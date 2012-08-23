@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE QMRF SYSTEM "/WEB-INF/xslt/qmrf.dtd">
+<QMRF author="European Chemicals Bureau" contact="Joint Research Centre, European Commission" date="July 2007" email="qsardb@jrc.it" name="(Q)SAR Model Reporting Format" schema_version="0.9" url="http://ecb.jrc.ec.europa.eu/qsar/" version="1.2">
+<QMRF_chapters>
+<QSAR_identifier chapter="1" help="" name="QSAR identifier">
+<QSAR_title chapter="1.1" help="" name="QSAR identifier (title)">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      QSAR for acute toxicity to fish (Danio rerio)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</QSAR_title>
+<QSAR_models chapter="1.2" help="" name="Other related models">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</QSAR_models>
+<QSAR_software chapter="1.3" help="" name="Software coding the model">
+
+
+<software_ref idref="firstsoftware" catalog="software_catalog"/>
+</QSAR_software>
+</QSAR_identifier>
+<QSAR_General_information chapter="2" help="" name="General information">
+<qmrf_date chapter="2.1" help="" name="Date of QMRF">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      29.06.2009    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</qmrf_date>
+<qmrf_authors chapter="2.2" help="" name="QMRF author(s) and contact details">
+<author_ref idref="firstauthor" catalog="authors_catalog"/>
+<author_ref idref="authors_catalog_3" catalog="authors_catalog"/>
+<author_ref idref="authors_catalog_4" catalog="authors_catalog"/>
+<author_ref idref="authors_catalog_5" catalog="authors_catalog"/>
+<author_ref idref="authors_catalog_6" catalog="authors_catalog"/>
+</qmrf_authors>
+<qmrf_date_revision chapter="2.3" help="" name="Date of QMRF update(s)">&lt;html&gt;
+  &lt;head&gt;
+   
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</qmrf_date_revision>
+<qmrf_revision chapter="2.4" help="" name="QMRF update(s)">&lt;html&gt;&#13;  &lt;head&gt;&#13;    &#13;  &lt;/head&gt;&#13;  &lt;body&gt;&#13;  &lt;/body&gt;&#13;&lt;/html&gt;&#13;</qmrf_revision>
+<model_authors chapter="2.5" help="" name="Model developer(s) and contact details">
+<author_ref idref="modelauthor" catalog="authors_catalog"/>
+</model_authors>
+<model_date chapter="2.6" help="" name="Date of model development and/or publication">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      20.06.2009    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</model_date>
+<references chapter="2.7" help="" name="Reference(s) to main scientific papers and/or software package">
+
+<publication_ref idref="publications_catalog_6" number="" catalog="publications_catalog"/>
+<publication_ref idref="publications_catalog_7" number="" catalog="publications_catalog"/>
+</references>
+<info_availability chapter="2.8" help="" name="Availability of information about the model">&lt;html&gt;
+  &lt;head&gt;
+  
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Model is proprietary, but the training and test sets are available.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</info_availability>
+<related_models chapter="2.9" help="" name="Availability of another QMRF for exactly the same model">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      None to date 
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</related_models>
+</QSAR_General_information>
+<QSAR_Endpoint chapter="3" help="" name="Defining the endpoint - OECD Principle 1">
+<model_species chapter="3.1" help="" name="Species">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      Fish (Danio rerio)    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</model_species>
+<model_endpoint chapter="3.2" help="" name="Endpoint">
+<endpoint_ref idref="endpoints_catalog_3" catalog="endpoints_catalog"/>
+</model_endpoint>
+<endpoint_comments chapter="3.3" help="" name="Comment on endpoint">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;  &lt;/body&gt;&lt;/html&gt;</endpoint_comments>
+<endpoint_units chapter="3.4" help="" name="Endpoint units">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;        &amp;#956;M    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</endpoint_units>
+<endpoint_variable chapter="3.5" help="" name="Dependent variable">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      log(LC50) logarithm of the median lethal concentration (LC50). The LC50       is the concentration that will kill 50% of the subjects after some       specified exposure time.    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</endpoint_variable>
+<endpoint_protocol chapter="3.6" help="" name="Experimental protocol">&lt;html&gt;
+  &lt;head&gt;
+   
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      The acute toxicity for fish was determined using the EU Test Guideline 
+      C.1. The acute toxicity for fish is a method for investigating the 
+      discernible adverse effects induced in an organism within a short time 
+      (days) of exposure to a substance. Acute toxicity is expressed as the 
+      median lethal concentration (LC50), that is the concentration in water 
+      which kills 50% of a test batch of fish within 96h. The concentrations 
+      of the test substance are given in micromoles per litre (umol/L). 
+      Toxicity values were translated to logarithmic scale (logLC50) to reduce 
+      the range of the data.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      References:
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      1. Dave et al (1981)
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      2. Roderer (1990)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</endpoint_protocol>
+<endpoint_data_quality chapter="3.7" help="" name="Endpoint data quality and variability">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Experimental data selected from EPA AQUIRE database 
+      (http://cfpub.epa.gov/ecotox/). The US EPA AQUIRE database includes 
+      lethal, sublethal and residue toxic effects data on all aquatic species 
+      including plants and animals and freshwater and saltwater species. 
+      Toxicity data for EPA - AQUIRE database are drawn from several sources 
+      and then reviewed:
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      (i) Ecotoxicological studies conducted by commercial laboratories and 
+      submitted by pesticide companies in support of their products. EPA's 
+      Office of Compliance and Monitoring conducts periodic audits of these 
+      laboratories;
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      (ii) Studies conducted by US-EPA, USDA, and USFWS laboratories over the 
+      last 25 years;
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      (iii) Published data considered to meet their guideline criteria for 
+      acceptable data.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Inorganic compounds and mixtures in which components have different 
+      molecular weight or connectivity (i.e. substances with different 
+      chemical identity) were eliminated from the original EPA dataset. 
+      However, mixtures of stereoisomers were kept, because they are super 
+      imposable using common 2D descriptors.Data for LC50 96 h exposure of 
+      fish were then pruned as follows:
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      (i) Eliminating studies with an a.s.&amp;lt;85% purity;
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      (ii) Those identified as invalid where invalid studies were defined by 
+      the EPA as studies which may not be scientifically sound, or they were 
+      performed under conditions that deviated so significantly from the 
+      recommended protocols that the results will not be useful in a risk 
+      assessment;
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      (iii) Furthermore, only studies with actual values were kept discarding 
+      data given as higher or lower that values.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Statistics:
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      max value: 3.81
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      min value: -2.56
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      standard deviation: 1.43
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      skewness: -0.45
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</endpoint_data_quality>
+</QSAR_Endpoint>
+<QSAR_Algorithm chapter="4" help="" name="Defining the algorithm - OECD Principle 2">
+<algorithm_type chapter="4.1" help="" name="Type of model">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      QSAR
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</algorithm_type>
+<algorithm_explicit chapter="4.2" help="" name="Explicit algorithm">
+<algorithm_ref idref="algorithms_catalog_2" catalog="algorithms_catalog"/>
+<equation>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Log(LC50) = 2.98 + 7.75*Image of the Onsager-Kirkwood solvation 
+      energy(AM1) - 60.24*Min electrophilic reactivity index (AM1) for N atoms 
+      - 0.15* Number of aromatic bonds + 1.54E-002*PNSA2  + 0.13* Lowest total 
+      interaction (AM1) for N - H bonds - 1.64* Number of carbonyl groups
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</equation>
+</algorithm_explicit>
+<algorithms_descriptors chapter="4.3" help="" name="Descriptors in the model">
+
+
+
+
+
+
+
+
+
+
+
+
+<descriptor_ref idref="descriptors_catalog_10" catalog="descriptors_catalog"/>
+<descriptor_ref idref="descriptors_catalog_11" catalog="descriptors_catalog"/>
+<descriptor_ref idref="descriptors_catalog_12" catalog="descriptors_catalog"/>
+<descriptor_ref idref="descriptors_catalog_13" catalog="descriptors_catalog"/>
+<descriptor_ref idref="descriptors_catalog_14" catalog="descriptors_catalog"/>
+<descriptor_ref idref="descriptors_catalog_15" catalog="descriptors_catalog"/>
+</algorithms_descriptors>
+<descriptors_selection chapter="4.4" help="" name="Descriptor selection">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Initial pool of ~1000 descriptors. Stepwise descriptor selection based 
+      on a set of statistical selection rules:
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      1-parameter equations: Fisher criterion and R2 over threshold, variance 
+      and t-test value over threshold, intercorrelation with another 
+      descriptor not over threshold
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      2 parameter equations: intercorrelation coefficient bellow threshold, 
+      significant correlation with endpoint in terms of correlation 
+      coefficient and t-test.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+       
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Stepwise trial of additional descriptors not significantly correlated to 
+      any already in the model.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</descriptors_selection>
+<descriptors_generation chapter="4.5" help="" name="Algorithm and descriptor generation">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      1D, 2D, and 3D theoretical calculations. Quantum chemical descriptors 
+      derived from AM1 calculation. Model developed by using multilinear 
+      regression.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</descriptors_generation>
+<descriptors_generation_software chapter="4.6" help="" name="Software name and version for descriptor generation" options="">
+
+
+<software_ref idref="software_catalog_2" catalog="software_catalog"/>
+</descriptors_generation_software>
+<descriptors_chemicals_ratio chapter="4.7" help="" name="Descriptors/Chemicals ratio">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      10.2 (61 chemicals/6 descriptors)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</descriptors_chemicals_ratio>
+</QSAR_Algorithm>
+<QSAR_Applicability_domain chapter="5" help="" name="Defining the applicability domain - OECD Principle 3">
+<app_domain_description chapter="5.1" help="" name="Description of the applicability domain of the model">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Applicability domain based on training set:
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      a) by chemical identity: diverse organic chemicals (aromatic, cyclic and 
+      aliphatic alcohols, phenols, halogenoderivatives, carboxylic acids, 
+      esters, amines, etc)
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      b) by descriptor value range: this model is suitable for compounds that 
+      have the descriptors in the following range: 
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Image of the Onsager-Kirkwood solvation energy (AM1) (min: 0 , max: 
+      0.286 ), Min electrophilic reactivity index (AM1) for N atoms (min: 0 , 
+      max: 0.03), Number of aromatic bonds (min: 0 , max: 23), PNSA2 Total 
+      charge weighted PNSA (Zefirov) (min: -309.517, max: 0), Lowest total 
+      interaction (AM1) for N - H bonds (min: -18.096 , max: 0), Number of 
+      carbonyl groups (min: 0 , max: 3).
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</app_domain_description>
+<app_domain_method chapter="5.2" help="" name="Method used to assess the applicability domain">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Presence of functional groups in structures
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Range of descriptor values in training set with &amp;#177;30% confidence
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Descriptor values must fall between maximal and minimal descriptor 
+      values of training set &amp;#177; 30%
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</app_domain_method>
+<app_domain_software chapter="5.3" help="" name="Software name and version for applicability domain assessment">
+
+
+<software_ref idref="software_catalog_3" catalog="software_catalog"/>
+</app_domain_software>
+<applicability_limits chapter="5.4" help="" name="Limits of applicability">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</applicability_limits>
+</QSAR_Applicability_domain>
+<QSAR_Robustness chapter="6" help="" name="Internal validation - OECD Principle 4">
+<training_set_availability answer="Yes" chapter="6.1" help="" name="Availability of the training set"/>
+<training_set_data cas="Yes" chapter="6.2" chemname="Yes" formula="No" help="" inchi="No" mol="Yes" name="Available information for the training set" smiles="No"/>
+<training_set_descriptors answer="All" chapter="6.3" help="" name="Data for each descriptor variable for the training set"/>
+<dependent_var_availability answer="All" chapter="6.4" help="" name="Data for the dependent variable for the training set"/>
+<other_info chapter="6.5" help="" name="Other information about the training set">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      61 data points: 12 negative values; 49 positive values
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</other_info>
+<preprocessing chapter="6.6" help="" name="Pre-processing of data before modelling">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</preprocessing>
+<goodness_of_fit chapter="6.7" help="" name="Statistics for goodness-of-fit">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      R&lt;sup&gt;2&lt;/sup&gt; = 0. 804 (Correlation coefficient);    &lt;/p&gt;    &lt;p style="margin-top: 0"&gt;      s = 0.443 (Standard error of the estimate);    &lt;/p&gt;    &lt;p style="margin-top: 0"&gt;      F = 36.891 (Fisher function);    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</goodness_of_fit>
+<loo chapter="6.8" help="" name="Robustness - Statistics obtained by leave-one-out cross-validation">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      R&lt;sup&gt;2&lt;/sup&gt;&lt;sub&gt;cv&lt;/sub&gt; = 0.745 LOO;    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</loo>
+<lmo chapter="6.9" help="" name="Robustness - Statistics obtained by leave-many-out cross-validation">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      R&lt;sup&gt;2&lt;/sup&gt;&lt;sub&gt;cv&lt;/sub&gt; = 0.810 LMO;    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</lmo>
+<yscrambling chapter="6.10" help="" name="Robustness - Statistics obtained by Y-scrambling">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</yscrambling>
+<bootstrap chapter="6.11" help="" name="Robustness - Statistics obtained by bootstrap">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</bootstrap>
+<other_statistics chapter="6.12" help="" name="Robustness - Statistics obtained by other methods">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      ABC analysis (2:1 training : prediction) on sorted (in increasing order 
+      of endpoint value) data divided into 3 subsets (A;B;C). Training set 
+      formed with 2/3 of the compounds (set A+B, A+C, B+C) and validation set 
+      consisted of 1/3 of the compounds (C, B, A)
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      average R&lt;sup&gt;2&lt;/sup&gt; (fitting) = 0.810
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      average R&lt;sup&gt;2&lt;/sup&gt; (prediction) = 0.785
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</other_statistics>
+</QSAR_Robustness>
+<QSAR_Predictivity chapter="7" help="" name="External validation - OECD Principle 4">
+<validation_set_availability answer="Yes" chapter="7.1" help="" name="Availability of the external validation set"/>
+<validation_set_data cas="Yes" chapter="7.2" chemname="Yes" formula="No" help="" inchi="No" mol="Yes" name="Available information for the external validation set" smiles="No"/>
+<validation_set_descriptors answer="All" chapter="7.3" help="" name="Data for each descriptor variable for the external validation set"/>
+<validation_dependent_var_availability answer="All" chapter="7.4" help="" name="Data for the dependent variable for the external validation set"/>
+<validation_other_info chapter="7.5" help="" name="Other information about the external validation set">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      6 data points: 1 negative values; 5 positive values
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</validation_other_info>
+<experimental_design chapter="7.6" help="" name="Experimental design of test set">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      The full experimental dataset was sorted according to increasing values       of log(LC50) and each tenth compound was assigned to the test set.    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</experimental_design>
+<validation_predictivity chapter="7.7" help="" name="Predictivity - Statistics obtained by external validation">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      R&lt;sup&gt;2&lt;/sup&gt;=0.847    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</validation_predictivity>
+<validation_assessment chapter="7.8" help="" name="Predictivity - Assessment of the external validation set">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      The descriptors for the test set are in the limit of applicability    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</validation_assessment>
+<validation_comments chapter="7.9" help="" name="Comments on the external validation of the model">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</validation_comments>
+</QSAR_Predictivity>
+<QSAR_Interpretation chapter="8" help="" name="Providing a mechanistic interpretation - OECD Principle 5">
+<mechanistic_basis chapter="8.1" help="" name="Mechanistic basis of the model">&lt;html&gt;  &lt;head&gt;      &lt;/head&gt;  &lt;body&gt;    &lt;p style="margin-top: 0"&gt;      The acute toxicity to Danio rerio depends on the solvation energy of the       compound. The toxicity decreases with increased solubility of the       chemical compound in water and decreased solubility in organic tissue.       The toxicity increases with the increased number of carbonyl functional       groups and the increased number of aromatic bonds.    &lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;</mechanistic_basis>
+<mechanistic_basis_comments chapter="8.2" help="" name="A priori or a posteriori mechanistic interpretation">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      A posteriori mechanistic interpretation.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</mechanistic_basis_comments>
+<mechanistic_basis_info chapter="8.3" help="" name="Other information about the mechanistic interpretation">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      The descriptor Image of the Onsager-Kirkwood solvation energy (AM1) 
+      gives information about the solubility of the molecule in water. The 
+      solubility in water increases with the increasing of the values of the 
+      descriptor Image of the Onsager-Kirkwood solvation energy (AM1). The 
+      log(LC50) increases (toxicity decrease) with the increasing solubility 
+      in water and decreased solubility in organic tissue. The descriptors 
+      Number of aromatic bonds and Number of carbonyl groups indicate that the 
+      acute toxicity to Danio rerio increases with the increasing in number of 
+      these functional groups. The charges in the molecule reflected by the 
+      descriptor PNSA2 Total charge weighted PNSA (Zefirov) influence also the 
+      toxicity. The increased number of electrical charges present in the 
+      chemical compound makes this less soluble in organic tissue and as a 
+      consequence less toxic. The toxicity has low values when the reactivity 
+      of the N atoms and N-H bonds is low, as reflected by the values of the 
+      descriptors: Min electrophilic reactivity index (AM1) for N atoms and 
+      Lowest total interaction (AM1) for N-H bonds.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</mechanistic_basis_info>
+</QSAR_Interpretation>
+<QSAR_Miscelaneous chapter="9" help="" name="Miscellaneous information">
+<comments chapter="9.1" help="" name="Comments">&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</comments>
+<bibliography chapter="9.2" help="" name="Bibliography">
+
+
+
+<publication_ref idref="publications_catalog_5" number="" catalog="publications_catalog"/>
+<publication_ref idref="publications_catalog_8" number="" catalog="publications_catalog"/>
+<publication_ref idref="publications_catalog_9" number="" catalog="publications_catalog"/>
+</bibliography>
+<attachments chapter="9.3" name="Supporting information" help="">
+<attachment_training_data>
+<molecules description="Danio rerio training_61" filetype="sdf" url="http://qsardb.jrc.ec.europa.eu:80/qmrf/download_attachment.jsp?name=qmrf136_Danio rerio training_61.sdf"/>
+</attachment_training_data>
+<attachment_validation_data>
+<molecules description="Danio rerio test_6" filetype="sdf" url="http://qsardb.jrc.ec.europa.eu:80/qmrf/download_attachment.jsp?name=qmrf136_Danio rerio test_6.sdf"/>
+</attachment_validation_data>
+</attachments>
+</QSAR_Miscelaneous>
+<QMRF_Summary chapter="10" help="" name="Summary (ECB Inventory)">
+<QMRF_number chapter="10.1" help="" name="QMRF number"/>
+<date_publication chapter="10.2" help="" name="Publication date"/>
+<keywords chapter="10.3" name="Keywords" help="">acute toxicity, fish, Danio rerio, QSARModel 3.3.8, LC50 </keywords>
+<summary_comments chapter="10.4" name="Comments" help=""/>
+</QMRF_Summary>
+</QMRF_chapters>
+<Catalogs>
+<software_catalog>
+<software contact="TestCode Ltd., Turu 2, Rivendell, 1389, Misty Mountains" description="" id="firstsoftware" name="QSARModel 3.3.8 " number="" url="http://www.TestCode.com"/>
+<software contact="TestCode Ltd, Turu 2, Rivendell, 1389, Misty Mountains" description="QSAR/QSPR package that will compute chemically meaningful descriptors and includes statistical tools for regression modeling" id="software_catalog_2" name="QSARModel 3.3.8" number="" url=" http://www.TestCode.com"/>
+<software contact="TestCode Ltd, Turu 2, Rivendell, 1389, Misty Mountains" description="QSAR/QSPR package that will compute chemically meaningful descriptors and includes statistical tools for regression modeling" id="software_catalog_3" name="QSARModel 3.3.8" number="" url="http://www.TestCode.com"/>
+</software_catalog>
+<algorithms_catalog>
+<algorithm definition="multilinear regression QSAR" description="" id="algorithms_catalog_2" publication_ref=""/>
+</algorithms_catalog>
+<descriptors_catalog>
+<descriptor description="" id="descriptors_catalog_10" name="Image of the Onsager-Kirkwood solvation energy (AM1)   " publication_ref="" units="[D2 mol/g]"/>
+<descriptor description="" id="descriptors_catalog_11" name="Min electrophilic reactivity index (AM1) for N atoms &#9;&#9;" publication_ref="" units="[1/eV]"/>
+<descriptor description="" id="descriptors_catalog_12" name="Number of aromatic bonds " publication_ref="" units=""/>
+<descriptor description="" id="descriptors_catalog_13" name="PNSA2 Total charge weighted PNSA (Zefirov) &#9;&#9;" publication_ref="" units="[�2]"/>
+<descriptor description="" id="descriptors_catalog_14" name="Lowest total interaction (AM1) for N - H bonds &#9;&#9;" publication_ref="" units="[eV]"/>
+<descriptor description="" id="descriptors_catalog_15" name="Number of carbonyl groups " publication_ref="" units=""/>
+</descriptors_catalog>
+<endpoints_catalog>
+<endpoint group="3.Ecotoxic effects" id="endpoints_catalog_3" name="3.3.Acute toxicity to fish (lethality)" subgroup="C.1 Acute toxicity to Danio rerio"/>
+</endpoints_catalog>
+<publications_catalog>
+<publication id="publications_catalog_6" title="Karelson M, Dobchev D, Tamm T, Tulp I, J�nes J, T�mm K, Lomaka A, Savchenko D &amp; Karelson G (2008). Correlation of blood-brain penetration and human serum albumin binding with theoretical descriptors. ARKIVOC 16, 38-60." url=""/>
+<publication id="publications_catalog_7" title="Karelson M, Karelson G, Tamm T, Tulp I, J�nes J, T�mm K, Lomaka A, Savchenko D &amp; Dobchev D (2009). QSAR study of pharmacological permeabilities. ARKIVOC 2, 218�238." url=""/>
+<publication id="publications_catalog_5" title="US EPA ECOTox Database" url=" http://cfpub.epa.gov/ecotox/"/>
+<publication id="publications_catalog_8" title="Dave G, Andersson K, Berglind R &amp;  Hasselrot B (1981). Toxicity of eight solvent extraction chemicals and of cadmium to water fleas, Daphnia magna, rainbow trout, Salmo gairdneri, and zebrafish, Brachydanio rerio. Comparative Biochemistry &amp; Physiology C 69, 83�98." url=""/>
+<publication id="publications_catalog_9" title="Roderer G (1990). Testung Wassergefahrdender Stoffe als Grundlage fur Wasserqualitatsstandards, Testbericht: Wassergefahrdende Stoffe. Fraunhofer-Institut fur Umweltchemie und Okotoxikologie, Schmallenberg (OECD Data File)." url=""/>
+</publications_catalog>
+<authors_catalog>
+<author affiliation="TestCode Ltd. " contact="Turu 2, Rivendell, 1389, Misty Mountains" email="models@TestCode.com" id="firstauthor" name="Indrek Tulp" number="" url="http://www.TestCode.com"/>
+<author affiliation="" contact="TestCode Ltd. Turu 2, Rivendell, 1389, Misty Mountains " email="models@TestCode.com" id="modelauthor" name="TestCode model development team" number="" url="http://www.TestCode.com"/>
+<author affiliation="TestCode Ltd. " contact="Turu 2, Rivendell, 1389, Misty Mountains" email="models@TestCode.com" id="authors_catalog_3" name="Bilbo Baggins" number="" url="http://www.TestCode.com"/>
+<author affiliation="TestCode Ltd. " contact="Turu 2, Rivendell, 1389, Misty Mountains" email="models@TestCode.com" id="authors_catalog_4" name="Frodo Baggins" number="" url="http://www.TestCode.com"/>
+<author affiliation="TestCode Ltd. " contact="Turu 2, Rivendell, 1389, Misty Mountains" email="models@TestCode.com" id="authors_catalog_5" name="Golum" number="" url="http://www.TestCode.com"/>
+<author affiliation="TestCode Ltd. " contact="Turu 2, Rivendell, 1389, Misty Mountains" email="models@TestCode.com" id="authors_catalog_6" name="dragon Smaug" number="" url="http://www.TestCode.com"/>
+</authors_catalog>
+</Catalogs>
+</QMRF>
+<!--
+	include_attachments
+	Replaces <attachments/> in param.xml with attachments from database.
+	expects:
+	param.id - qmrf_documents.documents.idqmrf
+	param.xml - the xml to be transformed
+-->
+<!--
+	include_attachments
+	Replaces <attachments/> in param.xml with attachments from database.
+	expects:
+	param.id - qmrf_documents.documents.idqmrf
+	param.xml - the xml to be transformed
+-->

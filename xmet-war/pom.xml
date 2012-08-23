@@ -1,0 +1,140 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>xmetdb</artifactId>
+    <groupId>org.xmetdb</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>org.xmetdb</groupId>
+  <artifactId>xmet-war</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>xmetdb REST web services</name>
+  
+  
+  <dependencies>
+  		
+		
+    	<dependency>
+		<groupId>org.xmetdb</groupId>
+  		<artifactId>xmet-db</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  	 <!-- reuse src/test/java code from moduleA! -->
+		<groupId>org.xmetdb</groupId>
+  		<artifactId>xmet-db</artifactId>
+  		<version>${project.version}</version>
+  		<scope>test</scope>
+  		<classifier>tests</classifier>
+  	</dependency>
+  	<dependency>
+    	<groupId>org.dbunit</groupId>
+    	<artifactId>dbunit</artifactId>
+    	<version>2.4.8</version>
+    	<scope>test</scope>
+    </dependency>
+
+  	<dependency>
+  	<groupId>net.bull.javamelody</groupId>
+  	<artifactId>javamelody-core</artifactId>
+  	<version>1.31.0</version>
+  	<scope>runtime</scope>
+	</dependency>
+	 
+
+  </dependencies>
+    <build>
+  <pluginManagement>
+  <plugins>
+  <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <configuration>
+      <skip>false</skip>
+      <disableXmlReport>false</disableXmlReport>
+      <argLine>-Xmx1024m</argLine>
+     </configuration>
+    </plugin>
+      <plugin>
+  				<groupId>org.codehaus.mojo</groupId>
+  				<artifactId>tomcat-maven-plugin</artifactId>
+  				<configuration>
+					<server>localhost</server>
+					<path>/xmetdb</path>
+					<port>8081</port>
+				</configuration>
+  	</plugin>
+ 	<plugin>
+       	<groupId>org.apache.maven.plugins</groupId>
+       	<artifactId>maven-resources-plugin</artifactId>
+      	 <version>2.5</version>
+       	<configuration>
+        	<nonFilteredFileExtensions>
+           	<nonFilteredFileExtension></nonFilteredFileExtension>
+		   <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+		   <nonFilteredFileExtension>png</nonFilteredFileExtension>
+          	</nonFilteredFileExtensions>
+        </configuration>
+      	</plugin>  	
+  </plugins>
+  </pluginManagement>
+    <finalName>xmetdb</finalName>
+	<resources>
+		<resource>
+			<directory>src/main/resources</directory>
+			<filtering>true</filtering>
+		</resource>
+	</resources>
+	</build>  
+  <profiles>
+<profile>
+   <id>http</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+			<properties>
+				<web_xml>src/main/resources/web.xml</web_xml>
+
+				<aa.opensso>src/main/resources/web.xml</aa.opensso>
+				<aa.opensso>http://opensso.in-silico.ch/opensso/identity</aa.opensso>
+        		<aa.policy>http://opensso.in-silico.ch/Pol/opensso-pol</aa.policy>
+			</properties>
+   </profile>
+   <profile>
+            <id>https</id>
+ 			<activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>            
+			<properties>
+				<web_xml>src/main/resources/web.https.xml</web_xml>
+				    <aa.opensso>http://opensso.in-silico.ch/opensso/identity</aa.opensso>
+        			<aa.policy>http://opensso.in-silico.ch/Pol/opensso-pol</aa.policy>
+			</properties>			
+	    </profile>
+    <!--  release build, with AA -->
+    <profile>
+      <id>aa-enabled</id>
+
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <xmet.protected>true</xmet.protected>
+      </properties>
+    </profile>
+    
+    
+    <!--  release build, without AA -->
+    <profile>
+      <id>aa-disabled</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <xmet.protected>false</xmet.protected>
+      </properties>
+    </profile>    
+	    
+</profiles>
+</project>

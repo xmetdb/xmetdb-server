@@ -1,0 +1,11 @@
+#net.idea.rest.protocol.db.DbCreateDatabase
+#Fri Mar 09 09:42:34 EET 2012
+Host=localhost
+Scheme=jdbc\:mysql
+Port=3306
+Database=qmrf
+MAXRECORDS=0
+defaultDir=
+User=guest
+timeout=60000
+startMySQL=true

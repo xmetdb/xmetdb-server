@@ -1,0 +1,31 @@
+package org.xmetdb.rest.endpoints;
+
+import java.sql.ResultSet;
+
+import org.xmetdb.rest.endpoints.db.QueryOntology;
+import org.xmetdb.rest.endpoints.db.QueryOntology.RetrieveMode;
+import org.xmetdb.rest.protocol.db.test.QueryTest;
+
+import junit.framework.Assert;
+import ambit2.base.data.Dictionary;
+
+public class QueryOntologyTest extends QueryTest<QueryOntology> {
+
+	@Override
+	protected QueryOntology createQuery() throws Exception {
+		QueryOntology q = new QueryOntology();
+		q.setIncludeParent(RetrieveMode.childandarent);
+		q.setValue(new Dictionary("Physical Chemical Properties",null));
+		return q;
+	}
+
+	@Override
+	protected void verify(QueryOntology query, ResultSet rs) throws Exception {
+		int count=0;
+		while (rs.next()) {
+			count++;
+		}
+		Assert.assertEquals(5,count);
+	}
+
+}

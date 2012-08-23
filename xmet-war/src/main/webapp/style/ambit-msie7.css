@@ -1,0 +1,54 @@
+/*
+This CSS stylesheet contains overrides for the Microsoft Internet Explorer family of browsers.
+
+The contents of this file are in the public domain. If this is not applicable, the contents are
+licensed under the 2-clause license BSD license ("Simplified BSD License" or "FreeBSD License").
+
+Created on 2012-04-09 by Luchesar V. ILIEV, IDEAconsult Ltd., http://www.ideaconsult.net/
+*/
+
+@CHARSET "UTF-8";
+
+div.w_left {
+	width: 182px;
+	margin-left: -25px;
+	margin-right: 40px;
+	padding: 25px 20px 0 0;
+	float: left;
+	display: inline-block;
+}
+
+img.w_logo_inventory {
+	top: 3px;
+	left: 48px;
+	border: 0;
+}
+
+div.w_stats {
+	margin-left: 41px;
+	margin-right: -39px;
+}
+
+div.w_content {
+	padding: 20px 20px 0 0;
+}
+
+p.w_p_send {
+	font-size: 10.5pt;
+	font-weight: bold;
+}
+
+div#menu {
+	margin-top: 12px;
+}
+
+img.logo_home_menu {
+	position: absolute;
+	top: -8px;
+	left: 25px;
+	border: 0;
+}
+
+.ui-tabs li a {
+	font-size: 7pt !important;
+}
