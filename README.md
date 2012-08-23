@@ -3,6 +3,9 @@ xmetdb-server
 
 The xmetdb web service/application
 
+This is an initial fork from qmrf.sf.net.  Don't consider it functional XMETDB application!
+
+--------
 Build: 
 
 mvn package -P xmet
