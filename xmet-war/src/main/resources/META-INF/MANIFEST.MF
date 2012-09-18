@@ -1,5 +1,5 @@
-Package: net.idea.qmrf.rest
-Main-Class: net.idea.qmrf.rest.QMRFApplication
+Package: org.xmetdb.xmet.rest
+Main-Class: org.xmetdb.xmet.rest.XMETApplication
 Manifest-version: ${project.version}
 Package-Version: ${project.version}
 Package-Vendor: Ideaconsult Ltd.

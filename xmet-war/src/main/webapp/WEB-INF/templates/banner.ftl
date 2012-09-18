@@ -6,15 +6,12 @@
 			<a class='topLinks' href='http://ambit.uni-plovdiv.bg/downloads/qmrf/QMRFEditor-v2.0.0-setup.exe'>Download QMRF Editor</a>
 			</li>
 			<li class='topLinks'>|</li>
+				-->
 			<li class='topLinks'>
-			<a class='topLinks email' href='mailto:JRC-IHCP-COMPUTOX@ec.europa.eu'>Submit QMRF by e-mail</a>
+			<a class='topLinks' href='http://xmetdb.org/'>Help</a>
 			</li>
 			<li class='topLinks'>|</li>
-			<li class='topLinks'>
-			<a class='topLinks' href='http://qmrf.sf.net/'>Help</a>
-			</li>
-			<li class='topLinks'>|</li>
-						-->
+						
 			<li class='topLinks'>
 
 			<#if username??>
@@ -26,7 +23,7 @@
 			</li>
 			</ul>
 
-			<a href='http://ihcp.jrc.ec.europa.eu/'>
+			<a href='http://xmetdb.org/'>
 			<img class='logo_top-left' src='./images/logo_xmetdb.png' alt='XMETDB logo'>
 			</a>
 </div>

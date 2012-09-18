@@ -23,7 +23,7 @@ body {
 div#header {
 	height: 140px;
 	text-align: left;
-	background: url("/qmrf/images/header-background.png") repeat-x scroll left top;
+	background: url("/xmetdb/images/header-background.png") repeat-x scroll left top;
 }
 
 ul.topLinks {
@@ -170,28 +170,28 @@ table.footerTable {
 a.download {
 	font-weight: normal;
 	text-decoration: none;
-	background: url("/qmrf/images/application_put.png") no-repeat scroll 0 0 transparent;
+	background: url("/xmetdb/images/application_put.png") no-repeat scroll 0 0 transparent;
 	padding: 0 0 0 20px;
 }
 
 a.email {
 	font-weight: normal;
 	text-decoration: none;
-	background: url("/qmrf/images/email_attach.png") no-repeat scroll 0 0 transparent;
+	background: url("/xmetdb/images/email_attach.png") no-repeat scroll 0 0 transparent;
 	padding: 0 0 0 20px;
 }
 
 a.help {
 	font-weight: normal;
 	text-decoration: none;
-	background: url("/qmrf/images/book_open.png") no-repeat scroll 0 0 transparent;
+	background: url("/xmetdb/images/book_open.png") no-repeat scroll 0 0 transparent;
 	padding: 0 0 0 20px;
 }
 
 a.login {
 	font-weight: normal;
 	text-decoration: none;
-	background: url("/qmrf/images/key.png") no-repeat scroll 0 0 transparent;
+	background: url("/xmetdb/images/key.png") no-repeat scroll 0 0 transparent;
 	padding: 0 0 0 20px;
 }
 
@@ -455,12 +455,12 @@ th.contentTable, th.contentTableManage, td.contentTable {
 
 td.togglerPlus {
 	width: 10px;
-	background: url("/qmrf/images/bullet_toggle_plus.png") no-repeat scroll 0 4px transparent;
+	background: url("/xmetdb/images/bullet_toggle_plus.png") no-repeat scroll 0 4px transparent;
 }
 
 td.togglerMinus {
 	width: 10px;
-	background: url("/qmrf/images/bullet_toggle_minus.png") no-repeat scroll 0 4px transparent;
+	background: url("/xmetdb/images/bullet_toggle_minus.png") no-repeat scroll 0 4px transparent;
 }
 
 *//* Plus/minus icons v2 */
@@ -469,7 +469,7 @@ td.togglerPlus {
 	width: 16px;
 	min-width: 16px;
 	min-height: 16px;
-	background: url("/qmrf/images/magnifier_zoom_in.png") no-repeat scroll center center transparent;
+	background: url("/xmetdb/images/magnifier_zoom_in.png") no-repeat scroll center center transparent;
 	cursor: pointer;
 }
 
@@ -477,7 +477,7 @@ td.togglerMinus {
 	width: 16px;
 	min-width: 16px;
 	min-height: 16px;
-	background: url("/qmrf/images/magnifier_zoom_out.png") no-repeat scroll center center transparent;
+	background: url("/xmetdb/images/magnifier_zoom_out.png") no-repeat scroll center center transparent;
 	cursor: pointer;
 }
 
@@ -491,12 +491,12 @@ th.contentTable, th.contentTableManage, td.contentTable {
 
 td.togglerPlus {
 	width: 15px;
-	background: url("/qmrf/images/plus_minus_icons_v2.png") no-repeat scroll -16px 4px transparent;
+	background: url("/xmetdb/images/plus_minus_icons_v2.png") no-repeat scroll -16px 4px transparent;
 }
 
 td.togglerMinus {
 	width: 15px;
-	background: url("/qmrf/images/plus_minus_icons_v2.png") no-repeat scroll 0 4px transparent;
+	background: url("/xmetdb/images/plus_minus_icons_v2.png") no-repeat scroll 0 4px transparent;
 }
 
 */

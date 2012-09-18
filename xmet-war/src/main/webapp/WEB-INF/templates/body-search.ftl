@@ -8,12 +8,10 @@
 			<img class='w_logo_inventory' src='./images/logo_menu.png'>
 			Access
 		</a></li>
-		<li><a class='selectable' title='Click here to download the QMRF Editor application' href='${qmrf_editor}'>Get QMRF Editor</a></li>
-		<li><a class='selectable' title='Click here to access the reviewers template' href='${qmrf_template}'>Reviewers Template</a></li>
-		<li><a class='selectable' title='Click here to read about the OECD Principles' href='${qmrf_oecd}'>OECD Principles</a></li>
-		<li><a class='selectable' title='Click here to access the QMRF user manual' href='${qmrf_manual}'>User Manual</a></li>
-		<li><a class='selectable' title='Click here to read the FAQ' href='${qmrf_faq}'>FAQ</a></li>
-		<li><a class='selectable' title='Click here to access the general help pages' href='http://qmrf.sf.net/'>Help</a></li>
+		<li><a class='selectable' title='Click here to access the reviewers template' href='${xmet_template}'>Reviewers Template</a></li>
+		<li><a class='selectable' title='Click here to access the XMETDB user manual' href='${xmet_manual}'>User Manual</a></li>
+		<li><a class='selectable' title='Click here to read the FAQ' href='${xmet_faq}'>FAQ</a></li>
+		<li><a class='selectable' title='Click here to access the general help pages' href='${xmet_home}'>Help</a></li>
 		</ul>
 	
 		<div id='stats' class="w_stats">
@@ -42,7 +40,7 @@
 
 	</div> <#-- w_menu -->
 	<div class='w_content'>
-		<p class='w_p_header'>Welcome to the QMRF Inventory</p>
+		<p class='w_p_header'>Welcome to the XMETDB Inventory</p>
 		<p class='w_p'>
 			In the regulatory assessment of chemicals (e.g. under REACH), <b>(Q)SAR models</b> are playing an increasingly important role in predicting properties for hazard and risk assessment. This implies both a need to be able to identify relevant (Q)SARs and to use them to derive estimates and/or have access to their precalculated estimates. To help meet these needs, we are developing a database of (Q)SAR models (i.e. an inventory of information on the models). The JRC QSAR Model Database is freely accessible through this web site.
 		</p>
@@ -56,7 +54,7 @@
 			All substances, available in the QMRF Database, can be searched by exact or similar structure, or by a substructure.
 		</p>
     	<p class='w_p_send'>Please send us your models to have them included in the database:
-    		<a class='email' href='mailto:${qmrf_email}'>${qmrf_email}</a>	
+    		<a class='email' href='mailto:${xmet_email}'>${xmet_email}</a>	
     	</p>
 	</div> <#-- w_content -->
 	

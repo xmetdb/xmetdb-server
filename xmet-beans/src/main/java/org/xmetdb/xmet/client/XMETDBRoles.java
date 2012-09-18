@@ -11,7 +11,7 @@ public enum XMETDBRoles {
 		}
 		@Override
 		public String getHint() {
-			return "Registered user and QMRF documents author";
+			return "Registered user and XMETDB documents author";
 		}		
 	},
 	xmetdb_editor {

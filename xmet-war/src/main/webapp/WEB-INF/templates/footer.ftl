@@ -1,5 +1,5 @@
 <div id='w_footer'>
-	Developed by <a class='footerLink' href='http://www.ideaconsult.net/'>IDEAconsult Ltd.</a> (2007-2012) on behalf of <a class='footerLink' href='${qmrf_jrc}'>JRC</a>
+	Developed by <a class='footerLink' href='http://www.ideaconsult.net/'>IDEAconsult Ltd.</a> (2012) on behalf of <a class='footerLink' href='${xmet_org}'>XMETDB</a>
 </div>
 <script type="text/javascript">
 	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

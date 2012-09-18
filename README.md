@@ -14,7 +14,7 @@ The default maven profile is -P xmet
 
 The tests assume 
 CREATE USER 'guest'@'localhost' IDENTIFIED BY 'guest';
-GRANT ALL ON qmrf.* TO 'guest'@'localhost';
+GRANT ALL ON xmet.* TO 'guest'@'localhost';
 GRANT TRIGGER ON xmet.* TO 'guest'@'localhost';
 GRANT execute on `ambit2-xmet`.* to guest@localhost
 GRANT execute on PROCEDURE `ambit2-xmet`.findByProperty to guest@127.0.0.1

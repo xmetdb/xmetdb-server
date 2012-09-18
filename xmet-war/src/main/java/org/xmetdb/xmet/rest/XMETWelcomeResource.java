@@ -37,7 +37,7 @@ public class XMETWelcomeResource extends ServerResource {
 	        map.put(Resources.Config.xmet_theory.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_theory.name()));
 	        map.put(Resources.Config.xmet_home.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_home.name()));
 	        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
-	        return toRepresentation(map, "body-welcome.ftl", MediaType.TEXT_PLAIN);
+	        return toRepresentation(map, "body-search.ftl", MediaType.TEXT_PLAIN);
 		} else {
 			//if no slash, all the styles etc. paths are broken...
 			redirectSeeOther(String.format("%s/",getRequest().getRootRef()));
