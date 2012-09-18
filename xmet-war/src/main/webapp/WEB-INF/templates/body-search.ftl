@@ -4,14 +4,13 @@
 	<#include "/banner.ftl">
 	<div class='w_left'>
 		<ul id='navmenu'>
-		<li><a class='selectable enter_qmrf' title='Click here to enter the QMRF inventory' href='./protocol'>
+		<li><a class='selectable enter_qmrf' title='Click here to search the Xenomiotics Metabolism Database' href='./protocol'>
 			<img class='w_logo_inventory' src='./images/logo_menu.png'>
-			Access
+			Search
 		</a></li>
-		<li><a class='selectable' title='Click here to access the reviewers template' href='${xmet_template}'>Reviewers Template</a></li>
-		<li><a class='selectable' title='Click here to access the XMETDB user manual' href='${xmet_manual}'>User Manual</a></li>
-		<li><a class='selectable' title='Click here to read the FAQ' href='${xmet_faq}'>FAQ</a></li>
-		<li><a class='selectable' title='Click here to access the general help pages' href='${xmet_home}'>Help</a></li>
+		<li><a class='selectable' title='Click here to submit an observation' href='./submit}'>Submit</a></li>
+		<li><a class='selectable' title='About XMETDB' href='${xmet_about}'>About</a></li>
+		<li><a class='selectable' title='Click here to read the XMETDB guide' href='${xmet_guide}'>Guide</a></li>
 		</ul>
 	
 		<div id='stats' class="w_stats">

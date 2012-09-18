@@ -5,7 +5,7 @@ import net.idea.restnet.aa.resource.AdminResource;
 import net.idea.restnet.c.resource.TaskResource;
 
 public class Resources {
-	public static final String welcome = "/welcome";
+	public static final String search = "/search";
 	public static final String protocol = "/protocol";
 	public static final String unpublished = "/unpublished";
 	public static final String chemical = "/chemical";
@@ -45,12 +45,8 @@ public class Resources {
 		secret,
 		insecure,
 		xmet_email,
-		xmet_editor,
-		xmet_template,
-		xmet_manual,
-		xmet_faq,
-		xmet_theory,
-		xmet_home,
+		xmet_guide,
+		xmet_about,
 		sessiontimeout
 	}
 	

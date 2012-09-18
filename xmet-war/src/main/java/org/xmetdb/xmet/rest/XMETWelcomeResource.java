@@ -30,12 +30,8 @@ public class XMETWelcomeResource extends ServerResource {
 	        	map.put("username", getClientInfo().getUser().getIdentifier());
 	        map.put("creator","IdeaConsult Ltd.");
 	        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
-	        map.put(Resources.Config.xmet_editor.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_editor.name()));
-	        map.put(Resources.Config.xmet_template.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_template.name()));
-	        map.put(Resources.Config.xmet_manual.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_manual.name()));
-	        map.put(Resources.Config.xmet_faq.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_faq.name()));
-	        map.put(Resources.Config.xmet_theory.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_theory.name()));
-	        map.put(Resources.Config.xmet_home.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_home.name()));
+	        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
+	        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
 	        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
 	        return toRepresentation(map, "body-search.ftl", MediaType.TEXT_PLAIN);
 		} else {
@@ -61,7 +57,7 @@ public class XMETWelcomeResource extends ServerResource {
 		return this.get(null);
 	}
 	protected XmetdbHTMLBeauty createHtmlBeauty() {
-		return new XmetdbHTMLBeauty(Resources.welcome);
+		return new XmetdbHTMLBeauty(Resources.search);
 	}
 	
 	public XmetdbHTMLBeauty getHtmlBeauty() {
