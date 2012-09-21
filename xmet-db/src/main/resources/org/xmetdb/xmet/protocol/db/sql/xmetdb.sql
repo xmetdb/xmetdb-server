@@ -21,8 +21,6 @@ CREATE TABLE  `user` (
   UNIQUE KEY `Index_2` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into  `user` values (null,"admin","","Administrator","","","","","","","",true);
-
 -- -----------------------------------------------------
 -- Organisation, project, linked to OpenAM groups
 -- -----------------------------------------------------
@@ -337,3 +335,31 @@ insert into template values
 (null,"cytochrome P450, family 2, subfamily C, polypeptide 8","CYP2C8","http://www.uniprot.org/uniprot/P10632"),
 (null,"cytochrome P450, family 3, subfamily A, polypeptide 5","CYP3A5","http://www.uniprot.org/uniprot/P20815");
 insert into dictionary select idtemplate,"is_part_of",1 from template where idtemplate!=1 order by idtemplate;
+
+-- -----------------------------------------------------
+-- Default set of enzymes
+-- -----------------------------------------------------
+insert into `user` values 
+(1,"admin","","Administrator","","","","","","","",true),
+(2,"guest","","Guest","User","","","","","","",true);
+
+-- -----------------------------------------------------
+-- Default project
+-- -----------------------------------------------------
+insert into project values
+(1,"XMETDB","xmetdb",null);
+
+-- -----------------------------------------------------
+-- Default organisation
+-- -----------------------------------------------------
+insert into organisation values
+(1,"XMETDB","xmetdb",null),
+(2,"Uppsala University","uppsalauni",null),
+(3,"University of Copenhagen","unicopenhagen",null),
+(4,"Ideaconsult","idea",null);
+
+-- -----------------------------------------------------
+-- Default protocol - this is for testing only!
+-- -----------------------------------------------------
+insert into protocol values
+(1,1,"HEP","XMETDB1","Hepatocytes",true,2,1,1,null,null,"RESEARCH",now(),now(),true);
