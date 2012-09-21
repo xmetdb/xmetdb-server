@@ -362,4 +362,15 @@ insert into organisation values
 -- Default protocol - this is for testing only!
 -- -----------------------------------------------------
 insert into protocol values
-(1,1,"HEP","XMETDB1","Hepatocytes",true,2,1,1,null,null,"RESEARCH",now(),now(),true);
+(1,1,"HEP","XMETDB1","Hepatocytes",true,2,1,1,null,null,"RESEARCH",now(),now(),"published"),
+(2,1,"ENZ","XMETDB2","Enzyme",true,2,1,1,null,null,"RESEARCH",now(),now(),true),
+(3,1,"MS","XMETDB3","Microsome",true,2,1,1,null,null,"RESEARCH",now(),now(),"published");
+
+-- another entry with the demo purpose
+ 
+insert into protocol_endpoints
+select idprotocol,version,idtemplate from protocol
+join
+template
+where code regexp concat("^CYP",idprotocol)
+group by idprotocol,version;
