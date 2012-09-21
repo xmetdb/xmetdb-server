@@ -16,6 +16,7 @@ The tests assume
 CREATE USER 'guest'@'localhost' IDENTIFIED BY 'guest';
 GRANT ALL ON xmet_users.* TO 'guest'@'localhost';
 GRANT ALL ON xmetdb.* TO 'guest'@'localhost';
+GRANT ALL ON `xmetdb-test`.* TO 'guest'@'localhost';
 
 GRANT TRIGGER ON xmetdb.* TO 'guest'@'localhost';
 GRANT execute on `ambit2-xmet`.* to guest@localhost
