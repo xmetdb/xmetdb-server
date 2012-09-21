@@ -1,10 +1,13 @@
+<#include "/html.ftl" >
+<head>
 <#include "/head.ftl" >
+</head>
 <body>
 	<div class='w_wrap'>
 	<#include "/banner.ftl">
 	<div class='w_left'>
 		<ul id='navmenu'>
-		<li><a class='selectable enter_qmrf' title='Click here to enter the QMRF inventory' href='./protocol'>
+		<li><a class='selectable enter_qmrf' title='Click here to search the Xenobiotics Metabolism Database' href='./protocol'>
 			<img class='w_logo_inventory' src='./images/logo_menu.png'>
 			Access
 		</a></li>
