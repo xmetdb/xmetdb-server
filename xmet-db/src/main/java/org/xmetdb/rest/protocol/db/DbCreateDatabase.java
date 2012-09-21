@@ -77,7 +77,7 @@ public class DbCreateDatabase extends AbstractDBProcessor<String,String> {
 	        else if (!tables.contains("version")) { //
 	        	dropTables(database,tables);
 	        	createTables(database);
-	        } else throw new AmbitException(String.format("Empty database `%s` is expected, but it has %d tables!",database,tables));
+	        } else throw new AmbitException(String.format("Empty database `%s` is expected, but it has %d tables!",database,tables.size()));
 		} catch (AmbitException x) {
 			throw x;
 		} catch (Exception x) {

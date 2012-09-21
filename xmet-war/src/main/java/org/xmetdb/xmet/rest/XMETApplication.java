@@ -202,12 +202,12 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	 * 
 	 * Filter userAuthn = new
 	 * ChallengeAuthenticatorDBLocal(getContext(),true,"conf/xmetdb.pref"
-	 * ,"tomcat_users"); userAuthn.setNext(clazz); return userAuthn; }
+	 * ,"xmet_users"); userAuthn.setNext(clazz); return userAuthn; }
 	 */
 	protected Filter createCookieAuthenticator(boolean optional) {
 		String secret = getProperty(Resources.Config.secret.name());
 		CookieAuthenticator cookieAuth = new CookieAuthenticator(getContext(),
-				"tomcat_users", (secret==null?UUID.randomUUID().toString():secret).getBytes());
+				"xmet_users", (secret==null?UUID.randomUUID().toString():secret).getBytes());
 		cookieAuth.setCookieName("xmetdb");
 		long sessionLength = 1000*60*45L; //45 min in milliseconds
 		try { sessionLength = Long.parseLong(getProperty(Resources.Config.sessiontimeout.name())); } catch (Exception x) {}
@@ -222,9 +222,9 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 
 
 			cookieAuth.setVerifier(new DBVerifier(getContext(), config,
-					"tomcat_users"));
+					"xmet_users"));
 			cookieAuth.setEnroler(new DbEnroller(getContext(), config,
-					"tomcat_users"));
+					"xmet_users"));
 			return cookieAuth;
 		} else {
 			cookieAuth.setVerifier(new SecretVerifier() {
@@ -251,7 +251,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 
 			});
 			cookieAuth.setEnroler(new DbEnroller(getContext(), config,
-					"tomcat_users"));
+					"xmet_users"));
 		}
 		return cookieAuth;
 	}

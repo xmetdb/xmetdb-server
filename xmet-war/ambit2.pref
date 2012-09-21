@@ -1,9 +1,9 @@
-#net.idea.rest.protocol.db.DbCreateDatabase
-#Fri Mar 09 09:42:34 EET 2012
+#org.xmetdb.rest.protocol.db.DbCreateDatabase
+#Fri Sep 21 15:25:54 EEST 2012
 Host=localhost
 Scheme=jdbc\:mysql
 Port=3306
-Database=qmrf
+Database=xmetdb
 MAXRECORDS=0
 defaultDir=
 User=guest
