@@ -195,7 +195,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 					"All",
 					"",
 					"",
-					"All endpoints"));
+					"All enzymes"));
 			if (query instanceof QueryOntology) {
 					EndpointTest et = ((QueryOntology<EndpointTest>)query).getValue();
 					/*

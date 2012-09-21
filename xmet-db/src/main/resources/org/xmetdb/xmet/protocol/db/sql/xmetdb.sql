@@ -313,3 +313,27 @@ begin
 end $$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- Default set of enzymes
+-- -----------------------------------------------------
+
+insert into template values
+(1,null,null,null),
+(null,"cytochrome P450, family 3, subfamily A, polypeptide 4","CYP3A4","http://www.uniprot.org/uniprot/P08684"),
+(null,"cytochrome P450, family 2, subfamily E, polypeptide 1","CYP2E1","http://www.uniprot.org/uniprot/P05181"),
+(null,"cytochrome P450, family 2, subfamily D, polypeptide 6","CYP2D6","http://www.uniprot.org/uniprot/P10635"),
+(null,"cytochrome P450, family 2, subfamily C, polypeptide 9","CYP2C9","http://www.uniprot.org/uniprot/P11712"),
+(null,"cytochrome P450, family 1, subfamily A, polypeptide 2","CYP1A2","http://www.uniprot.org/uniprot/P05177"),
+(null,"cytochrome P450, family 2, subfamily C, polypeptide 19","CYP2C19","http://www.uniprot.org/uniprot/P33261"),
+(null,"cytochrome P450, family 1, subfamily A, polypeptide 1","CYP1A1","http://www.uniprot.org/uniprot/P04798"),
+(null,"cytochrome P450, family 1, subfamily B, polypeptide 1","CYP1B1","http://www.uniprot.org/uniprot/Q16678"),
+(null,"cytochrome P450, family 26, subfamily A, polypeptide 1","CYP26A1","http://www.uniprot.org/uniprot/O43174"),
+
+(null,"cytochrome P450, family 26, subfamily B, polypeptide 1","CYP26B1","http://www.uniprot.org/uniprot/Q9NR63"),
+(null,"cytochrome P450, family 2, subfamily S, polypeptide 1","CYP2S1","http://www.uniprot.org/uniprot/Q96SQ9"),
+(null,"cytochrome P450, family 4, subfamily B, polypeptide 1","CYP4B1","http://www.uniprot.org/uniprot/P13584"),
+(null,"cytochrome P450, family 2, subfamily W, polypeptide 1","CYP2W1","http://www.uniprot.org/uniprot/Q8TAV3"),
+(null,"cytochrome P450, family 2, subfamily C, polypeptide 8","CYP2C8","http://www.uniprot.org/uniprot/P10632"),
+(null,"cytochrome P450, family 3, subfamily A, polypeptide 5","CYP3A5","http://www.uniprot.org/uniprot/P20815");
+insert into dictionary select idtemplate,"is_part_of",1 from template where idtemplate!=1 order by idtemplate;

@@ -463,7 +463,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 			String[][] menu = {
 					{ Resources.protocol, "XMETDB metadatat search", "10", "Search all published XMETDB documents" },
 					{ Resources.chemical, "Structures search", "10", "Search chemical structures by identifiers, similarity or substructure" },
-					{ Resources.endpoint, "Endpoints", null, "XMETDB documents by endpoints" },
+					{ Resources.endpoint, "Enzymes", null, "XMETDB documents by enzymes" },
 			};
 
 			w.write(
@@ -474,7 +474,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 			// Home
 			w.write(String.format(homeMenuOption, baseReference.toString(), baseReference.toString()));
 			
-			// Documents, Structures, Endpoints
+			// Documents, Structures, Enzymes
 			for (String[] menuItem: menu) {
 				w.write(printMenuItem(menuItem[0], menuItem[1], baseReference.toString(), menuItem[2], menuItem[3]));
 			}
@@ -877,7 +877,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					content.append(_tdStart);
 					content.append(String.format("<input type='text' readonly size='15' id='%s' name='%s'>",ReadProtocol.fields.endpointParentCode.name(),ReadProtocol.fields.endpointParentCode.name()));
 					content.append(String.format("<input type='text' readonly size='75' id='%s' name='%s'><br>",ReadProtocol.fields.endpointParentName.name(),ReadProtocol.fields.endpointParentName.name()));
-					content.append(String.format("<input type='text' size='75' title = 'Start writing here to get list of endpoints. The rest of the fields will be automatically filled in.' id='%s' name='%s'>","endpoint","endpoint"));
+					content.append(String.format("<input type='text' size='75' title = 'Start writing here to get list of enzymes. The rest of the fields will be automatically filled in.' id='%s' name='%s'>","endpoint","endpoint"));
 
 					
 					content.append(String.format(		
