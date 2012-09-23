@@ -1,7 +1,7 @@
 <#include "/html.ftl" >
 <head>
 <#include "/head.ftl" >
-<#include "/protocols_head.ftl" >
+<#include "/structures_head.ftl" >
 </head>
 <body>
 	<div class='w_wrap'>
@@ -11,11 +11,9 @@
 	<div class='w_content'>
 		<p class='w_p'>
 		<div>
-		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
+		<table class='compoundtable' id='structures'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
 		<th>XMETDBID</th>
-		<th>Substrate</th>
-		<th>Product</th>
 		<th>Experiment</th>
 		<th>Enzyme</th>
 		<th>Last updated</th>

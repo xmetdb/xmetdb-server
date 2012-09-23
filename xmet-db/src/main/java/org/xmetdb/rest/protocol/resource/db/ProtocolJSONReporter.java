@@ -47,7 +47,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 		
 	}
 	
-	private static String format = "\n{\n\"uri\":\"%s\",\n\"identifier\":\"%s\",\n\"title\":\"%s\",\n\"enzyme\":\"%s\",\n\"updated\":\"%s\",\n\"owner\":{\"uri\":\"%s\",\"username\":\"%s\"}\n}";
+	private static String format = "\n{\n\"uri\":\"%s\",\n\"identifier\":\"%s\",\n\"title\":\"%s\",\n\"enzyme\":\"%s\",\n\"updated\":\"%s\",\n\"owner\":{\"uri\":\"%s\",\"username\":\"%s\"},\n\"substrate\":{\"uri\":\"%s\"},\n\"product\":{\"uri\":\"%s\"}\n}";
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
 		try {
@@ -68,7 +68,9 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					item.getEndpoint(),
 					item.getTimeModified(),
 					item.getOwner().getResourceURL(),
-					item.getOwner().getUserName()
+					item.getOwner().getUserName(),
+					"http://localhost:8080/ambit2/compound/1/conformer/1",
+					"http://localhost:8080/ambit2/compound/395/conformer/395"
 					));
 			comma = ",";
 		} catch (Exception x) {
