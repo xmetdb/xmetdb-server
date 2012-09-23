@@ -19,7 +19,7 @@ public class DBAttachment extends Document {
 		data_training {
 			@Override
 			public String toString() {
-				return "Training dataset";
+				return "Substrate";
 			}
 			@Override
 			public String getDescription() {
@@ -29,7 +29,7 @@ public class DBAttachment extends Document {
 		data_validation {
 			@Override
 			public String toString() {
-				return "Validation dataset";
+				return "Product";
 			}
 			@Override
 			public String getDescription() {

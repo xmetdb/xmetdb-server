@@ -39,7 +39,7 @@ public class ReadAttachment extends AbstractQuery<DBProtocol, DBAttachment, EQCo
 	protected static String sql = 
 		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,id_srcdataset,published_status,title FROM protocol\n" +
 		"join attachments a using(idprotocol,version)\n" +
-		"left join `ambit2-qmrf`.src_dataset a1 using(name) where %s ";
+		"left join `ambit2-xmetdb`.src_dataset a1 using(name) where %s ";
 	protected static String where_protocol = "protocol.qmrf_number=?";
 	protected static String where_attachment = "idattachment=?";
 	protected static String where_datasetname = "a.name=?";
@@ -47,9 +47,9 @@ public class ReadAttachment extends AbstractQuery<DBProtocol, DBAttachment, EQCo
 	
 	/**
 	 * get datasets by structure
-SELECT * FROM attachments a, `ambit2-qmrf`.src_dataset d
-join `ambit2-qmrf`.struc_dataset using(id_srcdataset)
-join `ambit2-qmrf`.structure using(idstructure)
+SELECT * FROM attachments a, `ambit2-xmetdb`.src_dataset d
+join `ambit2-xmetdb`.struc_dataset using(id_srcdataset)
+join `ambit2-xmmetdb`.structure using(idstructure)
 where a.name=d.name
 and idchemical=282
 	 */
