@@ -13,11 +13,8 @@
 		<div>
 		<table class='compoundtable' id='structures'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
-		<th>XMETDBID</th>
-		<th>Experiment</th>
-		<th>Enzyme</th>
-		<th>Last updated</th>
-		<th>Owner</th>
+		<th>Structure</th>
+		<th>Name</th>
 		</thead>
 		<tbody></tbody>
 		</table>
