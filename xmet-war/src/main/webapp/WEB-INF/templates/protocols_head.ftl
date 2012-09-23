@@ -1,6 +1,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#protocols').dataTable( {
+		"sAjaxDataProp" : "observations",
 		"bProcessing": true,
 		"bServerSide": false,
 		"sAjaxSource": "/xmetdb/protocol?media=application/json",

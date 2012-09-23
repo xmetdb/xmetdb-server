@@ -42,7 +42,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 	@Override
 	public void header(Writer output, IQueryRetrieval<DBProtocol> query) {
 		try {
-			output.write("{\"aaData\": [\n");
+			output.write("{\"observations\": [\n");
 		} catch (Exception x) {}
 		
 	}
