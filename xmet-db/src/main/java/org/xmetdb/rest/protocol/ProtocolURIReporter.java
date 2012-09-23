@@ -2,13 +2,13 @@ package org.xmetdb.rest.protocol;
 
 import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.c.reporters.CatalogURIReporter;
+import net.toxbank.client.resource.Protocol;
 
 import org.restlet.Request;
-import org.restlet.data.Protocol;
 import org.restlet.data.Reference;
 import org.xmetdb.xmet.client.Resources;
 
-public class ProtocolURIReporter extends CatalogURIReporter<Protocol> {
+public class ProtocolURIReporter<P extends Protocol> extends CatalogURIReporter<P> {
 	/**
 	 * 
 	 */
@@ -26,11 +26,11 @@ public class ProtocolURIReporter extends CatalogURIReporter<Protocol> {
 		super();
 	}		
 	@Override
-	public String getURI(String ref, Protocol item) {
-		return String.format("%s%s/%s",ref,Resources.protocol,item.toString());
+	public String getURI(String ref, P item) {
+		return String.format("%s%s/%s",ref,Resources.protocol,item.getIdentifier());
 	}
 	@Override
-	public String getURI(Protocol item) {
+	public String getURI(P item) {
 		String ref = baseReference==null?"":baseReference.toString();
 		if (ref.endsWith("/")) ref = ref.substring(0,ref.length()-1);	
 		return getURI(ref,item);
