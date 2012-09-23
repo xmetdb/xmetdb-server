@@ -55,10 +55,10 @@ public class DBAttachment extends Document {
 	
 	protected int idquerydatabase= -1;
 	protected DBProtocol protocol = null;
-	public DBProtocol getQMRFDocument() {
+	public DBProtocol getProtocol() {
 		return protocol;
 	}
-	public void setQMRFDocument(DBProtocol protocol) {
+	public void setProtocol(DBProtocol protocol) {
 		this.protocol = protocol;
 	}
 	public int getIdquerydatabase() {

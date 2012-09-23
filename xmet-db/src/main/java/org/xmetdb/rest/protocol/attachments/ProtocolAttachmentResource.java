@@ -9,6 +9,7 @@ import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.c.StringConvertor;
+import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.c.task.TaskCreator;
@@ -50,6 +51,7 @@ public class ProtocolAttachmentResource extends XmetdbQueryResource<IQueryRetrie
 	@Override
 	protected void customizeVariants(MediaType[] mimeTypes) {
 		super.customizeVariants(mimeTypes);
+		getVariants().add(new Variant(MediaType.APPLICATION_JSON));
 		getVariants().add(new Variant(MediaType.APPLICATION_POWERPOINT));
 		getVariants().add(new Variant(MediaType.APPLICATION_MSOFFICE_DOCX));
 		getVariants().add(new Variant(MediaType.APPLICATION_MSOFFICE_PPTX));
@@ -72,12 +74,17 @@ public class ProtocolAttachmentResource extends XmetdbQueryResource<IQueryRetrie
 	public IProcessor<IQueryRetrieval<DBAttachment>, Representation> createConvertor(
 			Variant variant) throws AmbitException, ResourceException {
 		String filenamePrefix = getRequest().getResourceRef().getPath();
-		if (variant.getMediaType().equals(MediaType.TEXT_URI_LIST)) 
+		if (variant.getMediaType().equals(MediaType.TEXT_URI_LIST)) { 
 			return new StringConvertor(	
 					new AttachmentURIReporter<IQueryRetrieval<DBAttachment>>(getRequest(),
 							protocol==null?"":String.format("%s/%s",Resources.protocol ,protocol.getIdentifier()))
 					,MediaType.TEXT_URI_LIST,filenamePrefix);
-		if (variant.getMediaType().equals(MediaType.TEXT_HTML)) 
+		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+				String queryService = ((TaskApplication) getApplication())
+						.getProperty(Resources.Config.xmet_ambit_service.name());
+				AttachmentJSONReporter r = new AttachmentJSONReporter(queryService,getRequest());
+				return new StringConvertor(	r,MediaType.APPLICATION_JSON,filenamePrefix);		
+		} else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) 
 			return new StringConvertor(createHTMLReporter(headless),MediaType.TEXT_HTML,filenamePrefix);	
 			else	
 				return new DownloadDocumentConvertor(createFileReporter(),null,filenamePrefix);

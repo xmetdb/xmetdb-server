@@ -144,7 +144,7 @@ and idchemical=282
 					protocol.setIdentifier(rs.getString("qmrf_number"));
 					Timestamp ts = rs.getTimestamp(ReadProtocol.fields.created.name());
 					protocol.setSubmissionDate(ts.getTime());
-					attachment.setQMRFDocument(protocol);
+					attachment.setProtocol(protocol);
 				} catch (Exception x) {
 					x.printStackTrace();
 					
