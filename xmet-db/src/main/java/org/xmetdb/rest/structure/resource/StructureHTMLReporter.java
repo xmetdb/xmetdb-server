@@ -64,7 +64,7 @@ public class StructureHTMLReporter extends XmetdbCatalogHTMLReporter<Structure> 
 
 		
 		String protocolURI = String.format(
-				"<a href=\"%s%s?structure=%s&headless=true&details=false&media=text/html\" title=\"QMRF documents\">QMRF documents</a>",
+				"<a href=\"%s%s?structure=%s&headless=true&details=false&media=text/html\" title=\"XMETDB observations\">XMETDB observations</a>",
 				getRequest().getRootRef(),Resources.protocol,Reference.encode(item.getResourceIdentifier().toString()));
 		
 		String moleculeURI = String.format(
@@ -111,7 +111,7 @@ public class StructureHTMLReporter extends XmetdbCatalogHTMLReporter<Structure> 
 							getRequest().getRootRef(),Resources.chemical,item.getIdchemical(),attachment.getID());
 			String uri = String.format(
 					"<a href=\"%s\" title=\"%s\">%s&nbsp;%s</a>",
-					datasetURI,attachment.getTitle(),attachment.getQMRFDocument().getVisibleIdentifier(),attachment.getType().toString());
+					datasetURI,attachment.getTitle(),attachment.getProtocol().getVisibleIdentifier(),attachment.getType().toString());
 			return String.format("<li>%s<span></span></li>\n",uri);
 		} else return "";
 		
@@ -237,8 +237,8 @@ class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 		
 		searchTitle = attachment==null?getSearchTitle():
 				String.format("<a href='%s%s/%s' title='XMETDB document'>%s</a>&nbsp;<a href='%s%s/%s%s/A%d' title='%s'>%s</a>",
-							baseReference,Resources.protocol,attachment.getQMRFDocument().getIdentifier(),attachment.getQMRFDocument().getVisibleIdentifier(),
-							baseReference,Resources.protocol,attachment.getQMRFDocument().getIdentifier(),Resources.attachment,attachment.getID(),
+							baseReference,Resources.protocol,attachment.getProtocol().getIdentifier(),attachment.getProtocol().getVisibleIdentifier(),
+							baseReference,Resources.protocol,attachment.getProtocol().getIdentifier(),Resources.attachment,attachment.getID(),
 							attachment.getDescription(),attachment.getType().toString());
 		/*already set by the resource
 		searchQuery = form.getFirstValue(QueryResource.search_param);

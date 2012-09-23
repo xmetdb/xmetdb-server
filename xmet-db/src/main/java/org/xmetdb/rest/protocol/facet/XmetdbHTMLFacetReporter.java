@@ -34,10 +34,10 @@ public class XmetdbHTMLFacetReporter extends XmetdbHTMLReporter<EndpointProtocol
 	protected void printTableHeader(Writer w) throws Exception {
 		try {
 			w.write(String.format("<div class='ui-widget' style='margin-top:18px'><p><strong>%s<strong><span style='float:right;'><a href='%s%s'>%s</a></span></p></div>",
-					"QMRF documents by endpoints",
+					"XMETDB observations by enzymes",
 					uriReporter.getBaseReference(),
 					EndpointsResource.resource,
-					"Endpoints catalog"
+					"Enzymes catalog"
 					));
 			//w.write("<div class='protocol'>");
 			//w.write("<div class='tabs'>");
