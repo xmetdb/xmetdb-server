@@ -42,7 +42,8 @@ function defineTable(url) {
 		        "data": aoData,
 		        "dataType": "jsonp", 
 		        "contentType" : "application/x-javascript",
-		        "success": fnCallback
+		        "success": fnCallback,
+		        "cache": false
 		      } );
 		}     
 	} );
