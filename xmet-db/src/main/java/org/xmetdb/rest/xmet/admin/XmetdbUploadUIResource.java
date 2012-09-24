@@ -26,6 +26,7 @@ import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.CatalogFTLResource;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.FreeMarkerApplicaton;
 import org.xmetdb.rest.db.exceptions.InvalidXmetdbNumberException;
@@ -37,7 +38,7 @@ import org.xmetdb.xmet.client.Resources;
 /**
  * @TODO Rewrite to use the .ftl template only 
  */
-public class XmetdbUploadUIResource extends CatalogResource<DBProtocol> {
+public class XmetdbUploadUIResource extends CatalogFTLResource<DBProtocol> {
 
 	/**
 	 * 
@@ -46,23 +47,17 @@ public class XmetdbUploadUIResource extends CatalogResource<DBProtocol> {
 	protected List<DBProtocol> items = new ArrayList<DBProtocol>();
 	protected DBProtocol protocol = null;
 	protected update_mode mode = update_mode.newdocument;
-	protected boolean htmlbyTemplate = true;
 
+	@Override
 	public String getTemplateName() {
 		return "submit_body.ftl";
 	}
 
-	public boolean isHtmlbyTemplate() {
-		return htmlbyTemplate;
-	}
-
-	public void setHtmlbyTemplate(boolean htmlbyTemplate) {
-		this.htmlbyTemplate = htmlbyTemplate;
-	}
 
 	
 	public XmetdbUploadUIResource() {
 		super();
+		htmlbyTemplate = true;
 	}
 	@Override
 	protected Iterator<DBProtocol> createQuery(Context context,
@@ -132,46 +127,5 @@ public class XmetdbUploadUIResource extends CatalogResource<DBProtocol> {
 		return new XmetdbHTMLBeauty(Resources.editor);
 	}
 	
-	@Override
-	protected Representation get(Variant variant) throws ResourceException {
-		if (htmlbyTemplate && MediaType.TEXT_HTML.equals(variant.getMediaType())) {
-			CookieSetting cS = new CookieSetting(0, "subjectid", getToken());
-			cS.setPath("/");
-	        this.getResponse().getCookieSettings().add(cS);
-	        return getHTMLByTemplate(variant);
-    	} else				
-    		return super.get(variant);
-	}
-	protected Representation getHTMLByTemplate(Variant variant) throws ResourceException {
-		//	if (getRequest().getResourceRef().toString().equals(String.format("%s/",getRequest().getRootRef()))) {
 
-		        Map<String, Object> map = new HashMap<String, Object>();
-		        if (getClientInfo().getUser()!=null) 
-		        	map.put("username", getClientInfo().getUser().getIdentifier());
-		        map.put("creator","IdeaConsult Ltd.");
-		        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
-		        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
-		        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
-		        map.put("xmet_root",getRequest().getRootRef().toString());
-		        getRequest().getResourceRef().addQueryParameter("media", Reference.encode(MediaType.APPLICATION_JSON.toString()));
-		        map.put("xmet_request",getRequest().getResourceRef().toString());
-		        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
-		        return toRepresentation(map, getTemplateName(), MediaType.TEXT_PLAIN);
-		//	} else {
-				//if no slash, all the styles etc. paths are broken...
-			//	redirectSeeOther(String.format("%s/",getRequest().getRootRef()));
-				//return null;
-		//	}
-		}
-		
-
-	    protected Representation toRepresentation(Map<String, Object> map,
-	            String templateName, MediaType mediaType) {
-	        
-	        return new TemplateRepresentation(
-	        		templateName,
-	        		((FreeMarkerApplicaton)getApplication()).getConfiguration(),
-	        		map,
-	        		MediaType.TEXT_HTML);
-	    }
 }
