@@ -12,6 +12,7 @@
 <script type='text/javascript' src='./jquery/jquery-1.7.1.min.js'></script>
 <script type='text/javascript' src='./jquery/jquery-ui-1.8.18.custom.min.js'></script>
 <script type='text/javascript' charset='utf8' src='./jquery/jquery.dataTables-1.9.0.min.js'></script>
+<script type='text/javascript' src='./scripts/xmetdb.js'></script>
 
 <link rel="meta" type="application/rdf+xml" title="Xenobiotics Metabolism Database" href="./protocol?media=application%252Frdf%252Bxml"/>
 <link rel="meta" type="text/n3" title="Xenobiotics Metabolism Database" href="./protocol?media=application%252Frdf%252Bxml"/>
