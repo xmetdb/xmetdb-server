@@ -8,10 +8,10 @@
 	<#include "/banner.ftl">
 	<#include "/menu.ftl">
 
-	<div class='w_content ui-widget ' style='margin-top: 25px; padding: 0 .1em;'>
+	<div class='w_content ui-widget ' style='margin-top: 25px; margin-left: 10px;  margin-right: 10px; padding: 0 .1em;'>
 	<div class='ui-widget-header ui-corner-top' style='margin-top: 0px'><p>Search XMETDB</p></div>
 	<div class='ui-widget-content ui-corner-bottom' style='margin-top: 0px;' />
-			<p class='w_p' style='margin-top: 0px;' >						
+			<p class='w_p' style='margin-top: 0px; ' >						
 	<form method="GET" action="/xmetdb/chemical" name="form">		
 	<table id="xmet_obs" style='margin-top: 0px;' >
 	<tr>

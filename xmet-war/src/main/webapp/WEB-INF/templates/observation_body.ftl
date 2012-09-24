@@ -8,7 +8,7 @@
 	<#include "/banner.ftl">
 	<#include "/menu.ftl">
 
-	<div class='w_content ui-widget ' style='margin-top: 25px; padding: 0 .1em;'>
+	<div class='w_content ui-widget ' style='margin-top: 25px; margin-left: 0px;  margin-right: 10px; padding: 0 .1em;'>
 	<div class='ui-widget-header ui-corner-top'><p>&nbsp;Observation ID: <span id="xmet_id"></span></p></div>
 	<div class='ui-widget-content ui-corner-bottom' style='margin-top: 0px;' />
 			<p class='w_p'>						
