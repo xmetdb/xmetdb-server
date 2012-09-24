@@ -88,7 +88,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 		
 	}
 	
-	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"enzyme\": \"%s\",\n\t\"updated\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\":\"%s\",\"username\": \"%s\"\n\t}";
+	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"description\": \"%s\",\n\t\"enzyme\": {\n\t\t\"code\" :null, \"name\" :null\n\t},\n\t\"updated\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\" :\"%s\",\n\t\t\"username\": \"%s\"\n\t}";
 	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": \"%s/dataset/%d\", \"structure\": null}\n\t}";
 		
 	@Override
@@ -109,7 +109,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					uri,
 					item.getVisibleIdentifier(),
 					item.getTitle(),
-					item.getEndpoint(),
+					item.getAbstract(),
 					dateFormat.format(new Date(item.getTimeModified())),
 					item.getOwner().getResourceURL(),
 					item.getOwner().getUserName()
