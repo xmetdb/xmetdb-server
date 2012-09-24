@@ -9,6 +9,7 @@ import net.idea.restnet.c.reporters.CatalogHTMLReporter;
 import org.restlet.Request;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 
+@Deprecated
 public class XmetdbCatalogHTMLReporter<T> extends CatalogHTMLReporter<T> {
 
 	/**

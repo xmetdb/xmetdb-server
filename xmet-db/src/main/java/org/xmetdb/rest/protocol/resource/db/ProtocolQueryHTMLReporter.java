@@ -26,7 +26,7 @@ import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.resource.UserURIReporter;
 import org.xmetdb.xmet.client.Resources;
 
-
+@Deprecated
 public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQueryRetrieval<DBProtocol>> {
 	/**
 	 * 

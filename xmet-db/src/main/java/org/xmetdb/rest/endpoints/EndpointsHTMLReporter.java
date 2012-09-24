@@ -28,6 +28,7 @@ import ambit2.base.data.Property;
  * @author nina
  *
  */
+@Deprecated
 public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLReporter<D, IQueryRetrieval<D>> {
 
 	/**

@@ -15,6 +15,7 @@ import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.alerts.db.DBAlert;
 import org.xmetdb.xmet.client.Resources;
 
+@Deprecated
 public class AlertHTMLReporter extends XmetdbHTMLReporter<DBAlert, IQueryRetrieval<DBAlert>> {
 	/**
 	 * 

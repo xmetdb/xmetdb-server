@@ -11,6 +11,7 @@ import org.restlet.data.Reference;
 import org.xmetdb.rest.xmet.admin.XmetdbCatalogHTMLReporter;
 import org.xmetdb.xmet.client.Resources;
 
+@Deprecated
 public class MoleculeHTMLReporter extends XmetdbCatalogHTMLReporter<Structure> {
 
 	

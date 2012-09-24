@@ -18,6 +18,7 @@ import org.xmetdb.rest.structure.resource.StructureResource.SearchMode;
 import org.xmetdb.rest.xmet.admin.XmetdbCatalogHTMLReporter;
 import org.xmetdb.xmet.client.Resources;
 
+@Deprecated
 public class StructureHTMLReporter extends XmetdbCatalogHTMLReporter<Structure> {
 
 	/**

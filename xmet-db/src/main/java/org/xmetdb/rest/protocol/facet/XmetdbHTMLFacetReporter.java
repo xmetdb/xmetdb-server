@@ -14,6 +14,7 @@ import org.xmetdb.rest.XmetdbHTMLReporter;
 import org.xmetdb.rest.endpoints.EndpointsResource;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 
+@Deprecated
 public class XmetdbHTMLFacetReporter extends XmetdbHTMLReporter<EndpointProtocolFacet,IQueryRetrieval<EndpointProtocolFacet>> {
 	protected String endpoint = null;
 	public XmetdbHTMLFacetReporter(Request request, boolean collapsed,ResourceDoc doc, HTMLBeauty htmlBeauty) {

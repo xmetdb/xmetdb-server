@@ -18,7 +18,7 @@ import org.xmetdb.rest.groups.IDBGroup;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.user.DBUser;
 
-
+@Deprecated
 public abstract class GroupHTMLReporter extends XmetdbHTMLReporter<IDBGroup, IQueryRetrieval<IDBGroup>> {
 	/**
 	 * 

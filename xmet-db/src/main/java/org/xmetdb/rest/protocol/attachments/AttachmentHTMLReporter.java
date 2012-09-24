@@ -15,6 +15,7 @@ import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.xmet.client.Resources;
 
+@Deprecated
 public class AttachmentHTMLReporter extends XmetdbHTMLReporter<DBAttachment, IQueryRetrieval<DBAttachment>> {
 
 	/**
