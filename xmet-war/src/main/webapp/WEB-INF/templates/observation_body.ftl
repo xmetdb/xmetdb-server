@@ -16,7 +16,10 @@
 	<tr>
 	<th align="right" height="150px">Substrate:</th><td colspan="2"><span id="xmet_substrate"></span></td>
 	<!-- Export & edit will be links -->
-	<td align="right" valign="top" title="Not working yet!!!"><u>Export</u><p><u>Edit</u></td>
+	<td align="right" valign="top" title="Not working yet!!!">
+		<a href="${xmet_request}">Export</a><p>
+		<a href="/xmetdb/editor/">Edit</a>
+	</td>
 	</tr>
 	<tr>
 	<th align="right">Atom uncertainty:</th><td colspan="3">Certain/Uncertain (TODO)</td>
