@@ -5,7 +5,7 @@ $(document).ready(function() {
 		"bProcessing": true,
 		"bServerSide": false,
 		"bStateSave": true,
-		"sAjaxSource": "/xmetdb/protocol?media=application/json",
+		"sAjaxSource": "${xmet_request}",
 		"aoColumns": [
 				{ "mDataProp": "identifier" , "asSorting": [ "asc", "desc" ],
  			      "fnRender": function ( o, val ) {
