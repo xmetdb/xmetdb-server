@@ -147,13 +147,6 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				};
 		} else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
 			return new OutputWriterConvertor(createHTMLReporter(headless),MediaType.TEXT_HTML);
-		} else if (variant.getMediaType().equals(MediaType.APPLICATION_WORD)) {
-			XmetdbChaptersHTMLReporter rep = new XmetdbChaptersHTMLReporter(getRequest(),false,false,structure==null,details);
-			rep.setHeadless(true);
-			rep.setHtmlBeauty(getHTMLBeauty());
-			rep.setDtdresolver(((TaskApplication)getApplication()).getResolver());
-			rep.setPlainHtmlHeader(true);
-			return new OutputWriterConvertor(rep,MediaType.APPLICATION_WORD);
 		} else if (singleItem && (structure==null)) {
 			
 			Object fileNamePrefix = getRequest().getAttributes().get(FileResource.resourceKey);

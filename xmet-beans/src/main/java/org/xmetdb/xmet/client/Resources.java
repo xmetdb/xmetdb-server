@@ -18,7 +18,6 @@ public class Resources {
 	public static final String versions = "/versions";
 	public static final String previous = "/previous";
 	public static final String authors = "/authors";
-	public static final String chapter = "/chapter";
 	public static final String document = "/document";
 	public static final String attachment = "/attachment";
 	public static final String editor = "/editor";
