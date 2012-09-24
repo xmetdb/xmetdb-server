@@ -7,11 +7,11 @@
 	<#include "/banner.ftl">
 	<div class='w_left'>
 		<ul id='navmenu'>
-		<li><a class='selectable enter_qmrf' title='Click here to search the Xenobiotics Metabolism Database' href='./protocol'>
-			<img class='w_logo_inventory' src='./images/logo_menu.png'>
+		<li><a class='selectable enter_qmrf' title='Click here to search the Xenobiotics Metabolism Database' href='/xmetdb/protocol'>
+			<img class='w_logo_inventory' src='/xmetdb/images/logo_menu.png'>
 			Search
 		</a></li>
-		<li><a class='selectable' title='Click here to submit an observation' href='./submit}'>Submit</a></li>
+		<li><a class='selectable' title='Click here to submit an observation' href='/xmetdb/submit}'>Submit</a></li>
 		<li><a class='selectable' title='About XMETDB' href='${xmet_about}'>About</a></li>
 		<li><a class='selectable' title='Click here to read the XMETDB guide' href='${xmet_guide}'>Guide</a></li>
 		</ul>
@@ -46,7 +46,7 @@
 		<p class='w_p'>
 
 		<div >
-		   <form method='GET' name='form' action='./protocol'>
+		   <form method='GET' name='form' action='/xmetdb/protocol'>
 		   <input type='hidden' name='page' value=''>
 		   <input type='hidden' name='type' value='smiles'>
 		   <table width='20%'>

@@ -7,8 +7,8 @@
 	<#include "/banner.ftl">
 	<div class='w_left'>
 		<ul id='navmenu'>
-		<li><a class='selectable enter_qmrf' title='Click here to search the Xenobiotics Metabolism Database' href='./protocol'>
-			<img class='w_logo_inventory' src='./images/logo_menu.png'>
+		<li><a class='selectable enter_qmrf' title='Click here to search the Xenobiotics Metabolism Database' href='/xmetdb/protocol'>
+			<img class='w_logo_inventory' src='/xmetdb/images/logo_menu.png'>
 			Access
 		</a></li>
 		<li><a class='selectable' title='Click here to access the reviewers template' href='${xmet_template}'>Reviewers Template</a></li>

@@ -85,7 +85,16 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	protected boolean details = true;
 	protected Object structure;
 
+	public ProtocolDBResource() {
+		super();
+		setHtmlbyTemplate(true);
+		
+	}
 	
+	@Override
+	public String getTemplateName() {
+		return singleItem?"observation_body.ftl":"protocols_body.ftl";
+	}
 	
 	@Override
 	protected void doInit() throws ResourceException {

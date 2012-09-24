@@ -273,7 +273,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 	}
 	public XmetdbHTMLBeauty(String searchURI,boolean loadTabs) {
 		super(searchURI==null?Resources.protocol:searchURI);
-		setSearchTitle("XMETDB metadata search");
+		setSearchTitle("Observations");
 		setLoadTabs(loadTabs);
 	};
 
@@ -461,7 +461,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 			
 			//menu
 			String[][] menu = {
-					{ Resources.protocol, "XMETDB metadatat search", "10", "Search all published XMETDB documents" },
+					{ Resources.protocol, "Observations", "10", "Search all published XMETDB documents" },
 					{ Resources.chemical, "Structures search", "10", "Search chemical structures by identifiers, similarity or substructure" },
 					{ Resources.endpoint, "Enzymes", null, "XMETDB documents by enzymes" },
 			};
@@ -917,7 +917,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					content.append(_tdEnd);
 					content.append(_trEnd); 
 					content.append(_trStart);						
-					content.append("<th width='15%%'>QMRF Number</th>");
+					content.append("<th width='15%%'>XMETDB identifier</th>");
 					content.append("<th>");
 					content.append(String.format("Q%s-%s-%s",new SimpleDateFormat("yy").format(new Date()),
 								"endpoint","number of QMRF documents published in the specified year"));

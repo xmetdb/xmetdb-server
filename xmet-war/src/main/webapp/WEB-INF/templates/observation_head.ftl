@@ -5,7 +5,8 @@ var observation;
 $(document).ready(function() {
 				      $.ajax({
 				          dataType: "json",
-				          url: "/xmetdb/protocol/XMETDB2?media=application%2Fjson",
+				          url: "${xmet_request}",
+				        	  //"/xmetdb/protocol/XMETDB2?media=application%2Fjson",
 				          success: function(data, status, xhr) {
 				        	  observation = data.observations[0];
 				        	  $('span#xmet_id').replaceWith("<a href='"+ observation["uri"] + "'>" + observation["identifier"] + "</a>");

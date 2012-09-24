@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Locale;
 
 import net.idea.modbcum.i.IQueryRetrieval;
+import net.idea.modbcum.i.exceptions.AmbitException;
+import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.restnet.c.TaskApplication;
@@ -22,6 +24,7 @@ import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
@@ -48,6 +51,12 @@ public class StructureResource extends CatalogResource<Structure> {
 
 	public enum SearchMode {
 		auto, similarity, smarts
+	}
+	@Override
+	protected void doInit() throws ResourceException {
+		// TODO Auto-generated method stub
+		super.doInit();
+		getVariants().add(new Variant(MediaType.APPLICATION_JSON));
 	}
 	
 	
@@ -192,6 +201,7 @@ public class StructureResource extends CatalogResource<Structure> {
 		reporter.setHeadless(headless);
 		return reporter;
 	}
+	
 
 	@Override
 	protected Representation post(Representation entity, Variant variant)
@@ -304,6 +314,21 @@ public class StructureResource extends CatalogResource<Structure> {
 		
 	}
 	
+	
+	public IProcessor<Iterator<Structure>, Representation> createJSONConvertor(
+			Variant variant,String filenamePrefix) throws AmbitException, ResourceException {
+		throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+	}	
+	
+	@Override
+	public IProcessor<Iterator<Structure>, Representation> createConvertor(
+			Variant variant) throws AmbitException, ResourceException {
+		if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)){
+			return createJSONConvertor(variant,getRequest().getResourceRef().getPath());
+		} else return super.createConvertor(variant);	
+	}		
+	
+	
 }
 
 class PropertiesIterator extends CSVFeatureValuesIterator<Structure> {
@@ -387,6 +412,5 @@ class PropertiesIterator extends CSVFeatureValuesIterator<Structure> {
 
 		return r;
 	}
-	
-	
+
 };

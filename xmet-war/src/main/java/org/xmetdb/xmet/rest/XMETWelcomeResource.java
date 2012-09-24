@@ -20,25 +20,26 @@ import org.xmetdb.xmet.client.Resources;
  *
  */
 public class XMETWelcomeResource extends ServerResource {
-	protected XmetdbHTMLBeauty htmlBeauty;
 
+	
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
-		if (getRequest().getResourceRef().toString().equals(String.format("%s/",getRequest().getRootRef()))) {
+		//if (getRequest().getResourceRef().toString().equals(String.format("%s/",getRequest().getRootRef()))) {
 	        Map<String, Object> map = new HashMap<String, Object>();
 	        if (getClientInfo().getUser()!=null) 
 	        	map.put("username", getClientInfo().getUser().getIdentifier());
 	        map.put("creator","IdeaConsult Ltd.");
+	        map.put("xmet_root",getRequest().getRootRef().toString());
 	        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
 	        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
 	        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
 	        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
-	        return toRepresentation(map, "body-search.ftl", MediaType.TEXT_PLAIN);
-		} else {
+	        return toRepresentation(map, "/search_body.ftl", MediaType.TEXT_PLAIN);
+		//} else {
 			//if no slash, all the styles etc. paths are broken...
-			redirectSeeOther(String.format("%s/",getRequest().getRootRef()));
-			return null;
-		}
+			//redirectSeeOther(String.format("%s/",getRequest().getRootRef()));
+			//return null;
+		//}
 	}
 	
 
@@ -61,12 +62,11 @@ public class XMETWelcomeResource extends ServerResource {
 	}
 	
 	public XmetdbHTMLBeauty getHtmlBeauty() {
-		if (htmlBeauty==null) htmlBeauty = createHtmlBeauty();
-		return htmlBeauty;
+		return null;
 	}
 
 	public void setHtmlBeauty(XmetdbHTMLBeauty htmlBeauty) {
-		this.htmlBeauty = htmlBeauty;
+
 	}
 
 }
