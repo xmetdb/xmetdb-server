@@ -65,7 +65,7 @@ public class ProtocolRDFReporter<Q extends IQueryRetrieval<DBProtocol>> extends 
 		getProcessors().add(authersReader);
 		*/
 		IQueryRetrieval<DBAttachment> queryP = new ReadAttachment(null,null); 
-		MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition> authersReader = new MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition>(queryP) {
+		MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition> attachmentReader = new MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition>(queryP) {
 			@Override
 			protected DBProtocol processDetail(DBProtocol target, DBAttachment detail)
 					throws Exception {
@@ -75,7 +75,7 @@ public class ProtocolRDFReporter<Q extends IQueryRetrieval<DBProtocol>> extends 
 				return target;
 			}
 		};
-		getProcessors().add(authersReader);		
+		getProcessors().add(attachmentReader);		
 		processors.add(new DefaultAmbitProcessor<DBProtocol,DBProtocol>() {
 			@Override
 			public DBProtocol process(DBProtocol target) throws AmbitException {

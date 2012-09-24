@@ -250,7 +250,7 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 				MediaType.APPLICATION_PDF,
 				MediaType.APPLICATION_EXCEL,
 				MediaType.APPLICATION_RTF,
-				MediaType.APPLICATION_XML,
+				MediaType.APPLICATION_JSON,
 				null
 				};
 		
@@ -258,7 +258,7 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 				"pdf.png",
 				"excel.png",
 				"word.png",
-				"xml.png",
+				"json.png",
 				"qmrf/attachments.png"
 		};	
 		
@@ -266,7 +266,7 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 				"Download as PDF",
 				"Download as MS Excel",
 				"Download as Rich Text Format (RTF)",
-				"Download as QMRF XML",
+				"Download as JSON",
 				"Browse attachments"
 		};			
 		for (int i=0;i<mimes.length-1;i++) {

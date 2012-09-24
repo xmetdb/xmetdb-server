@@ -116,7 +116,9 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 						,MediaType.TEXT_URI_LIST,filenamePrefix);
 				
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
-			ProtocolJSONReporter r = new ProtocolJSONReporter(getRequest());
+			String queryService = ((TaskApplication) getApplication())
+									.getProperty(Resources.Config.xmet_ambit_service.name());
+			ProtocolJSONReporter r = new ProtocolJSONReporter(getRequest(),queryService);
 			return new StringConvertor(	r,MediaType.APPLICATION_JSON,filenamePrefix);
 							
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
