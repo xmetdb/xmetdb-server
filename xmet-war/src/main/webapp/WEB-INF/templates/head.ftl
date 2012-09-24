@@ -18,3 +18,14 @@
 <link rel="primarytopic" type="application/rdf+xml" href="./protocol?media=application%252Frdf%252Bxml"/>
 <link rel="primarytopic" type="text/n3" href="./protocol?media=application/rdf+xml"/>
 <title>Xenobiotics Metabolism Database</title>
+
+<script type='text/javascript'>
+  	$(document).ready(function() {
+    	$('div#footer-in').mouseenter( function () {
+    		$('div#footer').stop().animate({bottom: '15px'}, 'fast');
+    	});
+    	$('div#footer-out').mouseleave( function () {
+    		$('div#footer').stop().animate({bottom: '-17px'}, 'slow');
+    	});
+    });
+</script>
