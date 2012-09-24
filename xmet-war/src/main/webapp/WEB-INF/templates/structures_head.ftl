@@ -1,29 +1,15 @@
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	var opentox;
-	
   	var url =  "http://localhost:8080/ambit2/dataset/8";
-  	jQuery.ajax({ 
-        type: "GET",
-        async: false,
-        url: url + "?media=application%2Fx-javascript" ,
-        dataType: "jsonp", 
-        contentType : "application/x-javascript",
-        success: function(data) { 
-            defineTable(data);
-        }
-    });
-
+  	defineTable(url);
     	
 
 } );
 
-function defineTable(dataset) {
-	console.log(dataset);
+function defineTable(url) {
+
 	
 	$('#structures').dataTable( {
-		"aaData" : dataset.dataEntry,
 		"bProcessing": true,
 		"bServerSide": false,
 		"aoColumns": [
@@ -46,8 +32,19 @@ function defineTable(dataset) {
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
-		"bSearchable": true
-			
+		"bSearchable": true,
+		"sAjaxSource": url,
+		"sAjaxDataProp" : "dataEntry",
+		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+		      oSettings.jqXHR = $.ajax( {
+		        "type": "GET",
+		        "url": sSource + "?media=application%2Fx-javascript" ,
+		        "data": aoData,
+		        "dataType": "jsonp", 
+		        "contentType" : "application/x-javascript",
+		        "success": fnCallback
+		      } );
+		}     
 	} );
 	
 }
