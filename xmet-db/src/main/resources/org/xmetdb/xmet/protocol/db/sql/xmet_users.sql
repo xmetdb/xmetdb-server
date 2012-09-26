@@ -32,7 +32,7 @@ CREATE TABLE  `user_roles` (
 -- -----------------------------------------------------
 -- Default user
 -- -----------------------------------------------------
-insert into user values("admin",MD5("admin"));
+insert into users values("admin",MD5("admin"));
 insert into roles values("xmetdb_editor");
 insert into roles values("xmetdb_manager");
 insert into roles values ("xmetdb_user");
