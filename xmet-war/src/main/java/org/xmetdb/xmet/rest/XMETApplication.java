@@ -291,7 +291,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	 */
 	protected Restlet createEditorRouter() {
 		Authorizer authz = new SimpleRoleAndMethodAuthorizer(new DBRole(
-				XMETDBRoles.xmetdb_editor.name(), XMETDBRoles.xmetdb_editor.toString()));
+				XMETDBRoles.xmetdb_user.name(), XMETDBRoles.xmetdb_user.toString()));
 		authz.setNext(new XMETEditorRouter(getContext()));
 		
 		return authz;
