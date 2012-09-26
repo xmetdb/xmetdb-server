@@ -35,5 +35,8 @@ CREATE TABLE  `user_roles` (
 insert into user values("admin",MD5("admin"));
 insert into roles values("xmetdb_editor");
 insert into roles values("xmetdb_manager");
-insert into user_roles values("admin","xmetdb_editor")
-insert into user_roles values("admin","xmetdb_manager")
+insert into roles values ("xmetdb_user");
+
+insert into user_roles values("admin","xmetdb_editor");
+insert into user_roles values("admin","xmetdb_manager");
+insert into user_roles values("admin","xmetdb_user");
