@@ -53,15 +53,7 @@
   	    	<type>jar</type>
   	    	<scope>compile</scope>
   	    </dependency>
-  	    <dependency>
-		<groupId>org.xmetdb</groupId>
-  	    	<artifactId>xmet-resource</artifactId>
-  	    	<version>${project.version}</version>
-  	    	<type>jar</type>
-  	    	<scope>compile</scope>
-  	    </dependency>
-    
-    
+   
     	<!-- 
   		<dependency>
 			<groupId>org.freemarker</groupId>
