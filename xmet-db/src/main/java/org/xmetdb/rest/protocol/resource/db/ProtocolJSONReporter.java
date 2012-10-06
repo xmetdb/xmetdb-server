@@ -21,6 +21,7 @@ import org.xmetdb.rest.groups.resource.GroupQueryURIReporter;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.AttachmentURIReporter;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
+import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.resource.UserURIReporter;
@@ -90,6 +91,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 	
 	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"description\": \"%s\",\n\t\"enzyme\": {\n\t\t\"code\" :null, \"name\" :null\n\t},\n\t\"updated\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\" :\"%s\",\n\t\t\"username\": \"%s\"\n\t}";
 	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": \"%s/dataset/%d\", \"structure\": null}\n\t}";
+	private static String emptyAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": null, \"structure\": null}\n\t}";
 		
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
@@ -120,7 +122,13 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 							attachment.getType().toString(),
 							queryService,
 							attachment.getIdquerydatabase()));
-				}			
+				}		
+			else {
+				for (attachment_type at : attachment_type.values()) {
+					getOutput().write(String.format(emptyAttachments,
+							at.toString()));
+				}
+			}
 		//	\"substrate\":{\"uri\":\"%s\"},\n\"product\":{\"uri\":%s%s%s}			
 			getOutput().write("\n}");
 			comma = ",";
