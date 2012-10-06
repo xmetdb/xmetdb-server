@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
@@ -16,7 +17,6 @@ import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
-import net.idea.restnet.c.resource.CatalogResource;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryResource;
 
@@ -30,6 +30,7 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.CatalogFTLResource;
 import org.xmetdb.rest.prediction.DBModel;
 import org.xmetdb.rest.prediction.ReadModel;
 import org.xmetdb.rest.prediction.ReadModelQuery;
@@ -38,7 +39,7 @@ import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.xmet.client.Resources;
 
-public class StructureResource extends CatalogResource<Structure> {
+public class StructureResource extends CatalogFTLResource<Structure> {
 	protected String queryService;
 	protected boolean singleItem = false;
 	protected HTMLBeauty htmlBeauty = null;
@@ -57,8 +58,13 @@ public class StructureResource extends CatalogResource<Structure> {
 		// TODO Auto-generated method stub
 		super.doInit();
 		getVariants().add(new Variant(MediaType.APPLICATION_JSON));
+		htmlbyTemplate = true;
 	}
 	
+	@Override
+	public String getTemplateName() {
+		return "structures_body.ftl";
+	}
 	
 	protected void parseParameters(Context context, Request request,Response response) throws ResourceException {
 		Form form = request.getResourceRef().getQueryAsForm();
@@ -126,11 +132,12 @@ public class StructureResource extends CatalogResource<Structure> {
 		}
 	}
 	*/
-	@Override
-	protected Iterator<Structure> createQuery(Context context, Request request,
-			Response response) throws ResourceException {
+	
+	protected Reference getSearchReference(Context context, Request request,
+						Response response,StructureHTMLBeauty parameters) throws ResourceException {
 		parseParameters(context,request,response);
-		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
+
+		
 		Reference ref = null;
 		try {
 			ref = new Reference(String.format("%s/query/compound/search/all",
@@ -156,21 +163,29 @@ public class StructureResource extends CatalogResource<Structure> {
 			ref.addQueryParameter("page", Integer.toString(parameters.getPage()));
 			if (parameters.getSearchQuery() != null)
 				ref.addQueryParameter(QueryResource.search_param, parameters.getSearchQuery());
-
-			try {
-				List<Structure> records = Structure.retrieveStructures(
-						queryService, ref.toString());
-				return records.iterator();
-			} catch (Exception x) {
-				throw createException(Status.CLIENT_ERROR_BAD_REQUEST, parameters.getSearchQuery(),
-						parameters.option, ref.toString(), x);
-			}
+			return ref;
 		} catch (ResourceException x) {
 			throw x;
 		} catch (Exception x) {
 			throw createException(Status.CLIENT_ERROR_BAD_REQUEST,  parameters.getSearchQuery(),
 					parameters.option, ref.toString(), x);
 		}
+	}
+	@Override
+	protected Iterator<Structure> createQuery(Context context, Request request,
+			Response response) throws ResourceException {
+		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
+		Reference searchReference = getSearchReference(context,request,response,parameters);
+	
+		try {
+			List<Structure> records = Structure.retrieveStructures(
+					queryService, searchReference.toString());
+			return records.iterator();
+		} catch (Exception x) {
+			throw createException(Status.CLIENT_ERROR_BAD_REQUEST, parameters.getSearchQuery(),
+					parameters.option, searchReference.toString(), x);
+		}
+
 	}
 
 	protected ResourceException createException(Status status, String search,
@@ -328,7 +343,13 @@ public class StructureResource extends CatalogResource<Structure> {
 		} else return super.createConvertor(variant);	
 	}		
 	
-	
+	@Override
+	protected void configureTemplateMap(Map<String, Object> map) {
+		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
+		Reference searchReference = getSearchReference(getContext(),getRequest(),getResponse(),parameters);
+		searchReference.addQueryParameter("media", Reference.encode(MediaType.APPLICATION_JSON.toString()));
+		map.put("xmet_structuresearch",searchReference.toString());
+	}
 }
 
 class PropertiesIterator extends CSVFeatureValuesIterator<Structure> {
@@ -412,5 +433,5 @@ class PropertiesIterator extends CSVFeatureValuesIterator<Structure> {
 
 		return r;
 	}
-
+	
 };

@@ -1,6 +1,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
-  	var url =  "http://localhost:8080/ambit2/dataset/8";
+	var url = "${xmet_structuresearch}";
+	console.log(url);
+  		//"http://localhost:8080/ambit2/query/similarity?search=c1ccccc1Cl&threshold=0.5&media=application%2Fx-javascript";
   	defineTable(url);
     	
 
@@ -38,7 +40,7 @@ function defineTable(url) {
 		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 		      oSettings.jqXHR = $.ajax( {
 		        "type": "GET",
-		        "url": sSource + "?media=application%2Fx-javascript" ,
+		        "url": sSource ,
 		        "data": aoData,
 		        "dataType": "jsonp", 
 		        "contentType" : "application/x-javascript",

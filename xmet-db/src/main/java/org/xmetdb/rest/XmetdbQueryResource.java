@@ -19,7 +19,6 @@ import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
-import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
@@ -27,19 +26,6 @@ import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
 
 public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends Serializable> extends QueryResource<Q,T>{
-	protected boolean htmlbyTemplate = false;
-
-	public String getTemplateName() {
-		return null;
-	}
-
-	public boolean isHtmlbyTemplate() {
-		return htmlbyTemplate;
-	}
-
-	public void setHtmlbyTemplate(boolean htmlbyTemplate) {
-		this.htmlbyTemplate = htmlbyTemplate;
-	}
 
 	protected boolean headless = false;
 	protected XmetdbHTMLBeauty htmlBeauty;
@@ -129,8 +115,6 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 	}
 	
 	protected Representation getHTMLByTemplate(Variant variant) throws ResourceException {
-	//	if (getRequest().getResourceRef().toString().equals(String.format("%s/",getRequest().getRootRef()))) {
-
 	        Map<String, Object> map = new HashMap<String, Object>();
 	        if (getClientInfo().getUser()!=null) 
 	        	map.put("username", getClientInfo().getUser().getIdentifier());
@@ -143,22 +127,8 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 	        map.put("xmet_request",getRequest().getResourceRef().toString());
 	        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
 	        return toRepresentation(map, getTemplateName(), MediaType.TEXT_PLAIN);
-	//	} else {
-			//if no slash, all the styles etc. paths are broken...
-		//	redirectSeeOther(String.format("%s/",getRequest().getRootRef()));
-			//return null;
-	//	}
+
 	}
 	
 
-    protected Representation toRepresentation(Map<String, Object> map,
-            String templateName, MediaType mediaType) {
-        
-        return new TemplateRepresentation(
-        		templateName,
-        		((FreeMarkerApplicaton)getApplication()).getConfiguration(),
-        		map,
-        		MediaType.TEXT_HTML);
-    }
-	
 }
