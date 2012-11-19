@@ -85,6 +85,16 @@ public class CallableNotification extends CallableDBUpdateTask<DBUser,Form,Strin
 		return reporter.getURI(user);
 	}
 
+	@Override
+	protected Object executeQuery(IQueryUpdate<? extends Object, DBUser> query)
+			throws Exception {
+		/*TODO
+		Object result = super.executeQuery(query);
+		if (Method.POST.equals(method)) {
+		}
+		*/
+		return null;
+	}
 
 	@Override
 	protected boolean isNewResource() {

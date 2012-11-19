@@ -29,47 +29,80 @@
 
 package org.xmetdb.rest.protocol.db.user.test;
 
+import java.sql.Statement;
+
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.restnet.u.UserCredentials;
+import net.idea.restnet.u.UserRegistration;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
+import org.junit.Test;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.db.CreateUser;
 import org.xmetdb.rest.user.db.DeleteUser;
+import org.xmetdb.rest.user.db.UpdateCredentials;
 import org.xmetdb.rest.user.db.UpdateUser;
 
-public final class User_crud_test  extends CRUDTest<Object,DBUser>  {
+public final class User_crud_test<T extends Object>  extends CRUDTest<T,DBUser>  {
 
-
+	protected final String code = RandomStringUtils.randomAlphanumeric(45);
 	@Override
-	protected IQueryUpdate<Object,DBUser> createQuery() throws Exception {
-		DBUser ref = new DBUser();
-		ref.setFirstname("QWERTY");
-		ref.setLastname("ASDFG");
-		return new CreateUser(ref);
+	protected IQueryUpdate<T,DBUser> createQuery() throws Exception {
+        IDatabaseConnection c = getConnection();	
+        Statement st = c.getConnection().createStatement();
+        st.addBatch("USE aalocal_test;");
+        st.addBatch("DELETE FROM aalocal_test.users;");
+        st.addBatch("DELETE FROM aalocal_test.user_registration;");
+        st.addBatch("DELETE FROM aalocal_test.user_roles;");
+        st.executeBatch();
+		ITable table = 	c.createQueryTable("EXPECTED",String.format("SELECT user_name from aalocal_test.users"));
+		Assert.assertEquals(0,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED",String.format("SELECT user_name from aalocal_test.user_registration"));
+		Assert.assertEquals(0,table.getRowCount());	
+		table = 	c.createQueryTable("EXPECTED",String.format("SELECT role_name from aalocal_test.user_roles"));
+		Assert.assertEquals(0,table.getRowCount());		
+		st.close();
+		c.close();
+		
+		DBUser user = new DBUser();
+		user.setFirstname("QWERTY");
+		user.setLastname("ASDFG");
+		user.setUserName("testuser");
+		user.setCredentials(new UserCredentials(null,"test"));
+		return (IQueryUpdate<T,DBUser>)new CreateUser(user,new UserRegistration(code),"aalocal_test");
 	}
 
 	@Override
-	protected void createVerify(IQueryUpdate<Object,DBUser> query)
+	protected void createVerify(IQueryUpdate<T,DBUser> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT iduser,username,firstname,lastname from user where firstname='QWERTY'"));
-		
+				String.format("SELECT iduser,username,firstname,lastname from user where firstname='QWERTY' and username='testuser'"));
 		Assert.assertEquals(1,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED",
+					"SELECT user_name  from aalocal_test.users where user_name='testuser'");		
+		Assert.assertEquals(1,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED",
+				String.format("SELECT user_name,code,status  from aalocal_test.user_registration where user_name='testuser' and status='commenced' and code='%s'",code));		
+		Assert.assertEquals(1,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED",
+					"SELECT user_name,role_name from aalocal_test.user_roles where user_name='testuser' and role_name='user'");		
+		Assert.assertEquals(1,table.getRowCount());		
 		c.close();
 	}
 
 	@Override
-	protected IQueryUpdate<Object,DBUser> deleteQuery() throws Exception {
+	protected IQueryUpdate<T,DBUser> deleteQuery() throws Exception {
 		DBUser ref = new DBUser(4);
-		return new DeleteUser(ref);
+		return (IQueryUpdate<T,DBUser>)new DeleteUser(ref);
 	}
 
 	@Override
-	protected void deleteVerify(IQueryUpdate<Object,DBUser> query)
+	protected void deleteVerify(IQueryUpdate<T,DBUser> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=4");
@@ -79,20 +112,16 @@ public final class User_crud_test  extends CRUDTest<Object,DBUser>  {
 	}
 
 	@Override
-	public void testUpdate() throws Exception {
-		//TODO Not implemented
-	}
-	@Override
-	protected IQueryUpdate<Object,DBUser> updateQuery() throws Exception {
+	protected IQueryUpdate<T,DBUser> updateQuery() throws Exception {
 		DBUser ref = new DBUser();
 		ref.setLastname("NEW");
-		ref.setID(2);
+		ref.setID(3);
 
-		return new UpdateUser(ref);
+		return (IQueryUpdate<T,DBUser>) new UpdateUser(ref);
 	}
 
 	@Override
-	protected void updateVerify(IQueryUpdate<Object,DBUser> query)
+	protected void updateVerify(IQueryUpdate<T,DBUser> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT lastname FROM user where iduser=3");
@@ -105,13 +134,13 @@ public final class User_crud_test  extends CRUDTest<Object,DBUser>  {
 	}
 
 	@Override
-	protected IQueryUpdate<Object, DBUser> createQueryNew()
+	protected IQueryUpdate<T, DBUser> createQueryNew()
 			throws Exception {
 		return null;
 	}
 
 	@Override
-	protected void createVerifyNew(IQueryUpdate<Object, DBUser> query)
+	protected void createVerifyNew(IQueryUpdate<T, DBUser> query)
 			throws Exception {
 		
 		
@@ -120,4 +149,26 @@ public final class User_crud_test  extends CRUDTest<Object,DBUser>  {
 	public void testCreateNew() throws Exception {
 	}
 
+	@Test
+	public void testUpdatePassword() throws Exception {
+		DBUser user = new DBUser();
+		user.setUserName("test");
+		IDatabaseConnection c = getConnection();
+		java.sql.Statement st = c.getConnection().createStatement();
+		st.executeUpdate("insert into aalocal_test.users values ('test',md5('test')) on duplicate key update  user_pass=values(user_pass)");
+
+		//String md = org.apache.commons.codec.digest.DigestUtils.md5Hex("test");
+		IQueryUpdate query = new UpdateCredentials(
+					new UserCredentials("test", "newpwd"), 
+					user,"aalocal_test");
+		setUpDatabase(dbFile);
+		executor.setConnection(c.getConnection());
+		executor.open();
+		Assert.assertTrue(executor.process(query)>=1);
+		
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT user_pass FROM `aalocal_test`.users where user_name='test'");
+		Assert.assertEquals(1,table.getRowCount());
+		Assert.assertEquals(org.apache.commons.codec.digest.DigestUtils.md5Hex("newpwd"),table.getValue(0,"user_pass"));
+		c.close();
+	}
 }

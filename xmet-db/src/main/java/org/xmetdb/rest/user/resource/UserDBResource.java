@@ -1,15 +1,22 @@
 package org.xmetdb.rest.user.resource;
 
+import java.io.Writer;
 import java.sql.Connection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
+import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.modbcum.q.conditions.EQCondition;
 import net.idea.restnet.c.RepresentationConvertor;
+import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.c.task.FactoryTaskConvertor;
+import net.idea.restnet.c.task.TaskCreator;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
@@ -30,9 +37,13 @@ import org.restlet.data.Status;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.XmetdbQueryResource;
+import org.xmetdb.rest.protocol.UserHTMLBeauty;
+import org.xmetdb.rest.task.UserTaskHTMLReporter;
 import org.xmetdb.rest.user.CallableUserCreator;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.db.ReadUser;
+import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.Resources.Config;
 
 /**
  * Protocol resource
@@ -46,7 +57,22 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 	
 	protected boolean singleItem = false;
 	protected boolean editable = true;
+	
+	public UserDBResource() {
+		super();
+		setHtmlbyTemplate(true);
+	}
 
+	@Override
+	public boolean isHtmlbyTemplate() {
+		return headless?false:singleItem?htmlbyTemplate:false;
+	}
+	@Override
+	public String getTemplateName() {
+		return "myprofile_body.ftl";
+	}
+	
+	
 	@Override
 	protected void doInit() throws ResourceException {
 		super.doInit();
@@ -69,8 +95,12 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 						,MediaType.TEXT_URI_LIST,filenamePrefix);
 		} else if (variant.getMediaType().equals(MediaType.TEXT_CSV)) {
 			return new OutputWriterConvertor(
-					new UserCSVReporter<IQueryRetrieval<DBUser>>(getRequest().getResourceRef()),
+					new UserCSVReporter<IQueryRetrieval<DBUser>>(getRequest()),
 					MediaType.TEXT_CSV);
+		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			return new OutputWriterConvertor(
+					new UserJSONReporter<IQueryRetrieval<DBUser>>(getRequest()),
+					MediaType.APPLICATION_JSON);			
 		} else if (variant.getMediaType().equals(MediaType.TEXT_XML)) {
 			return new OutputWriterConvertor(
 					new UserXMLReporter<IQueryRetrieval<DBUser>>(getRequest().getResourceRef()),
@@ -78,8 +108,7 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_N3) ||
-					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES) ||
-					variant.getMediaType().equals(MediaType.APPLICATION_JSON) 
+					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES) 
 					) {
 				return new RDFJenaConvertor<DBUser, IQueryRetrieval<DBUser>>(
 						new UserRDFReporter<IQueryRetrieval<DBUser>>(
@@ -178,14 +207,27 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 	}
 	
 	@Override
+	protected TaskCreator getTaskCreator(Form form, Method method,
+			boolean async, Reference reference) throws Exception {
+		if (Method.POST.equals(method) && (form.getFirstValue(ReadUser.fields.email.name())==null)) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"e-mail address not specified!");
+		}
+		return super.getTaskCreator(form, method, async, reference);
+	}
+	
+	@Override
 	protected CallableProtectedTask<String> createCallable(Method method,
 			Form form, DBUser item) throws ResourceException {
+
+		
 		Connection conn = null;
 		try {
+			String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
 			UserURIReporter reporter = new UserURIReporter(getRequest(),"");
 			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 			conn = dbc.getConnection();
-			return new CallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),conn,getToken());
+			return new CallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),
+					conn,getToken(),false,usersdbname==null?"tomcat_users":usersdbname);
 		} catch (Exception x) {
 			try { conn.close(); } catch (Exception xx) {}
 			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
@@ -210,7 +252,13 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 	@Override
 	protected FactoryTaskConvertor getFactoryTaskConvertor(ITaskStorage storage)
 			throws ResourceException {
-		return new FactoryTaskConvertorRDF(storage);
+		return new FactoryTaskConvertorRDF<Object>(storage,getHTMLBeauty()) {
+			@Override
+			public synchronized Reporter<Iterator<UUID>, Writer> createTaskReporterHTML(
+					Request request,ResourceDoc doc,HTMLBeauty htmlbeauty) throws AmbitException, ResourceException {
+				return	new UserTaskHTMLReporter(storage,request,doc,htmlbeauty);
+			}			
+		};
 	}
 	
 	
@@ -222,8 +270,16 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 	
 	@Override
 	protected HTMLBeauty getHTMLBeauty() {
-		if (htmlBeauty==null) htmlBeauty =  new UserHTMLBeauty();
+		if (htmlBeauty==null) htmlBeauty =  new UserHTMLBeauty(Resources.user);
 		return htmlBeauty;
+	}
+	
+	@Override
+	protected Map<String, Object> getMap(Variant variant)
+			throws ResourceException {
+		Map<String, Object> map = super.getMap(variant);
+		map.put("myprofile", false);
+		return map;
 	}
 	
 	

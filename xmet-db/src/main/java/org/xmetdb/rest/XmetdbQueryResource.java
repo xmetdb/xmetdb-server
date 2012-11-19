@@ -15,7 +15,6 @@ import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.i.task.Task;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
 
-import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
@@ -103,32 +102,57 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 		
 	}
 	
-	@Override
-	protected Representation get(Variant variant) throws ResourceException {
-		if (htmlbyTemplate && MediaType.TEXT_HTML.equals(variant.getMediaType())) {
-			CookieSetting cS = new CookieSetting(0, "subjectid", getToken());
-			cS.setPath("/");
-	        this.getResponse().getCookieSettings().add(cS);
-	        return getHTMLByTemplate(variant);
-    	} else				
-    		return super.get(variant);
-	}
-	
-	protected Representation getHTMLByTemplate(Variant variant) throws ResourceException {
-	        Map<String, Object> map = new HashMap<String, Object>();
-	        if (getClientInfo().getUser()!=null) 
-	        	map.put("username", getClientInfo().getUser().getIdentifier());
-	        map.put("creator","IdeaConsult Ltd.");
-	        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
-	        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
-	        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
-	        map.put("xmet_root",getRequest().getRootRef().toString());
-	        getRequest().getResourceRef().addQueryParameter("media",MediaType.APPLICATION_JSON.toString());
-	        map.put("xmet_request",getRequest().getResourceRef().toString());
-	        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
-	        return toRepresentation(map, getTemplateName(), MediaType.TEXT_PLAIN);
+	protected Map<String, Object> getMap(Variant variant) throws ResourceException {
+		   Map<String, Object> map = new HashMap<String, Object>();
 
+			map.put("managerRole", "false");
+			map.put("editorRole", "false");
+			if (getClientInfo()!=null) {
+				if (getClientInfo().getUser()!=null)
+					map.put("username", getClientInfo().getUser().getIdentifier());
+				if (getClientInfo().getRoles()!=null) {
+					if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.managerRole)>=0)
+						map.put("managerRole", "true");
+					if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.editorRole)>=0)
+						map.put("editorRole", "true");
+				}
+			}
+
+		        map.put("creator","IdeaConsult Ltd.");
+		        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
+		        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
+		        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
+		        map.put("xmet_root",getRequest().getRootRef().toString());
+		        getRequest().getResourceRef().addQueryParameter("media",MediaType.APPLICATION_JSON.toString());
+		        map.put("xmet_request",getRequest().getResourceRef().toString());
+		        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
+
+		        map.put("searchURI",htmlBeauty==null || htmlBeauty.getSearchURI()==null?"":htmlBeauty.getSearchURI());
+		        
+		        //remove paging
+		        Form query = getRequest().getResourceRef().getQueryAsForm();
+		        //query.removeAll("page");query.removeAll("pagesize");query.removeAll("max");
+		        query.removeAll("media");
+		        Reference r = getRequest().getResourceRef().clone();
+		        r.setQuery(query.getQueryString());
+		        map.put("xmet_request",r.toString()) ;
+		        if (query.size()>0)
+		        	map.put("xmet_query",query.getQueryString()) ;
+		        //json
+		        query.removeAll("media");query.add("media", MediaType.APPLICATION_JSON.toString());
+		        r.setQuery(query.getQueryString());
+		        map.put("xmet_request_json",r.toString());
+		        //csv
+		        query.removeAll("media");query.add("media", MediaType.TEXT_CSV.toString());
+		        r.setQuery(query.getQueryString());
+		        map.put("xmet_request_csv",r.toString());
+		        return map;
 	}
 	
+	@Override
+	protected Representation getHTMLByTemplate(Variant variant) throws ResourceException {
+		getHTMLBeauty();
+        return toRepresentation(getMap(variant), getTemplateName(), MediaType.TEXT_PLAIN);
+	}	
 
 }

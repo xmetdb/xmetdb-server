@@ -41,6 +41,9 @@ import org.xmetdb.rest.structure.resource.StructureRouter;
 import org.xmetdb.rest.user.UserRouter;
 import org.xmetdb.rest.user.alerts.resource.AlertRouter;
 import org.xmetdb.rest.user.resource.MyAccountResource;
+import org.xmetdb.rest.user.resource.RegistrationConfirmResource;
+import org.xmetdb.rest.user.resource.RegistrationNotifyResource;
+import org.xmetdb.rest.user.resource.RegistrationResource;
 import org.xmetdb.xmet.aa.UserAuthorizer;
 import org.xmetdb.xmet.aa.XMETLoginFormResource;
 import org.xmetdb.xmet.aa.XMETLoginPOSTResource;
@@ -180,6 +183,9 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		auth.setNext(protectedRouter);
 		router.attach("/protected", auth);
 
+		router.attach(Resources.register, RegistrationResource.class);
+		router.attach(String.format("%s%s", Resources.register, Resources.confirm), RegistrationConfirmResource.class);
+		router.attach(String.format("%s%s", Resources.register, Resources.notify), RegistrationNotifyResource.class);
 
 		router.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
 		router.setRoutingMode(Router.MODE_BEST_MATCH);

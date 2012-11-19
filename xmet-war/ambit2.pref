@@ -1,9 +1,9 @@
 #org.xmetdb.rest.protocol.db.DbCreateDatabase
-#Fri Sep 21 15:25:54 EEST 2012
+#Mon Nov 19 21:15:11 EET 2012
 Host=localhost
 Scheme=jdbc\:mysql
 Port=3306
-Database=xmetdb
+Database=xmetdb-test
 MAXRECORDS=0
 defaultDir=
 User=guest

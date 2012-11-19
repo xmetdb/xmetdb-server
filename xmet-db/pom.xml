@@ -96,6 +96,13 @@
   		<artifactId>org.restlet.ext.fileupload</artifactId>
   		<version>${restlet.version}</version>
   	</dependency>  	
+  	<dependency>
+  	   	<groupId>net.ideaconsult.restnet</groupId>
+  	   	<artifactId>restnet-u</artifactId>
+  	   	<version>${restnet.version}</version>
+  	   	<type>jar</type>
+  	   	<scope>compile</scope>
+  	</dependency>
   </dependencies>
   <build>
   <pluginManagement>
