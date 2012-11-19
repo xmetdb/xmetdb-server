@@ -123,7 +123,7 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 	        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
 	        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
 	        map.put("xmet_root",getRequest().getRootRef().toString());
-	        getRequest().getResourceRef().addQueryParameter("media", Reference.encode(MediaType.APPLICATION_JSON.toString()));
+	        getRequest().getResourceRef().addQueryParameter("media",MediaType.APPLICATION_JSON.toString());
 	        map.put("xmet_request",getRequest().getResourceRef().toString());
 	        map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
 	        return toRepresentation(map, getTemplateName(), MediaType.TEXT_PLAIN);
