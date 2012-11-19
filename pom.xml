@@ -20,7 +20,7 @@
 	<modbcum.version>0.0.3</modbcum.version>
 	<restnet.version>0.0.8-SNAPSHOT</restnet.version>
 	<opentoxcli.version>1.0.0</opentoxcli.version>
-	<ambit.version>2.4.9-SNAPSHOT</ambit.version>
+	<ambit.version>2.4.9</ambit.version>
   </properties>
  <issueManagement>
   	<system></system>
