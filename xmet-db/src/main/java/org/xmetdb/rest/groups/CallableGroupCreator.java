@@ -106,11 +106,6 @@ public class CallableGroupCreator extends CallableDBUpdateTask<IDBGroup,Form,Str
 		return reporter.getURI(user);
 	}
 
-	@Override
-	protected Object executeQuery(IQueryUpdate<Object, IDBGroup> q)
-			throws Exception {
-		return super.executeQuery(q);
-	}
 
 	@Override
 	public String toString() {

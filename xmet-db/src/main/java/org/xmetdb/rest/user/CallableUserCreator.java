@@ -80,8 +80,9 @@ public class CallableUserCreator extends CallableDBUpdateTask<DBUser,Form,String
 		return reporter.getURI(user);
 	}
 
+	
 	@Override
-	protected Object executeQuery(IQueryUpdate<Object, DBUser> query)
+	protected Object executeQuery(IQueryUpdate<? extends Object, DBUser> query)
 			throws Exception {
 		Object result = super.executeQuery(query);
 		if (Method.POST.equals(method)) {
