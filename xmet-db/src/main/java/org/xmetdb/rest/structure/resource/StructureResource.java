@@ -3,23 +3,26 @@ package org.xmetdb.rest.structure.resource;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import net.idea.modbcum.i.IQueryRetrieval;
-import net.idea.modbcum.i.exceptions.AmbitException;
-import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.modbcum.p.QueryExecutor;
+import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
+import net.idea.restnet.c.resource.CatalogResource;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryResource;
 
+import org.apache.xerces.impl.dv.util.Base64;
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -30,7 +33,7 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.CatalogFTLResource;
+import org.xmetdb.rest.XmetdbHTMLReporter;
 import org.xmetdb.rest.prediction.DBModel;
 import org.xmetdb.rest.prediction.ReadModel;
 import org.xmetdb.rest.prediction.ReadModelQuery;
@@ -39,33 +42,99 @@ import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.xmet.client.Resources;
 
-public class StructureResource extends CatalogFTLResource<Structure> {
+public class StructureResource extends CatalogResource<Structure> {
 	protected String queryService;
 	protected boolean singleItem = false;
 	protected HTMLBeauty htmlBeauty = null;
+	protected DecimalFormat trf = new DecimalFormat( "#0.00" );
 	
 	public StructureResource() {
 		super();
-		queryService = ((TaskApplication) getApplication())
-				.getProperty(Resources.Config.xmet_ambit_service.name());
+		queryService = 
+			//"http://ambit.uni-plovdiv.bg:8080/qmrfdata";
+			((TaskApplication) getApplication()).getProperty(Resources.Config.xmet_ambit_service.name());
+		htmlbyTemplate = true;
 	}
 
+	@Override
+	public boolean isHtmlbyTemplate() {
+		return singleItem?false:headless?false:super.isHtmlbyTemplate();
+	}
 	public enum SearchMode {
 		auto, similarity, smarts
 	}
-	@Override
-	protected void doInit() throws ResourceException {
-		// TODO Auto-generated method stub
-		super.doInit();
-		getVariants().add(new Variant(MediaType.APPLICATION_JSON));
-		htmlbyTemplate = true;
-	}
+	
 	
 	@Override
 	public String getTemplateName() {
 		return "structures_body.ftl";
 	}
 	
+	@Override
+	protected void configureTemplateMap(Map<String, Object> map) {
+		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
+
+		Reference query = getSearchReference(getContext(),getRequest(),getResponse(),parameters);
+		
+
+		Reference qmrf_request = query.clone();
+		qmrf_request.addQueryParameter("media",MediaType.TEXT_CSV.toString());
+		map.put("xmet_request_csv",qmrf_request.toString());
+		
+		qmrf_request = query.clone();
+		qmrf_request.addQueryParameter("media",ChemicalMediaType.CHEMICAL_MDLSDF.toString());
+		map.put("xmet_request_sdf",qmrf_request.toString());		
+		
+		query.addQueryParameter("media",MediaType.APPLICATION_JAVASCRIPT.toString());
+		map.put("xmet_request_jsonp",query.toString());
+
+	
+		map.put("managerRole", "false");
+		map.put("editorRole", "false");
+		if (getClientInfo()!=null) {
+			if (getClientInfo().getUser()!=null)
+				map.put("username", getClientInfo().getUser().getIdentifier());
+			if (getClientInfo().getRoles()!=null) {
+				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.managerRole)>=0)
+					map.put("managerRole", "true");
+				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.editorRole)>=0)
+					map.put("editorRole", "true");
+			}
+		}
+		map.put("creator","Ideaconsult Ltd.");
+	    map.put("xmet_root",getRequest().getRootRef());
+	    map.put("searchURI",htmlBeauty==null || htmlBeauty.getSearchURI()==null?"":htmlBeauty.getSearchURI());
+	    map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
+        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
+        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
+        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));
+
+	    map.put("query", query2map(parameters));
+	}
+	
+	
+	protected Map<String,Object> query2map(StructureHTMLBeauty parameters) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			map.put("search",parameters.getSearchQuery());
+		} catch (Exception x) {	}		
+		try {
+			map.put("option",parameters.getOption().name().toLowerCase());
+		} catch (Exception x) {}
+		try {
+			map.put("threshold",parameters.getThreshold());
+		} catch (Exception x) {}		
+		try {
+			map.put("dataset",parameters.getDatasets());
+		} catch (Exception x) {}	
+		try {
+			map.put("model",parameters.getModels());
+		} catch (Exception x) {}			
+		try {
+			map.put("pagesize",parameters.getPageSize());
+		} catch (Exception x) {}		
+		return map;
+	}
 	protected void parseParameters(Context context, Request request,Response response) throws ResourceException {
 		Form form = request.getResourceRef().getQueryAsForm();
 		
@@ -122,22 +191,10 @@ public class StructureResource extends CatalogFTLResource<Structure> {
 				parameters.setModels(verifyModels(models));
 		} catch (Exception x) { parameters.setModels(null); x.printStackTrace();}
 	}
-	/*
-	protected String name2Structure(String name) {
-		try {
-			if (nameToStructure == null) nameToStructure = NameToStructure.getInstance();
-			return nameToStructure.parseToSmiles(name);
-		} catch (Exception x) {
-			return null;
-		}
-	}
-	*/
-	
-	protected Reference getSearchReference(Context context, Request request,
-						Response response,StructureHTMLBeauty parameters) throws ResourceException {
-		parseParameters(context,request,response);
 
-		
+	protected Reference getSearchReference(Context context, Request request,
+			Response response,StructureHTMLBeauty parameters) throws ResourceException {
+		parseParameters(context,request,response);
 		Reference ref = null;
 		try {
 			ref = new Reference(String.format("%s/query/compound/search/all",
@@ -161,8 +218,12 @@ public class StructureResource extends CatalogFTLResource<Structure> {
 			}
 			ref.addQueryParameter("pagesize", Long.toString(parameters.getPageSize()));
 			ref.addQueryParameter("page", Integer.toString(parameters.getPage()));
-			if (parameters.getSearchQuery() != null)
-				ref.addQueryParameter(QueryResource.search_param, parameters.getSearchQuery());
+			if (parameters.getSearchQuery() != null) {
+				if (parameters.getSearchQuery().indexOf("#")>=0) //this breasks jquery jsonp even if url encoded, use base64 as workaround
+					ref.addQueryParameter("b64search", Base64.encode(parameters.getSearchQuery().getBytes()));
+				else
+					ref.addQueryParameter(QueryResource.search_param, parameters.getSearchQuery());
+			}
 			return ref;
 		} catch (ResourceException x) {
 			throw x;
@@ -171,21 +232,29 @@ public class StructureResource extends CatalogFTLResource<Structure> {
 					parameters.option, ref.toString(), x);
 		}
 	}
+	
 	@Override
 	protected Iterator<Structure> createQuery(Context context, Request request,
 			Response response) throws ResourceException {
 		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
-		Reference searchReference = getSearchReference(context,request,response,parameters);
-	
+		Reference ref = getSearchReference(context,request,response,parameters);
 		try {
-			List<Structure> records = Structure.retrieveStructures(
-					queryService, searchReference.toString());
-			return records.iterator();
-		} catch (Exception x) {
-			throw createException(Status.CLIENT_ERROR_BAD_REQUEST, parameters.getSearchQuery(),
-					parameters.option, searchReference.toString(), x);
-		}
+		
 
+			try {
+				List<Structure> records = Structure.retrieveStructures(
+						queryService, ref.toString());
+				return records.iterator();
+			} catch (Exception x) {
+				throw createException(Status.CLIENT_ERROR_BAD_REQUEST, parameters.getSearchQuery(),
+						parameters.option, ref.toString(), x);
+			}
+		} catch (ResourceException x) {
+			throw x;
+		} catch (Exception x) {
+			throw createException(Status.CLIENT_ERROR_BAD_REQUEST,  parameters.getSearchQuery(),
+					parameters.option, ref.toString(), x);
+		}
 	}
 
 	protected ResourceException createException(Status status, String search,
@@ -216,7 +285,6 @@ public class StructureResource extends CatalogFTLResource<Structure> {
 		reporter.setHeadless(headless);
 		return reporter;
 	}
-	
 
 	@Override
 	protected Representation post(Representation entity, Variant variant)
@@ -329,27 +397,6 @@ public class StructureResource extends CatalogFTLResource<Structure> {
 		
 	}
 	
-	
-	public IProcessor<Iterator<Structure>, Representation> createJSONConvertor(
-			Variant variant,String filenamePrefix) throws AmbitException, ResourceException {
-		throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED);
-	}	
-	
-	@Override
-	public IProcessor<Iterator<Structure>, Representation> createConvertor(
-			Variant variant) throws AmbitException, ResourceException {
-		if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)){
-			return createJSONConvertor(variant,getRequest().getResourceRef().getPath());
-		} else return super.createConvertor(variant);	
-	}		
-	
-	@Override
-	protected void configureTemplateMap(Map<String, Object> map) {
-		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
-		Reference searchReference = getSearchReference(getContext(),getRequest(),getResponse(),parameters);
-		searchReference.addQueryParameter("media", Reference.encode(MediaType.APPLICATION_JSON.toString()));
-		map.put("xmet_structuresearch",searchReference.toString());
-	}
 }
 
 class PropertiesIterator extends CSVFeatureValuesIterator<Structure> {
@@ -433,5 +480,6 @@ class PropertiesIterator extends CSVFeatureValuesIterator<Structure> {
 
 		return r;
 	}
+	
 	
 };
