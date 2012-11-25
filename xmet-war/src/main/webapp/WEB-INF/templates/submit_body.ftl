@@ -17,7 +17,7 @@
 			<p class='w_p'>		
 	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
 
-	<table id="xmet_obs" style="margin: 0 0 0 0;padding: 0 0 0 0;width=100%">
+	<table id="xmet_obs" style="margin: 0 0 0 0;padding: 0 0 0 0;" width="100%">
 	<!-- Substrate (to be able to edit the structure / retrieve existing and select SOM ) -->
 	<tr>
 	<th align="right"  valign='top' width='15%'>
@@ -36,13 +36,7 @@
 	<input type="text" id="xmet_substrate" value="TODO" valign="bottom" style="position:relative;float:right;"/>
 	</td>
 	<td valign="top"  align="right">
-			<div class="ui-widget">
-				<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;"> 
-					<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
- 
-					<strong>Warning:</strong> This form is under development! <br>Submission of new observations <br>does not work yet! </p>
-				</div>
-			</div>
+
 	
 	</td>
 	</tr>
@@ -131,6 +125,15 @@
 		</p>
 	</div>
 		   	
+		   	
+			<div class="ui-widget">
+				<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;"> 
+					<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+ 
+					<strong>Warning:</strong> This form is under development! <br>Submission of new observations <br>does not work yet! </p>
+				</div>
+			</div>
+					   	
 	</div> <#-- w_content -->
 
 	<#-- Prevents the footer from hiding the last line on smaller screens. -->

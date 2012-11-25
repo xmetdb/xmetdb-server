@@ -231,21 +231,3 @@ function formatValues(dataEntry,tag) {
 	return sOut;
 }
 
-function getQueryURL(queryService) {
-	switch(option)
-	{
-	case 'similarity': 
-	  url = queryService	+ "/query/similarity?" + $.param(params,false);
-	  break;
-	case 'smarts':
-		  url = queryService	+ "/query/smarts?" + $.param(params,false);
-	  break;
-	default: //auto
-	  url = queryService + "/query/compound/search/all?"+ $.param(params,false);
-	}
-	
-	if (purl.param('search').length>60) $('#qvalue').text(purl.param('search').substring(0,60)+" ...");
-	else  $('#qvalue').text(purl.param('search'));
-	$('#qvalue').attr('title',purl.param('search'));
-	
-}

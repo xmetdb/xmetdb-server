@@ -7,7 +7,8 @@ function cmp2image(val) {
 		//} else {
 		//		cmpURI = opentox["model_uri"] + "?dataset_uri=" + cmpURI + "&media=image/png";
 		//}
-		return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
+		//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
+		return '<img border="0" src="'+cmpURI+'&w=150&h=150">';
 }
 
 function renderEnzyme(code,name) {
@@ -44,26 +45,63 @@ function loadEnzymesList(selectTag) {
 function addSearchUI(searchSelector, tableid, xmet_root, formName) {
 	var searchUI = 
 	"<form method='GET' action='#' name='" + formName+ "'>"+
-	"<table id='"+ tableid + "' style='margin: 0 0 0 0;padding: 0 0 0 0;' class='ui-widget-content ui-corner-all'><tr>"+
-	"<td colspan='2'>"+
+	"<table id='"+ tableid + "' width='100%' class='ui-widget-content ui-corner-all'>"+
+	"<tr><td colspan='2'>\n"+
 	"   <input type='hidden' name='type' value='smiles'>"+
 	"   <input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'><br>"+
 	"   <input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>"+
-	"</td>"+
-	"<td align='left' valign='top'>"+
+	"</td>\n"+
+	"<td align='left' valign='top'>\n"+
 	"   <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20'>Auto<br>"+
 	"   <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure'>Similarity&nbsp;"+
-	"   <select title ='Tanimoto similarity threshold' name='threshold'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option></select>"+
+	"   <select title ='Tanimoto similarity threshold' name='threshold'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>"+
 	"   <br>"+
 	"   <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure"+
 	"</td><td  valign='bottom' ><input type='submit' value='Search'></td>" +
+	"</tr>\n<tr>" + 
+	"<td colspan='4'><ol id='substrateResults' class='structresults'></ol></td>"+
 	"</tr></table></form>";
 	$( searchSelector ).append(searchUI);
+	$( '#substrateResults' ).selectable();
 }		
 
+function getQueryURL(queryService,option) {
+	switch(option)
+	{
+	case 'similarity': 
+	  url = queryService	+ "/query/similarity?" + $.param(params,false);
+	  break;
+	case 'smarts':
+		  url = queryService	+ "/query/smarts?" + $.param(params,false);
+	  break;
+	default: //auto
+	  url = queryService + "/query/compound/search/all?"+ $.param(params,false);
+	}
+	
+	if (purl.param('search').length>60) $('#qvalue').text(purl.param('search').substring(0,60)+" ...");
+	else  $('#qvalue').text(purl.param('search'));
+	$('#qvalue').attr('title',purl.param('search'));
+	
+}
 
 function runSearch(queryService,values) {
-	console.log(queryService + '?'+ values);
+	var sSource = queryService + '/query/similarity?media=application/x-javascript&'+ values;
+	$.ajax( {
+	        "type": "GET",
+	        "url": sSource ,
+	        "dataType": "jsonp", 
+	        "contentType" : "application/x-javascript",
+	        "success": function(json) {
+	        	$("#substrateResults").empty(); 
+   	        	json.dataEntry.forEach(function img(element, index, array) {
+	        		$("#substrateResults").append('<li class="ui-state-default">'+cmp2image(element.compound.URI)+'</li>');
+	        	  });
+	        },
+	        "cache": false,
+	        "error" : function( xhr, textStatus, error ) {
+	        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
+	        }
+	      } );
 }
 /**
  * Toggles search UI visibility

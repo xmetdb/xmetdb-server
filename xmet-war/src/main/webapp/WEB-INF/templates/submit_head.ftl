@@ -1,3 +1,9 @@
+   <style>
+    .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
+    .structresults .ui-selected { background: #F39814; border-color: #F39814; }
+    .structresults { list-style-type: none; margin: 0; padding: 0; width: 930px; }
+    .structresults li { margin: 3px; padding: 1px; float: left; width: 155px; height: 155px; font-size: 4em; text-align: center; }
+    </style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		loadEnzymesList("#search_enzyme");
