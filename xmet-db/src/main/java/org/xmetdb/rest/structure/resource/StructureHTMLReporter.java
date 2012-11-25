@@ -270,7 +270,7 @@ class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 		   "<input type='hidden' name='page' value='%s'>\n"+
 		   "<input type='hidden' name='type' value='smiles'>\n"+
 		   "<table width='100%%'>\n"+
-		   "<tr><td colspan='2' align='center'><input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor(\"%s\");'></td></tr>\n"+
+		   "<tr><td colspan='2' align='center'><input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor(\"%s\",'form');'></td></tr>\n"+
 		   "<tr><td colspan='2' align='center'><input type='text' name='search' size='20' value='%s' tabindex='1' title='%s'></td></tr>\n"+
 		   "<tr><td colspan='2'><input %s type='radio' value='auto' name='option' title='Exact structure or search by identifier' size='20'>Auto</td></tr>\n"+
 		   "<tr><td><input %s type='radio' name='option' value='similarity' title='Enter SMILES or draw structure'>Similarity</td>\n"+

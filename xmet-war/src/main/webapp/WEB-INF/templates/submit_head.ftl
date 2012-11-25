@@ -1,10 +1,25 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		loadEnzymesList("#search_enzyme");
+		addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm');
+		addSearchUI('#productsearch','productSearchUI','${xmet_root}','productSearchForm');
+		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#substrateSearchUI','#buttonSubstrateSearch');  return false; });
+		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#productSearchUI','#buttonProductSearch');  return false; });
+		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
+        .submit(function(event){
+        	runSearch('${queryService}',$(this).serialize());
+            event.preventDefault();
+            return false;
+        });
+		$('form[name="productSearchForm"]').removeAttr('onsubmit')
+        .submit(function(event){
+        	runSearch('${queryService}',$(this).serialize());
+            event.preventDefault();
+            return false;
+        });        
 	});
 	
 </script>
-
 <script src="http://d3js.org/d3.v2.min.js?2.9.4"></script>
 
 <style>

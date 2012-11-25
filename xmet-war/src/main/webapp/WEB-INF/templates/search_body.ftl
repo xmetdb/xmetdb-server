@@ -18,7 +18,7 @@
 	<th align="right" valign="top">Structure:</th>
 	<td colspan="2">
 	   <input type='hidden' name='type' value='smiles'>
-	   <input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor("${xmet_root}");'><br>
+	   <input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor("${xmet_root}","form");'><br>
 	   <input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'><br>
 	   <input class="ui-widget" type='checkbox' id="search_substrates" checked>Substrate&nbsp;
 	   <input class="ui-widget" type='checkbox' id="search_products">Product

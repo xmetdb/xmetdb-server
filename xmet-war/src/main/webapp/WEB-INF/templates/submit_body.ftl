@@ -1,6 +1,7 @@
 <#include "/html.ftl" >
 <head>
 <#include "/head.ftl" >
+<script type='text/javascript' src='/xmetdb/jme/jme.js'></script>
 <#include "/submit_head.ftl" >
 </head>
 <body>
@@ -16,14 +17,23 @@
 			<p class='w_p'>		
 	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
 
-	<table id="xmet_obs">
+	<table id="xmet_obs" style="margin: 0 0 0 0;padding: 0 0 0 0;width=100%">
 	<!-- Substrate (to be able to edit the structure / retrieve existing and select SOM ) -->
 	<tr>
-	<th align="right" height="150px">Substrate:</th><td colspan="2">
-	<input type="text" id="xmet_substrate" value="TODO" ">
+	<th align="right"  valign='top' width='15%'>
+	Substrate:
+	<br>
+	<a href="#" id="buttonSubstrateSearch">Hide search options</a>
+	</th><td colspan="2" id="substratesearch"></td>
+	</tr>	
+	<tr>
+	<th align="right" height="150px" valign='top'>
+		
+	</th><td colspan="2">
 	
 	<!-- the picture -->
-	<p id="structure1"/>
+	<p style="float:left;" id="structure1"/>
+	<input type="text" id="xmet_substrate" value="TODO" valign="bottom" style="position:relative;float:right;"/>
 	</td>
 	<td valign="top"  align="right">
 			<div class="ui-widget">
@@ -47,11 +57,18 @@
 	<tr>
 	<td colspan="4"><hr></td>
 	</tr>
-	<!-- Product (to be able to edit the structure / retrieve existing ) -->	
+	<!-- Product (to be able to edit the structure / retrieve existing ) -->
 	<tr>
-	<th align="right" height="150px">Product:</th><td colspan="3">
-	<input type="text" id="xmet_product" value="TODO" >
-	<p id="structure2">
+	<th align="right">
+		Product:
+		<br>
+		<a href="#" id="buttonProductSearch">Hide search options</a>
+	</th><td colspan="2" id="productsearch" ></td>
+	</tr>	
+	<tr>
+	<th align="right" height="150px" valign='top'></th><td colspan="3">
+	<p style="float:left;" id="structure2"/>
+	<input type="text" id="xmet_product" value="TODO" valign="bottom" style="position:relative;float:right;"/>	
 </p>
 	</td>
 	</tr>
