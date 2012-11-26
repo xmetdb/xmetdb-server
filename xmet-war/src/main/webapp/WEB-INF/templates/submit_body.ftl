@@ -14,9 +14,7 @@
 	<div class='ui-widget-content ui-corner-bottom' style='margin: 0 0 0 0; padding: 0 0 0 0;' />
 	<!-- Don't expect this to work! -->
 
-			<p class='w_p'>		
-	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
-
+	<p class='w_p'>		
 	<table id="xmet_obs" style="margin: 0 0 0 0;padding: 0 0 0 0;" width="100%">
 	<!-- Substrate (to be able to edit the structure / retrieve existing and select SOM ) -->
 	<tr>
@@ -42,17 +40,9 @@
 	
 	</td>
 	</tr>
-	<tr>
-	<th align="right">Atom uncertainty:</th><td colspan="3">
-			<select id="xmet_atom_uncertainty" >
-			<option value="Certain" selected>Certain</option>
-			<option value="Uncertain">Uncertain</option>
-			</select>
-	</td>
+
 	</tr>	
-	<tr>
-	<td colspan="4"><hr></td>
-	</tr>
+	<tr><td colspan="4"><hr></td></tr>
 	<!-- Product (to be able to edit the structure / retrieve existing ) -->
 	<tr>
 	<th align="right">
@@ -70,62 +60,54 @@
 </p>
 	</td>
 	</tr>
-	<!-- Product amount -->
-	<tr>
-	<th align="right">Product amount:</th><td colspan="3">
+	<tr><td colspan="4"><hr></td></tr>
+	</table>
+	
+	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
+	
+	<p><label for="xmet_atom_uncertainty">Atom uncertainty:<em>*</em></label>
+			<select id="xmet_atom_uncertainty" >
+			<option value="Certain" selected>Certain</option>
+			<option value="Uncertain">Uncertain</option>
+			</select>
+	</p>	
+		<!-- Product amount -->
+	<p><label for="xmet_product_amount">Product amount:<em>*</em></label>
 		<select id="xmet_product_amount">
 			<option value="Major" selected>Major</option>
 			<option value="Minor">Minor</option>
 			<option value="Unknown">Unknown</option>
 		</select>
-	</td>
-	</tr>	
-	<tr>
-	<td colspan="4"><hr></td>
-	</tr>
+	</p>
 	<!-- Experiment -->
-	<tr>
-	<th align="right">Experiment:</th><td colspan="3">
-	
-			<select id="xmet_experiment"  >
+	<p><label for="xmet_experiment">Experiment:<em>*</em></label>
+		<select id="xmet_experiment"  >
 			<option value="MS" selected>MS (Microsomes)</option>
 			<option value="HEP">HEP (Hepatocytes)</option>
 			<option value="ENZ">ENZ (Enzyme)</option>
 		</select>
-	</td>
-	</tr>	
-	
+	</p>
 	<!-- Enzymes -->
-	<tr>
-	<th align="right" valign="top">Enzyme:</th>
-	<td>
-		<select id="search_enzyme">
+	<p><label for="search_enzyme">Enzyme:<em>*</em></label>
+		<select id="search_enzyme"  >
 		</select>
-	</td>
-	<th align="right" valign="top">Allele:</th>
-	<td valign="top">
-	TODO
-	</td>
-	</tr>	
+		Allele
+	</p>
 	<!-- References -->
-	<tr>
-	<th align="right">Reference</th><td colspan="3">
+	<p><label for="xmet_reference">Reference:<em>*</em></label>
 		<input type="text" name="xmet_reference" title="DOI or free text?" value="">
-	</td>
-	</tr>	
+	</p>
 	
 	<!-- Submit -->
-			
-	<tr>
-	<th align="right" valign="top"></th>
-	<td ></td>
-	<td colspan="2">
-			<input type="submit" class="submit" value="Submit">	
-	</td>
-	</tr>	
-		
-	</table>
+	<p><input type="submit" class="submit" value="Submit">	</p>			
+	<p>
+	<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
+	</p>
+	<p>
+	<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
+	</p>
 	</form>
+	<!-- End of form submission -->
 		</p>
 	</div>
 		   	

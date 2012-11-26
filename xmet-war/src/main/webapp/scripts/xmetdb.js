@@ -8,7 +8,7 @@ function cmp2image(val) {
 		//		cmpURI = opentox["model_uri"] + "?dataset_uri=" + cmpURI + "&media=image/png";
 		//}
 		//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
-		return '<img border="0" src="'+cmpURI+'&w=150&h=150">';
+		return '<img border="0" alt="'+val+'" src="'+cmpURI+'&w=150&h=150">';
 }
 
 function renderEnzyme(code,name) {
@@ -42,7 +42,12 @@ function loadEnzymesList(selectTag) {
  * @param searchSelector
  * @param tableid
  */
-function addSearchUI(searchSelector, tableid, xmet_root, formName, resultsName) {
+//addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm','substrateResults');
+function addSearchUI(prefix, xmet_root) {
+	var searchSelector = '#' + prefix + 'search';
+	var tableid = prefix + 'SearchUI';
+	var formName = prefix + 'SearchForm';
+	var resultsName = prefix + 'Results';
 	var searchUI = 
 	"<form method='GET' action='#' name='" + formName+ "'>"+
 	"<table id='"+ tableid + "' width='100%' class='ui-widget-content ui-corner-all'>"+
@@ -60,10 +65,24 @@ function addSearchUI(searchSelector, tableid, xmet_root, formName, resultsName) 
 	"</td><td  valign='bottom' ><input type='submit' value='Search'></td>" +
 	"</tr>\n<tr>" + 
 	"<td colspan='4'><ul id='" + resultsName+ "' class='structresults'></ul></td>"+
-	"</tr></table></form>";
+	"</tr>" +
+	"<tr><td colspan='4' align='right'>" +
+	"<button class='useSelected' onClick='useSelected(\"" + prefix+ "\");return false;'>Use selected structures as "+prefix+"s</button>" +
+	"</td></tr>"+
+	"</table></form>";
 	$( searchSelector ).append(searchUI);
 	$( '#'+resultsName ).selectable();
+	
 }		
+/**
+ * Fills in two hiddent text fields with selected compound URIs
+ * @param prefix
+ */
+function useSelected(prefix) {
+	$( '#' + prefix + 'Results li.ui-selected img').each(function (index,entry) {
+		$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
+	});
+}
 
 function getQueryURL(queryService,option) {
 	switch(option)
@@ -94,7 +113,7 @@ function runSearch(queryService,values,results) {
 	        "success": function(json) {
 	        	$(results).empty(); 
    	        	json.dataEntry.forEach(function img(element, index, array) {
-	        		$(results).append('<li class="ui-state-default">'+cmp2image(element.compound.URI)+'</li>');
+	        		$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
 	        	  });
 	        },
 	        "cache": false,

@@ -1,14 +1,22 @@
-   <style>
+<style>
     .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
     .structresults .ui-selected { background: #F39814; border-color: #F39814; }
     .structresults { list-style-type: none; margin: 0; padding: 0; width: 930px; }
     .structresults li { margin: 3px; padding: 1px; float: left; width: 155px; height: 155px; font-size: 4em; text-align: center; }
-    </style>
+</style>
+<style type="text/css">
+	label { width: 10em; float: left; }
+	label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+	p { clear: both; }
+	.submit { margin-left: 12em; }
+	em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+</style>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$( ".useSelected" ).button();
 		loadEnzymesList("#search_enzyme");
-		addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm','substrateResults');
-		addSearchUI('#productsearch','productSearchUI','${xmet_root}','productSearchForm','productResults');
+		addSearchUI('substrate','${xmet_root}');
+		addSearchUI('product','${xmet_root}');
 		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#substrateSearchUI','#buttonSubstrateSearch');  return false; });
 		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#productSearchUI','#buttonProductSearch');  return false; });
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
