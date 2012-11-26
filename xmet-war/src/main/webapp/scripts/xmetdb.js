@@ -81,6 +81,7 @@ function addSearchUI(prefix, xmet_root) {
 function useSelected(prefix) {
 	$( '#' + prefix + 'Results li.ui-selected img').each(function (index,entry) {
 		$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
+		$('#xmet_'+prefix+'_img').html(cmp2image(entry.alt));
 	});
 }
 

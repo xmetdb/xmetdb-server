@@ -20,7 +20,8 @@
 	<tr>
 	<th align="right"  valign='top' width='15%'>
 	Substrate:
-	</th><td colspan="2">
+	</th>
+	<td>
 		<a style='float:right;' href="#" id="buttonSubstrateSearch">Hide search options</a>
 		<br>
 		<div id="substratesearch"></div>
@@ -28,39 +29,38 @@
 	</tr>	
 	<tr>
 	<th align="right" height="150px" valign='top'>
-		
-	</th><td colspan="2">
-	
+	</th>
+	<td>
 	<!-- the picture -->
-	<p style="float:left;" id="structure1"/>
+	<span  style="float:left;" id='xmet_substrate_img'></span>
+	<span style='display:none'>
+	<p id="structure1"/>
 	<input type="text" id="xmet_substrate" value="TODO" valign="bottom" style="position:relative;float:right;"/>
+	</span>
 	</td>
-	<td valign="top"  align="right">
-
-	
-	</td>
-	</tr>
-
 	</tr>	
-	<tr><td colspan="4"><hr></td></tr>
-	<!-- Product (to be able to edit the structure / retrieve existing ) -->
+	<tr><td colspan="2"><hr></td></tr>
 	<tr>
 	<th align="right">
 		Product:
-	</th><td colspan="2">
+	</th>
+	<td>
 		<a style='float:right;' href="#" id="buttonProductSearch">Hide search options</a>
 		<br>
 		<div id="productsearch"></div>
 	</td>
 	</tr>	
 	<tr>
-	<th align="right" height="150px" valign='top'></th><td colspan="3">
-	<p style="float:left;" id="structure2"/>
-	<input type="text" id="xmet_product" value="TODO" valign="bottom" style="position:relative;float:right;"/>	
-</p>
+	<th align="right" height="150px" valign='top'></th>
+	<td>
+	<span  style="float:left;" id='xmet_product_img'></span>
+	<span style='display: none;'>
+	<p id="structure2"/>
+	<input type="text" id="xmet_product" value="TODO" valign="bottom" style="position:relative;float:right;"/>
+	</span>
 	</td>
 	</tr>
-	<tr><td colspan="4"><hr></td></tr>
+	<tr><td colspan="2"><hr></td></tr>
 	</table>
 	
 	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
