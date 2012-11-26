@@ -11,7 +11,7 @@
 			
 	<div class='w_content ui-widget ' style='margin-top: 25px; margin-left: 0px;  margin-right: 10px; padding: 0 .1em;'>
 	<div class='ui-widget-header ui-corner-top'><p>New XMETDB observation <span id="xmet_id"></span></p></div>
-	<div class='ui-widget-content ui-corner-bottom' style='margin-top: 0px;' />
+	<div class='ui-widget-content ui-corner-bottom' style='margin: 0 0 0 0; padding: 0 0 0 0;' />
 	<!-- Don't expect this to work! -->
 
 			<p class='w_p'>		
@@ -22,9 +22,11 @@
 	<tr>
 	<th align="right"  valign='top' width='15%'>
 	Substrate:
-	<br>
-	<a href="#" id="buttonSubstrateSearch">Hide search options</a>
-	</th><td colspan="2" id="substratesearch"></td>
+	</th><td colspan="2">
+		<a style='float:right;' href="#" id="buttonSubstrateSearch">Hide search options</a>
+		<br>
+		<div id="substratesearch"></div>
+	</td>
 	</tr>	
 	<tr>
 	<th align="right" height="150px" valign='top'>
@@ -55,9 +57,11 @@
 	<tr>
 	<th align="right">
 		Product:
+	</th><td colspan="2">
+		<a style='float:right;' href="#" id="buttonProductSearch">Hide search options</a>
 		<br>
-		<a href="#" id="buttonProductSearch">Hide search options</a>
-	</th><td colspan="2" id="productsearch" ></td>
+		<div id="productsearch"></div>
+	</td>
 	</tr>	
 	<tr>
 	<th align="right" height="150px" valign='top'></th><td colspan="3">
