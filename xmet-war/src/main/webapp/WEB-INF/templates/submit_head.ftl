@@ -21,13 +21,13 @@
 		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#productSearchUI','#buttonProductSearch');  return false; });
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
-        	runSearch('${queryService}',$(this).serialize(),'#substrateResults');
+        	runSearch('${queryService}',$(this),'#substrateResults');
             event.preventDefault();
             return false;
         });
 		$('form[name="productSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
-        	runSearch('${queryService}',$(this).serialize(),'#productResults');
+        	runSearch('${queryService}',$(this),'#productResults');
             event.preventDefault();
             return false;
         });        

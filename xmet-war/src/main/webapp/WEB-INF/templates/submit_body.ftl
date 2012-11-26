@@ -95,7 +95,7 @@
 	</p>
 	<!-- References -->
 	<p><label for="xmet_reference">Reference:<em>*</em></label>
-		<input type="text" name="xmet_reference" title="DOI or free text?" value="">
+		<input type="text" name="xmet_reference" size='60' title="DOI or free text?" value="">
 	</p>
 	
 	<!-- Submit -->
@@ -108,7 +108,7 @@
 	</p>
 	</form>
 	<!-- End of form submission -->
-		</p>
+	
 	</div>
 		   	
 		   	

@@ -80,8 +80,14 @@ function addSearchUI(prefix, xmet_root) {
  */
 function useSelected(prefix) {
 	$( '#' + prefix + 'Results li.ui-selected img').each(function (index,entry) {
-		$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
-		$('#xmet_'+prefix+'_img').html(cmp2image(entry.alt));
+		if (entry.alt.indexOf('http')==0) {
+			$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
+			$('#xmet_'+prefix+'_img').html(cmp2image(entry.alt));
+		} else {
+			$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
+			$('#xmet_'+prefix+'_img').html('<img border="0" src="'+entry.src+'">');
+			
+		}
 	});
 }
 
@@ -104,20 +110,36 @@ function getQueryURL(queryService,option) {
 	
 }
 
-function runSearch(queryService,values,results) {
-	var sSource = queryService + '/query/similarity?media=application/x-javascript&'+ values;
+function runSearch(queryService,form,results) {
+	var sSource = queryService + '/query/similarity?media=application/x-javascript&'+ form.serialize();
+	var search = "";
+	jQuery.each(form.serializeArray(),function(index,entry){
+		if ('search' == entry.name) search = entry.value;
+	});
+	$(results).empty(); 
 	$.ajax( {
 	        "type": "GET",
 	        "url": sSource ,
 	        "dataType": "jsonp", 
 	        "contentType" : "application/x-javascript",
 	        "success": function(json) {
-	        	$(results).empty(); 
+	        	$(results).append('<li class="ui-state-default" ><img src="'+
+	        			queryService + '/depict/cdk/kekule?search=' + encodeURIComponent(search) +
+	        			'&w=150&h=150" alt="'+ search +'"></li>');
+	        	http://localhost:8080/ambit2/depict/cdk/kekule?search=O%3Dc2c1ccccc1c3ccccc23&media=image/png
    	        	json.dataEntry.forEach(function img(element, index, array) {
 	        		$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
 	        	  });
 	        },
 	        "cache": false,
+	        "statusCode" : {
+	            400: function() {
+	              alert("Not found");
+	            },
+	            404: function() {
+		              alert("Not found");
+		        }
+	        },
 	        "error" : function( xhr, textStatus, error ) {
 	        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
 	        }
