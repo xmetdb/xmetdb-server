@@ -42,7 +42,7 @@ function loadEnzymesList(selectTag) {
  * @param searchSelector
  * @param tableid
  */
-function addSearchUI(searchSelector, tableid, xmet_root, formName) {
+function addSearchUI(searchSelector, tableid, xmet_root, formName, resultsName) {
 	var searchUI = 
 	"<form method='GET' action='#' name='" + formName+ "'>"+
 	"<table id='"+ tableid + "' width='100%' class='ui-widget-content ui-corner-all'>"+
@@ -59,10 +59,10 @@ function addSearchUI(searchSelector, tableid, xmet_root, formName) {
 	"   <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure"+
 	"</td><td  valign='bottom' ><input type='submit' value='Search'></td>" +
 	"</tr>\n<tr>" + 
-	"<td colspan='4'><ol id='substrateResults' class='structresults'></ol></td>"+
+	"<td colspan='4'><ul id='" + resultsName+ "' class='structresults'></ul></td>"+
 	"</tr></table></form>";
 	$( searchSelector ).append(searchUI);
-	$( '#substrateResults' ).selectable();
+	$( '#'+resultsName ).selectable();
 }		
 
 function getQueryURL(queryService,option) {
@@ -84,7 +84,7 @@ function getQueryURL(queryService,option) {
 	
 }
 
-function runSearch(queryService,values) {
+function runSearch(queryService,values,results) {
 	var sSource = queryService + '/query/similarity?media=application/x-javascript&'+ values;
 	$.ajax( {
 	        "type": "GET",
@@ -92,9 +92,9 @@ function runSearch(queryService,values) {
 	        "dataType": "jsonp", 
 	        "contentType" : "application/x-javascript",
 	        "success": function(json) {
-	        	$("#substrateResults").empty(); 
+	        	$(results).empty(); 
    	        	json.dataEntry.forEach(function img(element, index, array) {
-	        		$("#substrateResults").append('<li class="ui-state-default">'+cmp2image(element.compound.URI)+'</li>');
+	        		$(results).append('<li class="ui-state-default">'+cmp2image(element.compound.URI)+'</li>');
 	        	  });
 	        },
 	        "cache": false,

@@ -7,19 +7,19 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		loadEnzymesList("#search_enzyme");
-		addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm');
-		addSearchUI('#productsearch','productSearchUI','${xmet_root}','productSearchForm');
+		addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm','substrateResults');
+		addSearchUI('#productsearch','productSearchUI','${xmet_root}','productSearchForm','productResults');
 		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#substrateSearchUI','#buttonSubstrateSearch');  return false; });
 		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#productSearchUI','#buttonProductSearch');  return false; });
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
-        	runSearch('${queryService}',$(this).serialize());
+        	runSearch('${queryService}',$(this).serialize(),'#substrateResults');
             event.preventDefault();
             return false;
         });
 		$('form[name="productSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
-        	runSearch('${queryService}',$(this).serialize());
+        	runSearch('${queryService}',$(this).serialize(),'#productResults');
             event.preventDefault();
             return false;
         });        
