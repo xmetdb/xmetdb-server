@@ -44,16 +44,20 @@ function loadEnzymesList(selectTag) {
  */
 //addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm','substrateResults');
 function addSearchUI(prefix, xmet_root) {
-	var searchSelector = '#' + prefix + 'search';
-	var tableid = prefix + 'SearchUI';
+	var searchSelector = '#searchUI';
 	var formName = prefix + 'SearchForm';
-	var resultsName = prefix + 'Results';
+	var resultsName = 'structureSearchResults';
 	var searchUI = 
+	"<div class='ui-widget-header ui-corner-top'><p>Structure search<span style='float:right;'>" +
+	"<a href='#' onClick='useSelected(\"substrate\");return false;'>Use selected structures as a substrate</a>&nbsp;|&nbsp;" +
+	"<a href='#' onClick='useSelected(\"product\");return false;'>Use selected structures as products</a>&nbsp;" +
+	"</span></p></div>"+
+	"<div class='ui-widget-content'>"+
 	"<form method='GET' action='#' name='" + formName+ "'>"+
-	"<table id='"+ tableid + "' width='100%' class='ui-widget-content ui-corner-all'>"+
-	"<tr><td colspan='2'>\n"+
+	"<table width='100%'>"+
+	"<tr><td>\n"+
 	"   <input type='hidden' name='type' value='smiles'>"+
-	"   <input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'><br>"+
+	"   <input type='button' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'><br>"+
 	"   <input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>"+
 	"</td>\n"+
 	"<td align='left' valign='top'>\n"+
@@ -62,14 +66,17 @@ function addSearchUI(prefix, xmet_root) {
 	"   <select title ='Tanimoto similarity threshold' name='threshold'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>"+
 	"   <br>"+
 	"   <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure"+
-	"</td><td  valign='bottom' ><input type='submit' value='Search'></td>" +
+	"</td></tr>" +
+	"<tr><td></td><td><input type='submit' value='Search'></td>" +
 	"</tr>\n<tr>" + 
-	"<td colspan='4'><ul id='" + resultsName+ "' class='structresults'></ul></td>"+
+	"<td colspan='2'><ul id='" + resultsName+ "' class='structresults'></ul></td>"+
 	"</tr>" +
-	"<tr><td colspan='4' align='right'>" +
-	"<button class='useSelected' onClick='useSelected(\"" + prefix+ "\");return false;'>Use selected structures as "+prefix+"s</button>" +
-	"</td></tr>"+
-	"</table></form>";
+	"</table></form>"+
+	"</div>" +
+	"<div class='ui-widget-header ui-corner-bottom'><p>&nbsp;<span style='float:right;'>" +
+	"<a href='#' class='useSelected' onClick='useSelected(\"substrate\");return false;'>Use selected structures as a substrate</a>&nbsp;|&nbsp;" +
+	"<a href='#' class='useSelected' onClick='useSelected(\"product\");return false;'>Use selected structures as products</a>" +
+	"</span></p></div";
 	$( searchSelector ).append(searchUI);
 	$( '#'+resultsName ).selectable();
 	
@@ -81,14 +88,17 @@ function addSearchUI(prefix, xmet_root) {
  * @param prefix
  */
 function useSelected(prefix) {
-	$( '#' + prefix + 'Results li.ui-selected img').each(function (index,entry) {
+	$( '#structureSearchResults li.ui-selected img').each(function (index,entry) {
+		var results = '#xmet_'+prefix+'_img';
+		var results_uri = 'input:[name=xmet_'+prefix+'_uri]';
 		if (entry.alt.indexOf('http')==0) {
-			$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
-			$('#xmet_'+prefix+'_img').html(cmp2image(entry.alt));
+			$(results_uri).val(entry.alt);
+			$(results).empty();
+			$(results).append('<li class="ui-state-default" >'+cmp2image(entry.alt)+'</li>');
 		} else {
-			$('input:[name=xmet_'+prefix+'_uri]').val(entry.alt);
-			$('#xmet_'+prefix+'_img').html('<img border="0" src="'+entry.src+'">');
-			
+			$(results_uri).val(entry.alt);
+			$(results).empty();
+			$(results).append('<li class="ui-state-default" ><img border="0" src="'+entry.src+'"></li>');
 		}
 	});
 }
@@ -154,7 +164,8 @@ function runSearch(queryService,form,results) {
  */
 function toggleSearchUI(id, idButton) {
  	$( id ).toggle( 'blind', {}, function(x) {
- 		$( idButton).text($(id).is(":hidden")?'Show search options':'Hide search options');
+ 		$( "#buttonSubstrateSearch").text($(id).is(":hidden")?'Show search options':'Hide search options');
+ 		$( "#buttonProductSearch").text($(id).is(":hidden")?'Show search options':'Hide search options');
  	});
 }      
 

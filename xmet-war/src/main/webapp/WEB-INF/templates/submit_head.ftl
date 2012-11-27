@@ -4,20 +4,17 @@
     .structresults { list-style-type: none; margin: 0; padding: 0; width: 930px; }
     .structresults li { margin: 3px; padding: 1px; float: left; width: 155px; height: 155px; font-size: 4em; text-align: center; }
 </style>
-<style type="text/css">
-	label { width: 10em; float: left; }
-	label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
-	p { clear: both; }
-	.submit { margin-left: 12em; }
-	em { font-weight: bold; padding-right: 1em; vertical-align: top; }
-</style>
+<link href="/xmetdb/style/form.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$( ".useSelected" ).button();
 		loadEnzymesList("#search_enzyme");
 		addSearchUI('substrate','${xmet_root}');
 		addSearchUI('product','${xmet_root}');
-		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#substrateSearchUI','#buttonSubstrateSearch');  return false; });
+		$( "#buttonSubstrateSearch" ).click(function() {  
+			//toggleSearchUI('#substrateSearchUI','#buttonSubstrateSearch');  return false;
+            $( "#substratesearch" ).dialog( "open" );
+		});
 		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#productSearchUI','#buttonProductSearch');  return false; });
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
@@ -31,6 +28,24 @@
             event.preventDefault();
             return false;
         });        
+		
+		 $( "#substratesearch" ).dialog({
+	            autoOpen: false,
+	            height: 450,
+	            width: 600,
+	            modal: false,
+	            buttons: {
+	                "Use selected structures as substrates": function() {
+	                	useSelected('substrate');
+	                },
+	                'Close': function() {
+	                    $( this ).dialog( "close" );
+	                }
+	            },
+	            close: function() {
+	                //allFields.val( "" ).removeClass( "ui-state-error" );
+	            }
+	        });
 	});
 	
 </script>

@@ -24,7 +24,7 @@
 	<td>
 		<a style='float:right;' href="#" id="buttonSubstrateSearch">Hide search options</a>
 		<br>
-		<div id="substratesearch"></div>
+
 	</td>
 	</tr>	
 	<tr>
@@ -64,6 +64,14 @@
 	</table>
 	
 	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
+
+	<p><label for="xmet_substrate_upload">Upload substrate:<em>*</em></label>
+	<input type='file'  class='multi' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='30'>
+	</p>	
+	
+	<p><label for="xmet_product_upload">Upload product:<em>*</em></label>
+	<input type='file'  class='multi' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='30'>
+	</p>	
 	
 	<p><label for="xmet_atom_uncertainty">Atom uncertainty:<em>*</em></label>
 			<select id="xmet_atom_uncertainty" >
@@ -194,6 +202,8 @@
 
 	};
 	</script>
+	
+	<div id="substratesearch"></div>
 	
 </body>
 </html>

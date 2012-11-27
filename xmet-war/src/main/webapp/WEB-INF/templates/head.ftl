@@ -2,7 +2,6 @@
 <meta property="dc:title" content="Xenobiotics Metabolism Database"/>
 <meta name="robots" content="index,follow"><META NAME="GOOGLEBOT" CONTENT="index,FOLLOW">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta http-equiv='content-type' content='text/html; charset=iso-8859-1' />
 
 <link href="/xmetdb/style/ambit.css" rel="stylesheet" type="text/css">
 <!--[if IE 7]><link rel="stylesheet" type="text/css" media="all" href="/xmetdb/style/ambit-msie7.css"><![endif]-->
