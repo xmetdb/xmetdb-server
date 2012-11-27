@@ -138,6 +138,7 @@ function defineStructuresTable(url, query_service, similarity) {
 		        "url": sSource ,
 		        "data": aoData,
 		        "dataType": "jsonp", 
+		        "crossDomain": true, 
 		        "contentType" : "application/x-javascript",
 		        "success": function(json) {
 		        	identifiers(json);
@@ -158,6 +159,7 @@ function defineStructuresTable(url, query_service, similarity) {
 			id_uri = query_service + "/query/compound/url/all?search=" + encodeURIComponent(aData.compound.URI) + "?max=1&media=application%2Fx-javascript";
 			$.ajax({
 			         dataType: "jsonp",
+			         "crossDomain": true, 
 			         url: id_uri,
 			         success: function(data, status, xhr) {
 			        	identifiers(data);

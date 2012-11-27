@@ -74,8 +74,10 @@ function addSearchUI(prefix, xmet_root) {
 	$( '#'+resultsName ).selectable();
 	
 }		
+
+
 /**
- * Fills in two hiddent text fields with selected compound URIs
+ * Fills in two hidden text fields with selected compound URIs
  * @param prefix
  */
 function useSelected(prefix) {
@@ -121,12 +123,12 @@ function runSearch(queryService,form,results) {
 	        "type": "GET",
 	        "url": sSource ,
 	        "dataType": "jsonp", 
+	        "crossDomain": true,  //bloody IE
 	        "contentType" : "application/x-javascript",
 	        "success": function(json) {
 	        	$(results).append('<li class="ui-state-default" ><img src="'+
 	        			queryService + '/depict/cdk/kekule?search=' + encodeURIComponent(search) +
 	        			'&w=150&h=150" alt="'+ search +'"></li>');
-	        	http://localhost:8080/ambit2/depict/cdk/kekule?search=O%3Dc2c1ccccc1c3ccccc23&media=image/png
    	        	json.dataEntry.forEach(function img(element, index, array) {
 	        		$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
 	        	  });
@@ -155,3 +157,190 @@ function toggleSearchUI(id, idButton) {
  		$( idButton).text($(id).is(":hidden")?'Show search options':'Hide search options');
  	});
 }      
+
+/**
+ * Load structures from remote Ambit dataset uri via JSONP
+ */
+function loadStructures(datasetURI, tag) {
+		 
+	      $.ajax({
+	          dataType: "jsonp",
+	          "crossDomain": true,  //bloody IE
+	          url: datasetURI + "?media=application%2Fx-javascript",
+	          success: function(data, status, xhr) {
+	        	  var images = "";
+	        	  var dataSize = data.dataEntry.length;
+	        	  for (i = 0; i < dataSize; i++) {
+	        		  images += cmp2image(data.dataEntry[i].compound.URI);
+	        		  images += "&nbsp;";
+	        	  };
+	        	  $(tag).replaceWith(images);	
+	          },
+	          error: function(xhr, status, err) { 
+	          },
+	          complete: function(xhr, status) { }
+	       });
+}
+
+/*
+ * Loads single observation via JSON and fills in the relevant HTML tags
+*/
+function loadObservation(observation_uri) {
+	var observation;
+    $.ajax({
+	          dataType: "json",
+	          contentType: 'application/json; charset=utf-8',
+	          url: observation_uri,
+	        	  //"/xmetdb/protocol/XMETDB2?media=application%2Fjson",
+	          success: function(data, status, xhr) {
+	        	  
+	        	  observation = data.observations[0];
+	        	  $('span#xmet_id').replaceWith("<a href='"+ observation["uri"] + "'>" + observation["identifier"] + "</a>");
+	        	  $('span#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
+	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
+	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
+	        	  $('span#xmet_reference').replaceWith("TODO");
+	        	  
+	        	  loadEnzyme(observation);
+	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
+	        		  loadStructures(observation.Substrate.dataset.uri,"span#xmet_substrate");
+	        	  
+	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
+	        		  loadStructures(observation.Product.dataset.uri,"span#xmet_product");
+	          },
+	          error: function(xhr, status, err) { 
+	        	  xmetdblog(status + " " + xhr.responseText);
+	          },
+	          complete: function(xhr, status) { 
+	        	  xmetdblog(status);
+	          }
+	       });
+}
+
+/*
+* Loads enzyme for a single observation via JSON
+*/
+function loadEnzyme(observation) {
+	 if ((observation.enzyme.code === undefined) || (observation.enzyme.code ==null)) {
+	      $.ajax({
+	          dataType: "json",
+	          contentType: 'application/json; charset=utf-8',
+	          url: observation.uri + "/endpoint?max=1&media=application%2Fjson",
+	          success: function(data, status, xhr) {
+	        	  observation.enzyme.code = data[0].code;
+	        	  observation.enzyme.name = data[0].name;
+	        	  $('span#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
+	          },
+	          error: function(xhr, status, err) {
+	        	  xmetdblog(status+err);
+	          },
+	          complete: function(xhr, status) { }
+	       });
+	 } else {
+		 $('span#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
+	 }	
+}
+
+/**
+* Defines dataTable for a list of observations, retrieved via JSON
+*/
+function defineObservationsTable(tableSelector,observations_uri) {
+	$(tableSelector).dataTable( {
+		"sAjaxDataProp" : "observations",
+		"bProcessing": true,
+		"bServerSide": false,
+		"bStateSave": true,
+		"sAjaxSource": observations_uri,
+		"aoColumns": [
+				{ "mDataProp": "identifier" , "asSorting": [ "asc", "desc" ],
+ 			      "fnRender": function ( o, val ) {
+          				return "<a href='"+o.aData["uri"] + "'>" + o.aData["identifier"] + "</a>";
+        			}
+				},
+				{ "mDataProp": "Substrate.dataset.uri" , "asSorting": [ "asc", "desc" ], "bVisible": false },
+				{ "mDataProp": "Substrate.dataset.structure" , "asSorting": [ "asc", "desc" ], "sDefaultContent" : "TODO" },
+				{ "mDataProp": "Product.dataset.uri" , "asSorting": [ "asc", "desc" ], "bVisible": false },
+				{ "mDataProp": "Product.dataset.structure" , "asSorting": [ "asc", "desc" ],"sDefaultContent" : "TODO"},
+				{ "mDataProp": "title" , "asSorting": [ "asc", "desc" ],
+				   "fnRender": function ( o, val ) {
+	          				return "<span title='"+ o.aData["description"] +"'>" + val + "</span>";
+	        		}
+				},
+				{ "mDataProp": "enzyme.code" , "asSorting": [ "asc", "desc" ], "bSearchable" : true	},
+				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] },
+				{ "mDataProp": "owner.username" , "asSorting": [ "asc", "desc" ] }
+			],
+		"bJQueryUI" : true,
+		"bPaginate" : true,
+		"bDeferRender": true,
+		"bSearchable": true,
+		/*
+		"sDom": '<"H"fr>tC<"F"ip>', //ColVis 
+		"oColVis": {
+			"buttonText": "&nbsp;",
+			"bRestore": true,
+			"sAlign": "left"
+		},
+		"fnDrawCallback": function (o) {
+			var nColVis = $('div.ColVis', o.nTableWrapper)[0];
+			nColVis.style.width = o.oScroll.iBarWidth+"px";
+			nColVis.style.top = ($('div.dataTables_scroll', o.nTableWrapper).position().top)+"px";
+			nColVis.style.height = ($('div.dataTables_scrollHead table', o.nTableWrapper).height())+"px";
+		},		
+		*/
+		"oLanguage": {
+	            "sProcessing": "<img src='images/progress.gif' border='0'>"
+	    },
+		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+				//retrieve the first compound URI from substrates dataset URI
+				 if ((aData.Substrate.dataset.structure === undefined) || (aData.Product.dataset.structure==null)) {
+				      $.ajax({
+				          dataType: "jsonp",
+				          url: aData.Substrate.dataset.uri + "?max=1&media=application%2Fx-javascript",
+				          success: function(data, status, xhr) {
+				        	  aData.Substrate.dataset.structure = data.dataEntry[0].compound.URI;
+				        	  $('td:eq(1)', nRow).html(cmp2image( aData.Substrate.dataset.structure));	
+				          },
+				          error: function(xhr, status, err) { },
+				          complete: function(xhr, status) { }
+				       });
+				 } else {
+					 $('td:eq(1)', nRow).html(cmp2image(aData.Substrate.dataset.structure));
+				 }			
+				//retrieve the first compound URI from products dataset URI
+				 if ((aData.Product.dataset.structure === undefined) || (aData.Product.dataset.structure==null)) {
+				      $.ajax({
+				          dataType: "jsonp",
+				          url: aData.Product.dataset.uri + "?max=1&media=application%2Fx-javascript",
+				          success: function(data, status, xhr) {
+				        	  aData.Product.dataset.structure = data.dataEntry[0].compound.URI;
+				        	  $('td:eq(2)', nRow).html(cmp2image( aData.Product.dataset.structure));	
+				          },
+				          error: function(xhr, status, err) { },
+				          complete: function(xhr, status) { }
+				       });
+				 } else {
+					 $('td:eq(2)', nRow).html(cmp2image(aData.Product.dataset.structure));
+				 }
+				 //retrieve the enzyme from /protocol/id/endpoint URI
+				 if ((aData.enzyme.code === undefined) || (aData.enzyme.code ==null)) {
+				      $.ajax({
+				          dataType: "json",
+				          url: aData.uri + "/endpoint?max=1&media=application%2Fjson",
+				          success: function(data, status, xhr) {
+				        	  aData.enzyme.code = data[0].code;
+				        	  aData.enzyme.name = data[0].name;
+				        	  $('td:eq(4)', nRow).html(renderEnzyme(data[0].code,data[0].name));	
+				          },
+				          error: function(xhr, status, err) { },
+				          complete: function(xhr, status) { }
+				       });
+				 } else {
+					 $('td:eq(4)', nRow).html(renderEnzyme(aData.enzyme.code,aData.enzyme.name));	
+				 }				 
+        }			
+	} );
+}
+function xmetdblog(msg) {
+	try { console.log(msg); } catch (e) { alert(msg); }
+}

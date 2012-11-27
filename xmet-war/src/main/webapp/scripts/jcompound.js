@@ -33,7 +33,6 @@ function identifiers(opentox) {
 	        	if (opentox.feature[k]) {lookup.inchikey.push(k);   }	        
 	        	/*
 	        } else {
-	        	//console.log(k);
 	        	count[4]++;
 	        	if (count[4]<=200) { //TODO check how it works with many columns
 		        	var thclass = "property";

@@ -6,7 +6,6 @@ function startEditor(baseRef,formName) {
   // use here fully qualified IP address (number!) i.e.
   // window.open('http://123.456.789.1/jme_window.html',...
   form = formName==undefined?'form':formName;
-  console.log(form);
   window.open(baseRef+'/jme/jme_window.html','JME','width=500,height=450,scrollbars=no,resizable=yes');
 }
 

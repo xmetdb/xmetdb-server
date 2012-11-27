@@ -7,7 +7,6 @@
 			$('span#valueDatasets').load(  '${queryService}/admin/stats/dataset'   );
 			$('span#valueStructures').load( '${queryService}/admin/stats/structures');
 		} catch (e) {
-			console.log(e);
 		}
 		
 <#-- XXX Remove these two lines when the above issue is fixed. 
