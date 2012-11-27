@@ -57,7 +57,7 @@ function addSearchUI(prefix, xmet_root) {
 	"<table width='100%'>"+
 	"<tr><td>\n"+
 	"   <input type='hidden' name='type' value='smiles'>"+
-	"   <input type='button' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'><br>"+
+	"   <a href='#' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'>Draw (sub)structure</a><br>"+
 	"   <input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>"+
 	"</td>\n"+
 	"<td align='left' valign='top'>\n"+
@@ -91,16 +91,37 @@ function useSelected(prefix) {
 	$( '#structureSearchResults li.ui-selected img').each(function (index,entry) {
 		var results = '#xmet_'+prefix+'_img';
 		var results_uri = 'input:[name=xmet_'+prefix+'_uri]';
+		var results_mol = 'input:[name=xmet_'+prefix+'_mol]';
 		if (entry.alt.indexOf('http')==0) {
 			$(results_uri).val(entry.alt);
 			$(results).empty();
 			$(results).append('<li class="ui-state-default" >'+cmp2image(entry.alt)+'</li>');
+			$(results_mol).val('');
 		} else {
 			$(results_uri).val(entry.alt);
 			$(results).empty();
 			$(results).append('<li class="ui-state-default" ><img border="0" src="'+entry.src+'"></li>');
+			$(results_mol).val('');
 		}
 	});
+}
+
+function useDrawn(queryService,prefix) {
+	var smiles = document.JME.smiles();
+	var jme = document.JME.molFile();
+	if (smiles == "") {
+		alert("Nothing to submit");
+	} else {
+		var results = '#xmet_'+prefix+'_img';
+		var results_uri = 'input:[name=xmet_'+prefix+'_uri]';
+		var results_mol = 'input:[name=xmet_'+prefix+'_mol]';
+		$(results_uri).val(smiles);
+		$(results_mol).val(jme);
+		$(results).empty();
+		$(results).append('<li class="ui-state-default" ><img border="0" src="'+
+    			queryService + '/depict/cdk/kekule?search=' + encodeURIComponent(smiles) +
+    			'&w=150&h=150" alt="'+ smiles +'"></li>');
+	}
 }
 
 function getQueryURL(queryService,option) {
@@ -162,10 +183,29 @@ function runSearch(queryService,form,results) {
  * @param id
  * @param idButton
  */
-function toggleSearchUI(id, idButton) {
+function toggleSearchUI(id, idButton, msg) {
  	$( id ).toggle( 'blind', {}, function(x) {
- 		$( "#buttonSubstrateSearch").text($(id).is(":hidden")?'Show search options':'Hide search options');
- 		$( "#buttonProductSearch").text($(id).is(":hidden")?'Show search options':'Hide search options');
+ 		$( idButton).text($(id).is(":hidden")?'Show '+msg:'Hide '+msg);
+ 	});
+}      
+
+function toggleDrawUI(prefix, idButton, msg) {
+ 	$( '#drawUI').toggle( 'blind', {}, function(x) {
+ 		if ($('#drawUI').is(":hidden")) {
+ 			$( idButton).text('Show '+msg);
+ 		} else {
+ 			$( idButton).text('Hide '+msg);
+ 			var results_mol = 'input:[name=xmet_'+prefix+'_mol]';
+ 			try {
+ 				var mol = $(results_mol).val();
+ 				if ((mol===undefined) || (mol== null) || ("" == mol)) {
+ 					document.JME.reset();
+ 				} else
+ 					document.JME.readMolFile(mol);
+ 			} catch (err) {
+ 				document.JME.reset();
+ 			}
+ 		} 
  	});
 }      
 

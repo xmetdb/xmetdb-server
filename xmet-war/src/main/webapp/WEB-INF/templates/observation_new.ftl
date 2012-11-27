@@ -18,8 +18,10 @@ $(document).ready(function() {
 		$( ".useSelected" ).button();
 		loadEnzymesList("#xmet_enzyme");
 		addSearchUI('substrate','${xmet_root}');
-		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch');  return false; });
-		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch');  return false; });
+		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch','search options');  return false; });
+		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch','search options');  return false; });
+		$( "#buttonSubstrateDraw" ).click(function() {  toggleDrawUI('substrate','.buttonDraw','structure diagram editor');  return false; });
+		$( "#buttonProductDraw" ).click(function() {  toggleDrawUI('product','.buttonDraw','structure diagram editor');  return false; });		
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
         	runSearch('${queryService}',$(this),'#structureSearchResults');
@@ -45,28 +47,30 @@ $(document).ready(function() {
 <form method="POST" action="/xmetdb/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
 <div class='ui-widget-content ui-corner-bottom' style='margin-top: 0px;margin-bottom: 0px;' />
 		
-	<p><label for="xmet_substrate">Substrate:</label>
+	<p><label for="xmet_substrate">Substrate:<em>*</em></label>
 			<ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
+			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 	</p>
 	<p><label>&nbsp;</label>
 		<span >
-				<a class='button' href="#" title='Launches structure diagram editor' onClick='startEditor("${xmet_root}","submitForm");'>Draw</a>
+				<a class='button buttonDraw' href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor</a>
 				&nbsp;|&nbsp;
-				<a class='button' href="#" id="buttonSubstrateSearch" class="buttonSearch">Show search options</a>
+				<a class='button buttonSearch' href="#" id="buttonSubstrateSearch">Show search options</a>
 				&nbsp;|&nbsp;
 				Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20'>
 		</span>
 	</p>
-	<p><label for="xmet_product">Product:</label>
+	<p><label for="xmet_product">Product:<em>*</em></label>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
-			<input type="hidden" id="xmet_substrate_uri" name="xmet_product_uri" value="">
+			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
+			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 	</p>
 	<p><label>&nbsp;</label>
 			<span >
-					<a class='button' href="#" title='Launches structure diagram editor' onClick='startEditor("${xmet_root}","submitForm");'>Draw</a>
+					<a class='button buttonDraw' href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor</a>
 					&nbsp;|&nbsp;
-					<a class='button' href="#" id="buttonProductSearch" class="buttonSearch">Show search options</a>
+					<a class='button buttonSearch' href="#" id="buttonProductSearch">Show search options</a>
 					&nbsp;|&nbsp;
 					Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20'>
 			</span>			
@@ -108,7 +112,31 @@ $(document).ready(function() {
 	
 </form>	
 	<br/>
-	<div id="searchUI" class="structresults" style='width:100%;'></div>
+	<div id="searchUI" class="structresults" style='width:100%;display:none;'></div>
+	<br/>
+	<!-- Structure diagram editor -->
+	<div id="drawUI" style='width:100%;display:none;'>
+	<div class='ui-widget-header ui-corner-top'><p>Structure diagram editor<span style='float:right;'>
+	<a href='#' onClick='useDrawn("${queryService}","substrate");return false;'>Use the structure as a substrate</a>
+	&nbsp;|&nbsp;
+	<a href='#' onClick='useDrawn("${queryService}","product");return false;'>Use the structures as a product</a>&nbsp;
+	</span></p></div>
+	<div class='ui-widget-content' style='margin:5 5 5 5;padding: 5 5 5 5;'>
+	&nbsp;
+	<applet code="JME.class" name="JME" archive="/xmetdb/jme/JME.jar" width="500px" height="400px">
+	<param name="options" value="nohydrogens,polarnitro,nocanonize">
+	You have to enable Java and JavaScript on your machine ! 
+	</applet>
+	
+	</div> 
+	
+	<div class='ui-widget-header ui-corner-bottom'><p>&nbsp;<span style='float:right;'>
+	<a href='#' onClick='useDrawn("${queryService}","substrate");return false;'>Use the structure as a substrate</a>
+	&nbsp;|&nbsp;
+	<a href='#' onClick='useDrawn("${queryService}","product");return false;'>Use the structure as a product</a>&nbsp;
+	</span></p></div>	
+	
+	</div> <!-- drawUI -->
 	
 <!-- Footer and the like -->
 
