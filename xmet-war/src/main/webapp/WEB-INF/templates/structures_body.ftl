@@ -18,7 +18,7 @@
 		<th>Structure</th>
 		<th>Name</th>
 		<th>CAS</th>
-		<th>QMRF documents</th>
+		<th>XMETDB observations</th>
 		<th>Similarity</th>
 		<th>SMILES</th>
 		<th>InChI</th>

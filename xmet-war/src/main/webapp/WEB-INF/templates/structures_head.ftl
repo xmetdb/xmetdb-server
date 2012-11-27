@@ -13,16 +13,16 @@ $(document).ready(function() {
 			function() {
 				var nTr = $(this).parents('tr')[0];
 				if (oTable.fnIsOpen(nTr)) {
-					this.src = "/qmrf/images/zoom_in.png";
+					this.src = "/xmetdb/images/zoom_in.png";
 					this.alt = "Zoom in";
-					this.title='Click to show QMRF documents';
+					this.title='Click to show XMETDB observations';
 					oTable.fnClose(nTr);
 				} else {
 				    this.alt = "Zoom out";
-					this.src = "/qmrf/images/zoom_out.png";
-					this.title='Click to close QMRF documents list';
+					this.src = "/xmetdb/images/zoom_out.png";
+					this.title='Click to close XMETDB observations list';
 					var id = 'v'+getID();
-					oTable.fnOpen(nTr, fnStructureQMRFList(oTable,nTr,id),	'details');
+					oTable.fnOpen(nTr, fnStructureXMETObservationsList(oTable,nTr,id),	'details');
 											       
 				}
 		});

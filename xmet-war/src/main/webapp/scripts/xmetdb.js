@@ -161,20 +161,18 @@ function toggleSearchUI(id, idButton) {
 /**
  * Load structures from remote Ambit dataset uri via JSONP
  */
-function loadStructures(datasetURI, tag) {
+function loadStructures(datasetURI, results) {
 		 
 	      $.ajax({
 	          dataType: "jsonp",
 	          "crossDomain": true,  //bloody IE
 	          url: datasetURI + "?media=application%2Fx-javascript",
 	          success: function(data, status, xhr) {
-	        	  var images = "";
 	        	  var dataSize = data.dataEntry.length;
+	        	  $(results).empty();
 	        	  for (i = 0; i < dataSize; i++) {
-	        		  images += cmp2image(data.dataEntry[i].compound.URI);
-	        		  images += "&nbsp;";
+	        		  $(results).append('<li class="ui-state-default" >'+cmp2image(data.dataEntry[i].compound.URI)+'</li>');
 	        	  };
-	        	  $(tag).replaceWith(images);	
 	          },
 	          error: function(xhr, status, err) { 
 	          },
@@ -195,18 +193,18 @@ function loadObservation(observation_uri) {
 	          success: function(data, status, xhr) {
 	        	  
 	        	  observation = data.observations[0];
-	        	  $('span#xmet_id').replaceWith("<a href='"+ observation["uri"] + "'>" + observation["identifier"] + "</a>");
-	        	  $('span#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
+	        	  $('#xmet_id').replaceWith("<a href='"+ observation["uri"] + "'>" + observation["identifier"] + "</a>");
+	        	  $('#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
-	        	  $('span#xmet_reference').replaceWith("TODO");
+	        	  $('#xmet_reference').replaceWith("TODO");
 	        	  
 	        	  loadEnzyme(observation);
 	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        		  loadStructures(observation.Substrate.dataset.uri,"span#xmet_substrate");
+	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate");
 	        	  
 	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-	        		  loadStructures(observation.Product.dataset.uri,"span#xmet_product");
+	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product");
 	          },
 	          error: function(xhr, status, err) { 
 	        	  xmetdblog(status + " " + xhr.responseText);
@@ -220,7 +218,8 @@ function loadObservation(observation_uri) {
 /*
 * Loads enzyme for a single observation via JSON
 */
-function loadEnzyme(observation) {
+function loadEnzyme(observation, renderEnzyme) {
+	 if (renderEnzyme === undefined) renderEnzyme = displayEnzyme;
 	 if ((observation.enzyme.code === undefined) || (observation.enzyme.code ==null)) {
 	      $.ajax({
 	          dataType: "json",
@@ -229,7 +228,7 @@ function loadEnzyme(observation) {
 	          success: function(data, status, xhr) {
 	        	  observation.enzyme.code = data[0].code;
 	        	  observation.enzyme.name = data[0].name;
-	        	  $('span#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
+	        	  renderEnzyme(observation);
 	          },
 	          error: function(xhr, status, err) {
 	        	  xmetdblog(status+err);
@@ -237,8 +236,12 @@ function loadEnzyme(observation) {
 	          complete: function(xhr, status) { }
 	       });
 	 } else {
-		 $('span#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
+		 renderEnzyme(observation);
 	 }	
+}
+
+function displayEnzyme(observation) {
+	  $('#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
 }
 
 /**

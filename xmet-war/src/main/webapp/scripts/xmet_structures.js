@@ -192,12 +192,13 @@ function getID() {
 }			
 
 	/* QMRF list per structure */
-function fnStructureQMRFList(oTable, nTr, id) {
+function fnStructureXMETObservationsList(oTable, nTr, id) {
 	var obj = oTable.fnGetData(nTr);
 	var sOut = '<div class="ui-widget-content ui-corner-all" id="' + id + '">';
-	sOut = sOut + "<div id='" + id + "_qmrf' >Please wait while QMRF documents list is loading...</div>";
+	sOut = sOut + "<div id='" + id + "_xmetdb' >Please wait while XMETDB observations list is loading...</div>";
 	sOut += "</div>";	
-
+	//TODO rewrite it to use JSON to retrieve observations per structure
+	/*
 	var uri = encodeURIComponent(obj["compound"]["URI"]);
 	var qmrf_query = "/xmetdb/protocol?structure=" + uri + "&headless=true&details=false&media=text%2Fhtml&"+ new Date().getTime();
 
@@ -212,7 +213,7 @@ function fnStructureQMRFList(oTable, nTr, id) {
           complete: function(xhr, status) {
           }
        });
-       
+      */ 
 	return sOut;
 }
 
