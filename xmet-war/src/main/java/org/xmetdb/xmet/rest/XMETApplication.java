@@ -20,6 +20,7 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
 import org.restlet.Server;
+import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Filter;
@@ -49,6 +50,7 @@ import org.xmetdb.xmet.aa.XMETLoginFormResource;
 import org.xmetdb.xmet.aa.XMETLoginPOSTResource;
 import org.xmetdb.xmet.aa.XMETLogoutPOSTResource;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.Resources.Config;
 import org.xmetdb.xmet.client.XMETDBRoles;
 import org.xmetdb.xmet.task.XMETAdminRouter;
 import org.xmetdb.xmet.task.XMETEditorRouter;
@@ -109,10 +111,13 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		Router router = new MyRouter(this.getContext());
 		// here we check if the cookie contains auth token, if not just consider
 		// the user notlogged in
+		boolean testAuthZ = "true".equalsIgnoreCase(getContext().getParameters().getFirstValue("TESTAUTHZ"));
+		
 		Filter auth = createCookieAuthenticator(true);
+		Filter authz = new ProtocolAuthorizer(testAuthZ); 
 		Router setCookieUserRouter = new MyRouter(getContext());
-		auth.setNext(setCookieUserRouter);
-
+		auth.setNext(authz);
+		authz.setNext(setCookieUserRouter);
 		setCookieUserRouter
 				.attach(Resources.login, XMETLoginFormResource.class);
 		
@@ -212,8 +217,11 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	 */
 	protected Filter createCookieAuthenticator(boolean optional) {
 		String secret = getProperty(Resources.Config.secret.name());
+		String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
+		if (usersdbname==null) usersdbname = "xmet_users";
+		
 		CookieAuthenticator cookieAuth = new CookieAuthenticator(getContext(),
-				"xmet_users", (secret==null?UUID.randomUUID().toString():secret).getBytes());
+				usersdbname, (secret==null?UUID.randomUUID().toString():secret).getBytes());
 		cookieAuth.setCookieName("xmetdb");
 		long sessionLength = 1000*60*45L; //45 min in milliseconds
 		try { sessionLength = Long.parseLong(getProperty(Resources.Config.sessiontimeout.name())); } catch (Exception x) {}
@@ -410,6 +418,30 @@ class SimpleRoleAndMethodAuthorizer extends RoleAuthorizer {
 			return false;
 		// if (Method.GET.equals(request.getMethod()))
 		// return true;
+		return super.authorize(request, response);
+	}
+
+}
+
+
+class ProtocolAuthorizer extends RoleAuthorizer {
+	protected boolean skip = true;
+	public ProtocolAuthorizer(boolean skip, DBRole... roles) {
+		super();
+		this.skip = skip;
+		for (DBRole role : roles)
+			getAuthorizedRoles().add(role);
+	}
+
+	@Override
+	public boolean authorize(Request request, Response response) {
+		if (Method.GET.equals(request.getMethod()))
+			return true;
+		if (skip) return true;
+		if ((request.getClientInfo() == null)
+				|| (request.getClientInfo().getUser() == null)
+				|| (request.getClientInfo().getUser().getIdentifier() == null))
+			return false;
 		return super.authorize(request, response);
 	}
 

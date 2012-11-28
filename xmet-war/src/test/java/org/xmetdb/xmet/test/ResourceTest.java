@@ -71,6 +71,8 @@ public abstract class ResourceTest extends DbUnitTest {
         context.getParameters().add(Preferences.PORT, getPort());
         context.getParameters().add(Preferences.HOST, getHost());
         context.getParameters().add(Resources.Config.xmet_protected.name(), "false");
+        context.getParameters().add("TESTAUTHZ", Boolean.TRUE.toString());
+        context.getParameters().add(Resources.Config.users_dbname.name(),"aalocal_test");
         
         // Create a component
         component = new XMETRESTComponent(context);

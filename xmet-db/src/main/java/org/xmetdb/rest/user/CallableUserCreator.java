@@ -150,7 +150,7 @@ public class CallableUserCreator extends CallableDBUpdateTask<DBUser,Form,String
 	}
 
 	private static String emailContent = 
-	"Thank you for applying for user registration with the QMRF Database.\n"+
+	"Thank you for applying for user registration with the XMETDB.\n"+
 	"\n"+
 	"Please point your browser to the following URL in order to proceed with the registration of the \"%s\" user:\n"+
 	"%s%s%s?code=%s\n"+
@@ -164,8 +164,8 @@ public class CallableUserCreator extends CallableDBUpdateTask<DBUser,Form,String
 		if (passwordChange)
 			return String.format("%s%s", baseReference, Resources.myaccount);
 		else if (Method.POST.equals(method) && registration!=null && target != null && target.getEmail()!=null) {
-			Notification notification = new Notification("config/qmrf.properties");
-			notification.sendNotification(target.getEmail(), "QMRF Inventory User Confirmation", 
+			Notification notification = new Notification("config/xmetdb.properties");
+			notification.sendNotification(target.getEmail(), "XMETDB User Confirmation", 
 					String.format(emailContent,target.getUserName(),baseReference,Resources.register,Resources.confirm,registration.getConfirmationCode()),
 					"text/plain");
 			return String.format("%s%s%s", baseReference, Resources.register, Resources.notify);

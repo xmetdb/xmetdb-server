@@ -39,9 +39,9 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  */
 public class ProtocolResourceTest extends ProtectedResourceTest {
 
-	protected static String id2v1 = "8f0aba27-862e-11e1-ba85-00ff3739b863";
-	protected static String id2v2 = "8f0afddb-862e-11e1-ba85-00ff3739b863";
-	protected static String id119v1 = "Q2-10-14-119";
+	protected static String idxmet2 = "XMETDB2";
+	protected static String idxmet3 = "XMETDB3";
+	protected static String idxmet1 = "XMETDB1";
 	@Override
 	protected boolean isAAEnabled() {
 		return false;
@@ -57,7 +57,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 	@Override
 	public String getTestURI() {
 		return String.format("http://localhost:%d%s/%s", port,
-							Resources.protocol, id2v2);
+							Resources.protocol, idxmet3);
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		int count = 0;
 		while ((line = r.readLine()) != null) {
 			Assert.assertEquals(String.format("http://localhost:%d%s/%s",
-					port, Resources.protocol, id2v2), line);
+					port, Resources.protocol, idxmet3), line);
 			count++;
 		}
 		return count == 1;
@@ -95,9 +95,9 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		List<Protocol> protocols = ioClass.fromJena(model);
 		Assert.assertEquals(1, protocols.size());
 		Assert.assertEquals(String.format(
-				"http://localhost:8181/protocol/%s",id2v2),
+				"http://localhost:8181/protocol/%s",idxmet3),
 				protocols.get(0).getResourceURL().toString());
-		Assert.assertEquals(id2v2, protocols.get(0).getIdentifier());
+		Assert.assertEquals(idxmet3, protocols.get(0).getIdentifier());
 		Assert.assertEquals("QSAR model for narcosis", protocols.get(0)
 				.getTitle());
 		Assert.assertNotNull(protocols.get(0).getAbstract());
@@ -182,7 +182,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 	@Test
 	public void testUpdateEntryFromMultipartWeb() throws Exception {
 		String uri = String.format("http://localhost:%d%s/%s", port,
-										Resources.protocol, id2v2);
+										Resources.protocol, idxmet3);
 		String newURI = createEntryFromMultipartWeb(new Reference(uri), Method.PUT);
 		String newXMETID = "Q12-14-0001";
 		IDatabaseConnection c = getConnection();
@@ -209,7 +209,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 	public void testCreateVersionEntryFromMultipartWeb() throws Exception {
 		String url = createEntryFromMultipartWeb(new Reference(String.format(
 				"http://localhost:%d%s/%s%s", port,
-				Resources.protocol, id119v1 , Resources.versions)));
+				Resources.protocol, idxmet1 , Resources.versions)));
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
 		Assert.assertEquals(6, table.getRowCount());
@@ -391,7 +391,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 
 	public void testDownloadFile() throws Exception {
 		testGet(String.format("http://localhost:%d%s/%s%s", port,
-				Resources.protocol, id2v1, Resources.document),
+				Resources.protocol, idxmet2, Resources.document),
 				MediaType.APPLICATION_PDF);
 	}
 
