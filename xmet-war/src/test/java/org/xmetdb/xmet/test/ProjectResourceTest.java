@@ -100,7 +100,7 @@ public class ProjectResourceTest  extends ResourceTest {
 		Assert.assertEquals(1,projects.size());
 		Assert.assertEquals(String.format("http://localhost:%d%s/G1",port,Resources.project),
 													projects.get(0).getResourceURL().toString());
-		Assert.assertEquals("N/A", projects.get(0).getTitle());
+		Assert.assertEquals("XMETDB", projects.get(0).getTitle());
 		//Assert.assertEquals("detective", projects.get(0).getGroupName());
 		return model;
 	}	
@@ -169,11 +169,11 @@ public class ProjectResourceTest  extends ResourceTest {
 	@Test
 	public void testDeleteFromUserProfile() throws Exception {
 		IDatabaseConnection c = getConnection();	
-		String sql = "SELECT iduser FROM user_project where idproject=3 and iduser=3";
+		String sql = "SELECT iduser FROM user_project where idproject=1 and iduser=1";
 		ITable table = 	c.createQueryTable("EXPECTED",sql);
 		Assert.assertEquals(1,table.getRowCount());
 		c.close();		
-		String org = String.format("http://localhost:%d%s/U3%s/G3", port,Resources.user,Resources.project);
+		String org = String.format("http://localhost:%d%s/U1%s/G1", port,Resources.user,Resources.project);
 		RemoteTask task = testAsyncPoll(new Reference(org),
 				MediaType.TEXT_URI_LIST, null,
 				Method.DELETE);
@@ -188,14 +188,14 @@ public class ProjectResourceTest  extends ResourceTest {
 	@Test
 	public void testAddProjectToUserProfile() throws Exception {
 		IDatabaseConnection c = getConnection();	
-		String sql = "SELECT iduser FROM user_project where idproject=3 and iduser=3";
+		String sql = "SELECT iduser FROM user_project where idproject=2 and iduser=3";
 		ITable table = 	c.createQueryTable("EXPECTED",sql);
-		Assert.assertEquals(1,table.getRowCount());
+		Assert.assertEquals(0,table.getRowCount());
 		c.close();		
 		
 
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		formparams.add(new BasicNameValuePair("project_uri",  String.format("http://localhost:%d%s/G1",port,Resources.project)));
+		formparams.add(new BasicNameValuePair("project_uri",  String.format("http://localhost:%d%s/G2",port,Resources.project)));
 		
 		String org = String.format("http://localhost:%d%s/U3%s", port,Resources.user,Resources.project);
 		RemoteTask task = testAsyncPoll(new Reference(org),
@@ -204,7 +204,7 @@ public class ProjectResourceTest  extends ResourceTest {
 		Assert.assertEquals(Status.SUCCESS_OK.getCode(), task.getStatus());
 		//Assert.assertNull(task.getResult());
 		c = getConnection();	
-		sql = "SELECT iduser FROM user_project where idproject=1 and iduser=3";
+		sql = "SELECT iduser FROM user_project where idproject=2 and iduser=3";
 		table = 	c.createQueryTable("EXPECTED",sql);
 		Assert.assertEquals(1,table.getRowCount());
 		c.close();			
@@ -213,26 +213,26 @@ public class ProjectResourceTest  extends ResourceTest {
 	@Test
 	public void testUpdate() throws Exception {
 		IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT name,ldapgroup FROM project where idproject=2");
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT name,ldapgroup FROM project where idproject=3");
 		Assert.assertEquals("ToDelete",table.getValue(0,"name"));
 		Assert.assertNull(table.getValue(0,"ldapgroup"));
 		c.close();		
 		
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		formparams.add(new BasicNameValuePair(DBGroup.fields.name.name(), "XMETDB"));
-		formparams.add(new BasicNameValuePair(DBGroup.fields.ldapgroup.name(), "xmetdb"));
+		formparams.add(new BasicNameValuePair(DBGroup.fields.name.name(), "XMETDB-new"));
+		formparams.add(new BasicNameValuePair(DBGroup.fields.ldapgroup.name(), "xmetdb-new"));
 		
 		
-		String org = String.format("http://localhost:%d%s/G2", port,Resources.project);
+		String org = String.format("http://localhost:%d%s/G3", port,Resources.project);
 		RemoteTask task = testAsyncPoll(new Reference(org),
 				MediaType.TEXT_URI_LIST,new UrlEncodedFormEntity(formparams,"UTF-8"),
 				Method.PUT);
 		Assert.assertEquals(Status.SUCCESS_OK.getCode(), task.getStatus());
 		//Assert.assertNull(task.getResult());
 		c = getConnection();	
-		table = 	c.createQueryTable("EXPECTED","SELECT name,ldapgroup FROM project where idproject=2");
-		Assert.assertEquals("XMETDB",table.getValue(0,"name"));
-		Assert.assertEquals("xmetdb",table.getValue(0,"ldapgroup"));
+		table = 	c.createQueryTable("EXPECTED","SELECT name,ldapgroup FROM project where idproject=3");
+		Assert.assertEquals("XMETDB-new",table.getValue(0,"name"));
+		Assert.assertEquals("xmetdb-new",table.getValue(0,"ldapgroup"));
 		c.close();			
 	}
 	

@@ -41,7 +41,7 @@ public class AlertResourceTest extends ResourceTest {
 	}
 	@Override
 	public String getTestURI() {
-		return String.format("http://localhost:%d%s/U3%s", port,Resources.user,Resources.alert);
+		return String.format("http://localhost:%d%s/U2%s", port,Resources.user,Resources.alert);
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class AlertResourceTest extends ResourceTest {
 		String line = null;
 		int count = 0;
 		while ((line = r.readLine())!= null) {
-			Assert.assertTrue(line.startsWith(String.format("http://localhost:%d%s/U3%s/A",port,Resources.user,Resources.alert)));
+			Assert.assertTrue(line.startsWith(String.format("http://localhost:%d%s/U2%s/A",port,Resources.user,Resources.alert)));
 			count++;
 		}
 		return count==2;
@@ -86,7 +86,7 @@ public class AlertResourceTest extends ResourceTest {
 	
 	@Test
 	public void testRDF() throws Exception {
-		testGet(String.format("http://localhost:%d%s/U3%s", port,Resources.user,Resources.alert),
+		testGet(String.format("http://localhost:%d%s/U2%s", port,Resources.user,Resources.alert),
 												MediaType.APPLICATION_RDF_XML);
 	}
 	
@@ -102,7 +102,7 @@ public class AlertResourceTest extends ResourceTest {
 		Assert.assertEquals(2,alerts.size());
 		Assert.assertTrue(
 				alerts.get(0).getResourceURL().toString().startsWith(
-				String.format("http://localhost:%d%s/U3%s/A",port,Resources.user,Resources.alert)
+				String.format("http://localhost:%d%s/U2%s/A",port,Resources.user,Resources.alert)
 													));
 		Assert.assertTrue("cell".equals(alerts.get(0).getTitle()) || "toxicity".equals(alerts.get(0).getTitle()) ) ;
 		Assert.assertTrue("cell".equals(alerts.get(0).getQueryString()) || "toxicity".equals(alerts.get(0).getQueryString()) ) ;
@@ -112,7 +112,7 @@ public class AlertResourceTest extends ResourceTest {
 		Assert.assertEquals(Query.QueryType.FREETEXT, alerts.get(0).getType());
 		Assert.assertEquals(1, alerts.get(0).getRecurrenceInterval());
 		Assert.assertNotNull(alerts.get(0).getUser());
-		String user =  String.format("http://localhost:%d%s/U3",port,Resources.user);
+		String user =  String.format("http://localhost:%d%s/U2",port,Resources.user);
 		Assert.assertEquals(user, alerts.get(0).getUser().getResourceURL().toString());
 		return model;
 	}	
@@ -165,7 +165,7 @@ public class AlertResourceTest extends ResourceTest {
 	
 	@Test
 	public void testDelete() throws Exception {
-		String org = String.format("http://localhost:%d%s/U3%s/A1", port,Resources.user,Resources.alert);
+		String org = String.format("http://localhost:%d%s/U2%s/A1", port,Resources.user,Resources.alert);
 		RemoteTask task = testAsyncPoll(new Reference(org),
 				MediaType.TEXT_URI_LIST, null,
 				Method.DELETE);

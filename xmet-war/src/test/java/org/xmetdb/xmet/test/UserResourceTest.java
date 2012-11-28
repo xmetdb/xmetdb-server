@@ -59,7 +59,7 @@ public class UserResourceTest extends ResourceTest {
 			Assert.assertTrue(line.startsWith(String.format("http://localhost:%d%s/U",port,Resources.user)));
 			count++;
 		}
-		return count==5;
+		return count==3;
 	}	
 	
 	
@@ -181,17 +181,17 @@ public class UserResourceTest extends ResourceTest {
 	@Test
 	public void testDelete() throws Exception {
 		IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=4");
-		Assert.assertEquals(new BigInteger("4"),table.getValue(0,"iduser"));
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=3");
+		Assert.assertEquals(new BigInteger("3"),table.getValue(0,"iduser"));
 		c.close();		
-		String org = String.format("http://localhost:%d%s/U4", port,Resources.user);
+		String org = String.format("http://localhost:%d%s/U3", port,Resources.user);
 		RemoteTask task = testAsyncPoll(new Reference(org),
 				MediaType.TEXT_URI_LIST, null,
 				Method.DELETE);
 		Assert.assertEquals(Status.SUCCESS_OK.getCode(), task.getStatus());
 		//Assert.assertNull(task.getResult());
 		c = getConnection();	
-		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user where iduser=4");
+		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user where iduser=3");
 		Assert.assertEquals(0,table.getRowCount());
 		c.close();			
 	}
