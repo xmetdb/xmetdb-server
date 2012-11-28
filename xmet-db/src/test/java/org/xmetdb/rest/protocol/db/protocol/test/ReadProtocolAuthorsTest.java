@@ -15,7 +15,7 @@ public class ReadProtocolAuthorsTest extends QueryTest<ReadAuthor> {
 
 	@Override
 	protected ReadAuthor createQuery() throws Exception {
-		return new ReadAuthor(new DBProtocol(CRUDTest.idxmet2),null);
+		return new ReadAuthor(new DBProtocol(CRUDTest.idxmet1),null);
 	}
 
 	@Override
@@ -23,8 +23,8 @@ public class ReadProtocolAuthorsTest extends QueryTest<ReadAuthor> {
 		int records = 0;
 		while (rs.next()) {
 			DBUser user = query.getObject(rs);
-			Assert.assertEquals(10,user.getID());
-			Assert.assertEquals("TestQMRF",user.getFirstname());
+			Assert.assertEquals(2,user.getID());
+			Assert.assertEquals("Guest",user.getFirstname());
 			records++;
 		}
 		Assert.assertEquals(1,records);

@@ -22,7 +22,7 @@ public class ReadProtocolByFreeTextTest  extends QueryTest<ReadProtocolByTextSea
 		int records = 0;
 		while (rs.next()) {
 			DBProtocol protocol = query.getObject(rs);
-			Assert.assertEquals(83,protocol.getID());
+			Assert.assertEquals(1,protocol.getID());
 			Assert.assertNotNull(protocol.getOwner());
 			records++;
 		}

@@ -13,7 +13,7 @@ public class ReadProtocolTest extends QueryTest<ReadProtocol> {
 
 	@Override
 	protected ReadProtocol createQuery() throws Exception {
-		return new ReadProtocol("8f0adb53-862e-11e1-ba85-00ff3739b863");
+		return new ReadProtocol("XMETDB3");
 	}
 
 	@Override
@@ -21,9 +21,9 @@ public class ReadProtocolTest extends QueryTest<ReadProtocol> {
 		int records = 0;
 		while (rs.next()) {
 			DBProtocol protocol = query.getObject(rs);
-			Assert.assertEquals(83,protocol.getID());
+			Assert.assertEquals(3,protocol.getID());
 			Assert.assertNotNull(protocol.getKeywords());
-			Assert.assertEquals(4,protocol.getKeywords().size());
+			Assert.assertEquals(1,protocol.getKeywords().size());
 			Assert.assertNotNull(protocol.getOwner());
 			//Assert.assertNotNull(protocol.getOwner().getFirstname());
 			records++;

@@ -15,7 +15,7 @@ public class ReadProtocolByUserTest extends QueryTest<ReadProtocol> {
 	@Override
 	protected ReadProtocol createQuery() throws Exception {
 		ReadProtocol q = new ReadProtocol();
-		q.setFieldname(new DBUser(10));
+		q.setFieldname(new DBUser(1));
 		return q;
 	}
 
@@ -24,14 +24,14 @@ public class ReadProtocolByUserTest extends QueryTest<ReadProtocol> {
 		int records = 0;
 		while (rs.next()) {
 			DBProtocol protocol = query.getObject(rs);
-			Assert.assertEquals(2,protocol.getID());
+			Assert.assertEquals(3,protocol.getID());
 			Assert.assertNotNull(protocol.getKeywords());
 			Assert.assertEquals(1,protocol.getKeywords().size());
 			Assert.assertNotNull(protocol.getOwner());
 			//Assert.assertNotNull(protocol.getOwner().getFirstname());
 			records++;
 		}
-		Assert.assertEquals(2,records);
+		Assert.assertEquals(1,records);
 		
 	}
 

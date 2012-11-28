@@ -22,10 +22,14 @@ The tests assume
     GRANT ALL ON xmet_users.* TO 'guest'@'localhost';
     GRANT ALL ON xmetdb.* TO 'guest'@'localhost';
     GRANT ALL ON `xmetdb-test`.* TO 'guest'@'localhost';
+    GRANT EXECUTE on procedure `xmetdb-test`.createProtocolVersion to 'guest'@'localhost';
+    GRANT EXECUTE on procedure `xmetdb-test`.deleteProtocol to 'guest'@'localhost';
 
 
     GRANT TRIGGER ON xmetdb.* TO 'guest'@'localhost';
-    GRANT execute on `ambit2-xmetdb`.* to guest@localhost;
+    GRANT EXECUTE on procedure `xmetdb-test`.createProtocolVersion to 'guest'@'localhost';
+    GRANT EXECUTE on procedure `xmetdb-test`.deleteProtocol to 'guest'@'localhost';
+    
     GRANT execute on PROCEDURE `ambit2-xmetdb`.findByProperty to guest@127.0.0.1;
     GRANT execute on PROCEDURE `ambit2-xmetdbf`.findByProperty to guest@localhost;
 

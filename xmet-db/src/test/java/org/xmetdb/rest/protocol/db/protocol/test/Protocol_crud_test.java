@@ -111,7 +111,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	}
 
 	protected IQueryUpdate<T,DBProtocol> markAsDeletedQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(idxmet1);
+		DBProtocol ref = new DBProtocol(idxmet2);
 		return ( IQueryUpdate<T,DBProtocol>)new DeleteProtocol(ref);
 	}
 	
@@ -126,7 +126,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	}	
 	@Override
 	protected IQueryUpdate<T,DBProtocol> deleteQuery() throws Exception {
-		DBProtocol ref = new DBProtocol("Q8-10-13-121");
+		DBProtocol ref = new DBProtocol(idxmet3);
 		return ( IQueryUpdate<T,DBProtocol>)new DeleteProtocol(ref);
 	}
 
@@ -134,7 +134,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	protected void deleteVerify(IQueryUpdate<T,DBProtocol> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT idprotocol FROM protocol where idprotocol=121 and version=1");
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT idprotocol FROM protocol where idprotocol=3 and version=1");
 		Assert.assertEquals(0,table.getRowCount());
 		c.close();
 		
@@ -145,11 +145,11 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	 */
 	@Override
 	protected IQueryUpdate<T,DBProtocol> updateQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(idxmet1);
+		DBProtocol ref = new DBProtocol(idxmet2);
 		//ref.addAuthor(new DBUser(3));
 		//ref.addAuthor(new DBUser(10));
 
-		IQueryUpdate<T,DBProtocol> q = (IQueryUpdate<T,DBProtocol>)new AddAuthor(new DBUser(10),ref);
+		IQueryUpdate<T,DBProtocol> q = (IQueryUpdate<T,DBProtocol>)new AddAuthor(new DBUser(3),ref);
 		return q;
 	}
 
@@ -218,9 +218,9 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		ref.setID(2);
 		ref.setVersion(1);
 		ref.setPublished(true);
-		EndpointTest endpoint = new EndpointTest("Vapour Pressure", "Physical Chemical Properties");
-		endpoint.setCode("QMRF 1.4.");
-		endpoint.setParentCode("QMRF 1.");
+		EndpointTest endpoint = new EndpointTest("cytochrome P450, family 3, subfamily A, polypeptide 4", "");
+		endpoint.setCode("CYP3A4");
+		endpoint.setParentCode(null);
 		return (IQueryUpdate<T,DBProtocol>)new PublishProtocol(endpoint,ref);
 	}
 
@@ -233,11 +233,11 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals(PublishedStatus.published.name(),
 				table.getValue(0,ReadProtocol.fields.published_status.name())
 				);
-		Assert.assertEquals("1.Physical Chemical Properties",table.getValue(0,"g"));
-		Assert.assertEquals("1.4.Vapour Pressure",table.getValue(0,"n"));
+		Assert.assertEquals(null,table.getValue(0,"g"));
+		Assert.assertEquals("cytochrome P450, family 3, subfamily A, polypeptide 4",table.getValue(0,"n"));
 		Assert.assertEquals("Q12-14-0001",table.getValue(0,"qxml"));
 		Assert.assertEquals("Q12-14-0001",table.getValue(0,"qmrf_number"));
-		table = 	c.createQueryTable("EXPECTED","SELECT idprotocol,version,idtemplate from protocol_endpoints where idprotocol=2 and version=1 and idtemplate=10");
+		table = 	c.createQueryTable("EXPECTED","SELECT idprotocol,version,idtemplate from protocol_endpoints where idprotocol=2 and version=1 and idtemplate=2");
 		Assert.assertEquals(1,table.getRowCount());
 		c.close();
 	}

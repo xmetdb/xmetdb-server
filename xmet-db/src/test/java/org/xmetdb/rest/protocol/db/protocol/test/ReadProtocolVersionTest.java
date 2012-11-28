@@ -16,7 +16,7 @@ public class ReadProtocolVersionTest extends QueryTest<ReadProtocol> {
 
 	@Override
 	protected ReadProtocol createQuery() throws Exception {
-		return new ReadProtocolVersions(CRUDTest.idxmet1);
+		return new ReadProtocolVersions(CRUDTest.idxmet2);
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class ReadProtocolVersionTest extends QueryTest<ReadProtocol> {
 			//Assert.assertNotNull(protocol.getOwner().getFirstname());
 			records++;
 		}
-		Assert.assertEquals(2,records);
+		Assert.assertEquals(1,records);
 		
 	}
 

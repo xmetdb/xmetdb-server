@@ -25,7 +25,7 @@ public class Alert_crud_test  extends CRUDTest<DBUser,DBAlert>  {
 		alert.setQueryString("rabbit");
 		alert.setRecurrenceFrequency(RecurrenceFrequency.monthly);
 		alert.setTitle("Query");
-		DBUser user = new DBUser(88);
+		DBUser user = new DBUser(1);
 		return new AddAlert(alert,user);
 	}
 
@@ -34,7 +34,7 @@ public class Alert_crud_test  extends CRUDTest<DBUser,DBAlert>  {
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idquery,iduser,query,qformat,rfrequency,rinterval,username from alert join user using(iduser) where iduser=88"));
+				String.format("SELECT idquery,iduser,query,qformat,rfrequency,rinterval,username from alert join user using(iduser) where iduser=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals("rabbit",table.getValue(0,"query"));
@@ -47,14 +47,14 @@ public class Alert_crud_test  extends CRUDTest<DBUser,DBAlert>  {
 	@Override
 	protected IQueryUpdate<DBUser,DBAlert> deleteQuery() throws Exception {
 		DBAlert ref = new DBAlert(1);
-		return new DeleteAlert(ref,new DBUser(3));
+		return new DeleteAlert(ref,new DBUser(2));
 	}
 
 	@Override
 	protected void deleteVerify(IQueryUpdate<DBUser,DBAlert> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT idquery,iduser,idquery FROM alert where iduser=3");
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT idquery,iduser,idquery FROM alert where iduser=2");
 		Assert.assertEquals(1,table.getRowCount());
 		c.close();
 		

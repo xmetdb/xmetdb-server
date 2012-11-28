@@ -34,7 +34,7 @@ public class ReadProtocolByTimeStampTest extends QueryTest<ReadProtocol> {
 			//Assert.assertEquals(new Long(1326699051000L),protocol.getTimeModified());
 			records++;
 		}
-		Assert.assertEquals(2,records);
+		Assert.assertEquals(1,records);
 		
 	}
 	

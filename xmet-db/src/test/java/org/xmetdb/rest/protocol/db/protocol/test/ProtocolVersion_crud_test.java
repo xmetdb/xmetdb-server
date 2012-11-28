@@ -14,7 +14,7 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 
 	@Override
 	protected IQueryUpdate<T,DBProtocol> createQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(idxmet1);
+		DBProtocol ref = new DBProtocol(idxmet2);
 		ref.setAbstract("abstrakt");
 		ref.setTitle("title");
 		return (IQueryUpdate<T,DBProtocol>)new CreateProtocolVersion(DBProtocol.generateIdentifier(),ref);
@@ -27,7 +27,7 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 		ITable table = 	c.createQueryTable("EXPECTED",
 				String.format("SELECT idprotocol,version,published_status,title FROM protocol where idprotocol=2"));
 		
-		Assert.assertEquals(3,table.getRowCount());
+		Assert.assertEquals(2,table.getRowCount());
 		c.close();	
 	}
 	
@@ -36,7 +36,7 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 	 */
 	@Override
 	protected IQueryUpdate<T, DBProtocol> createQueryNew() throws Exception {
-		DBProtocol ref = new DBProtocol(idxmet3);
+		DBProtocol ref = new DBProtocol(idxmet2);
 		ref.setAbstract("abstrakt");
 		ref.setTitle("title");
 		return (IQueryUpdate<T,DBProtocol>)new CreateProtocolVersion(DBProtocol.generateIdentifier(),ref);
@@ -48,13 +48,13 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,version,qmrf_number,published_status,title FROM protocol where idprotocol=119 order by idprotocol,version"));
+				String.format("SELECT idprotocol,version,qmrf_number,published_status,title FROM protocol where idprotocol=2 order by idprotocol,version"));
 		
 		Assert.assertEquals(2,table.getRowCount());
 		Assert.assertEquals("published",table.getValue(1,"published_status"));
 		Assert.assertEquals("archived",table.getValue(0,"published_status"));
-		Assert.assertEquals("Q2-10-14-119-v1",table.getValue(0,"qmrf_number"));
-		Assert.assertEquals("Q2-10-14-119",table.getValue(1,"qmrf_number"));
+		Assert.assertEquals("XMETDB2-v1",table.getValue(0,"qmrf_number"));
+		Assert.assertEquals("XMETDB2",table.getValue(1,"qmrf_number"));
 		c.close();	
 		
 	}

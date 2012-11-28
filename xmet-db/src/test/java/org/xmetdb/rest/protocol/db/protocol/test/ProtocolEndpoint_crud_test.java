@@ -76,9 +76,9 @@ public final class ProtocolEndpoint_crud_test<T extends Object>  extends CRUDTes
 	 */
 	@Override
 	protected IQueryUpdate<T,DBProtocol> updateQuery() throws Exception {
-		DBProtocol protocol = new DBProtocol(idxmet1);
-		EndpointTest endpoint = new EndpointTest("UV-VIS Adsorption Spectra",null);
-		endpoint.setCode("101");
+		DBProtocol protocol = new DBProtocol(idxmet2);
+		EndpointTest endpoint = new EndpointTest("cytochrome P450, family 3, subfamily A, polypeptide 4",null);
+		endpoint.setCode("CYP3A4");
 		IQueryUpdate<T,DBProtocol> q = (IQueryUpdate<T,DBProtocol>)new AddProtocolEndpoint(endpoint,protocol);
 		return q;
 	}
@@ -90,8 +90,8 @@ public final class ProtocolEndpoint_crud_test<T extends Object>  extends CRUDTes
 		ITable table = 	c.createQueryTable("EXPECTED",
 				"SELECT idprotocol,version,idtemplate,code,name FROM  protocol_endpoints join template using(idtemplate) where idprotocol=2");
 		Assert.assertEquals(1,table.getRowCount());
-		Assert.assertEquals("101",table.getValue(0, "code"));
-		Assert.assertEquals("UV-VIS Adsorption Spectra",table.getValue(0, "name"));
+		Assert.assertEquals("CYP3A4",table.getValue(0, "code"));
+		Assert.assertEquals("cytochrome P450, family 3, subfamily A, polypeptide 4",table.getValue(0, "name"));
 
 		c.close();
 	}
