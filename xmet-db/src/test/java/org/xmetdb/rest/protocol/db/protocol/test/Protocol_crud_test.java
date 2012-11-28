@@ -39,7 +39,6 @@ import org.apache.commons.io.IOUtils;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.junit.Test;
-import org.xmetdb.rest.endpoints.EndpointTest;
 import org.xmetdb.rest.groups.DBOrganisation;
 import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.DBProtocol;
@@ -47,6 +46,7 @@ import org.xmetdb.rest.protocol.db.CreateProtocol;
 import org.xmetdb.rest.protocol.db.DeleteProtocol;
 import org.xmetdb.rest.protocol.db.PublishProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
+import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.author.db.AddAuthor;
@@ -57,26 +57,17 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	
 	@Override
 	protected IQueryUpdate<T,DBProtocol> createQuery() throws Exception {
-		
-		Assert.fail("Not implemented");
-		return null;
-		/*
+
 		DBProtocol ref = new DBProtocol(); //id2v1);
-		ref.setID(2);
+		ref.setID(3);
 		ref.setVersion(1);
-		InputStream in = getClass().getClassLoader().getResourceAsStream("net/idea/qmrf/QMRF-NEW.xml");
 		//ref.setAbstract(IOUtils.toString(in, "UTF-8"));
-		QMRFObject qmrf = new QMRFObject();
-		qmrf.read(in);in.close();
-		ref.setTitle(QMRFConverter.replaceTags(((QMRFSubChapterText)qmrf.getChapters().get(0).getSubchapters().getItem(0)).getText()));
-		//ref.setIdentifier(QMRFConverter.replaceTags(((QMRFSubChapterText)qmrf.getChapters().get(9).getSubchapters().getItem(0)).getText()));
-		String keywords = QMRFConverter.replaceTags(((QMRFSubChapterText)qmrf.getChapters().get(9).getSubchapters().getItem(2)).getText());
-		String[] keyword = keywords.split(",");
-		for (String key:keyword) ref.addKeyword(key);
-		ref.setIdentifier("Q-123456-789");
+		ref.setTitle("HEP");
+		ref.setAbstract("Hepatocytes");
+		ref.addKeyword("hepatocyte");
 		ref.setPublished(true);
 		return (IQueryUpdate<T,DBProtocol>)new UpdateProtocol(ref);
-		*/
+
 	}
 
 	@Override
@@ -84,17 +75,16 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,version,published_status,title,qmrf_number FROM protocol where idprotocol=2 and version=1"));
+				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number FROM protocol where idprotocol=3 and version=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		//we ignore the published flag here! There is a special PublishProtocol query
 		Assert.assertEquals(Boolean.FALSE,
 					(Boolean)(PublishedStatus.published==table.getValue(0,ReadProtocol.fields.published_status.name()))
 					);
-		Assert.assertEquals("QSAR for acute toxicity to fish (Danio rerio)",table.getValue(0,"title"));
-		//we change the identifier only on publishing
-		Assert.assertEquals("8f0aba27-862e-11e1-ba85-00ff3739b863",table.getValue(0,"qmrf_number"));
-	
+		Assert.assertEquals("HEP",table.getValue(0,"title"));
+		Assert.assertEquals("Hepatocytes",table.getValue(0,"abstract"));
+		Assert.assertEquals("XMETDB3",table.getValue(0,"qmrf_number"));
 		c.close();	
 	}
 	
@@ -167,8 +157,6 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	protected IQueryUpdate<T, DBProtocol> createQueryNew()
 			throws Exception {
 		DBProtocol ref = new DBProtocol();
-		//ref.setID(3);
-		//ref.setVersion(1);
 		DBUser user = new DBUser();
 		user.setID(3);
 		ref.setOwner(user);
@@ -179,9 +167,8 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		ref.setPublished(false);
 		ref.setIdentifier(newQMRFNumber);
 		
-		InputStream in = getClass().getClassLoader().getResourceAsStream("net/idea/qmrf/QMRF-NEW.xml");
-		ref.setAbstract(IOUtils.toString(in, "UTF-8"));
-		ref.setTitle("title");
+		ref.setAbstract("Hepatocytes");
+		ref.setTitle("HEP");
 
 		return (IQueryUpdate<T, DBProtocol>)new CreateProtocol(ref);
 	}
@@ -191,7 +178,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status FROM protocol where title='title' and abstract regexp '<QMRF' and iduser='3' and idproject=1 and idorganisation=1"));
+				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status FROM protocol where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"summarySearchable"));
@@ -214,31 +201,21 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	}
 	
 	protected IQueryUpdate<T,DBProtocol> publishQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(); //id2v1);
-		ref.setID(2);
+		DBProtocol ref = new DBProtocol(); 
+		ref.setID(3);
 		ref.setVersion(1);
 		ref.setPublished(true);
-		EndpointTest endpoint = new EndpointTest("cytochrome P450, family 3, subfamily A, polypeptide 4", "");
-		endpoint.setCode("CYP3A4");
-		endpoint.setParentCode(null);
-		return (IQueryUpdate<T,DBProtocol>)new PublishProtocol(endpoint,ref);
+		return (IQueryUpdate<T,DBProtocol>)new PublishProtocol(ref);
 	}
 
 	protected void publishVerify(IQueryUpdate<T,DBProtocol> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-					"SELECT idprotocol,version,qmrf_number,published_status,extractvalue(abstract,'/QMRF/Catalogs/endpoints_catalog/endpoint/@group') g,extractvalue(abstract,'/QMRF/Catalogs/endpoints_catalog/endpoint/@name') n,extractvalue(abstract,\"//QMRF_number\") qxml FROM protocol where idprotocol=2 and version=1");
+					"SELECT idprotocol,version,qmrf_number,published_status FROM protocol where idprotocol=3 and version=1");
 		
-		Assert.assertEquals(PublishedStatus.published.name(),
-				table.getValue(0,ReadProtocol.fields.published_status.name())
-				);
-		Assert.assertEquals(null,table.getValue(0,"g"));
-		Assert.assertEquals("cytochrome P450, family 3, subfamily A, polypeptide 4",table.getValue(0,"n"));
-		Assert.assertEquals("Q12-14-0001",table.getValue(0,"qxml"));
-		Assert.assertEquals("Q12-14-0001",table.getValue(0,"qmrf_number"));
-		table = 	c.createQueryTable("EXPECTED","SELECT idprotocol,version,idtemplate from protocol_endpoints where idprotocol=2 and version=1 and idtemplate=2");
-		Assert.assertEquals(1,table.getRowCount());
+		Assert.assertEquals(PublishedStatus.published.name(),table.getValue(0,ReadProtocol.fields.published_status.name()));
+		Assert.assertEquals("XMETDB3",table.getValue(0,"qmrf_number"));
 		c.close();
 	}
 }
