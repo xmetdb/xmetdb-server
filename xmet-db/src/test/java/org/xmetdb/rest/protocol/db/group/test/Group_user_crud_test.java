@@ -21,14 +21,42 @@ public class Group_user_crud_test  extends CRUDTest<DBUser,List<IDBGroup>> {
 	@Override
 	protected IQueryUpdate<DBUser, List<IDBGroup>> createQuery()
 			throws Exception {
-		return new AddGroupsPerUser(new DBUser(3),new DBProject(1));
+		return new AddGroupsPerUser(new DBUser(1),new DBProject(2));
 	}
+
+
+	@Override
+	protected void createVerify(IQueryUpdate<DBUser, List<IDBGroup>> query)
+			throws Exception {
+        IDatabaseConnection c = getConnection();	
+		ITable table = 	c.createQueryTable("EXPECTED",
+				"SELECT idproject from user_project where iduser=1 and idproject=2");
+		
+		Assert.assertEquals(1,table.getRowCount());
+		c.close();
+		
+	}
+
 
 	@Override
 	protected IQueryUpdate<DBUser, List<IDBGroup>> createQueryNew()
 			throws Exception {
-		return new AddGroupsPerUser<IDBGroup>(new DBUser(3),new DBOrganisation(1));
+		return new AddGroupsPerUser<IDBGroup>(new DBUser(1),new DBOrganisation(4));
 	}
+
+	
+	@Override
+	protected void createVerifyNew(IQueryUpdate<DBUser, List<IDBGroup>> query)
+			throws Exception {
+        IDatabaseConnection c = getConnection();	
+		ITable table = 	c.createQueryTable("EXPECTED",
+				"SELECT idorganisation from user_organisation where iduser=1 and idorganisation=4");
+		
+		Assert.assertEquals(1,table.getRowCount());
+		c.close();
+		
+	}
+
 
 	@Override
 	protected IQueryUpdate<DBUser, List<IDBGroup>> updateQuery()
@@ -36,46 +64,24 @@ public class Group_user_crud_test  extends CRUDTest<DBUser,List<IDBGroup>> {
 		return null;
 	}
 
-	@Override
-	protected IQueryUpdate<DBUser, List<IDBGroup>> deleteQuery()
-			throws Exception {
-		DBUser ref = new DBUser(3);
-		List<IDBGroup> p = new ArrayList<IDBGroup>();
-		p.add(new DBProject(3));
-		DeleteGroupsPerUser q = new DeleteGroupsPerUser();
-		q.setGroup(ref);
-		q.setObject(p);
-		return q;
-	}
-
-	@Override
-	protected void createVerify(IQueryUpdate<DBUser, List<IDBGroup>> query)
-			throws Exception {
-        IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED",
-				"SELECT idproject from user_project where iduser=3 and idproject=1");
-		
-		Assert.assertEquals(1,table.getRowCount());
-		c.close();
-		
-	}
-
-	@Override
-	protected void createVerifyNew(IQueryUpdate<DBUser, List<IDBGroup>> query)
-			throws Exception {
-        IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED",
-				"SELECT idorganisation from user_organisation where iduser=3 and idorganisation=1");
-		
-		Assert.assertEquals(1,table.getRowCount());
-		c.close();
-		
-	}
-
+	
 	@Override
 	protected void updateVerify(IQueryUpdate<DBUser, List<IDBGroup>> query)
 			throws Exception {
 		
+	}
+	
+
+	@Override
+	protected IQueryUpdate<DBUser, List<IDBGroup>> deleteQuery()
+			throws Exception {
+		DBUser ref = new DBUser(1);
+		List<IDBGroup> p = new ArrayList<IDBGroup>();
+		p.add(new DBProject(1));
+		DeleteGroupsPerUser q = new DeleteGroupsPerUser();
+		q.setGroup(ref);
+		q.setObject(p);
+		return q;
 	}
 
 	@Override

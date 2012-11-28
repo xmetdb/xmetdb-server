@@ -15,7 +15,7 @@ public class QueryOntologyTest extends QueryTest<QueryOntology> {
 	protected QueryOntology createQuery() throws Exception {
 		QueryOntology q = new QueryOntology();
 		q.setIncludeParent(RetrieveMode.childandarent);
-		q.setValue(new Dictionary("Physical Chemical Properties",null));
+		q.setValue(new Dictionary(null,null));
 		return q;
 	}
 
@@ -25,7 +25,7 @@ public class QueryOntologyTest extends QueryTest<QueryOntology> {
 		while (rs.next()) {
 			count++;
 		}
-		Assert.assertEquals(5,count);
+		Assert.assertEquals(15,count);
 	}
 
 }

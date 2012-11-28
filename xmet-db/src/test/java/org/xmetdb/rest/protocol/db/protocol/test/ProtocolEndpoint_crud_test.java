@@ -76,7 +76,7 @@ public final class ProtocolEndpoint_crud_test<T extends Object>  extends CRUDTes
 	 */
 	@Override
 	protected IQueryUpdate<T,DBProtocol> updateQuery() throws Exception {
-		DBProtocol protocol = new DBProtocol(id2v1);
+		DBProtocol protocol = new DBProtocol(idxmet1);
 		EndpointTest endpoint = new EndpointTest("UV-VIS Adsorption Spectra",null);
 		endpoint.setCode("101");
 		IQueryUpdate<T,DBProtocol> q = (IQueryUpdate<T,DBProtocol>)new AddProtocolEndpoint(endpoint,protocol);

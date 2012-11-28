@@ -34,16 +34,17 @@ public class ExtractData extends DbUnitTest {
 	
 	        // partial database export
 	        QueryDataSet partialDataSet = new QueryDataSet(connection);
-	        partialDataSet.addTable("user", "SELECT * FROM user where iduser in (10,88)");
+	        partialDataSet.addTable("user", "SELECT * FROM user where iduser in (1,2)");
 	        partialDataSet.addTable("project", "SELECT * FROM project");
-	        partialDataSet.addTable("organisation", "SELECT * FROM organisation where idorganisation in (1,5)");
+	        partialDataSet.addTable("organisation", "SELECT * FROM organisation where idorganisation in (1,2,3,4)");
 
-	        partialDataSet.addTable("protocol", "SELECT * FROM protocol where idprotocol in (83,119,121,2)");
-	        partialDataSet.addTable("attachments", "SELECT * FROM attachments where idprotocol in (83,119,121)");
-	        partialDataSet.addTable("protocol_authors", "SELECT * FROM protocol_authors where idprotocol in (83,119,121)");
+	        partialDataSet.addTable("protocol", "SELECT * FROM protocol where idprotocol in (1,2,3)");
+	        partialDataSet.addTable("attachments", "SELECT * FROM attachments where idprotocol in (1,2,3)");
+	        partialDataSet.addTable("protocol_authors", "SELECT * FROM protocol_authors where idprotocol in (1,2,3)");
 
 	        partialDataSet.addTable("keywords", "SELECT * FROM keywords");
-	        partialDataSet.addTable("user_organisation", "SELECT * FROM user_organisation where iduser in (10,88)");
+	        partialDataSet.addTable("user_organisation", "SELECT * FROM user_organisation where iduser in (1,2)");
+	        partialDataSet.addTable("user_project", "SELECT * FROM user_project where iduser in (1,2)");
 	        
 	        partialDataSet.addTable("template", "SELECT * FROM template");
 	        partialDataSet.addTable("dictionary", "SELECT * FROM dictionary");

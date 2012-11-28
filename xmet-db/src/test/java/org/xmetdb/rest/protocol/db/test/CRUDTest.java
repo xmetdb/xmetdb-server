@@ -46,9 +46,9 @@ import org.junit.Test;
  */
 public abstract class CRUDTest<G,T> extends DbUnitTest {
 	protected UpdateExecutor<IQueryUpdate<G,T>> executor;
-	public static final String id2v1 = "8f0aba27-862e-11e1-ba85-00ff3739b863";
-	public static final String id83v1 = "8f0adb53-862e-11e1-ba85-00ff3739b863";
-	public static final String id119v1 = "Q2-10-14-119";
+	public static final String idxmet1 = "XMETDB1";
+	public static final String idxmet2 = "XMETDB2";
+	public static final String idxmet3 = "XMETDB3";
 
 	protected String dbFile = "src/test/resources/org/xmetdb/xmet/xmet.xml";	
 	

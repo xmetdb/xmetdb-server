@@ -111,7 +111,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	}
 
 	protected IQueryUpdate<T,DBProtocol> markAsDeletedQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(id2v1);
+		DBProtocol ref = new DBProtocol(idxmet1);
 		return ( IQueryUpdate<T,DBProtocol>)new DeleteProtocol(ref);
 	}
 	
@@ -145,7 +145,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	 */
 	@Override
 	protected IQueryUpdate<T,DBProtocol> updateQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(id2v1);
+		DBProtocol ref = new DBProtocol(idxmet1);
 		//ref.addAuthor(new DBUser(3));
 		//ref.addAuthor(new DBUser(10));
 

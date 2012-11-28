@@ -14,7 +14,7 @@ public class ReadGroupByUserTest extends QueryTest<ReadOrganisation> {
 	@Override
 	protected ReadOrganisation createQuery() throws Exception {
 		DBOrganisation p = new DBOrganisation();
-		DBUser user = new DBUser(88);
+		DBUser user = new DBUser(1);
 		ReadOrganisation q = new ReadOrganisation(p);
 		q.setFieldname(user);
 		return q;

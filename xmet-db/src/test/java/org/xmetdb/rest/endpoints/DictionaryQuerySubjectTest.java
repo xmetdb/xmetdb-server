@@ -49,7 +49,7 @@ public class DictionaryQuerySubjectTest<D extends  Dictionary> extends QueryTest
 	protected DictionaryQuery<D> createQuery() throws Exception {
 		DictionarySubjectQuery q = new DictionarySubjectQuery();
 		q.setCondition(StringCondition.getInstance(StringCondition.C_REGEXP));
-		q.setValue("Physical");
+		q.setValue("cytochrome P450, family 3, subfamily A");
 		return q;
 	}
 
@@ -60,9 +60,9 @@ public class DictionaryQuerySubjectTest<D extends  Dictionary> extends QueryTest
 			records ++;
 			D d = query.getObject(rs);
 			Assert.assertNull(d.getParentTemplate());
-			Assert.assertEquals("Physical Chemical Properties",d.getTemplate());				
+			Assert.assertTrue(d.getTemplate().startsWith("cytochrome P450, family 3, subfamily A"));				
 		}
-		Assert.assertEquals(1,records);
+		Assert.assertEquals(2,records);
 		
 	}
 	@Test

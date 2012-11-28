@@ -15,7 +15,7 @@ public class ReadProtocolAuthorsTest extends QueryTest<ReadAuthor> {
 
 	@Override
 	protected ReadAuthor createQuery() throws Exception {
-		return new ReadAuthor(new DBProtocol(CRUDTest.id83v1),null);
+		return new ReadAuthor(new DBProtocol(CRUDTest.idxmet2),null);
 	}
 
 	@Override

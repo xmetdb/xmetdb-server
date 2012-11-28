@@ -50,7 +50,7 @@ public class DictionaryObjectTest extends QueryTest<DictionaryQuery<Dictionary>>
 	protected DictionaryQuery<Dictionary> createQuery() throws Exception {
 		DictionaryObjectQuery q = new DictionaryObjectQuery();
 		q.setCondition(StringCondition.getInstance(StringCondition.C_REGEXP));
-		q.setValue("Physical");
+		q.setValue(null);
 		return q;
 	}
 
@@ -60,10 +60,10 @@ public class DictionaryObjectTest extends QueryTest<DictionaryQuery<Dictionary>>
 		while (rs.next()) {
 			records ++;
 			Dictionary d = query.getObject(rs);
-			Assert.assertEquals("Physical Chemical Properties",d.getParentTemplate());
+			Assert.assertEquals(null,d.getParentTemplate());
 			Assert.assertNotNull(d.getTemplate());			
 		}
-		Assert.assertEquals(4,records);
+		Assert.assertEquals(15,records);
 		
 	}
 	@Test

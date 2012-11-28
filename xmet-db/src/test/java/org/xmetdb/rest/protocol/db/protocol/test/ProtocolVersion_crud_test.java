@@ -14,7 +14,7 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 
 	@Override
 	protected IQueryUpdate<T,DBProtocol> createQuery() throws Exception {
-		DBProtocol ref = new DBProtocol(id2v1);
+		DBProtocol ref = new DBProtocol(idxmet1);
 		ref.setAbstract("abstrakt");
 		ref.setTitle("title");
 		return (IQueryUpdate<T,DBProtocol>)new CreateProtocolVersion(DBProtocol.generateIdentifier(),ref);
@@ -36,7 +36,7 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 	 */
 	@Override
 	protected IQueryUpdate<T, DBProtocol> createQueryNew() throws Exception {
-		DBProtocol ref = new DBProtocol(id119v1);
+		DBProtocol ref = new DBProtocol(idxmet3);
 		ref.setAbstract("abstrakt");
 		ref.setTitle("title");
 		return (IQueryUpdate<T,DBProtocol>)new CreateProtocolVersion(DBProtocol.generateIdentifier(),ref);

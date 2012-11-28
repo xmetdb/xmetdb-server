@@ -16,7 +16,7 @@ public class ReadProtocolVersionTest extends QueryTest<ReadProtocol> {
 
 	@Override
 	protected ReadProtocol createQuery() throws Exception {
-		return new ReadProtocolVersions(CRUDTest.id2v1);
+		return new ReadProtocolVersions(CRUDTest.idxmet1);
 	}
 
 	@Override

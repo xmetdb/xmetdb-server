@@ -13,7 +13,7 @@ public class ReadUserTest  extends QueryTest<ReadUser> {
 
 	@Override
 	protected ReadUser createQuery() throws Exception {
-		DBUser user = new DBUser(3);
+		DBUser user = new DBUser(1);
 		return new ReadUser(user);
 	}
 
@@ -22,10 +22,10 @@ public class ReadUserTest  extends QueryTest<ReadUser> {
 		int records = 0;
 		while (rs.next()) {
 			DBUser user = query.getObject(rs);
-			Assert.assertEquals(3,user.getID());
-			Assert.assertEquals("guest",user.getUserName());
-			Assert.assertEquals("abcdef",user.getFirstname());
-			Assert.assertEquals("ABCDEF",user.getLastname());
+			Assert.assertEquals(1,user.getID());
+			Assert.assertEquals("admin",user.getUserName());
+			Assert.assertEquals("Administrator",user.getFirstname());
+			Assert.assertEquals("",user.getLastname());
 			records++;
 		}
 		Assert.assertEquals(1,records);

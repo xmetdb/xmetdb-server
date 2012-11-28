@@ -97,7 +97,7 @@ public final class User_crud_test<T extends Object>  extends CRUDTest<T,DBUser> 
 
 	@Override
 	protected IQueryUpdate<T,DBUser> deleteQuery() throws Exception {
-		DBUser ref = new DBUser(4);
+		DBUser ref = new DBUser(3);
 		return (IQueryUpdate<T,DBUser>)new DeleteUser(ref);
 	}
 
@@ -105,7 +105,7 @@ public final class User_crud_test<T extends Object>  extends CRUDTest<T,DBUser> 
 	protected void deleteVerify(IQueryUpdate<T,DBUser> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=4");
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=3");
 		Assert.assertEquals(0,table.getRowCount());
 		c.close();
 		

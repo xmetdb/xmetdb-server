@@ -13,7 +13,7 @@ public class ReadOrganisationTest extends QueryTest<ReadOrganisation> {
 	@Override
 	protected ReadOrganisation createQuery() throws Exception {
 		DBOrganisation p = new DBOrganisation();
-		p.setID(5);
+		p.setID(4);
 		return new ReadOrganisation(p);
 	}
 
@@ -22,7 +22,7 @@ public class ReadOrganisationTest extends QueryTest<ReadOrganisation> {
 		int records = 0;
 		while (rs.next()) {
 			DBOrganisation group = query.getObject(rs);
-			Assert.assertEquals(5,group.getID());
+			Assert.assertEquals(4,group.getID());
 			records++;
 		}
 		Assert.assertEquals(1,records);

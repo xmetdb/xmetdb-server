@@ -21,7 +21,7 @@ public class ReadAttachmentsTest  extends QueryTest<ReadAttachment> {
 
 	@Override
 	protected ReadAttachment createQuery() throws Exception {
-		DBProtocol protocol = new DBProtocol(CRUDTest.id83v1);
+		DBProtocol protocol = new DBProtocol(CRUDTest.idxmet2);
 		return new ReadAttachment(protocol,System.getProperty("java.io.tmpdir"));
 	}
 
@@ -31,10 +31,8 @@ public class ReadAttachmentsTest  extends QueryTest<ReadAttachment> {
 		while (rs.next()) {
 			DBAttachment attachment = query.getObject(rs);
 			switch ( attachment.getID()) {
-			case 108: break;
-			case 109: break;
-			case 110: break;
-			case 111: break;
+			case 3: break;
+			case 4: break;
 			default: Assert.fail(String.format("Wrong id %d", attachment.getID()));
 			}
 
@@ -50,7 +48,7 @@ public class ReadAttachmentsTest  extends QueryTest<ReadAttachment> {
 			Assert.assertTrue(attachment.getResourceURL().toExternalForm().startsWith(expected.toExternalForm()));
 			records++;
 		}
-		Assert.assertEquals(4,records);
+		Assert.assertEquals(2,records);
 
 	}
 
