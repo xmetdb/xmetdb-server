@@ -121,7 +121,7 @@ public class ProjectResourceTest  extends ResourceTest {
 		
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM organisation");
-		Assert.assertEquals(3,table.getRowCount());
+		Assert.assertEquals(4,table.getRowCount());
 		c.close();
 
 		RemoteTask task = testAsyncPoll(new Reference(String.format("http://localhost:%d%s", port,
