@@ -98,7 +98,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				"http://localhost:8181/protocol/%s",idxmet3),
 				protocols.get(0).getResourceURL().toString());
 		Assert.assertEquals(idxmet3, protocols.get(0).getIdentifier());
-		Assert.assertEquals("QSAR model for narcosis", protocols.get(0)
+		Assert.assertEquals("MS", protocols.get(0)
 				.getTitle());
 		Assert.assertNotNull(protocols.get(0).getAbstract());
 		//Assert.assertEquals(5, protocols.get(0).getAbstract().indexOf("\u2122")); // TM
@@ -107,7 +107,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		Assert.assertFalse(protocols.get(0).isPublished());
 		Assert.assertNotNull(protocols.get(0).getOwner());
 		Assert.assertEquals(
-				String.format("http://localhost:%d%s/U10", port, Resources.user),
+				String.format("http://localhost:%d%s/U1", port, Resources.user),
 				protocols.get(0).getOwner().getResourceURL().toString());
 		// Assert.assertEquals("abcdef",
 		// protocols.get(0).getOwner().getFirstname());
@@ -155,17 +155,17 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		IDatabaseConnection c = getConnection();
 		ITable table = c
 				.createQueryTable("EXPECTED",
-						"SELECT idprotocol,version FROM protocol where idprotocol=121 and version=1");
-		Assert.assertEquals(new BigInteger("121"),table.getValue(0, "idprotocol"));
+						"SELECT idprotocol,version FROM protocol where idprotocol=3 and version=1");
+		Assert.assertEquals(new BigInteger("3"),table.getValue(0, "idprotocol"));
 		c.close();
 		String org = String.format("http://localhost:%d%s/%s", port,
-				Resources.protocol, "Q8-10-13-121");
+				Resources.protocol, "XMETDB3");
 		RemoteTask task = testAsyncPoll(new Reference(org),	MediaType.TEXT_URI_LIST, null, Method.DELETE);
 		Assert.assertEquals(Status.SUCCESS_OK.getCode(), task.getStatus());
 		// Assert.assertNull(task.getResult());
 		c = getConnection();
 		table = c.createQueryTable("EXPECTED",
-				"SELECT * FROM protocol where idprotocol=121 and version=1");
+				"SELECT * FROM protocol where idprotocol=3 and version=1");
 		Assert.assertEquals(0, table.getRowCount());
 		c.close();
 	}
@@ -182,9 +182,9 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 	@Test
 	public void testUpdateEntryFromMultipartWeb() throws Exception {
 		String uri = String.format("http://localhost:%d%s/%s", port,
-										Resources.protocol, idxmet3);
+										Resources.protocol, idxmet1);
 		String newURI = createEntryFromMultipartWeb(new Reference(uri), Method.PUT);
-		String newXMETID = "Q12-14-0001";
+		String newXMETID = "XMETDB1v2";
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
 		Assert.assertEquals(5, table.getRowCount());
@@ -365,7 +365,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
-		Assert.assertEquals(5, table.getRowCount());
+		Assert.assertEquals(3, table.getRowCount());
 		c.close();
 
 		RemoteTask task = testAsyncPoll(uri, MediaType.TEXT_URI_LIST, rep,
