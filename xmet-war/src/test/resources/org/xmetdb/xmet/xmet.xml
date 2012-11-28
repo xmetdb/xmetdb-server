@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-  <user iduser="1" username="admin" title="" firstname="Administrator" lastname="" institute="" weblog="" homepage="" address="" email="" keywords="" reviewer="true"/>
+  <user iduser="1" username="admin" title="" firstname="Administrator" lastname="" institute="" weblog="" homepage="http://www.example.com"  address="" email="" keywords="" reviewer="true"/>
   <user iduser="2" username="guest" title="" firstname="Guest" lastname="User" institute="" weblog="" homepage="" address="" email="" keywords="" reviewer="true"/>
   <user iduser="3" username="test" title="" firstname="Test" lastname="User" institute="" weblog="" homepage="" address="" email="" keywords="" reviewer="true"/>
   <project idproject="1" name="XMETDB" ldapgroup="xmetdb"/>
@@ -16,7 +16,7 @@
   updated="1999-01-01 00:00:33.000000000" created="2004-09-17 00:00:30.000000000" published_status="published"/>
   <protocol idprotocol="3" version="1" title="MS" qmrf_number="XMETDB3" abstract="Microsome" summarySearchable="true" iduser="1" idproject="1" idorganisation="1" status="RESEARCH" 
   updated="2012-01-16 09:30:51.000000000" created="2004-09-17 00:00:30.000000000" published_status="deleted"/>
-  <attachments idattachment="1" idprotocol="1" version="1" name="qmrf1_substrate: 1_2_4_trichlorobenzene" description="substrate: 1_2_4_trichlorobenzene" type="data_training" updated="2012-09-23 10:50:17.0" format="SDF" original_name="substrate.sdf" imported="true"/>
+  <attachments idattachment="1" idprotocol="1" version="1" name="qmrf1_substrate: 1_2_4_trichlorobenzene" description="substrate: 1_2_4_trichlorobenzene" type="data_training" updated="2012-09-23 10:50:17.0" format="SDF" original_name="substrate.sdf" imported="false"/>
   <attachments idattachment="2" idprotocol="1" version="1" name="qmrf1_product: 1_2_4_trichlorobenzene" description="product: 1_2_4_trichlorobenzene" type="data_validation" updated="2012-09-23 10:50:52.0" format="SDF" original_name="product.sdf" imported="true"/>
   <attachments idattachment="3" idprotocol="2" version="1" name="qmrf2_substrate: 4_nitropyrene" description="substrate: 4_nitropyrene" type="data_training" updated="2012-09-23 11:14:51.0" format="SDF" original_name="" imported="true"/>
   <attachments idattachment="4" idprotocol="2" version="1" name="qmrf2_product: 4_nitropyrene" description="product: 4_nitropyrene" type="data_validation" updated="2012-09-23 11:15:01.0" format="SDF" original_name="" imported="true"/>

@@ -28,7 +28,7 @@ import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.xmet.client.Resources;
 
 public class AttachmentResourceTest extends ResourceTest {
-	protected final static String id83="8f0adb53-862e-11e1-ba85-00ff3739b863";
+	protected final static String idxmet1="XMETDB1";
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
@@ -39,7 +39,7 @@ public class AttachmentResourceTest extends ResourceTest {
 	public String getTestURI() {
 		return String.format("http://localhost:%d%s/%s%s", port,
 				Resources.protocol,
-				id83,Resources.attachment);
+				idxmet1,Resources.attachment);
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class AttachmentResourceTest extends ResourceTest {
 		testGet(getTestURI(),MediaType.TEXT_URI_LIST);
 	}
 	/**
-	 * The URI should be /protocol/{id83}/attachment
+	 * The URI should be /protocol/XMETDB1/attachment
 	 */
 	@Override
 	public boolean verifyResponseURI(String uri, MediaType media, InputStream in)
@@ -59,27 +59,27 @@ public class AttachmentResourceTest extends ResourceTest {
 			System.out.println(line);
 			Assert.assertTrue(line.startsWith(
 					String.format("http://localhost:%d%s/%s%s",port,Resources.protocol,
-							id83,Resources.attachment)
+							idxmet1,Resources.attachment)
 							));
 			count++;
 		}
-		return count==4;
+		return count==2;
 	}	
 	
 	@Test
 	public void testCreateEntryFromMultipartWeb() throws Exception {
 		String url = createEntryFromMultipartWeb(new Reference(getTestURI()));
 		
-		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s/attachment",port,id83),url);
+		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s/attachment",port,idxmet1),url);
 
 		
    	    IDatabaseConnection c = getConnection();	
 		ITable  table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
-		Assert.assertEquals(5,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version from attachments p where p.idprotocol=83 and p.version=1");
-		Assert.assertEquals(5,table.getRowCount());
+		Assert.assertEquals(3,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version from attachments p where p.idprotocol=1 and p.version=1");
+		Assert.assertEquals(3,table.getRowCount());
 		Assert.assertEquals(new BigInteger("1"),table.getValue(0,"version"));
-		Assert.assertEquals(new BigInteger("83"),table.getValue(0,"idprotocol"));
+		Assert.assertEquals(new BigInteger("1"),table.getValue(0,"idprotocol"));
 		c.close();
 	}
 	
@@ -95,7 +95,7 @@ public class AttachmentResourceTest extends ResourceTest {
 		
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
-		Assert.assertEquals(5,table.getRowCount());
+		Assert.assertEquals(3,table.getRowCount());
 		c.close();
 
 		RemoteTask task = testAsyncPoll(uri,
@@ -129,10 +129,10 @@ public class AttachmentResourceTest extends ResourceTest {
 	
 	@Test
 	public void testImportAttachment() throws Exception {
-		Reference uri = new Reference(String.format("http://localhost:%d/protocol/%s/attachment/A108/dataset",port,id83));
+		Reference uri = new Reference(String.format("http://localhost:%d/protocol/%s/attachment/A1/dataset",port,idxmet1));
 
 		IDatabaseConnection c = getConnection();	
-		ITable  table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment=108");
+		ITable  table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment=1");
 		Assert.assertEquals(Boolean.FALSE,table.getValue(0,"imported"));
 		c.close();
 		
@@ -155,7 +155,7 @@ public class AttachmentResourceTest extends ResourceTest {
 		Assert.assertEquals(uri.toString(),task.getResult().toString());
 
 		c = getConnection();	
-		 table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment=108");
+		 table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment=1");
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"imported"));
 		c.close();
 
