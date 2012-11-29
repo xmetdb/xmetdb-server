@@ -296,12 +296,16 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				
 				if (existing) {
 					protocol.setIdentifier(identifier); //in case the web form messed up the identifier
+					//TODO get the real version generated in order to return corect URI
 					CreateProtocolVersion q = new CreateProtocolVersion(DBProtocol.generateIdentifier(),protocol);
 					exec.process(q);
 				} else {
 					protocol.setIdentifier(identifier);
 					CreateProtocol q = new CreateProtocol(protocol);
 					exec.process(q);
+					protocol.setID(q.getObject().getID());
+					protocol.setVersion(q.getObject().getVersion());
+					protocol.setIdentifier(String.format("XMETDB%d", protocol.getID()));
 				}
 				
 				try {

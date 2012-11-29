@@ -41,8 +41,8 @@ import org.xmetdb.rest.protocol.DBProtocol;
 
 public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	public static final String[] create_sql = {
-		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created) " +
-		"values (?,?,?,?,?,?,?,?,?,now())",
+		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created,published_status) " +
+		"values (?,?,?,?,?,?,?,?,?,now(),?)",
 		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where code = ? and idprotocol=? and version=?",
 		"update protocol set qmrf_number=? where idprotocol=? and version=?"
 	};
@@ -66,7 +66,8 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 					ReadProtocol.fields.summarySearchable,
 					ReadProtocol.fields.idproject,
 					ReadProtocol.fields.idorganisation,
-					ReadProtocol.fields.status
+					ReadProtocol.fields.status,
+					ReadProtocol.fields.published_status
 			};
 			for (ReadProtocol.fields field: f) try {
 				params1.add(field.getParam(getObject()));

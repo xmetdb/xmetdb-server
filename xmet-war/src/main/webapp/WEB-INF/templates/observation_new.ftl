@@ -110,6 +110,8 @@ $(document).ready(function() {
 	</p>
 	<!-- Submit --> 
 	<p><label >&nbsp;</em></label>
+		//Let's have everything published by default.
+		<input type="hidden" name="published_status"  value="on">
 		<input type="submit" class="submit" value="Submit observation">
 	</p>
 </p>
