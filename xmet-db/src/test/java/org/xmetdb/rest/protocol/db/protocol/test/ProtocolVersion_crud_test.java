@@ -53,8 +53,8 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 		Assert.assertEquals(2,table.getRowCount());
 		Assert.assertEquals("published",table.getValue(1,"published_status"));
 		Assert.assertEquals("archived",table.getValue(0,"published_status"));
-		Assert.assertEquals("XMETDB2-v1",table.getValue(0,"qmrf_number"));
-		Assert.assertEquals("XMETDB2",table.getValue(1,"qmrf_number"));
+		Assert.assertEquals("XMETDB2",table.getValue(0,"qmrf_number"));
+		Assert.assertEquals("XMETDB2v2",table.getValue(1,"qmrf_number"));
 		c.close();	
 		
 	}
