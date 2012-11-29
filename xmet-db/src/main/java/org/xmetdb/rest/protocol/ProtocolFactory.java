@@ -26,7 +26,6 @@ import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.xmet.client.PublishedStatus;
 
 public class ProtocolFactory {
-	protected static final String msg_invalid_qmrf = "Invalid QMRF document!";
 	protected static final String utf8= "UTF-8";
 	public static DBProtocol getProtocol(DBProtocol protocol,
 				List<FileItem> items, 
@@ -73,70 +72,11 @@ public class ProtocolFactory {
 					}
 					break;
 				}
-				/*
 				case anabstract: {
 					String s = fi.getString(utf8);
 					if ((s!=null) && !"".equals(s))
 					protocol.setAbstract(s);
 					break;
-				}
-				*/
-				case filename: {
-					if (fi.isFormField()) {
-						protocol.setAbstract(fi.getString(utf8));
-						//protocol.setDocument(new Document(new URL(fi.getString(utf8))));
-					} else {	
-						if (fi.getSize()==0)  {
-							switch (updateMode) {
-							case create:
-								throw new ResourceException(new Status(Status.CLIENT_ERROR_BAD_REQUEST,"Empty file!"));								
-							case createversion:
-								throw new ResourceException(new Status(Status.CLIENT_ERROR_BAD_REQUEST,"Empty file!"));								
-							default: {
-								continue; //ignore, not mandatory
-							}
-							}	
-						}
-						File file = null;
-				        if (fi.getName()==null)
-				           	throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"File name can't be empty!");
-				        else {
-				        	try { 
-				        		if ((dir!=null) && !dir.exists())  dir.mkdir();
-				        	} catch (Exception x) {dir = null; }
-				          	file = new File(
-				            		String.format("%s/%s",
-				            				dir==null?System.getProperty("java.io.tmpdir"):dir,
-				            				fi.getName()));
-				        }
-				        protocol.setAbstract(fi.getString(utf8));
-				        
-				        /*
-				    	QMRFObject qmrf = new QMRFObject();
-				    	try {
-				    		qmrf.read(new StringReader(protocol.getAbstract()));
-				    	} catch (Exception x) {
-				    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,
-				    				String.format(msg_invalid_qmrf,x));
-				    	}
-						if (qmrf.getChapters().size()<10) 
-							throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,msg_invalid_qmrf);
-						
-						try {
-							protocol.setTitle(QMRFConverter.replaceTags(((QMRFSubChapterText)qmrf.getChapters().get(0).getSubchapters().getItem(0)).getText()));
-							String keywords = QMRFConverter.replaceTags(((QMRFSubChapterText)qmrf.getChapters().get(9).getSubchapters().getItem(2)).getText());
-							String[] keyword = keywords.split(",");
-							for (String key:keyword) protocol.addKeyword(key);
-						} catch (Exception x) {
-							throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,msg_invalid_qmrf,x);
-						}
-						*/
-				        throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED,"Not yet implemented");
-
-					}
-					
-					protocol.setDocument(null);
-			        break;
 				}
 				case data_training :{
 					DBAttachment attachment = createAttachment(fi,protocol,attachment_type.data_training,dir);
@@ -148,12 +88,13 @@ public class ProtocolFactory {
 					if (attachment!=null) protocol.getAttachments().add(attachment);
 					break;
 				}
+				/*
 				case document :{
 					DBAttachment attachment = createAttachment(fi,protocol,attachment_type.document,dir);
 					if (attachment!=null) protocol.getAttachments().add(attachment);
 					break;
 				}
-					
+				*/	
 				case project_uri: {
 					String s = fi.getString(utf8);
 					if ((s!=null) && !"".equals(s)) {
@@ -243,20 +184,6 @@ public class ProtocolFactory {
 					} catch (Exception x) { }
 					break;					
 				}		
-				case endpointParentCode: {
-					try {
-						if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
-						protocol.getEndpoint().setParentCode(fi.getString(utf8));
-					} catch (Exception x) { }
-					break;					
-				}					
-				case endpointParentName: {
-					try {
-						if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
-						protocol.getEndpoint().setParentTemplate(fi.getString(utf8));
-					} catch (Exception x) { }
-					break;					
-				}				
 				case allowReadByUser: {
 					String s = fi.getString(utf8);
 					if ((s!=null) && !"".equals(s))
@@ -306,6 +233,7 @@ public class ProtocolFactory {
 	protected static DBAttachment createAttachment(FileItem fi, DBProtocol protocol, attachment_type type, File dir) throws Exception {
 			
 			if (fi.isFormField()) {
+				//TODO URI or smiles specification of substrate & product
 //				protocol.setDataTemplate(new Template(new URL(fi.getString(utf8))));
 			} else {	
 				String originalName = "";

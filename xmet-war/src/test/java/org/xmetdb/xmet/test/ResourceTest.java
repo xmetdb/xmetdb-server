@@ -426,7 +426,7 @@ public abstract class ResourceTest extends DbUnitTest {
 	    	if (formValues[i]==null) continue;
 	    	entity.addPart(formFields[i], new StringBody(formValues[i],Charset.forName("UTF-8")));
 	    }
-	    entity.addPart(fileFieldName, new FileBody(file));	      
+	   if (file !=null) entity.addPart(fileFieldName, new FileBody(file));	      
 	    return entity;
 	}	
 }

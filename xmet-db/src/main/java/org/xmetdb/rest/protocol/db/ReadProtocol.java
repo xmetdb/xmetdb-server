@@ -41,7 +41,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 	public static final ReadProtocol.fields[] entryFields = new ReadProtocol.fields[] {
 			
 			fields.title,
-			fields.filename,
+			fields.anabstract,
 			fields.identifier,
 			fields.published_status,
 			fields.user_uri,
@@ -50,8 +50,8 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			fields.project_uri,
 			fields.endpoint,
 			fields.endpointName,
-			fields.endpointParentCode,
-			fields.endpointParentName
+			fields.data_training,
+			fields.data_validation
 		};
 	public static final ReadProtocol.fields[] displayFields = new ReadProtocol.fields[] {
 			fields.idprotocol,
