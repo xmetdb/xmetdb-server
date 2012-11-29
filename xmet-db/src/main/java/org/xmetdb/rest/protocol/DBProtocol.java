@@ -10,6 +10,8 @@ import net.toxbank.client.resource.Protocol;
 
 import org.xmetdb.rest.endpoints.EndpointTest;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
+import org.xmetdb.xmet.client.AtomUncertainty;
+import org.xmetdb.xmet.client.ProductAmount;
 import org.xmetdb.xmet.client.PublishedStatus;
 
 public class DBProtocol extends Protocol {
@@ -23,7 +25,24 @@ public class DBProtocol extends Protocol {
 	public static final String QMRFNUMBER = "qmrf_number";
 	protected EndpointTest endpoint;
 	protected PublishedStatus publishedStatus = PublishedStatus.draft;
+	protected AtomUncertainty atomUncertainty = AtomUncertainty.Uncertain;
+	public AtomUncertainty getAtomUncertainty() {
+		return atomUncertainty;
+	}
 
+	public void setAtomUncertainty(AtomUncertainty atomUncertainty) {
+		this.atomUncertainty = atomUncertainty;
+	}
+
+	public ProductAmount getProductAmount() {
+		return productAmount;
+	}
+
+	public void setProductAmount(ProductAmount productAmount) {
+		this.productAmount = productAmount;
+	}
+
+	protected ProductAmount productAmount = ProductAmount.Unknown;
 
 	public EndpointTest getEndpoint() {
 		return endpoint;

@@ -48,6 +48,8 @@ import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.author.db.AddAuthor;
+import org.xmetdb.xmet.client.AtomUncertainty;
+import org.xmetdb.xmet.client.ProductAmount;
 import org.xmetdb.xmet.client.PublishedStatus;
 
 public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBProtocol>  {
@@ -167,7 +169,8 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		ref.getEndpoint().setCode("CYP3A4");
 		ref.setAbstract("Hepatocytes");
 		ref.setTitle("HEP");
-
+		ref.setProductAmount(ProductAmount.Major);
+		ref.setAtomUncertainty(AtomUncertainty.Certain);
 		return (IQueryUpdate<T, DBProtocol>)new CreateProtocol(ref);
 	}
 
@@ -176,11 +179,13 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status FROM protocol where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
+				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status,atom_uncertainty,product_amount FROM protocol where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"summarySearchable"));
 		Assert.assertEquals(STATUS.SOP.toString(),table.getValue(0,"status"));
+		Assert.assertEquals(AtomUncertainty.Certain.toString(),table.getValue(0,"atom_uncertainty"));
+		Assert.assertEquals(ProductAmount.Major.toString(),table.getValue(0,"product_amount"));
 		Assert.assertTrue(table.getValue(0,"qmrf_number").toString().startsWith("XMETDB"));
 		c.close();		
 	}

@@ -23,6 +23,8 @@ import org.xmetdb.rest.groups.DBOrganisation;
 import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.user.DBUser;
+import org.xmetdb.xmet.client.AtomUncertainty;
+import org.xmetdb.xmet.client.ProductAmount;
 import org.xmetdb.xmet.client.PublishedStatus;
 import org.xmetdb.xmet.client.Resources;
 
@@ -37,23 +39,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 	 */
 	private static final long serialVersionUID = 6228939989116141217L;
 	
-	/*
-	public static final ReadProtocol.fields[] entryFields = new ReadProtocol.fields[] {
-			
-			fields.title,
-			fields.anabstract,
-			fields.identifier,
-			fields.published_status,
-			fields.user_uri,
-			fields.author_uri,
-			fields.organisation_uri,
-			fields.project_uri,
-			fields.endpoint,
-			fields.endpointName,
-			fields.data_training,
-			fields.data_validation
-		};
-		*/
+
 	public static final ReadProtocol.fields[] displayFields = new ReadProtocol.fields[] {
 			fields.idprotocol,
 			fields.identifier,
@@ -767,6 +753,46 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 						"on");
 			}			
 		},		
+		atom_uncertainty {
+			@Override
+			public QueryParam getParam(DBProtocol protocol) {
+				return new QueryParam<String>(String.class,protocol.getAtomUncertainty().name());
+			}			
+			@Override
+			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
+				try {
+					protocol.setAtomUncertainty(AtomUncertainty.valueOf(rs.getString(name())));
+				} catch (Exception x) {protocol.setAtomUncertainty(AtomUncertainty.Uncertain);}
+			}		
+			@Override
+			public Object getValue(DBProtocol protocol) {
+				return protocol==null?null:protocol.getStatus();
+			}
+			
+			public String getCondition() {
+				return String.format(" %s = ? ",name());
+			}
+		},		
+		product_amount {
+			@Override
+			public QueryParam getParam(DBProtocol protocol) {
+				return new QueryParam<String>(String.class,protocol.getProductAmount().name());
+			}			
+			@Override
+			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
+				try {
+					protocol.setProductAmount(ProductAmount.valueOf(rs.getString(name())));
+				} catch (Exception x) {protocol.setProductAmount(ProductAmount.Unknown);}
+			}		
+			@Override
+			public Object getValue(DBProtocol protocol) {
+				return protocol==null?null:protocol.getStatus();
+			}
+			
+			public String getCondition() {
+				return String.format(" %s = ? ",name());
+			}
+		},			
 		allowReadByUser {
 			@Override
 			public Object getValue(DBProtocol protocol) {

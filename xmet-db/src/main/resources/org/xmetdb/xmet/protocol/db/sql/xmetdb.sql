@@ -98,6 +98,8 @@ CREATE TABLE  `protocol` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated',
   `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `published_status` enum('draft','submitted','under_review','returned_for_revision','review_completed','published','archived','deleted') NOT NULL DEFAULT 'draft',
+  `atom_uncertainty` enum('Certain','Uncertain') NOT NULL DEFAULT 'Uncertain',
+  `product_amount` enum('Major','Minor','Unknown') NOT NULL DEFAULT 'Unknown',
   PRIMARY KEY (`idprotocol`,`version`) USING BTREE,
   UNIQUE KEY `qmrf_number` (`qmrf_number`),
   KEY `Index_3` (`title`),
@@ -106,11 +108,12 @@ CREATE TABLE  `protocol` (
   KEY `FK_protocol_3` (`iduser`),
   KEY `updated` (`updated`),
   KEY `Index_8` (`published_status`),
+  KEY `Index_9` (`atom_uncertainty`),
+  KEY `Index_10` (`product_amount`),
   CONSTRAINT `FK_protocol_1` FOREIGN KEY (`idproject`) REFERENCES `project` (`idproject`),
   CONSTRAINT `FK_protocol_2` FOREIGN KEY (`idorganisation`) REFERENCES `organisation` (`idorganisation`),
   CONSTRAINT `FK_protocol_3` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- -----------------------------------------------------
 -- Protocol authors
 -- -----------------------------------------------------
@@ -231,7 +234,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,7,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,8,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
