@@ -429,4 +429,18 @@ public abstract class ResourceTest extends DbUnitTest {
 	   if (file !=null) entity.addPart(fileFieldName, new FileBody(file));	      
 	    return entity;
 	}	
+	protected MultipartEntity getMultipartWebFormRepresentation(
+			String[] formFields, String[] formValues, 
+			String[] fileFieldNames, File[] files, String mediaType) throws Exception {
+	
+		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,null,Charset.forName("UTF-8"));
+	    for (int i=0;i< formFields.length;i++ ) {
+	    	if (formValues[i]==null) continue;
+	    	entity.addPart(formFields[i], new StringBody(formValues[i],Charset.forName("UTF-8")));
+	    }
+	   if (files !=null) 
+		   for (int i=0; i < files.length; i++) 
+			   	entity.addPart(fileFieldNames[i], new FileBody(files[i]));	      
+	    return entity;
+	}
 }

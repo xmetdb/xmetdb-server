@@ -407,7 +407,7 @@
 			<xmet.db.user>guest</xmet.db.user>
 			<xmet.db.user.password>guest</xmet.db.user.password>
 		<!-- The folder where attachment files are stored -->
-			<xmet.dir.attachments></xmet.dir.attachments>
+			<xmet.dir.attachments>/tmp</xmet.dir.attachments>
 		<!-- How to serialize RDF - by Jena or StAX  jena|stax -->
 			<rdf.writer>jena</rdf.writer>
 			<!-- Protect /admin resource by AA -->
@@ -422,9 +422,7 @@
 			Consider changing only for testing purposes  -->
   			<xmet_protected>true</xmet_protected>
   			<!-- File path to store attachments_ If notdefined will use the temp folder -->
-			<!--
   			<xmet_attachments_dir>/tmp</xmet_attachments_dir>
-			-->
   			<!-- #URI of Ambit web service to store and query structures and data via OpenTox REST API
 				 #The service (ambit2.war) could be downloaded from http://ambit_sf_net
 				 #If not defined, structure search will not be available 

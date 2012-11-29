@@ -1,8 +1,10 @@
 package org.xmetdb.rest.protocol;
 
 import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.idea.modbcum.i.query.IQueryUpdate;
@@ -10,12 +12,19 @@ import net.idea.modbcum.p.ProcessorException;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.modbcum.q.conditions.EQCondition;
+import net.idea.opentox.cli.task.RemoteTask;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.i.task.TaskResult;
 import net.toxbank.client.policy.AccessRights;
 import net.toxbank.client.resource.User;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
@@ -322,13 +331,37 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					exec.process(k);
 				}
 				*/
-				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0) 
+				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
 					for (DBAttachment attachment: protocol.getAttachments()) {
 						AddAttachment k = new AddAttachment(protocol,attachment);
 						exec.process(k);
+						attachment.setID(k.getObject().getID());
 					}
 				
+				}
+				
 				connection.commit();
+				
+				//if commit succeeds, start import, but don't wait for it to complete
+				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
+					List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+					formparams.add(new BasicNameValuePair("import",  "true"));
+					HttpClient cli = new DefaultHttpClient();
+					try {
+						for (DBAttachment attachment: protocol.getAttachments()) {
+							String attachmentURL = String.format("%s/protocol/XMETDB%d/attachment/A%d/dataset",
+									baseReference,protocol.getID(),attachment.getID());
+							RemoteTask task = new RemoteTask(cli,new URL(attachmentURL),
+									MediaType.TEXT_URI_LIST.toString(),
+									new UrlEncodedFormEntity(formparams,"UTF-8"),
+									Method.POST.toString());
+							System.out.println(task);
+						}
+					} finally {
+						cli.getConnectionManager().shutdown();
+					}
+				}
+				
 				TaskResult result = new TaskResult(uri,true);
 				/*
 				try {

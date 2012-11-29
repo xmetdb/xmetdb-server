@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.net.URL;
 import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
+import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.i.tools.DownloadTool;
 import net.toxbank.client.io.rdf.ProtocolIO;
 import net.toxbank.client.resource.Protocol;
@@ -24,6 +26,7 @@ import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.xmetdb.rest.protocol.ProtocolFactory;
+import org.xmetdb.rest.protocol.ProtocolFactory.ObservationFields;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.xmet.client.PublishedStatus;
 import org.xmetdb.xmet.client.Resources;
@@ -359,8 +362,14 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		names[i] = ReadProtocol.fields.author_uri.name();
 		values[i + 1] = null;
 		names[i + 1] = ReadProtocol.fields.author_uri.name();
+		
+		URL url = getClass().getClassLoader().getResource("org/xmetdb/xmet/sdf/100-04-9.sdf");
+		Assert.assertNotNull(url);
+		File file = new File(url.getFile());
+		
 		MultipartEntity rep = getMultipartWebFormRepresentation(names, values,
-				null, MediaType.APPLICATION_PDF.toString());
+				ObservationFields.xmet_substrate_upload.name(),file, 
+				ChemicalMediaType.CHEMICAL_MDLSDF.toString());
 
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
