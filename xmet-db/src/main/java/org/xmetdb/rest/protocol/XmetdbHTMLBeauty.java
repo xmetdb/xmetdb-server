@@ -153,15 +153,11 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 	private final static String topLinks =
 		"<ul class='topLinks'>\n" +
 			"<li class='topLinks'>\n" +
-				"<a class='topLinks download' href='%s'>Download QMRF Editor</a>\n" +
+				"<a class='topLinks help' href='%s/help'>Help</a>\n" +
 			"</li>\n" +
 			"<li class='topLinks'>|</li>\n" +
 			"<li class='topLinks'>\n" +
-				"<a class='topLinks email' href='mailto:%s'>Submit QMRF by E-mail</a>\n" +
-			"</li>\n" +
-			"<li class='topLinks'>|</li>\n" +
-			"<li class='topLinks'>\n" +
-				"<a class='topLinks help' href='%s'>Help</a>\n" +
+				"<a class='topLinks help' href='%s/register'>Register</a>\n" +
 			"</li>\n" +
 			"%s" +
 		"</ul>\n";
@@ -437,11 +433,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 			
 			w.write(String.format(
 					topLinks,
-					// Download QMRF Editor
-					qmrfEditorDownloadLink, 
-					//Sumbit QMRF by e-mail
-					qmrfEditorEmail, 
-					// Help
+					baseReference.toString(),
 					baseReference.toString(),					
 					logInOutLink
 			));
