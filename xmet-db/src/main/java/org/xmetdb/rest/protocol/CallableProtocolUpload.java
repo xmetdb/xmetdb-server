@@ -31,7 +31,6 @@ import org.xmetdb.rest.protocol.db.PublishProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolByID;
 import org.xmetdb.rest.protocol.db.UpdateFreeTextIndex;
-import org.xmetdb.rest.protocol.db.UpdateKeywords;
 import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.resource.db.ProtocolQueryURIReporter;
 import org.xmetdb.rest.user.DBUser;
@@ -317,10 +316,6 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				}
 				String uri = reporter.getURI(protocol);
 				
-				if ((protocol.getKeywords()!=null) && (protocol.getKeywords().size()>0)) {
-					UpdateKeywords k = new UpdateKeywords(protocol);
-					exec.process(k);
-				}
 				/*
 				if ((protocol.getAuthors()!=null) && protocol.getAuthors().size()>0) {
 					AddAuthors k = new AddAuthors(protocol);
@@ -421,10 +416,6 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					retrieveProtocolIdentifier(protocol,connection);
 				}
 				uri = reporter.getURI(protocol);
-				if ((protocol.getKeywords()!=null) && (protocol.getKeywords().size()>0)) {
-					UpdateKeywords k = new UpdateKeywords(protocol);
-					exec.process(k);
-				}
 				try {
 					UpdateFreeTextIndex x = new UpdateFreeTextIndex(protocol);
 					exec.process(x);

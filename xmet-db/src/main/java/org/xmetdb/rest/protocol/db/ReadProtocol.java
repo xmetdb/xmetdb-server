@@ -52,7 +52,6 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			fields.anabstract,
 			fields.author_uri,
 			fields.status,
-			fields.xmlkeywords,
 			fields.summarySearchable,
 			//ReadProtocol.fields.status
 			fields.idproject,
@@ -83,42 +82,6 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 				return "URI";
 			}
 		},
-		xmlkeywords {
-			@Override
-			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
-				try {
-					String kw = rs.getString(name());
-					
-					if (kw==null) return;
-					kw = kw.replace("&lt;html&gt;","").replace("&lt;head&gt;","").replace("&lt;/head&gt;","").
-							replace("&lt;body&gt;","").replace("&lt;/body&gt;","").replace("&lt;/html&gt;","");
-					String[] keywords = kw.split(";");
-					for (String keyword:keywords)
-						if (!protocol.getKeywords().contains(keyword))
-							protocol.addKeyword(keyword);
-				} catch (Exception x) {
-					throw new SQLException(x);
-				}
-			}
-			@Override
-			public QueryParam getParam(DBProtocol protocol) {
-				return new QueryParam<String>(String.class, (String)getValue(protocol));
-			}	
-			@Override
-			public Object getValue(DBProtocol protocol) {
-				if (protocol == null) return null;
-				StringBuilder b = new StringBuilder();
-				for (String keyword: protocol.getKeywords()) { 
-					b.append(keyword);
-					b.append(";");
-				}
-				return b.toString();
-			}
-			@Override
-			public String toString() {
-				return "Keywords";
-			}
-		},			
 		version {
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
@@ -766,7 +729,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			}		
 			@Override
 			public Object getValue(DBProtocol protocol) {
-				return protocol==null?null:protocol.getStatus();
+				return protocol==null?null:protocol.getAtomUncertainty();
 			}
 			
 			public String getCondition() {
@@ -786,7 +749,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			}		
 			@Override
 			public Object getValue(DBProtocol protocol) {
-				return protocol==null?null:protocol.getStatus();
+				return protocol==null?null:protocol.getProductAmount();
 			}
 			
 			public String getCondition() {
@@ -874,7 +837,6 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 		fields.iduser,
 		fields.idorganisation,
 		fields.filename,
-		fields.xmlkeywords,
 		fields.status,
 		fields.published_status
 		
