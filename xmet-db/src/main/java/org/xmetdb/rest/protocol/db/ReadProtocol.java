@@ -37,7 +37,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 	 */
 	private static final long serialVersionUID = 6228939989116141217L;
 	
-
+	/*
 	public static final ReadProtocol.fields[] entryFields = new ReadProtocol.fields[] {
 			
 			fields.title,
@@ -53,6 +53,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			fields.data_training,
 			fields.data_validation
 		};
+		*/
 	public static final ReadProtocol.fields[] displayFields = new ReadProtocol.fields[] {
 			fields.idprotocol,
 			fields.identifier,

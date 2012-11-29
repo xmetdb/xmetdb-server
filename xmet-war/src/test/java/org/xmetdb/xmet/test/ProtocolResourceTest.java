@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.net.URL;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -24,6 +23,7 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
+import org.xmetdb.rest.protocol.ProtocolFactory;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.xmet.client.PublishedStatus;
 import org.xmetdb.xmet.client.Resources;
@@ -280,12 +280,8 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		String[] names = new String[ReadProtocol.fields.values().length];
 		String[] values = new String[ReadProtocol.fields.values().length];
 		int i = 0;
-		for (ReadProtocol.fields field : ReadProtocol.entryFields) {
+		for (ProtocolFactory.ObservationFields field : ProtocolFactory.ObservationFields.values()) {
 			switch (field) {
-			case idprotocol:
-				continue;
-			case filename:
-				continue;
 				/*
 				 * case user_uri: { values[i] =
 				 * String.format("http://localhost:%d%s/%s"
@@ -302,8 +298,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				break;
 			}
 			case user_uri: {
-				values[i] = String.format("http://localhost:%d%s/%s", port,
-						Resources.user, "U1");
+				values[i] = String.format("http://localhost:%d%s/%s", port,	Resources.user, "U1");
 				break;
 			}
 			case author_uri: {

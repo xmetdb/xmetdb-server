@@ -21,12 +21,40 @@ import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.CallableProtocolUpload.UpdateMode;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
-import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.xmet.client.PublishedStatus;
 
 public class ProtocolFactory {
 	protected static final String utf8= "UTF-8";
+	public enum ObservationFields {
+		identifier,
+		title,
+		description,
+		published_status,
+		anabstract,
+		data_training,
+		data_validation,
+		project_uri,
+		organisation_uri,
+		user_uri,
+		iduser,
+		author_uri,
+		summarySearchable,
+		status,
+		xmlkeywords,
+		endpoint,
+		endpointName,
+		allowReadByUser,
+		allowReadByGroup;
+		
+		@Override
+		public String toString() {
+			String name= name();
+			return  String.format("%s%s",
+					name.substring(0,1).toUpperCase(),
+					name.substring(1).toLowerCase());
+		}
+	}
 	public static DBProtocol getProtocol(DBProtocol protocol,
 				List<FileItem> items, 
 				long maxSize,
@@ -39,18 +67,17 @@ public class ProtocolFactory {
 			FileItem fi = it.next();
 
 			try {
-				ReadProtocol.fields field  = null;
+				ObservationFields field  = null;
 				try { 
 					String fname = fi.getFieldName();
 					if (fname!=null)
-						field = ReadProtocol.fields.valueOf(fname);
+						field = ObservationFields.valueOf(fname);
 					
 				} catch (Exception x) {
 					continue;
 				}
 				if (field==null) continue;
 				switch (field) {
-				case idprotocol: continue;
 				case identifier: {
 					String s = fi.getString(utf8);
 					if ((s!=null) && !"".equals(s))
@@ -140,6 +167,7 @@ public class ProtocolFactory {
 						protocol.setTitle(s);
 					break;
 				}
+				/*
 				case iduser: {
 					String s = fi.getString(utf8);
 					if ((s!=null) && !"".equals(s)) {
@@ -151,6 +179,7 @@ public class ProtocolFactory {
 					}
 					break;
 				}
+				*/
 				case summarySearchable: {
 					try {
 						protocol.setSearchable(Boolean.parseBoolean(fi.getString(utf8)));
