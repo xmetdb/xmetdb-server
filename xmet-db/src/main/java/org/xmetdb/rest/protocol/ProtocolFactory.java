@@ -304,8 +304,8 @@ public class ProtocolFactory {
 		        	
 		        	//generate new file name
 		        	originalName = fi.getName();
-		        	String newName = String.format("qmrf%d_%s_%s%s", protocol.getID()>0?protocol.getID():0,
-		        								type.name(),DBProtocol.generateIdentifier(),ext);
+		        	String newName = String.format("xmet%d_%s_%s%s", protocol.getID()>0?protocol.getID():0,
+		        								type.getXmetName(),DBProtocol.generateIdentifier(),ext);
 		          	file = new File(String.format("%s/%s",dir==null?System.getProperty("java.io.tmpdir"):dir,newName));
 		        }
 		        fi.write(file);

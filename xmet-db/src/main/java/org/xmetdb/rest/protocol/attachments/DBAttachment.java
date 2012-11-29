@@ -25,6 +25,10 @@ public class DBAttachment extends Document {
 			public String getDescription() {
 				return "SDF, MOL, CSV, XLS formats";
 			}
+			@Override
+			public String getXmetName() {
+				return "substrate";
+			}
 		},
 		data_validation {
 			@Override
@@ -34,7 +38,11 @@ public class DBAttachment extends Document {
 			@Override
 			public String getDescription() {
 				return "SDF, MOL, CSV, XLS formats";
-			}			
+			}	
+			@Override
+			public String getXmetName() {
+				return "product";
+			}
 		},
 		document {
 			@Override
@@ -50,6 +58,7 @@ public class DBAttachment extends Document {
 		public String getDescription() { return toString();}
 		public int maxFiles() { return 3;}
 		public String acceptFormats() { return "sdf|mol|csv|xls"; };
+		public String getXmetName() {return name();};
 		
 	}
 	

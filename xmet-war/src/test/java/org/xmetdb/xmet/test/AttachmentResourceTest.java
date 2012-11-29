@@ -78,8 +78,8 @@ public class AttachmentResourceTest extends ResourceTest {
    	    IDatabaseConnection c = getConnection();	
 		ITable  table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
 		Assert.assertEquals(3,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version from attachments p where p.idprotocol=1 and p.version=1");
-		Assert.assertEquals(3,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version from attachments p where p.idprotocol=1 and p.version=1  order by idattachment desc limit 1");
+		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals(new BigInteger("1"),table.getValue(0,"version"));
 		Assert.assertEquals(new BigInteger("1"),table.getValue(0,"idprotocol"));
 		String idattachment = table.getValue(0,"idattachment").toString();
@@ -91,9 +91,8 @@ public class AttachmentResourceTest extends ResourceTest {
 	public void testImportAttachment(String attachmentID) throws Exception {
 		String attachmentURL = String.format("http://localhost:%d/protocol/%s/attachment/A%s/dataset",port,idxmet1,attachmentID);
 		Reference uri = new Reference(attachmentURL);
-
 		IDatabaseConnection c = getConnection();	
-		ITable  table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment="+attachmentID);
+		ITable  table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment="+attachmentID + " order by idattachment desc");
 		Assert.assertEquals(Boolean.FALSE,table.getValue(0,"imported"));
 		c.close();
 		
