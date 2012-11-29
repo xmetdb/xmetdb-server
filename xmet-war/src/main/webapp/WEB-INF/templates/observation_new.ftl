@@ -77,30 +77,30 @@ $(document).ready(function() {
 	</p>	
 			
    <p><label for="xmet_atom_uncertainty">Atom uncertainty:<em>*</em></label>
-			<select id="xmet_atom_uncertainty" >
-			<option value="Certain" selected>Certain</option>
+			<select id="xmet_atom_uncertainty" name="xmet_atom_uncertainty" >
+			<option value="Certain" selected="selected">Certain</option>
 			<option value="Uncertain">Uncertain</option>
 			</select>
 	</p>	
 		<!-- Product amount -->
 	<p><label for="xmet_product_amount">Product amount:<em>*</em></label>
-		<select id="xmet_product_amount">
-			<option value="Major" selected>Major</option>
+		<select id="xmet_product_amount" name="xmet_product_amount">
+			<option value="Major" selected="selected">Major</option>
 			<option value="Minor">Minor</option>
 			<option value="Unknown">Unknown</option>
 		</select>
 	</p>
 	<!-- Experiment -->
 	<p><label for="xmet_experiment">Experiment:<em>*</em></label>
-		<select id="xmet_experiment"  >
-			<option value="MS" selected>MS (Microsomes)</option>
+		<select id="xmet_experiment" name="xmet_experiment">
+			<option value="MS" selected="selected">MS (Microsomes)</option>
 			<option value="HEP">HEP (Hepatocytes)</option>
 			<option value="ENZ">ENZ (Enzyme)</option>
 		</select>
 	</p>
 	<!-- Enzymes -->
 	<p><label for="xmet_enzyme">Enzyme:<em>*</em></label>
-		<select id="xmet_enzyme">
+		<select id="xmet_enzyme" name="xmet_enzyme">
 		</select>
 		Allele
 	</p>
