@@ -44,7 +44,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		create {
 			@Override
 			public String getDescription() {
-				return "New document";
+				return "New observation";
 			}
 		},
 		update {
@@ -62,7 +62,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		createversion {
 			@Override
 			public String getDescription() {
-				return "New document version";
+				return "Observation new version";
 			}				
 		};		
 		public String getDescription() {return name();}

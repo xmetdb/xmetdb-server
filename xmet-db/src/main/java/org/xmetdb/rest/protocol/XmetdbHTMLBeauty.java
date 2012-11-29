@@ -410,7 +410,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					// Log in
 					logInOutLink = String.format(logInOutLinkTemplate,
 							// Log in hint
-							"Log in here to submit new documents (only required for editors)",
+							"Log in here to submit new observations (only required for editors)",
 							// Log in URL
 							baseReference.toString(), Resources.login,
 							// onClick event (used when logging out, hence empty here)
@@ -984,7 +984,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 								ReadProtocol.fields.filename.name(),
 								"QMRF XML"
 						));
-					content.append("<p style='color:red'>New document version will be created and assigned the same QMRF number.<br>The old version will be assigned <i>archived</i> status and will not be visible in published documents!</p>");
+					content.append("<p style='color:red'>New version will be created and assigned identifier in the format XMETDB{id}v{newversion}.<br>The old version will be assigned <i>archived</i> status and will not be visible in published observations!</p>");
 					content.append(_tdEnd);		
 					break;
 				}				

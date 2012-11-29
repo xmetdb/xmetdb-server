@@ -22,11 +22,11 @@ public enum XMETDBRoles {
 		}
 		@Override
 		public String toString() {
-			return "New Document";
+			return "New observation";
 		}
 		@Override
 		public String getHint() {
-			return "Publishing new documents";
+			return "Publishing new obsevations";
 		}
 	},
 	xmetdb_manager {
