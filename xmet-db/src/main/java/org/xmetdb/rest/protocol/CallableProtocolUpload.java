@@ -1,10 +1,8 @@
 package org.xmetdb.rest.protocol;
 
 import java.io.File;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.idea.modbcum.i.query.IQueryUpdate;
@@ -12,21 +10,18 @@ import net.idea.modbcum.p.ProcessorException;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.modbcum.q.conditions.EQCondition;
-import net.idea.opentox.cli.task.RemoteTask;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.i.task.TaskResult;
 import net.toxbank.client.policy.AccessRights;
 import net.toxbank.client.resource.User;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
+import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.groups.DBOrganisation;
 import org.xmetdb.rest.groups.DBProject;
@@ -344,21 +339,13 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				
 				//if commit succeeds, start import, but don't wait for it to complete
 				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
-					List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-					formparams.add(new BasicNameValuePair("import",  "true"));
-					HttpClient cli = new DefaultHttpClient();
 					try {
 						for (DBAttachment attachment: protocol.getAttachments()) {
-							String attachmentURL = String.format("%s/protocol/XMETDB%d/attachment/A%d/dataset",
-									baseReference,protocol.getID(),attachment.getID());
-							RemoteTask task = new RemoteTask(cli,new URL(attachmentURL),
-									MediaType.TEXT_URI_LIST.toString(),
-									new UrlEncodedFormEntity(formparams,"UTF-8"),
-									Method.POST.toString());
-							System.out.println(task);
+							String attachmentURL = String.format("riap://protocol/XMETDB%d/attachment/A%d/dataset",
+									protocol.getID(),attachment.getID());
+							postImportJob(attachmentURL,getToken());
 						}
 					} finally {
-						cli.getConnectionManager().shutdown();
 					}
 				}
 				
@@ -394,6 +381,39 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		}
 		} //switch
 
+	}
+	
+	protected String postImportJob(String url, String token)  {
+		ClientResource cr = null;
+		Representation repr = null;
+		try {
+			Form form = new Form();
+			form.add("import", "true");
+			
+			cr = new ClientResource(url);
+			Form headers = (Form) cr.getRequest().getAttributes().get("org.restlet.http.headers");
+			if (headers == null) {
+			    headers = new Form();
+			    cr.getRequest().getAttributes().put("org.restlet.http.headers", headers);
+			}
+			headers.add("Cookie", "xmetdb="+token);
+			repr = cr.post(form.getWebRepresentation(),MediaType.TEXT_URI_LIST);
+			return repr.getText();
+		} catch (ResourceException x) {
+			x.printStackTrace();
+			if (Status.CLIENT_ERROR_NOT_FOUND.equals(x.getStatus())) {
+
+				return x.getStatus().toString();
+			}
+			else throw x;
+		} catch (Exception x) {
+			x.printStackTrace();
+
+		} finally {
+			try { repr.release(); } catch (Exception x) {}
+			try {cr.release();} catch (Exception x) {}
+		}
+		return null;
 	}
 
 	public TaskResult update() throws ResourceException {

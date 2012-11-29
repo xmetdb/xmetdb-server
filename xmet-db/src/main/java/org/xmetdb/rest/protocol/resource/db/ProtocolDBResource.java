@@ -423,6 +423,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		DBUser user = new DBUser();
 		user.setUserName(getRequest().getClientInfo().getUser().getIdentifier());
 		*/
+		String xmetdbcookie = getRequest().getCookies().getFirstValue("xmetdb");
 		DBUser user = null;
 		
 		if ((getRequest().getClientInfo().getUser()==null) || (getRequest().getClientInfo().getUser().getIdentifier()==null)) {
@@ -455,7 +456,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 
 			String dir = dbc.getDir();
 			if ("".equals(dir)) dir = null;
-			return new CallableProtocolUpload(method,item,user,input,conn,r,getToken(),getRequest().getRootRef().toString(),
+			return new CallableProtocolUpload(method,item,user,input,conn,r,xmetdbcookie,getRequest().getRootRef().toString(),
 						dir==null?null:new File(dir)
 			);
 		} catch (ResourceException x) {

@@ -435,9 +435,12 @@ class ProtocolAuthorizer extends RoleAuthorizer {
 
 	@Override
 	public boolean authorize(Request request, Response response) {
+		
 		if (Method.GET.equals(request.getMethod()))
 			return true;
 		if (skip) return true;
+		if (Protocol.RIAP.equals(request.getProtocol())) return true;
+		
 		if ((request.getClientInfo() == null)
 				|| (request.getClientInfo().getUser() == null)
 				|| (request.getClientInfo().getUser().getIdentifier() == null))
