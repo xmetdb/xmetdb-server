@@ -28,6 +28,6 @@
 	</div>
 	<div class='ui-widget-header ui-corner-bottom'><p>
 		<a class='button' href="${xmet_request}">Export</a>
-		 <a class='button' href="/xmetdb/editor/">Edit</a>
+		 <a class='button' id="xmet_editor" href="/xmetdb/editor/">Edit</a>
 		 </p>
 	</div>	

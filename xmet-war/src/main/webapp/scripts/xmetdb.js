@@ -252,7 +252,8 @@ function loadObservation(observation_uri) {
 	        	  
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
-	        	  
+	        	  $('#xmet_editor').attr("href","/xmetdb/editor/"+observation["identifier"]);
+
 	        	  loadEnzyme(observation);
 	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
 	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate");
