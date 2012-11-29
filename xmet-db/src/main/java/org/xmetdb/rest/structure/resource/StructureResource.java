@@ -305,7 +305,7 @@ public class StructureResource extends CatalogResource<Structure> {
 	
 	protected String getAttachmentDir() {
 		String dir = ((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_attachments_dir.name());
-		return dir==null?System.getProperty("java.io.tmpdir"):dir;
+		return dir==null || "".equals(dir)?System.getProperty("java.io.tmpdir"):dir;
 	}
 	
 	

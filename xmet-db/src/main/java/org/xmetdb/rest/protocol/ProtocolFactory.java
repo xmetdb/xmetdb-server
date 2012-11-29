@@ -33,8 +33,8 @@ public class ProtocolFactory {
 		xmet_experiment,
 		xmet_experimentdescription,
 		published_status,
-		data_training,
-		data_validation,
+		xmet_substrate_upload,
+		xmet_product_upload,
 		project_uri,
 		organisation_uri,
 		user_uri,
@@ -119,12 +119,12 @@ public class ProtocolFactory {
 					protocol.setAbstract(s);
 					break;
 				}
-				case data_training :{
+				case xmet_substrate_upload :{
 					DBAttachment attachment = createAttachment(fi,protocol,attachment_type.data_training,dir);
 					if (attachment!=null) protocol.getAttachments().add(attachment);
 					break;
 				}
-				case data_validation :{
+				case xmet_product_upload :{
 					DBAttachment attachment = createAttachment(fi,protocol,attachment_type.data_validation,dir);
 					if (attachment!=null) protocol.getAttachments().add(attachment);
 					break;
