@@ -100,7 +100,7 @@ $(document).ready(function() {
 	</p>
 	<!-- Enzymes -->
 	<p><label for="xmet_enzyme">Enzyme:<em>*</em></label>
-		<select id="xmet_enzyme"  >
+		<select id="xmet_enzyme">
 		</select>
 		Allele
 	</p>
@@ -108,6 +108,11 @@ $(document).ready(function() {
 	<p><label for="xmet_reference">Reference:<em>*</em></label>
 		<input type="text" name="xmet_reference" size='60' title="DOI or free text?" value="">
 	</p>
+	<!-- Submit --> 
+	<p><label >&nbsp;</em></label>
+		<input type="submit" class="submit" value="Submit observation">
+	</p>
+</p>
 </div>
 	
 </form>	
