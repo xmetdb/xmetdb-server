@@ -116,7 +116,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					item.getOwner().getResourceURL(),
 					item.getOwner().getUserName()
 					));
-			if (item.getAttachments()!=null)
+			if ((item.getAttachments()!=null) && (item.getAttachments().size()>0))
 				for (DBAttachment attachment : item.getAttachments()) {
 					getOutput().write(String.format(formatAttachments,
 							attachment.getType().toString(),
