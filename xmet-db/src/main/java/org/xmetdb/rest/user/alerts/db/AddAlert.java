@@ -15,10 +15,10 @@ import net.idea.modbcum.i.query.QueryParam;
  *
  */
 public class AddAlert  extends AbstractAlertUpdate<DBUser> {
-	public static final String[] sql_addAlert_byuserid = new String[] {"insert into alert (name,query,qformat,rfrequency,rinterval,iduser) values (?,?,?,?,?,?) "};
+	public static final String[] sql_addAlert_byuserid = new String[] {"insert into alert (name,query,qformat,rfrequency,rinterval,iduser,sent) values (?,?,?,?,?,?,now()) "};
 	public static final String[] sql_addAlert_byusername = new String[] {
 		"insert into alert " +
-		"SELECT null,?,?,?,?,?,iduser,now(),0 from user where username=? "
+		"SELECT null,?,?,?,?,?,iduser,now(),now() from user where username=? "
 	};
 	
 	public AddAlert(DBAlert alert,DBUser author) {
