@@ -192,6 +192,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				if ((user!=null) && (user.getID()<=0)&&(user.getResourceURL()!=null)) user.setID(user.parseURI(baseReference));
 					//retrieveAccountNames(user, connection);
 			}
+			if (user==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Observation owner not specified!");
 		} catch (ResourceException x) {
 			throw x;
 		} catch (Exception x) {
