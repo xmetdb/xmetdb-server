@@ -11,6 +11,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
+import net.idea.restnet.c.ChemicalMediaType;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -23,6 +24,7 @@ import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
+import org.xmetdb.rest.protocol.ProtocolFactory;
 import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.xmet.client.Resources;
@@ -70,8 +72,8 @@ public class AttachmentResourceTest extends ResourceTest {
 	public void testCreateEntryFromMultipartWeb() throws Exception {
 		String url = createEntryFromMultipartWeb(new Reference(getTestURI()));
 		
-		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s/attachment",port,idxmet1),url);
-
+		Assert.assertTrue(url.startsWith(String.format("http://localhost:%d/protocol/%s/attachment",port,idxmet1)));
+		System.out.println(url);
 		
    	    IDatabaseConnection c = getConnection();	
 		ITable  table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
@@ -80,59 +82,18 @@ public class AttachmentResourceTest extends ResourceTest {
 		Assert.assertEquals(3,table.getRowCount());
 		Assert.assertEquals(new BigInteger("1"),table.getValue(0,"version"));
 		Assert.assertEquals(new BigInteger("1"),table.getValue(0,"idprotocol"));
+		String idattachment = table.getValue(0,"idattachment").toString();
 		c.close();
+		
+		testImportAttachment(idattachment);
 	}
 	
-	public String createEntryFromMultipartWeb(Reference uri) throws Exception {
-
-		URL url = getClass().getClassLoader().getResource("org/xmetdb/xmet/protocol-sample.pdf");
-		Assert.assertNotNull(url);
-		File file = new File(url.getFile());
-		
-		String[] names = new String[0];
-		String[] values = new String[0];
-		MultipartEntity rep = getMultipartWebFormRepresentation(names,values,attachment_type.document.name(),file,MediaType.APPLICATION_PDF.toString());
-		
-        IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
-		Assert.assertEquals(3,table.getRowCount());
-		c.close();
-
-		RemoteTask task = testAsyncPoll(uri,
-				MediaType.TEXT_URI_LIST, rep,
-				Method.POST);
-		//wait to complete
-		while (!task.isDone()) {
-			task.poll();
-			Thread.sleep(100);
-			Thread.yield();
-		}
-		if (!task.isCompletedOK())
-			System.out.println(task.getError());
-		
-		Assert.assertTrue(task.getResult().toString().startsWith(
-					String.format("http://localhost:%d/protocol/",port)));
-		
-		return task.getResult().toString();
-
-
-	}		
-	@Override
-	public Object verifyResponseJavaObject(String uri, MediaType media,
-			Representation rep) throws Exception {
-		Object o = super.verifyResponseJavaObject(uri, media, rep);
-		Assert.assertTrue(o instanceof ReadAttachment);
-
-		return o;
-	}
-	
-	
-	@Test
-	public void testImportAttachment() throws Exception {
-		Reference uri = new Reference(String.format("http://localhost:%d/protocol/%s/attachment/A1/dataset",port,idxmet1));
+	public void testImportAttachment(String attachmentID) throws Exception {
+		String attachmentURL = String.format("http://localhost:%d/protocol/%s/attachment/A%s/dataset",port,idxmet1,attachmentID);
+		Reference uri = new Reference(attachmentURL);
 
 		IDatabaseConnection c = getConnection();	
-		ITable  table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment=1");
+		ITable  table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment="+attachmentID);
 		Assert.assertEquals(Boolean.FALSE,table.getValue(0,"imported"));
 		c.close();
 		
@@ -155,11 +116,59 @@ public class AttachmentResourceTest extends ResourceTest {
 		Assert.assertEquals(uri.toString(),task.getResult().toString());
 
 		c = getConnection();	
-		 table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment=1");
+		 table = 	c.createQueryTable("EXPECTED","SELECT idattachment,imported,name FROM attachments where idattachment="+attachmentID);
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"imported"));
 		c.close();
 
 	}
+	
+	public String createEntryFromMultipartWeb(Reference uri) throws Exception {
+
+		URL url = getClass().getClassLoader().getResource("org/xmetdb/xmet/sdf/100-04-9.sdf");
+		Assert.assertNotNull(url);
+		File file = new File(url.getFile());
+		
+		String[] names = new String[1];
+		String[] values = new String[1];
+		names[0] = ProtocolFactory.ObservationFields.user_uri.name();
+		values[0] = String.format("http://localhost:%d%s/%s", port,	Resources.user, "U1");
+		MultipartEntity rep = getMultipartWebFormRepresentation(names,values,
+				ProtocolFactory.ObservationFields.xmet_substrate_upload.name(),file,ChemicalMediaType.CHEMICAL_MDLSDF.toString());
+		
+        IDatabaseConnection c = getConnection();	
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
+		Assert.assertEquals(3,table.getRowCount());
+		c.close();
+
+		RemoteTask task = testAsyncPoll(uri,
+				MediaType.TEXT_URI_LIST, rep,
+				Method.POST);
+		//wait to complete
+		while (!task.isDone()) {
+			task.poll();
+			Thread.sleep(100);
+			Thread.yield();
+		}
+		if (!task.isCompletedOK())
+			System.out.println(task.getError());
+		
+		Assert.assertTrue(task.getResult().toString().startsWith(String.format("http://localhost:%d/protocol/",port)));
+		
+		return task.getResult().toString();
+
+
+	}		
+	@Override
+	public Object verifyResponseJavaObject(String uri, MediaType media,
+			Representation rep) throws Exception {
+		Object o = super.verifyResponseJavaObject(uri, media, rep);
+		Assert.assertTrue(o instanceof ReadAttachment);
+
+		return o;
+	}
+	
+	
+	
 	
 	
 }
