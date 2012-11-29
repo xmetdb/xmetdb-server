@@ -43,7 +43,8 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	public static final String[] create_sql = {
 		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created) " +
 		"values (?,?,?,?,?,?,?,?,?,now())",
-		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where code = ? and idprotocol=? and version=?"
+		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where code = ? and idprotocol=? and version=?",
+		"update protocol set qmrf_number=? where idprotocol=? and version=?"
 	};
 
 	public CreateProtocol(DBProtocol ref) {
@@ -67,8 +68,11 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 					ReadProtocol.fields.idorganisation,
 					ReadProtocol.fields.status
 			};
-			for (ReadProtocol.fields field: f) 
+			for (ReadProtocol.fields field: f) try {
 				params1.add(field.getParam(getObject()));
+			} catch (Exception x) {
+				x.printStackTrace();
+			}
 			break;
 		}
 		case 1: {
@@ -77,6 +81,13 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			params1.add(ReadProtocol.fields.version.getParam(getObject()));
 			break;
 		}
+		case 2: {
+			
+			params1.add(new QueryParam<String>(String.class,String.format("XMETDB%d",getObject().getID())));
+			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
+			params1.add(ReadProtocol.fields.version.getParam(getObject()));
+			break;
+		}		
 		}
 		return params1;
 		

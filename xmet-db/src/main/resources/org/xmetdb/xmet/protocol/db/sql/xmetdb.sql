@@ -231,7 +231,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,6,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,7,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
@@ -266,7 +266,7 @@ begin
 
   	-- create new version
     insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,created,published_status)
-    select idprotocol,version_new,ifnull(title_new,title),new_qmrf_number,ifnull(abstract_new,abstract),iduser,summarySearchable,idproject,idorganisation,null,status,now(),published_status 
+    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,summarySearchable,idproject,idorganisation,null,status,now(),published_status 
     from protocol where qmrf_number=protocol_qmrf_number;
 	
    	-- copy authors
@@ -281,10 +281,8 @@ begin
     insert into keywords (idprotocol,version,keywords)
     select idprotocol,version_new,keywords from keywords join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;    
     
-	-- move the qmrf number to the new version; replace the old one with qmrfnumber-vXX
-    update protocol set published_status='archived',qmrf_number=concat(left(protocol_qmrf_number,36-(length(version)+2)),"-v",version) where qmrf_number=protocol_qmrf_number;
-    update protocol set qmrf_number=protocol_qmrf_number where idprotocol=pid and version=version_new;
-
+	-- Set the previous protocol status to archived
+    update protocol set published_status='archived' where qmrf_number=protocol_qmrf_number;
 
     END LOOP the_loop;
 

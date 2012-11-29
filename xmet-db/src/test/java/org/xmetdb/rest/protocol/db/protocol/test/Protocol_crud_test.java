@@ -150,7 +150,6 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		c.close();
 	}
 
-	protected static String newQMRFNumber = DBProtocol.generateIdentifier(); 
 	@Override
 	protected IQueryUpdate<T, DBProtocol> createQueryNew()
 			throws Exception {
@@ -163,7 +162,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		ref.setSearchable(true);
 		ref.setStatus(STATUS.SOP);
 		ref.setPublished(false);
-		ref.setIdentifier(newQMRFNumber);
+		ref.setIdentifier("");
 		ref.setEndpoint(new EndpointTest(null,null));
 		ref.getEndpoint().setCode("CYP3A4");
 		ref.setAbstract("Hepatocytes");
@@ -182,7 +181,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"summarySearchable"));
 		Assert.assertEquals(STATUS.SOP.toString(),table.getValue(0,"status"));
-		Assert.assertEquals(newQMRFNumber,table.getValue(0,"qmrf_number"));
+		Assert.assertTrue(table.getValue(0,"qmrf_number").toString().startsWith("XMETDB"));
 		c.close();		
 	}
 
