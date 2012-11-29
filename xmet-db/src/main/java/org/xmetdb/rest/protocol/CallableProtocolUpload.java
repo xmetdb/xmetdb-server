@@ -263,24 +263,34 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				}
 				*/
 				//project
-				DBProject p = protocol.getProject() instanceof DBProject?
-							(DBProject)protocol.getProject():
-							new DBProject(protocol.getProject());
-			    protocol.setProject(p);
-			    if (p.getID()<=0) p.setID(p.parseURI(baseReference));
-				if (p.getID()<=0) {
-					CreateGroup q1 = new CreateGroup(p);
-					exec.process(q1);
+				DBProject p;
+				if (protocol.getProject()==null) 
+					protocol.setProject(new DBProject(1));  //default xmetdb pproject
+				else {
+					p = protocol.getProject() instanceof DBProject?
+								(DBProject)protocol.getProject():
+								new DBProject(protocol.getProject());
+				    protocol.setProject(p);
+				    if (p.getID()<=0) p.setID(p.parseURI(baseReference));
+					if (p.getID()<=0) {
+						CreateGroup q1 = new CreateGroup(p);
+						exec.process(q1);
+					}
 				}
 				//organisation
-				DBOrganisation o = protocol.getOrganisation() instanceof DBOrganisation?
-						(DBOrganisation)protocol.getOrganisation():
-						new DBOrganisation(protocol.getOrganisation());
-				protocol.setOrganisation(o);
-			    if (o.getID()<=0) o.setID(o.parseURI(baseReference));
-				if (o.getID()<=0) {
-					CreateGroup q2 = new CreateGroup(o);
-					exec.process(q2);
+				DBOrganisation o;
+				if (protocol.getOrganisation()==null)
+					protocol.setOrganisation(new DBOrganisation(1)); //default xmetdb org
+				else {	
+					o = protocol.getOrganisation() instanceof DBOrganisation?
+							(DBOrganisation)protocol.getOrganisation():
+							new DBOrganisation(protocol.getOrganisation());
+					protocol.setOrganisation(o);
+				    if (o.getID()<=0) o.setID(o.parseURI(baseReference));
+					if (o.getID()<=0) {
+						CreateGroup q2 = new CreateGroup(o);
+						exec.process(q2);
+					}
 				}
 				
 				if (existing) {

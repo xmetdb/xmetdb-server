@@ -292,13 +292,13 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				 * ,port,Resources.user,"U1"); break; }
 				 */
 			case project_uri: {
-				values[i] = String.format("http://localhost:%d%s/%s", port,
-						Resources.project, "G1");
+				values[i] = null;
+						//String.format("http://localhost:%d%s/%s", port,Resources.project, "G2");
 				break;
 			}
 			case organisation_uri: {
-				values[i] = String.format("http://localhost:%d%s/%s", port,
-						Resources.organisation, "G1");
+				values[i] = null;
+						//String.format("http://localhost:%d%s/%s", port,Resources.organisation, "G2");
 				break;
 			}
 			case user_uri: {
