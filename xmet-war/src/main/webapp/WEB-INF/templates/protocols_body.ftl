@@ -18,10 +18,11 @@
 		<th>Substrate</th>
 		<th>Product (dataset)</th>
 		<th>Product</th>
+		<th>Product amount</th>
 		<th>Experiment</th>
 		<th>Enzyme</th>
 		<th>Last updated</th>
-		<th>Owner</th>
+		<th>Submitted by</th>
 		</thead>
 		<tbody></tbody>
 		</table>

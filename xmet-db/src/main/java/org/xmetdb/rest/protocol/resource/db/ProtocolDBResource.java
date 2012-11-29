@@ -93,7 +93,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	
 	@Override
 	public String getTemplateName() {
-		return singleItem?"observation_new.ftl":"protocols_body.ftl";
+		return singleItem?"observation_body.ftl":"protocols_body.ftl";
 	}
 	
 	@Override

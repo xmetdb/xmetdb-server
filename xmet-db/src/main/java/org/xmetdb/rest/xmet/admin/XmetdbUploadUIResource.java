@@ -40,7 +40,8 @@ public class XmetdbUploadUIResource extends CatalogFTLResource<DBProtocol> {
 
 	@Override
 	public String getTemplateName() {
-		return "submit_body.ftl";
+		//eturn "submit_body.ftl";
+		return "observation_new.ftl";
 	}
 
 

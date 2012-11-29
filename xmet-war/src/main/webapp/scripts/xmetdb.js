@@ -250,6 +250,9 @@ function loadObservation(observation_uri) {
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
 	        	  $('#xmet_reference').replaceWith("TODO");
 	        	  
+	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
+	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
+	        	  
 	        	  loadEnzyme(observation);
 	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
 	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate");
@@ -315,6 +318,7 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				{ "mDataProp": "Substrate.dataset.structure" , "asSorting": [ "asc", "desc" ], "sDefaultContent" : "TODO" },
 				{ "mDataProp": "Product.dataset.uri" , "asSorting": [ "asc", "desc" ], "bVisible": false },
 				{ "mDataProp": "Product.dataset.structure" , "asSorting": [ "asc", "desc" ],"sDefaultContent" : "TODO"},
+				{ "mDataProp": "product_amount" , "asSorting": [ "asc", "desc" ], "bVisible": true},
 				{ "mDataProp": "title" , "asSorting": [ "asc", "desc" ],
 				   "fnRender": function ( o, val ) {
 	          				return "<span title='"+ o.aData["description"] +"'>" + val + "</span>";
@@ -384,13 +388,13 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				          success: function(data, status, xhr) {
 				        	  aData.enzyme.code = data[0].code;
 				        	  aData.enzyme.name = data[0].name;
-				        	  $('td:eq(4)', nRow).html(renderEnzyme(data[0].code,data[0].name));	
+				        	  $('td:eq(5)', nRow).html(renderEnzyme(data[0].code,data[0].name));	
 				          },
 				          error: function(xhr, status, err) { },
 				          complete: function(xhr, status) { }
 				       });
 				 } else {
-					 $('td:eq(4)', nRow).html(renderEnzyme(aData.enzyme.code,aData.enzyme.name));	
+					 $('td:eq(5)', nRow).html(renderEnzyme(aData.enzyme.code,aData.enzyme.name));	
 				 }				 
         }			
 	} );

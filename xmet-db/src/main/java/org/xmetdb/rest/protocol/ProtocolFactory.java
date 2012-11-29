@@ -22,6 +22,8 @@ import org.xmetdb.rest.protocol.CallableProtocolUpload.UpdateMode;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.user.DBUser;
+import org.xmetdb.xmet.client.AtomUncertainty;
+import org.xmetdb.xmet.client.ProductAmount;
 import org.xmetdb.xmet.client.PublishedStatus;
 
 public class ProtocolFactory {
@@ -42,6 +44,8 @@ public class ProtocolFactory {
 		status,
 		xmlkeywords,
 		xmet_enzyme,
+		xmet_atom_uncertainty,
+		xmet_product_amount,
 		allowReadByUser,
 		allowReadByGroup;
 		
@@ -206,12 +210,17 @@ public class ProtocolFactory {
 					} catch (Exception x) { protocol.setStatus(STATUS.RESEARCH);}
 					break;					
 				}
-				case xmlkeywords: {
+				case xmet_atom_uncertainty: {
 					try {
-						if ((fi.getString()!=null) && !"".equals(fi.getString(utf8)))
-							protocol.addKeyword(fi.getString().trim());
-						} catch (Exception x) { }
-						break;	
+						protocol.setAtomUncertainty(AtomUncertainty.valueOf(fi.getString(utf8)));
+					} catch (Exception x) { protocol.setAtomUncertainty(AtomUncertainty.Uncertain);}
+					break;					
+				}
+				case xmet_product_amount: {
+					try {
+						protocol.setProductAmount(ProductAmount.valueOf(fi.getString(utf8)));
+					} catch (Exception x) { protocol.setProductAmount(ProductAmount.Unknown);}
+					break;					
 				}
 				case xmet_enzyme: {
 					try {
