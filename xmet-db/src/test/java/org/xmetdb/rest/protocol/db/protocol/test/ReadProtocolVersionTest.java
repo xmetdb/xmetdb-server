@@ -7,6 +7,8 @@ import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolVersions;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 import org.xmetdb.rest.protocol.db.test.QueryTest;
+import org.xmetdb.xmet.client.AtomUncertainty;
+import org.xmetdb.xmet.client.ProductAmount;
 
 import junit.framework.Assert;
 
@@ -26,8 +28,10 @@ public class ReadProtocolVersionTest extends QueryTest<ReadProtocol> {
 			DBProtocol protocol = query.getObject(rs);
 			Assert.assertEquals(2,protocol.getID());
 			Assert.assertNotNull(protocol.getKeywords());
-			Assert.assertEquals(1,protocol.getKeywords().size());
+			Assert.assertEquals(0,protocol.getKeywords().size());
 			Assert.assertNotNull(protocol.getOwner());
+			Assert.assertEquals(AtomUncertainty.Certain,protocol.getAtomUncertainty());
+			Assert.assertEquals(ProductAmount.Major,protocol.getProductAmount());
 			//Assert.assertNotNull(protocol.getOwner().getFirstname());
 			records++;
 		}

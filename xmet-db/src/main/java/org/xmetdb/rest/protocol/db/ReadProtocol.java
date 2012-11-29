@@ -745,7 +745,9 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
 				try {
 					protocol.setProductAmount(ProductAmount.valueOf(rs.getString(name())));
-				} catch (Exception x) {protocol.setProductAmount(ProductAmount.Unknown);}
+				} catch (Exception x) {
+					protocol.setProductAmount(ProductAmount.Unknown);
+				}
 			}		
 			@Override
 			public Object getValue(DBProtocol protocol) {
@@ -838,7 +840,9 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 		fields.idorganisation,
 		fields.filename,
 		fields.status,
-		fields.published_status
+		fields.published_status,
+		fields.atom_uncertainty,
+		fields.product_amount
 		
 		//ReadProtocol.fields.accesslevel
 	};	

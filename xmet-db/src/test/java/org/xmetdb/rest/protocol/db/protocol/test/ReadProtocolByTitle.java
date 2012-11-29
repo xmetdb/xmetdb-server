@@ -25,7 +25,7 @@ public class ReadProtocolByTitle  extends QueryTest<ReadProtocol> {
 			DBProtocol protocol = query.getObject(rs);
 			Assert.assertEquals(1,protocol.getID());
 			Assert.assertNotNull(protocol.getKeywords());
-			Assert.assertEquals(1,protocol.getKeywords().size());
+			Assert.assertEquals(0,protocol.getKeywords().size());
 			Assert.assertNotNull(protocol.getOwner());
 			//Assert.assertNotNull(protocol.getOwner().getFirstname());
 			records++;
