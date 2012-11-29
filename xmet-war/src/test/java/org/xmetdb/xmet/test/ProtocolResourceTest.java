@@ -229,6 +229,11 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		//Assert.assertNotSame("Q2-10-14-119", table.getValue(1, "qmrf_number"));
 		Assert.assertEquals(PublishedStatus.archived.name(), table.getValue(0, ReadProtocol.fields.published_status.name()));
 		Assert.assertEquals(PublishedStatus.published.name(), table.getValue(1, ReadProtocol.fields.published_status.name()));
+		
+		table = c.createQueryTable("EXPECTED",
+		"SELECT p.idprotocol,p.version,idtemplate from protocol_endpoints p where p.idprotocol=1 and version=2");
+		Assert.assertEquals(1, table.getRowCount());
+		Assert.assertNotNull(table.getValue(0, "idtemplate"));		
 		c.close();
 	}
 
@@ -254,6 +259,11 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		Assert.assertEquals("HEP",table.getValue(0, "title"));
 		Assert.assertNotNull(table.getValue(0, "abstract"));
 		//Assert.assertNotSame("Q-1234-5678", table.getValue(0, "qmrf_number"));
+		
+		table = c.createQueryTable("EXPECTED",
+		"SELECT p.idprotocol,p.version,idtemplate from protocol_endpoints p where p.idprotocol>3");
+		Assert.assertEquals(1, table.getRowCount());
+		
 		c.close();
 	}
 

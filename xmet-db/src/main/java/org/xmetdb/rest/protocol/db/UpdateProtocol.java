@@ -32,11 +32,11 @@ package org.xmetdb.rest.protocol.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.protocol.DBProtocol;
-
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 import net.idea.modbcum.q.update.AbstractObjectUpdate;
+
+import org.xmetdb.rest.protocol.DBProtocol;
 
 /**
  * Update is one of the few queries, which still require idprotocol and version, instead of identifier.
@@ -56,8 +56,13 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			ReadProtocol.fields.iduser,
 			ReadProtocol.fields.status
 	};
-	public static final String update_sql = "update protocol set updated=now(),%s where idprotocol=? and version=? and published_status!='published'";
-
+	private static final String update_sql = "update protocol set updated=now(),%s where idprotocol=? and version=? and published_status!='published'";
+	private String[] update =   
+	{ 
+		update_sql,
+		"delete from protocol_endpoints where idprotocol=? and version=?",
+		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where name = ? and code = ? and idprotocol=? and version=?"
+	};
 
 	public UpdateProtocol(DBProtocol ref) {
 		super(ref);
@@ -67,30 +72,44 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	}			
 	public List<QueryParam> getParameters(int index) throws AmbitException {
 		List<QueryParam> params1 = new ArrayList<QueryParam>();
-		if (getObject()==null) throw new AmbitException("Empty protocol");
-		if (getObject().getID()<=0) throw new AmbitException("Invalid document ID");
-		if (getObject().getVersion()<=0) throw new AmbitException("Invalid document version");
-		for (ReadProtocol.fields field: f) 
-			if (field.getValue(getObject())!=null)
-				switch (field) {
-				case identifier: {
-					 if (getObject().isValidIdentifier()) {
-						 params1.add(new QueryParam<String>(String.class, getObject().getIdentifier()));
-					 } else 
-						 throw new AmbitException(String.format("Invalid QMRF number %s",getObject().getIdentifier()));
-					break;
-				}
-				default: {
-					params1.add(field.getParam(getObject()));
-				}
-				}
-		
-		if (params1.size()==0) throw new AmbitException("Nothing to update!");
+		switch (index) {
+		case 0: {
+			if (getObject()==null) throw new AmbitException("Empty protocol");
+			if (getObject().getID()<=0) throw new AmbitException("Invalid document ID");
+			if (getObject().getVersion()<=0) throw new AmbitException("Invalid document version");
+			for (ReadProtocol.fields field: f) 
+				if (field.getValue(getObject())!=null)
+					switch (field) {
+					case identifier: {
+						 if (getObject().isValidIdentifier()) {
+							 params1.add(new QueryParam<String>(String.class, getObject().getIdentifier()));
+						 } else 
+							 throw new AmbitException(String.format("Invalid QMRF number %s",getObject().getIdentifier()));
+						break;
+					}
+					default: {
+						params1.add(field.getParam(getObject()));
+					}
+					}
+			
+			if (params1.size()==0) throw new AmbitException("Nothing to update!");
+			break;
+		}
+		case 1: {
+			//none
+			break;
+		} 
+		case 2: {
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getName()));
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getCode()));
+			break;
+		}
+		}
 		params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
 		params1.add(ReadProtocol.fields.version.getParam(getObject()));
 		return params1;
-		
 	}
+	
 	public String[] getSQL() throws AmbitException {
 		StringBuilder b = new StringBuilder();
 		String d = " ";
@@ -111,8 +130,8 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 				}
 				d = ",";
 			}
-		String sql = String.format(update_sql,b.toString());
-		return  new String[] { sql};
+		update[0] = String.format(update_sql,b.toString());
+		return  update;
 	}
 	public void setID(int index, int id) {
 			

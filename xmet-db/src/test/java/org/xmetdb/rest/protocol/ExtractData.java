@@ -41,6 +41,7 @@ public class ExtractData extends DbUnitTest {
 	        partialDataSet.addTable("protocol", "SELECT * FROM protocol where idprotocol in (1,2,3)");
 	        partialDataSet.addTable("attachments", "SELECT * FROM attachments where idprotocol in (1,2,3)");
 	        partialDataSet.addTable("protocol_authors", "SELECT * FROM protocol_authors where idprotocol in (1,2,3)");
+	        partialDataSet.addTable("protocol_endpoints", "SELECT * FROM protocol_endpoints where idprotocol in (1,2,3)");
 
 	        partialDataSet.addTable("keywords", "SELECT * FROM keywords");
 	        partialDataSet.addTable("user_organisation", "SELECT * FROM user_organisation where iduser in (1,2)");

@@ -32,17 +32,18 @@ package org.xmetdb.rest.protocol.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.protocol.DBProtocol;
-
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 import net.idea.modbcum.q.update.AbstractObjectUpdate;
+
+import org.xmetdb.rest.protocol.DBProtocol;
 
 
 public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	public static final String[] create_sql = {
 		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created) " +
 		"values (?,?,?,?,?,?,?,?,?,now())",
+		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where name = ? and code = ? and idprotocol=? and version=?"
 	};
 
 	public CreateProtocol(DBProtocol ref) {
@@ -53,20 +54,31 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	}		
 	public List<QueryParam> getParameters(int index) throws AmbitException {
 		List<QueryParam> params1 = new ArrayList<QueryParam>();
-		ReadProtocol.fields[] f = new ReadProtocol.fields[] {
-				ReadProtocol.fields.idprotocol,
-				ReadProtocol.fields.title,
-				ReadProtocol.fields.identifier,
-				ReadProtocol.fields.anabstract,
-				ReadProtocol.fields.iduser,
-				ReadProtocol.fields.summarySearchable,
-				ReadProtocol.fields.idproject,
-				ReadProtocol.fields.idorganisation,
-				ReadProtocol.fields.status
-		};
-		for (ReadProtocol.fields field: f) 
-			params1.add(field.getParam(getObject()));
-		
+		switch (index) {
+		case 0: {
+			ReadProtocol.fields[] f = new ReadProtocol.fields[] {
+					ReadProtocol.fields.idprotocol,
+					ReadProtocol.fields.title,
+					ReadProtocol.fields.identifier,
+					ReadProtocol.fields.anabstract,
+					ReadProtocol.fields.iduser,
+					ReadProtocol.fields.summarySearchable,
+					ReadProtocol.fields.idproject,
+					ReadProtocol.fields.idorganisation,
+					ReadProtocol.fields.status
+			};
+			for (ReadProtocol.fields field: f) 
+				params1.add(field.getParam(getObject()));
+			break;
+		}
+		case 1: {
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getName()));
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getCode()));
+			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
+			params1.add(ReadProtocol.fields.version.getParam(getObject()));
+			break;
+		}
+		}
 		return params1;
 		
 	}
