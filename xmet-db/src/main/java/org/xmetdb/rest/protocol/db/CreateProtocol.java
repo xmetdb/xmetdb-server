@@ -72,8 +72,8 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			break;
 		}
 		case 1: {
-			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getName()));
-			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getCode()));
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint()==null?"":getObject().getEndpoint().getName()));
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint()==null?"":getObject().getEndpoint().getCode()));
 			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
 			params1.add(ReadProtocol.fields.version.getParam(getObject()));
 			break;

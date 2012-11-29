@@ -29,13 +29,10 @@
 
 package org.xmetdb.rest.protocol.db.protocol.test;
 
-import java.io.InputStream;
-
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
 import net.toxbank.client.resource.Protocol.STATUS;
 
-import org.apache.commons.io.IOUtils;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.junit.Test;

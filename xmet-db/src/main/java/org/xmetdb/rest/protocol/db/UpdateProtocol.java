@@ -100,8 +100,8 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			break;
 		} 
 		case 2: {
-			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getName()));
-			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint().getCode()));
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint()==null?"":getObject().getEndpoint().getName()));
+			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint()==null?"":getObject().getEndpoint().getCode()));
 			break;
 		}
 		}
