@@ -182,27 +182,29 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 	@Test
 	public void testUpdateEntryFromMultipartWeb() throws Exception {
 		String uri = String.format("http://localhost:%d%s/%s", port,
-										Resources.protocol, idxmet1);
+										Resources.protocol, idxmet3);
 		String newURI = createEntryFromMultipartWeb(new Reference(uri), Method.PUT);
-		String newXMETID = "XMETDB1v2";
+		String newXMETID = "XMETDB3";
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
-		Assert.assertEquals(5, table.getRowCount());
+		Assert.assertEquals(3, table.getRowCount());
 		table = c.createQueryTable("EXPECTED",
-						"SELECT p.idprotocol,p.version,published_status,qmrf_number from protocol p where p.idprotocol=2 and version=2");
+						"SELECT p.idprotocol,p.version,published_status,qmrf_number from protocol p where p.idprotocol=3 and version=1");
 		Assert.assertEquals(1, table.getRowCount());
 		Assert.assertEquals(PublishedStatus.published.name(), 
 				table.getValue(0, ReadProtocol.fields.published_status.name())
 				);
+		
+		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s",port,newXMETID),newURI);
+
+		
 		Assert.assertEquals(newXMETID, table.getValue(0, "qmrf_number"));
 		table = c.createQueryTable("EXPECTED",
-		"SELECT p.idprotocol,p.version,idtemplate from protocol_endpoints p where p.idprotocol=2 and version=2");
+		"SELECT p.idprotocol,p.version,idtemplate from protocol_endpoints p where p.idprotocol=3 and version=1");
 		Assert.assertEquals(1, table.getRowCount());
 		Assert.assertNotNull(table.getValue(0, "idtemplate"));
 		c.close();
 
-		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s",port,newXMETID),newURI);
-		System.out.println(newURI);
 	}
 
 	@Test
@@ -212,19 +214,19 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				Resources.protocol, idxmet1 , Resources.versions)));
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
-		Assert.assertEquals(6, table.getRowCount());
+		Assert.assertEquals(4, table.getRowCount());
 		table = c
 				.createQueryTable(
 						"EXPECTED",
-						"SELECT p.idprotocol,p.version,filename,title,abstract,qmrf_number,published_status from protocol p where p.idprotocol=119 order by version");
+						"SELECT p.idprotocol,p.version,filename,title,abstract,qmrf_number,published_status from protocol p where p.idprotocol=1 order by version");
 		Assert.assertEquals(2, table.getRowCount());
 		Assert.assertEquals(new BigInteger("1"), table.getValue(0, "version"));
 		Assert.assertEquals(new BigInteger("2"), table.getValue(1, "version"));
 		Assert.assertNotSame(getTestURI(), url);
-		Assert.assertEquals("QSAR for acute toxicity to fish (Danio rerio)",table.getValue(1, "title"));
+		Assert.assertEquals("HEP",table.getValue(1, "title"));
 		Assert.assertNotNull(table.getValue(1, "abstract"));
-		Assert.assertNotSame("Q2-10-14-119-v1", table.getValue(0, "qmrf_number"));
-		Assert.assertNotSame("Q2-10-14-119", table.getValue(1, "qmrf_number"));
+		//Assert.assertNotSame("Q2-10-14-119-v1", table.getValue(0, "qmrf_number"));
+		//Assert.assertNotSame("Q2-10-14-119", table.getValue(1, "qmrf_number"));
 		Assert.assertEquals(PublishedStatus.archived.name(), table.getValue(0, ReadProtocol.fields.published_status.name()));
 		Assert.assertEquals(PublishedStatus.published.name(), table.getValue(1, ReadProtocol.fields.published_status.name()));
 		c.close();
@@ -234,25 +236,24 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 	public void testCreateEntryFromMultipartWeb() throws Exception {
 		String url = createEntryFromMultipartWeb(new Reference(String.format(
 				"http://localhost:%d%s", port, Resources.protocol)));
-
-		testGet(String.format("%s%s", url, Resources.document),
-				MediaType.APPLICATION_PDF);
+		System.out.println(url);
+		//testGet(url, MediaType.TEXT_URI_LIST);
 
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
-		Assert.assertEquals(6, table.getRowCount());
+		Assert.assertEquals(4, table.getRowCount());
 		table = c
 				.createQueryTable(
 						"EXPECTED",
-						"SELECT abstract,p.idprotocol,p.version,filename,p.iduser,status,title,abstract,qmrf_number from protocol p where p.idprotocol>121 order by p.iduser");
+						"SELECT abstract,p.idprotocol,p.version,filename,p.iduser,status,title,abstract,qmrf_number from protocol p where p.idprotocol>3 order by p.iduser");
 		Assert.assertEquals(1, table.getRowCount());
 		//Assert.assertEquals(new BigInteger("1"), table.getValue(0, "version"));
 		//Assert.assertEquals(new BigInteger("3"), table.getValue(0, "iduser"));
-		Assert.assertEquals(new BigInteger("88"), table.getValue(0, "iduser"));
+		Assert.assertEquals(new BigInteger("1"), table.getValue(0, "iduser"));
 		Assert.assertEquals(STATUS.RESEARCH.toString(), table.getValue(0, "status"));
-		Assert.assertEquals("QSAR for acute toxicity to fish (Danio rerio)",table.getValue(0, "title"));
+		Assert.assertEquals("HEP",table.getValue(0, "title"));
 		Assert.assertNotNull(table.getValue(0, "abstract"));
-		Assert.assertNotSame("Q-1234-5678", table.getValue(0, "qmrf_number"));
+		//Assert.assertNotSame("Q-1234-5678", table.getValue(0, "qmrf_number"));
 		c.close();
 	}
 
@@ -262,9 +263,9 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 
 	public String createEntryFromMultipartWeb(Reference uri, Method method)
 			throws Exception {
-		URL url = getClass().getClassLoader().getResource(
-				"org/xmetdb/xmet/QMRF-NEW.xml");
-		File file = new File(url.getFile());
+		
+		//URL url = getClass().getClassLoader().getResource("org/xmetdb/xmet/QMRF-NEW.xml");
+		//File file = new File(url.getFile());
 
 		String[] names = new String[ReadProtocol.fields.values().length];
 		String[] values = new String[ReadProtocol.fields.values().length];
@@ -292,12 +293,12 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 			}
 			case user_uri: {
 				values[i] = String.format("http://localhost:%d%s/%s", port,
-						Resources.user, "U88");
+						Resources.user, "U1");
 				break;
 			}
 			case author_uri: {
 				values[i] = String.format("http://localhost:%d%s/%s", port,
-						Resources.user, "U88");
+						Resources.user, "U2");
 				break;
 			}
 			case allowReadByGroup: {
@@ -315,7 +316,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				break;
 			}
 			case anabstract: {
-				values[i] = null;
+				values[i] = "Hepatocytes";
 				break;
 			}
 			case published_status: {
@@ -323,27 +324,19 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				break;
 			}
 			case title: {
-				values[i] = null;
+				values[i] = "HEP";
 				break;
 			}
 			case endpoint: {
-				values[i] = "QMRF 1.4.";
+				values[i] = "CYP3A4";
 				break;
 			}
 			case endpointName: {
-				values[i] = "Vapour Pressure";
+				values[i] = "cytochrome P450, family 3, subfamily A, polypeptide 4";
 				break;
 			}
-			case endpointParentName: {
-				values[i] = "Physical Chemical Properties";
-				break;
-			}			
-			case endpointParentCode: {
-				values[i] = "QMRF 1.";
-				break;
-			}					
 			case identifier: {
-				values[i] = "Q-1234-5678";
+				values[i] = null;
 				break;
 			}			
 			default: {
@@ -351,7 +344,6 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 			}
 			}
 			names[i] = field.name();
-
 			i++;
 		}
 		// yet another author
@@ -361,7 +353,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		values[i + 1] = null;
 		names[i + 1] = ReadProtocol.fields.author_uri.name();
 		MultipartEntity rep = getMultipartWebFormRepresentation(names, values,
-				file, MediaType.APPLICATION_PDF.toString());
+				null, MediaType.APPLICATION_PDF.toString());
 
 		IDatabaseConnection c = getConnection();
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
