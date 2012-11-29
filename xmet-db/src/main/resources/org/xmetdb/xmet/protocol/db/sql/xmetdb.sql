@@ -337,7 +337,7 @@ insert into template values
 insert into dictionary select idtemplate,"is_part_of",1 from template where idtemplate!=1 order by idtemplate;
 
 -- -----------------------------------------------------
--- Default set of enzymes
+-- Default set of users
 -- -----------------------------------------------------
 insert into `user` values 
 (1,"admin","","Administrator","","","","","","","",true),
@@ -346,31 +346,11 @@ insert into `user` values
 -- -----------------------------------------------------
 -- Default project
 -- -----------------------------------------------------
-insert into project values
-(1,"XMETDB","xmetdb",null);
+insert into project values (1,"XMETDB","xmetdb",null);
+insert into user_project values (1,1,1);
 
 -- -----------------------------------------------------
 -- Default organisation
 -- -----------------------------------------------------
-insert into organisation values
-(1,"XMETDB","xmetdb",null),
-(2,"Uppsala University","uppsalauni",null),
-(3,"University of Copenhagen","unicopenhagen",null),
-(4,"Ideaconsult","idea",null);
-
--- -----------------------------------------------------
--- Default protocol - this is for testing only!
--- -----------------------------------------------------
-insert into protocol values
-(1,1,"HEP","XMETDB1","Hepatocytes",true,2,1,1,null,null,"RESEARCH",now(),now(),"published"),
-(2,1,"ENZ","XMETDB2","Enzyme",true,2,1,1,null,null,"RESEARCH",now(),now(),true),
-(3,1,"MS","XMETDB3","Microsome",true,2,1,1,null,null,"RESEARCH",now(),now(),"published");
-
--- another entry with the demo purpose
- 
-insert into protocol_endpoints
-select idprotocol,version,idtemplate from protocol
-join
-template
-where code regexp concat("^CYP",idprotocol)
-group by idprotocol,version;
+insert into organisation values (1,"XMETDB","xmetdb",null);
+insert into user_organisation values (1,1,1);
