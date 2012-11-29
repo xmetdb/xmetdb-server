@@ -163,12 +163,12 @@ CREATE TABLE  `keywords` (
 DROP TABLE IF EXISTS `template`;
 CREATE TABLE  `template` (
   `idtemplate` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL COLLATE utf8_general_ci,
-  `code` varchar(16) DEFAULT NULL COLLATE utf8_general_ci,
-  `uri` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(16) DEFAULT NULL,
+  `uri` text,
   PRIMARY KEY (`idtemplate`),
-  UNIQUE KEY `template_list_index4157` (`name`,`code`) USING BTREE,
-  KEY `Index_3` (`code`)
+  UNIQUE KEY `template_name` (`name`) USING BTREE,
+  UNIQUE KEY `template_code` (`code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
@@ -231,7 +231,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,5,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,6,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version

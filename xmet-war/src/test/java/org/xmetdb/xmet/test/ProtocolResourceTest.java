@@ -320,7 +320,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				values[i] = STATUS.RESEARCH.toString();
 				break;
 			}
-			case anabstract: {
+			case xmet_experimentdescription: {
 				values[i] = "Hepatocytes";
 				break;
 			}
@@ -328,16 +328,18 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				values[i] = PublishedStatus.published.name();
 				break;
 			}
-			case title: {
+			case xmet_experiment: {
 				values[i] = "HEP";
 				break;
 			}
+			/*
 			case endpoint: {
 				values[i] = "CYP3A4";
 				break;
 			}
-			case endpointName: {
-				values[i] = "cytochrome P450, family 3, subfamily A, polypeptide 4";
+			*/
+			case xmet_enzyme: {
+				values[i] = "CYP3A4";
 				break;
 			}
 			case identifier: {

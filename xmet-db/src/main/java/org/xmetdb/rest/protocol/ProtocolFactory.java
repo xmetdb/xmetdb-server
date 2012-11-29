@@ -28,10 +28,9 @@ public class ProtocolFactory {
 	protected static final String utf8= "UTF-8";
 	public enum ObservationFields {
 		identifier,
-		title,
-		description,
+		xmet_experiment,
+		xmet_experimentdescription,
 		published_status,
-		anabstract,
 		data_training,
 		data_validation,
 		project_uri,
@@ -42,8 +41,7 @@ public class ProtocolFactory {
 		summarySearchable,
 		status,
 		xmlkeywords,
-		endpoint,
-		endpointName,
+		xmet_enzyme,
 		allowReadByUser,
 		allowReadByGroup;
 		
@@ -53,6 +51,18 @@ public class ProtocolFactory {
 			return  String.format("%s%s",
 					name.substring(0,1).toUpperCase(),
 					name.substring(1).toLowerCase());
+		}
+	}
+	
+	protected enum SupportedExperiments {
+		HEP {
+			public String toString() { return "Hepatocytes";}
+		},
+		ENZ {
+			public String toString() { return "Enzymes";}
+		},
+		MS {
+			public String toString() { return "Microsomes";}
 		}
 	}
 	public static DBProtocol getProtocol(DBProtocol protocol,
@@ -99,7 +109,7 @@ public class ProtocolFactory {
 					}
 					break;
 				}
-				case anabstract: {
+				case xmet_experimentdescription: {
 					String s = fi.getString(utf8);
 					if ((s!=null) && !"".equals(s))
 					protocol.setAbstract(s);
@@ -161,10 +171,14 @@ public class ProtocolFactory {
 						 protocol.addAuthor(new DBUser(new URL(s)));
 					break;	
 				}
-				case title: {
+				
+				case xmet_experiment: {
 					String s = fi.getString(utf8);
-					if ((s!=null) && !"".equals(s)) 
+					if ((s!=null) && !"".equals(s)) {
 						protocol.setTitle(s);
+						if (protocol.getAbstract()==null)
+							try {protocol.setAbstract(SupportedExperiments.valueOf(s).toString());} catch (Exception x) { protocol.setAbstract(s);}
+					}
 					break;
 				}
 				/*
@@ -199,17 +213,10 @@ public class ProtocolFactory {
 						} catch (Exception x) { }
 						break;	
 				}
-				case endpoint: {
+				case xmet_enzyme: {
 					try {
 						if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
 						protocol.getEndpoint().setCode(fi.getString(utf8));
-					} catch (Exception x) { }
-					break;					
-				}	
-				case endpointName: {
-					try {
-						if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
-						protocol.getEndpoint().setName(fi.getString(utf8));
 					} catch (Exception x) { }
 					break;					
 				}		

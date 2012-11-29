@@ -36,6 +36,7 @@ import net.toxbank.client.resource.Protocol.STATUS;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.junit.Test;
+import org.xmetdb.rest.endpoints.EndpointTest;
 import org.xmetdb.rest.groups.DBOrganisation;
 import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.DBProtocol;
@@ -163,7 +164,8 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		ref.setStatus(STATUS.SOP);
 		ref.setPublished(false);
 		ref.setIdentifier(newQMRFNumber);
-		
+		ref.setEndpoint(new EndpointTest(null,null));
+		ref.getEndpoint().setCode("CYP3A4");
 		ref.setAbstract("Hepatocytes");
 		ref.setTitle("HEP");
 
