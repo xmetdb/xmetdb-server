@@ -3,7 +3,7 @@ xmetdb-server
 
 The xmetdb web service/application
 
-This is an initial implementation of XMETDB.  Only minimal functionality!
+This is an ongoing implementation of XMETDB.  Almost fully functional, with some issues still to be resolved!
 
 --------
 Build: 
@@ -24,18 +24,9 @@ The tests assume
     GRANT ALL ON `xmetdb-test`.* TO 'guest'@'localhost';
     GRANT EXECUTE on procedure `xmetdb-test`.createProtocolVersion to 'guest'@'localhost';
     GRANT EXECUTE on procedure `xmetdb-test`.deleteProtocol to 'guest'@'localhost';
-
-
-    GRANT TRIGGER ON xmetdb.* TO 'guest'@'localhost';
-    GRANT EXECUTE on procedure `xmetdb-test`.createProtocolVersion to 'guest'@'localhost';
-    GRANT EXECUTE on procedure `xmetdb-test`.deleteProtocol to 'guest'@'localhost';
     
-    GRANT execute on PROCEDURE `ambit2-xmetdb`.findByProperty to guest@127.0.0.1;
-    GRANT execute on PROCEDURE `ambit2-xmetdbf`.findByProperty to guest@localhost;
 
-
-
-To change user name and password, modify the local maven profile.
+To change user name and password, modify the local maven profile or the properties under WEB-INF/classes/ambit2/rest/config
 
 Test DB
     
