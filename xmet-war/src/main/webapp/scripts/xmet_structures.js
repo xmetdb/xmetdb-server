@@ -194,26 +194,53 @@ function getID() {
 	/* QMRF list per structure */
 function fnStructureXMETObservationsList(oTable, nTr, id) {
 	var obj = oTable.fnGetData(nTr);
-	var sOut = '<div class="ui-widget-content ui-corner-all" id="' + id + '">';
-	sOut = sOut + "<div id='" + id + "_xmetdb' >Please wait while XMETDB observations list is loading...</div>";
+	var details = id + '_xmetdb';
+	var sOut = '<div class="ui-widget-content" id="' + id + '">';
+	sOut = sOut + "<div id='" + details + "' >Please wait while XMETDB observations list is loading...</div>";
 	sOut += "</div>";	
-	//TODO rewrite it to use JSON to retrieve observations per structure
-	/*
-	var uri = encodeURIComponent(obj["compound"]["URI"]);
-	var qmrf_query = "/xmetdb/protocol?structure=" + uri + "&headless=true&details=false&media=text%2Fhtml&"+ new Date().getTime();
 
+	var uri = encodeURIComponent(obj["compound"]["URI"]);
+	var xmet_query = "/xmetdb/protocol?structure=" + uri + "&media=application%2Fjson";
+	details = '#' + details;
       $.ajax({
-          dataType: "html",
-          url: qmrf_query,
+          dataType: "json",
+          url: xmet_query,
           success: function(data, status, xhr) {
-        	  $('div#' + id + '_qmrf').html(data);
+        	  var dataSize = data.observations.length;
+        	  $(details).empty();
+        	  $(details).append('<table id="' + id + '_table"  cellpadding="1" border="1" width="100%" cellspacing="1"><thead>\n');
+        	  $(details).append('<th class="contentTable" >XMETID</th>');
+        	  $(details).append('<th class="contentTable">Experiment&nbsp;</th>');
+        	  $(details).append('<th class="contentTable">Product amount&nbsp;</th>');
+        	  $(details).append('<th class="contentTable">Enzyme&nbsp;</th>');
+        	  $(details).append('<th class="contentTable">Atom uncertainty&nbsp;</th>');
+        	  $(details).append('<th class="contentTable">Last updated&nbsp;</th>');
+        	  $(details).append('</thead>');
+        	  $(details).append('<tbody>');
+        	  for (i = 0; i < dataSize; i++) {
+        		  $(details).append('<tr>');
+        		  $(details).append('<td><a href="'+data.observations[i].uri+'" target=_blank>'+data.observations[i].identifier+'</a></td>');
+        		  $(details).append('<td>'+data.observations[i].title+ ' (' + data.observations[i].description + ')</td>');
+        		  $(details).append('<td>'+data.observations[i].product_amount + '</td>');
+        		  $(details).append('<td>&nbsp;</td>');
+        		  $(details).append('<td>'+data.observations[i].atom_uncertainty + '</td>');
+        		  $(details).append('<td>'+data.observations[i].updated + '</td>');
+        		  $(details).append('</tr>\n');
+        	  }
+        	  $(details).append('</tbody>');
+        	  $(details).append('</table>\n');
+        	  $('#'+id + '_table').dataTable();
           },
           error: function(xhr, status, err) {
+        	  if (status=404)
+        		  $(details).html('No observations found');
+        	  else
+        		  $(details).html('Error retrieving XMETDB observations [' + status + '] ' +err);
           },
           complete: function(xhr, status) {
           }
        });
-      */ 
+
 	return sOut;
 }
 
