@@ -369,8 +369,9 @@ function defineObservationsTable(tableSelector,observations_uri) {
 		},		
 		*/
 		"oLanguage": {
-	            "sProcessing": "<img src='images/progress.gif' border='0'>"
-	    },
+            "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
+            "sLoadingRecords": "No records found."
+		},	    
 		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 				//retrieve the first compound URI from substrates dataset URI
 				 if ((aData.Substrate.dataset.structure === undefined) || (aData.Product.dataset.structure==null)) {
@@ -404,8 +405,12 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				        		  $('td:eq(2)', nRow).html("N/A");
 				        	  }
 				          },
-				          error: function(xhr, status, err) { },
-				          complete: function(xhr, status) { }
+				          error: function(xhr, status, err) { 
+				        	  
+				          },
+				          complete: function(xhr, status) { 
+				        	  
+				          }
 				       });
 				 } else {
 					 $('td:eq(2)', nRow).html(cmp2image(aData.Product.dataset.structure));
