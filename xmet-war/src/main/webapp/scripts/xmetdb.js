@@ -361,8 +361,12 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				          dataType: "jsonp",
 				          url: aData.Substrate.dataset.uri + "?max=1&media=application%2Fx-javascript",
 				          success: function(data, status, xhr) {
-				        	  aData.Substrate.dataset.structure = data.dataEntry[0].compound.URI;
-				        	  $('td:eq(1)', nRow).html(cmp2image( aData.Substrate.dataset.structure));	
+				        	  if (data.dataEntry.length>0) {
+					        	  aData.Substrate.dataset.structure = data.dataEntry[0].compound.URI;
+					        	  $('td:eq(1)', nRow).html(cmp2image( aData.Substrate.dataset.structure));
+				          	  } else {
+				          		$('td:eq(1)', nRow).html("N/A");
+				          	  }
 				          },
 				          error: function(xhr, status, err) { },
 				          complete: function(xhr, status) { }
@@ -376,8 +380,12 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				          dataType: "jsonp",
 				          url: aData.Product.dataset.uri + "?max=1&media=application%2Fx-javascript",
 				          success: function(data, status, xhr) {
-				        	  aData.Product.dataset.structure = data.dataEntry[0].compound.URI;
-				        	  $('td:eq(2)', nRow).html(cmp2image( aData.Product.dataset.structure));	
+				        	  if (data.dataEntry.length>0) {
+				        		  aData.Product.dataset.structure = data.dataEntry[0].compound.URI;
+				        		  $('td:eq(2)', nRow).html(cmp2image( aData.Product.dataset.structure));
+				        	  } else {
+				        		  $('td:eq(2)', nRow).html("N/A");
+				        	  }
 				          },
 				          error: function(xhr, status, err) { },
 				          complete: function(xhr, status) { }
