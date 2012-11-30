@@ -236,7 +236,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		try {
 			queryObject.setPageSize(Long.parseLong(pageSize));
 		} catch (Exception x) {
-			queryObject.setPageSize(10);
+			queryObject.setPageSize(1000);
 		}			
 	}
 	
