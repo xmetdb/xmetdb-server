@@ -33,27 +33,42 @@
 	</td>
 	</tr>
 	<tr>
+	<th align="right" valign="top"></th>
+	<td >
+	
+	</td>
+	<td colspan="2">
+			<input type="submit" class="search" value="Search" tabindex='13'>	
+	</td>
+	</tr>	
+	</table>
+	</form>
+	<form method="GET" action="/xmetdb/protocol" name="form" id="search_protocol_form">	
+	<table id="xmet_obs" style='margin-top: 0px;' >
+	<tr>
 	<td colspan="4"><hr></td>
 	</tr>
 	<tr>
 	<th align="right" valign="top">Experiment:</th>
 	<td colspan="3">
-		<input class="ui-widget" type='checkbox' id="search_exp_ms"  tabindex='6'>MS (Microsomes)&nbsp;
-		<input class="ui-widget" type='checkbox' id="search_exp_hep" tabindex='7'>HEP (Hepatocytes)&nbsp;
-		<input class="ui-widget" type='checkbox' id="search_exp_enz" tabindex='8'>ENZ (Enzyme)
+		<input class="ui-widget" type='checkbox' name="search_exp_ms"  id="search_exp_ms"  tabindex='6'>MS (Microsomes)&nbsp;
+		<input class="ui-widget" type='checkbox' name="search_exp_hep"  id="search_exp_hep" tabindex='7'>HEP (Hepatocytes)&nbsp;
+		<input class="ui-widget" type='checkbox' name="search_exp_enz" id="search_exp_enz" tabindex='8'>ENZ (Enzyme)
 	</td>
 	</tr>	
 	<tr>
 	<th align="right" valign="top">Enzyme:</th>
 	<td>
-		<select id="search_enzyme" multiple tabindex='9'>
+	<!-- option=qmrfnumber | endpoint| title | text | author-->
+	<input type='hidden' name="option" value='endpointcode'>
+		<select id="search_enzyme" name="search" multiple tabindex='9'>
 		</select>
 	</td>
 	<th align="right" valign="top">	
 		Allele
 	</th>
 	<td valign="top">
-		<select id="search_allele" multiple tabindex='10'>
+		<select id="search_allele" name="search_allele" multiple tabindex='10'>
 		</select>
 	</td>
 	</tr>	
@@ -61,7 +76,7 @@
 	<tr>
 	<th align="right" valign="top">XMETID:</th>
 	<td colspan="3">
-		<input class="ui-widget" type='text' id="search_xmetid" tabindex='11'>
+		<input class="ui-widget" type='text' id="search_xmetid" name="search_xmetid" tabindex='11'>
 	</td>
 	</tr>
 			
