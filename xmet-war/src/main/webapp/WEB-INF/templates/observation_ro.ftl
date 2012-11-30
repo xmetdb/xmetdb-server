@@ -27,15 +27,17 @@
 </p>
 	</div>
 	<div class='ui-widget-header ui-corner-bottom'><p>
-		<a class='button' id="xmet_editor" href="/xmetdb/editor/">Edit</a>
+		<a class='button' id="xmet_editor" href="/xmetdb/editor/"  title='Modify the observation'>Edit</a>
 		&nbsp;|&nbsp;
 		Export observation:&nbsp;
-		<a class='button' id="xmet_export_json" href="${xmet_request}">as JSON</a>
+		<a class='button' id="xmet_export_json" href="${xmet_request}"  title='Export the observation as JSON'>as JSON</a>
 		&nbsp;|&nbsp;
 		Export substrate:&nbsp;
-		<a class='button' id="xmet_export_substrate" href="#">as SDF</a>
+		<a class='button' id="xmet_export_substrate" href="#"  title='Export substrate structure as SDF'>as SDF</a>
 		&nbsp;|&nbsp;
 		Export product(s):&nbsp;
-		<a class='button' id="xmet_export_product" href="#">as SDF</a>
+		<a class='button' id="xmet_export_product" href="#" title='Export product structure(s) as SDF'>as SDF</a>
+		&nbsp;|&nbsp;
+		<a class='button' id="xmet_copy_observation" href="#"  title='Create new observation with the same content as this one.Launches the new observation editor.'  onclick="alert('TODO')">Copy and create new observation</a>
 		</p>
 	</div>	
