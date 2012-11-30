@@ -11,6 +11,19 @@ function cmp2image(val) {
 		return '<img border="0" alt="'+val+'" src="'+cmpURI+'&w=150&h=150">';
 }
 
+function cmpatoms2image(uri, model_uri) {
+	if (uri.indexOf("/conformer")>=0) {
+		cmpURI = uri.substring(0,uri.indexOf("/conformer"));
+	}								
+	if ((model_uri==null) || (model_uri == undefined)) {
+		cmpURI = cmpURI + "?media=image/png";
+	} else {
+		cmpURI = model_uri + "?dataset_uri=" + cmpURI + "&media=image/png";
+	}
+	//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
+	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150">';
+}
+
 function renderEnzyme(code,name) {
 	return "<span title='"+ name +"'>" + code + "</span>";
 }
@@ -212,7 +225,7 @@ function toggleDrawUI(prefix, idButton, msg) {
 /**
  * Load structures from remote Ambit dataset uri via JSONP
  */
-function loadStructures(datasetURI, results) {
+function loadStructures(datasetURI, results, modelURI) {
 		 
 	      $.ajax({
 	          dataType: "jsonp",
@@ -222,7 +235,7 @@ function loadStructures(datasetURI, results) {
 	        	  var dataSize = data.dataEntry.length;
 	        	  $(results).empty();
 	        	  for (i = 0; i < dataSize; i++) {
-	        		  $(results).append('<li class="ui-state-default" >'+cmp2image(data.dataEntry[i].compound.URI)+'</li>');
+	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,modelURI)+'</li>');
 	        	  };
 	          },
 	          error: function(xhr, status, err) { 
@@ -235,6 +248,9 @@ function loadStructures(datasetURI, results) {
  * Loads single observation via JSON and fills in the relevant HTML tags
 */
 function loadObservation(observation_uri) {
+	//fixed uri just for tetsing, otherwise will be read from the observation
+	var model_uri = "http://ambit.uni-plovdiv.bg:8080/xmetdata/model/1";
+	
 	var observation;
     $.ajax({
 	          dataType: "json",
@@ -260,10 +276,11 @@ function loadObservation(observation_uri) {
 	        	  
 	        	  loadEnzyme(observation);
 	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate");
+	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate",model_uri);
+	        				  //");
 	        	  
 	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product");
+	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
 	          },
 	          error: function(xhr, status, err) { 
 	        	  xmetdblog(status + " " + xhr.responseText);
