@@ -26,7 +26,7 @@
 	<td align="left" valign="top">
 	   <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'>Auto<br>
 	   <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure' tabindex='3'>Similarity&nbsp;
-	   <select title ='Tanimoto similarity threshold' name='threshold' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option></select>
+	   <select title ='Tanimoto similarity threshold' name='threshold' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' >0.4</option><option value='0.3' >0.3</option><option value='0.2' >0.2</option></select>
 	   <br>
 	   <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' tabindex='5' size='20'>Substructure
 	
