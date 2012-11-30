@@ -2,6 +2,7 @@
 <head>
 <#include "/head.ftl" >
 <link href="/xmetdb/style/form.css" rel="stylesheet" type="text/css">
+<script type='text/javascript' charset='utf8' src='/xmetdb/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript' src='/xmetdb/jme/jme.js'></script>
 <script type='text/javascript' src='/xmetdb/jquery/jquery.MultiFile.pack.js'></script>
 <style>
@@ -28,6 +29,7 @@ $(document).ready(function() {
             event.preventDefault();
             return false;
         });
+		submitFormValidation("#submitForm");
 } );
 
 </script>
@@ -99,10 +101,12 @@ $(document).ready(function() {
 		</select>
 	</p>
 	<!-- Enzymes -->
-	<p><label for="xmet_enzyme">Enzyme:<em>*</em></label>
+	<p><label for="xmet_enzyme">Enzyme:</label>
 		<select id="xmet_enzyme" name="xmet_enzyme">
 		</select>
 		Allele
+		<select id="xmet_allele" name="xmet_allele">
+		</select>
 	</p>
 	<!-- References -->
 	<p><label for="xmet_reference">Reference:<em>*</em></label>

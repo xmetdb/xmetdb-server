@@ -476,3 +476,78 @@ function searchFormValidation(formName) {
 		}
 	});
 }
+
+/**
+ * Validates new observation form
+ * @param formName
+ */
+function submitFormValidation(formName) {
+	$(formName).validate({
+		rules : {
+			'xmet_substrate_uri': {
+			},		
+			'xmet_substrate_mol': {
+			},
+			'xmet_substrate_upload': {
+			},
+			'xmet_product_uri': {
+			},		
+			'xmet_product_mol': {
+			},
+			'xmet_product_upload': {
+			},
+			'xmet_atom_uncertainty': {
+				required: true
+			},
+			'xmet_product_amount': {
+				required: true
+			},
+			'xmet_experiment': {
+				required: true
+			},
+			'xmet_enzyme': {
+				
+			},
+			'xmet_allele': {
+				
+			},
+			'xmet_reference': {
+				
+			}
+		},
+		messages : {
+			'xmet_substrate_uri'  : {
+				required: "Ambit URI"
+			},
+			'xmet_substrate_mol' : "MOL file content",
+			'xmet_substrate_upload'  : {
+				required: "Substrate file upload"
+			},
+			'xmet_product_uri'  : {
+				required: "Ambit URI"
+			},
+			'xmet_product_mol' : "MOL file content",
+			'xmet_product_upload'  : {
+				required: "Product file upload"
+			},
+			'xmet_atom_uncertainty' : {
+				required: "How certain is the SOM atom mapping?"
+			},
+			'xmet_product_amount' : {
+				required: "Is the product major or minor metabolite?"
+			},
+			'xmet_experiment' : {
+				required: "Type of the experiment"
+			},
+			'xmet_enzyme' : {
+				required: "Specify the enzyme"
+			},
+			'xmet_allele' : {
+				required: "Specify the allele"
+			},
+			'xmet_reference' : {
+				required: "Reference"
+			}
+		}
+	});
+}
