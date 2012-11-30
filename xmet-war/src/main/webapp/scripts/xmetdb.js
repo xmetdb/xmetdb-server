@@ -407,3 +407,72 @@ function defineObservationsTable(tableSelector,observations_uri) {
 function xmetdblog(msg) {
 	try { console.log(msg); } catch (e) { alert(msg); }
 }
+
+
+function searchFormValidation(formName) {
+	$(formName).validate({
+		rules : {
+			'search': {
+				required : true
+			},		
+			'option': {
+				required : true
+			},
+			'threshold': {
+			},
+			'pagesize': {
+				required : true,
+				number	 : true,
+				range: [1, 1000]
+			},
+			search_exp_ms: {
+				
+			},
+			search_exp_hep: {
+				
+			},
+			search_exp_enz: {
+				
+			},
+			search_enzyme: {
+				
+			},
+			search_allele: {
+				
+			},
+			search_xmetid: {
+				
+			}
+		},
+		messages : {
+			'search'  : {
+				required: "Please enter a search query <br>(CAS, Chemical Name, SMILES, InChI or SMARTS in case of <i>Substructure</i> search), <br>or use the 'Draw (sub)structure' link to launch JME."
+			},
+			'option' : "Please select an option",
+			'threshold'  : {
+				required: "Please select the Tanimoto similarity threshold."
+			},
+			'pagesize'  : {
+				required: "Please provide number of hits."
+			},	
+			search_exp_ms : {
+				
+			},
+			search_exp_hep : {
+				
+			},
+			search_exp_enz : {
+				
+			},
+			search_enzyme : {
+				
+			},
+			search_allele : {
+				
+			},
+			search_xmetid : {
+				
+			}
+		}
+	});
+}
