@@ -27,7 +27,15 @@
 </p>
 	</div>
 	<div class='ui-widget-header ui-corner-bottom'><p>
-		<a class='button' href="${xmet_request}">Export</a>
-		 <a class='button' id="xmet_editor" href="/xmetdb/editor/">Edit</a>
-		 </p>
+		<a class='button' id="xmet_editor" href="/xmetdb/editor/">Edit</a>
+		&nbsp;|&nbsp;
+		Export observation:&nbsp;
+		<a class='button' id="xmet_export_json" href="${xmet_request}">as JSON</a>
+		&nbsp;|&nbsp;
+		Export substrate:&nbsp;
+		<a class='button' id="xmet_export_substrate" href="#">as SDF</a>
+		&nbsp;|&nbsp;
+		Export product(s):&nbsp;
+		<a class='button' id="xmet_export_product" href="#">as SDF</a>
+		</p>
 	</div>	

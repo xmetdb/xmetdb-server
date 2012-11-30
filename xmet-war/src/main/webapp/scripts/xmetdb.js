@@ -253,7 +253,11 @@ function loadObservation(observation_uri) {
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
 	        	  $('#xmet_editor').attr("href","/xmetdb/editor/"+observation["identifier"]);
-
+	        	  $('#xmet_export_json').attr("href",observation["uri"] + "?media=application%2Fjson");
+	        	  
+	        	  $('#xmet_export_substrate').attr("href",observation.Substrate.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
+	        	  $('#xmet_export_product').attr("href",observation.Product.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
+	        	  
 	        	  loadEnzyme(observation);
 	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
 	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate");
