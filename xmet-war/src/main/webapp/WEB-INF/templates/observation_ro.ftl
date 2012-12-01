@@ -1,32 +1,50 @@
-<div class='ui-widget-content' style='margin-top: 0px;margin-bottom: 0px;' />
-	<p class='w_p'>		
+	<div class="row remove-bottom ">	
+     	<div class="two columns alpha"><label for="xmet_substrate">Substrate:</label></div>
+      		<div class="six columns omega">
+      				<ul class='structresults' id="xmet_substrate"></ul>
+      		</div>
+    </div>		
+	<div class="row remove-bottom ">	
+     	<div class="two columns alpha"><label for="xmet_product">Product:</label></div>
+      		<div class="six columns omega">
+      			<ul class='structresults' id="xmet_product"></ul>
+      		</div>
+    </div>		
+	<div class="row remove-bottom ">	
+     	<div class="three columns alpha"><label for="xmet_atom_uncertainty">Atom uncertainty:</label></div>
+      	<div class="three columns omega">
+      		<span id="xmet_atom_uncertainty">&nbsp;</span>
+      	</div>
+       	<div class="three columns omega"><label for="xmet_product_amount">Product amount:</label></div>
+      	<div class="two columns omega">
+      		<span id="xmet_product_amount">&nbsp;</span>
+      	</div>
+    </div>	    
+	<div class="row remove-bottom ">	
+     	<div class="three columns alpha"><label for="xmet_experiment">Experiment:</label></div>
+      		<div class="six columns omega">
+				<span id="xmet_experiment">&nbsp;</span>
+      		</div>
+    </div>		    
+	<div class="row remove-bottom ">	
+     	<div class="three columns alpha"><label for="xmet_enzyme">Enzyme:</label></div>
+      		<div class="eight columns omega">
+      			<span id="xmet_enzyme">&nbsp;</span>
+      		</div>
+      		<div class="one column omega"><label>Allele</label></div>
+ 			<div class="two columns omega">
+      			<span id="xmet_allele">&nbsp;</span>
+      		</div>      		
+    </div>	   
+    <div class="row remove-bottom">	
+     	<div class="three columns alpha"><label for="xmet_reference">Reference:</label></div>
+      		<div class="six columns omega">
+      				<span id="xmet_reference">&nbsp;</span>
+      		</div>
+    </div>	
 	
-	<p><label for="xmet_substrate">Substrate:</label>
-			<ul class='structresults' id="xmet_substrate"></ul>
-	</p>	
-	<p><label for="xmet_product">Product:</label>
-			<ul class='structresults' id="xmet_product"></ul>
-	</p>	
-	<p><label for="xmet_atom_uncertainty">Atom uncertainty:</label>
-			<span id="xmet_atom_uncertainty">&nbsp;</span>
-	</p>	
-	<p><label for="xmet_product_amount">Product amount:</label>
-		<span id="xmet_product_amount">&nbsp;</span>
-	</p>
-	<p><label for="xmet_experiment">Experiment:</label>
-		<span id="xmet_experiment">&nbsp;</span>
-	</p>
-	<p><label for="xmet_enzyme">Enzyme:</label>
-		<span id="xmet_enzyme">&nbsp;</span>
-		&nbsp;<b>Allele:</b>
-		<span id="xmet_allele">&nbsp;</span>
-	</p>	
-	<p><label for="xmet_reference">Reference:</label>
-		<span id="xmet_reference">&nbsp;</span>
-	</p>
-</p>
-	</div>
-	<div class='ui-widget-header ui-corner-bottom'><p>
+	<div class='row remove-bottom'>
+		<hr class='half-bottom'/>
 		<a class='button' id="xmet_editor" href="/xmetdb/editor/"  title='Modify the observation'>Edit</a>
 		&nbsp;|&nbsp;
 		Export observation:&nbsp;
@@ -39,5 +57,4 @@
 		<a class='button' id="xmet_export_product" href="#" title='Export product structure(s) as SDF'>as SDF</a>
 		&nbsp;|&nbsp;
 		<a class='button' id="xmet_copy_observation" href="#"  title='Create new observation with the same content as this one.Launches the new observation editor.'  onclick="alert('TODO')">Copy and create new observation</a>
-		</p>
 	</div>	

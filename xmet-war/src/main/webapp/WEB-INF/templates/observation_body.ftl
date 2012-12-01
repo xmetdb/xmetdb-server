@@ -1,28 +1,33 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
-<#include "/head.ftl" >
+<#include "/s_head.ftl" >
 <#include "/observation_head.ftl" >
 </head>
 <body>
-	<div class='w_wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
 
-	<div class='w_content ui-widget ' style='margin-top: 25px; margin-left: 0px;  margin-right: 10px; padding: 0 .1em;'>
-	
-	<div class='ui-widget-header ui-corner-top'><p>&nbsp;Observation ID: <span id="xmet_id"></span></p></div>
-	
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
+		
+		<!-- Page Content
+		================================================== -->
+    <div class="eleven columns ui-widget-header ui-corner-top" style='margin: 0px'>&nbsp;Observation ID: <span id="xmet_id"></span></div>
+
+	<div class="eleven columns ui-widget-content ui-corner-bottom" style="margin:0;" >
+	<div   style="margin:5px;padding:5px;" class="remove-bottom"> 	
+		
 	<#include "/observation_ro.ftl" >
 	  	
-	</div> <#-- w_content -->
+	</div>
+	</div>
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+</div><!-- container -->
 
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
-
-	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
 <#include "/scripts-welcome.ftl">
 </body>
 </html>
