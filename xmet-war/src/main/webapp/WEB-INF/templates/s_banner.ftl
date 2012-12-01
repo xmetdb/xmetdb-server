@@ -1,4 +1,6 @@
-<ul class='topLinks'>
+<div class="sixteen columns" id="header">
+					
+	<ul class='topLinks'>
 	<li class='topLinks'>
 		<a class='topLinks' href='http://xmetdb.org/'>Help</a>
 	</li>
@@ -15,4 +17,20 @@
 			</li>				
 		</#if>			
 	</li>
-</ul>
+	</ul>
+		</div>
+		<div class="three columns">
+			<a href='http://xmetdb.org/'>
+				<img class='scale-with-grid' border='0' src='/xmetdb/images/logo.png' alt='XMETDB logo'>
+			</a>
+		</div>
+		<div class="thirteen columns">
+			<h1 class="remove-bottom">
+			Xenobiotics Metabolism Database			
+			</h1>
+			<h5>Version 1.0</h5>
+		</div>
+		<div class="sixteen columns" >
+			<div id="header_bottom" class="remove-bottom">&nbsp;</div>
+		</div>
+

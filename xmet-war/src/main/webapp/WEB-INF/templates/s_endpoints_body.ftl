@@ -1,13 +1,10 @@
 <#include "/s_html.ftl">
-
 <head>
-
   <#include "/s_head.ftl">
   <script type='text/javascript' src='/xmetdb/scripts/jendpoints.js'></script>
   <script type='text/javascript'>
 $(document).ready(function() {
 	$.ajaxSetup({cache:false});//while dev
-	
   	var oTable = defineEndpointsTable("${xmet_request_json}");
 
     <!-- Details panel -->	
@@ -34,28 +31,12 @@ $(document).ready(function() {
 </head>
 <body>
 
-<div class="container columns">
-		<div class="sixteen columns" id="header">
-			<#include "/s_banner.ftl">
-		</div>
-		<div class="three columns">
-			<a href='http://xmetdb.org/'>
-				<img class='scale-with-grid' border='0' src='/xmetdb/images/logo.png' alt='XMETDB logo'>
-			</a>
-		</div>
-		<div class="thirteen columns">
-			<h1 class="remove-bottom">
-			Xenobiotics Metabolism Database			
-			</h1>
-			<h5>Version 1.0</h5>
-		</div>
-		<div class="sixteen columns" >
-			<div id="header_bottom">&nbsp;</div>
-		</div>
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
 		
 		<!-- Menu
 		================================================== -->
-		<div class="two columns" style="margin-right:0;">
+		<div class="three columns" style="padding:0;" >
 		 	<#include "/s_menu.ftl">
 			 <br>
 			 <#include "/s_stats.ftl">
@@ -63,9 +44,9 @@ $(document).ready(function() {
 		
 		<!-- Page Content
 		================================================== -->
-		<div class="twelve columns" >
+		<div class="eleven columns" style="margin:0;padding:0;" >
 		
-		<table id='endpoints'  cellpadding='0' border='0' width='100%' cellspacing='0'>
+		<table id='endpoints'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>
 		<th></th>
 		<th>Code</th>
@@ -86,7 +67,7 @@ $(document).ready(function() {
 		<!-- Footer
 		================================================== -->
 		
-		<div class="sixteen columns add-bottom"></div>
+		<div class="sixteen  columns add-bottom"></div>
 		
 		<#include "/s_footer.ftl">
 		
