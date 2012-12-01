@@ -32,7 +32,7 @@
 <div id='footer-out'>
 <div id='footer-in'>
 <div id='footer'>
-	<a class='footerLink' href='http://www.ideaconsult.net/'>IDEAconsult Ltd.</a> 
+	<a class='footerLink' href='http://www.ideaconsult.net/'>IdeaConsult Ltd.</a> 
 	(2012) on behalf of <a class='footerLink' href='http://xmetdb.org'>XMETDB</a>
 </div>
 </div>

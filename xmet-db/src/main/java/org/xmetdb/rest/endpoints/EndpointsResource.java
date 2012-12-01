@@ -51,7 +51,7 @@ public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource
 	}
 	@Override
 	public String getTemplateName() {
-		return "endpoints_body.ftl";
+		return "s_endpoints_body.ftl";
 	}
 	public boolean isRecursive() {
 		return isRecursive;

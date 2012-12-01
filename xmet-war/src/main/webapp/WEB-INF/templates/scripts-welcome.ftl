@@ -8,11 +8,7 @@
 			$('span#valueStructures').load( '${queryService}/admin/stats/structures');
 		} catch (e) {
 		}
-		
-<#-- XXX Remove these two lines when the above issue is fixed. 
-		$('span#valueDatasets').replaceWith('47');
-		$('span#valueStructures').replaceWith('12049');
-	-->
+
 	});
 
 </script>

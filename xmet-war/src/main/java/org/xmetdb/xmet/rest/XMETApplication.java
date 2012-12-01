@@ -361,6 +361,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		Directory styleDir = new Directory(getContext(), "war:///style");
 		Directory scriptsDir = new Directory(getContext(), "war:///scripts");
 		Directory jquery = new Directory(getContext(), "war:///jquery");
+		Directory skeleton = new Directory(getContext(), "war:///skeleton");
 
 		router.attach("/meta/", metaDir);
 		router.attach("/images/", imgDir);
@@ -369,6 +370,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		router.attach("/jquery/", jquery);
 		router.attach("/style/", styleDir);
 		router.attach("/scripts/", scriptsDir);
+		router.attach("/skeleton/", skeleton);
 
 	}
 

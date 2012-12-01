@@ -60,6 +60,6 @@ $(document).ready(function() {
 	</div> <#-- w_wrap -->
 	
 <#include "/footer.ftl">
-<#include "/scripts-welcome.ftl">
+
 </body>
 </html>
