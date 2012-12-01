@@ -1,17 +1,18 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
-<#include "/head.ftl" >
+<#include "/s_head.ftl" >
 <script type='text/javascript' src='/xmetdb/jme/jme.js'></script>
 <#include "/structures_head.ftl" >
 </head>
 <body>
-	<div class='w_wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
 
-	<div class='w_content'>
-		<p class='w_p'>
-		<div>
+		<!-- Page Content
+		================================================== -->
+		<div class="eleven columns" style="margin:0;padding:0;" >
+		
 		<table class='compoundtable' id='structures'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
 		<th></th>
@@ -26,9 +27,8 @@
 		</thead>
 		<tbody></tbody>
 		</table>
-		</div>
-		   		</p>
-		   		
+
+		
 		<!-- Download links for the entire list -->
 		<div style='float:right; width:100%; align:center; margin:20px 0 0 0;'>
 		<p>Download as&nbsp;
@@ -37,15 +37,16 @@
 		<a href="${xmet_request_sdf}" id="downloadsdf"><img id="downloadimg" src="/xmetdb/images/sdf.jpg" alt="chemical/x-mdl-sdfile" title="Download as SDF" border="0"/></a>						
 		</p></div>
 		<!-- End download links -->
-	   		
-	</div> <#-- w_content -->
+		
+	</div>
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+</div><!-- container -->
 
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
-	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
 <#include "/scripts-welcome.ftl">
 </body>
 </html>
