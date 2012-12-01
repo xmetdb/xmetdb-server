@@ -1,109 +1,102 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
-<#include "/head.ftl" >
+<#include "/s_head.ftl" >
 <#include "/search_head.ftl" >
+<link rel="stylesheet" href="/xmetdb/style/form.css" type="text/css">
 </head>
 <body>
-	<div class='w_wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
 
-	<div class='w_content ui-widget ' style='margin-top: 25px; margin-left: 10px;  margin-right: 10px; padding: 0 .1em;'>
-	<div class='ui-widget-header ui-corner-top' style='margin-top: 0px'><p>Search XMETDB</p></div>
-	<div class='ui-widget-content ui-corner-bottom' style='margin-top: 0px;' />
-			<p class='w_p' style='margin-top: 0px; ' >						
-	<form method="GET" action="/xmetdb/chemical" name="form" id="search_form">		
-	<table id="xmet_obs" style='margin-top: 0px;' >
-	<tr>
-	<th align="right" valign="top">Structure:</th>
-	<td colspan="2">
-	   <input type='hidden' name='type' value='smiles'>
-	   <input type='button' class='draw' tabindex='0' value='Draw (sub)structure' title='Launches structure diagram editor' onClick='startEditor("${xmet_root}","form");'><br>
-	   <input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'><br>
-	   <input class="ui-widget" type='checkbox' id="search_substrates" checked>Substrate&nbsp;
-	   <input class="ui-widget" type='checkbox' id="search_products">Product
-	</td>
-	<td align="left" valign="top">
-	   <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'>Auto<br>
-	   <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure' tabindex='3'>Similarity&nbsp;
-	   <select title ='Tanimoto similarity threshold' name='threshold' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' >0.4</option><option value='0.3' >0.3</option><option value='0.2' >0.2</option></select>
-	   <br>
-	   <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' tabindex='5' size='20'>Substructure
-	
-	</td>
-	</tr>
-	<tr>
-	<th align="right" valign="top"></th>
-	<td >
-	
-	</td>
-	<td colspan="2">
-			<input type="submit" class="search" value="Search" tabindex='13'>	
-	</td>
-	</tr>	
-	</table>
+<div class="container columns" style="margin:0;padding:1;">
+	<#include "/s_banner.ftl">
+	<#include "/s_menu.ftl">
+		
+	<!-- Page Content
+	================================================== -->
+    <div class="eleven columns ui-widget-header ui-corner-top" style='margin: 0px'>Search XMETDB</div>
+	<div class="eleven columns ui-widget-content ui-corner-bottom" style="margin:0;" >
+	<div   style="margin:5px;padding:5px;" class="remove-bottom"> 	
+
+	<form method="GET" action="/xmetdb/chemical" name="search_form" id="search_form">		
+		<div class="row remove-bottom ">	
+      		<div class="two columns alpha"><label>Define structure</label></div>
+      		<div class="six columns omega">
+      			<input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
+      		</div>
+      		<div class="three columns omega">
+      		    <a href='#' title='Launches structure diagram editor' onClick='startEditor("${xmet_root}","search_form");'>Draw (sub)structure</a>
+      		</div>
+    	</div>		
+    	<div class="row remove-bottom">
+      		<div class="two columns alpha"><label>Search options</label></div>
+      		<div class="six columns omega">
+      		     <input type='radio' id='auto' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
+      		     <input type='radio' name='option' id='similarity' value='similarity' checked title='Enter SMILES or draw structure' tabindex='3'/>Similarity
+      		     <input type='radio' name='option' id="smarts" value='smarts' title='Enter or draw a SMARTS query' tabindex='5' size='40'/>Substructure
+      		</div>
+      		<div class="three columns omega">
+    		 	   <select title ='Tanimoto similarity threshold' name='threshold' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' >0.4</option><option value='0.3' >0.3</option><option value='0.2' >0.2</option></select>
+      		</div>
+    	</div>	   
+     	<div class="row remove-bottom">
+      		<div class="two columns alpha"><label>Search for</label></div>
+      		<div class="six columns omega">
+      		   	<input type="checkbox" name="search_substrates" id="search_substrates" checked /><span>Substrate</span>
+   				<input type="checkbox" name="search_products" id="search_products" checked /><span>Product</span>
+      		</div>
+      		<div class="two columns omega">
+      		  	<input type='hidden' name='type' value='smiles'>
+    		 	   <input type="submit" class="search" value="Search" tabindex='13'>
+      		</div>      		
+    	</div>	     	
 	</form>
-	<form method="GET" action="/xmetdb/protocol" name="form" id="search_protocol_form">	
-	<table id="xmet_obs" style='margin-top: 0px;' >
-	<tr>
-	<td colspan="4"><hr></td>
-	</tr>
-	<tr>
-	<th align="right" valign="top">Experiment:</th>
-	<td colspan="3">
-		<input class="ui-widget" type='checkbox' name="search_exp_ms"  id="search_exp_ms"  tabindex='6'>MS (Microsomes)&nbsp;
-		<input class="ui-widget" type='checkbox' name="search_exp_hep"  id="search_exp_hep" tabindex='7'>HEP (Hepatocytes)&nbsp;
-		<input class="ui-widget" type='checkbox' name="search_exp_enz" id="search_exp_enz" tabindex='8'>ENZ (Enzyme)
-	</td>
-	</tr>	
-	<tr>
-	<th align="right" valign="top">Enzyme:</th>
-	<td>
-	<!-- option=qmrfnumber | endpoint| title | text | author-->
-	<input type='hidden' name="option" value='endpointcode'>
-		<select id="search_enzyme" name="search" multiple tabindex='9'>
-		</select>
-	</td>
-	<th align="right" valign="top">	
-		Allele
-	</th>
-	<td valign="top">
-		<select id="search_allele" name="search_allele" multiple tabindex='10'>
-		</select>
-	</td>
-	</tr>	
-	<td colspan="4"><hr></td>
-	<tr>
-	<th align="right" valign="top">XMETID:</th>
-	<td colspan="3">
-		<input class="ui-widget" type='text' id="search_xmetid" name="search_xmetid" tabindex='11'>
-	</td>
-	</tr>
-			
-	<tr>
-	<th align="right" valign="top">Max number of hits</th>
-	<td >
-		<input type='text' size='3' name='pagesize' value='100' tabindex='12'>
-	</td>
-	<td colspan="2">
-			<input type="submit" class="search" value="Search" tabindex='13'>	
-	</td>
-	</tr>	
-	
-	</table>
-	</form>
-		</p>
+	<form method="GET" action="/xmetdb/protocol" name="form" id="search_protocol_form">		
+	    <div class="row remove-bottom">
+      		<div class="two columns alpha"><label>Experiment:</label></div>
+      		<div class="eight columns omega">
+				<input class="ui-widget" type='checkbox' name="search_exp_ms"  id="search_exp_ms"  tabindex='6'>MS (Microsomes)&nbsp;
+				<input class="ui-widget" type='checkbox' name="search_exp_hep"  id="search_exp_hep" tabindex='7'>HEP (Hepatocytes)&nbsp;
+				<input class="ui-widget" type='checkbox' name="search_exp_enz" id="search_exp_enz" tabindex='8'>ENZ (Enzyme)
+      		</div>
+    	</div>	
+	    <div class="row remove-bottom">
+      		<div class="two columns alpha"><label>Enzyme:</label></div>
+      		<div class="nine columns omega">
+				<!-- option=qmrfnumber | endpoint| title | text | author-->
+				<input type='hidden' name="option" value='endpointcode'>
+				<select id="search_enzyme" name="search" multiple tabindex='9'></select>
+      		</div>
+      		<div class="one columns omega">
+      				Allele
+      				<select id="search_allele" name="search_allele" multiple tabindex='10'>
+					</select>
+      		</div>
+    	</div>	    	
+    	<div class="row remove-bottom">
+      		<div class="two columns alpha"><label>XMETID:</label></div>
+      		<div class="six columns omega">
+				<input class="ui-widget" type='text' id="search_xmetid" name="search_xmetid" tabindex='11'>
+      		</div>
+    	</div>	
+     	<div class="row remove-bottom">
+      		<div class="two columns alpha"><label>Number of hits</label></div>
+      		<div class="six columns omega">
+      		   	<input type='text' size='3' name='pagesize' value='100' tabindex='12'>
+      		</div>
+      		<div class="two columns omega">
+    		 	   <input type="submit" class="search" value="Search" tabindex='13'>
+      		</div>      		
+    	</div>	    	
+    </form>
 	</div>
-		   	
-	</div> <#-- w_content -->
+	</div>
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+	</div><!-- container -->
 
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
-
-	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
-<#include "/scripts-welcome.ftl">
-</body>
+		<#include "/scripts-welcome.ftl">
+	</body>
 </html>

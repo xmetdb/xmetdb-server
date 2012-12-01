@@ -33,14 +33,7 @@ $(document).ready(function() {
 
 <div class="container columns" style="margin:0;padding:0;">
 		<#include "/s_banner.ftl">
-		
-		<!-- Menu
-		================================================== -->
-		<div class="three columns" style="padding:0;" >
-		 	<#include "/s_menu.ftl">
-			 <br>
-			 <#include "/s_stats.ftl">
-		</div>
+	 	<#include "/s_menu.ftl">
 		
 		<!-- Page Content
 		================================================== -->
@@ -58,17 +51,9 @@ $(document).ready(function() {
 		
 		</div>
 		
-		<!-- Help on the right
+		<!-- Right column and footer
 		================================================== -->
-		<div class="two columns">
-			<p>Help links</p>
-		</div>
-		
-		<!-- Footer
-		================================================== -->
-		
-		<div class="sixteen  columns add-bottom"></div>
-		
+		<#include "/s_help.ftl">
 		<#include "/s_footer.ftl">
 		
 </div><!-- container -->

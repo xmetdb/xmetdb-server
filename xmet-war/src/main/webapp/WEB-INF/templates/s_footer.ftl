@@ -1,3 +1,4 @@
+<div class="sixteen  columns add-bottom"></div>
 		<div id='footer-out' class="sixteen columns">
 		<div id='footer-in'>
 		<div id='footer'>
