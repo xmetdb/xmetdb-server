@@ -18,8 +18,8 @@ function getMyAccount(url) {
         		$("#keywords").prop("value",entry["keywords"]);
         		$("#reviewer").attr("checked",entry["reviewer"]);
         	        		
-        		var protocolURI = "/qmrf/user/" + entry.id + "/protocol?headless=true&details=false&media=text/html";
-        		var alertURI = "/qmrf/user/" + entry.id + "/alert?headless=true&details=false&media=text/html";
+        		var protocolURI = "/xmetdb/user/" + entry.id + "/protocol?headless=true&details=false&media=text/html";
+        		var alertURI = "/xmetdb/user/" + entry.id + "/alert?headless=true&details=false&media=text/html";
         		
         		$("#protocoluri").prop("href",protocolURI);
         		$("#alerturi").prop("href",alertURI);
