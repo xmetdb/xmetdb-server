@@ -347,15 +347,7 @@ function defineObservationsTable(tableSelector,observations_uri) {
 	        		}
 				},
 				{ "mDataProp": "enzyme.code" , "asSorting": [ "asc", "desc" ], "bSearchable" : true	},
-				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] },
-				{ "mDataProp": "owner.username" , "asSorting": [ "asc", "desc" ],
-				      "fnRender": function ( o, val ) {
-				    	  	
-				    	  	return (o.aData["owner"]===undefined) || (o.aData["owner"]==null)?"?":
-				    	  			("null" === o.aData["owner"]["username"])?"<a href='#' title='"+o.aData["owner"]["uri"]+"'>?</a>"
-				    	  			:val;
-	        		}
-				}
+				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] }
 			],
 		"bJQueryUI" : true,
 		"bPaginate" : true,

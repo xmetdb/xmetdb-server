@@ -1,16 +1,17 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
-<#include "/head.ftl" >
+<#include "/s_head.ftl" >
 <#include "/protocols_head.ftl" >
 </head>
 <body>
-	<div class='w_wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
 
-	<div class='w_content'>
-		<p class='w_p'>
-		<div>
+	<!-- Page Content
+		================================================== -->
+		<div class="eleven columns" style="margin:0;padding:0;" >
+		
 		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
 		<th>XMETDBID</th>
@@ -22,20 +23,19 @@
 		<th>Experiment</th>
 		<th>Enzyme</th>
 		<th>Last updated</th>
-		<th>Submitted by</th>
 		</thead>
 		<tbody></tbody>
 		</table>
+		
 		</div>
-		   		</p>
-	</div> <#-- w_content -->
-
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
+		   
+		   <!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+	</div> <#-- container -->
 	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
 <#include "/scripts-welcome.ftl">
 </body>
 </html>
