@@ -103,8 +103,8 @@ function addSearchUI(prefix, xmet_root) {
 function useSelected(prefix) {
 	$( '#structureSearchResults li.ui-selected img').each(function (index,entry) {
 		var results = '#xmet_'+prefix+'_img';
-		var results_uri = 'input:[name=xmet_'+prefix+'_uri]';
-		var results_mol = 'input:[name=xmet_'+prefix+'_mol]';
+		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
+		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		if (entry.alt.indexOf('http')==0) {
 			$(results_uri).val(entry.alt);
 			$(results).empty();
@@ -126,8 +126,8 @@ function useDrawn(queryService,prefix) {
 		alert("Nothing to submit");
 	} else {
 		var results = '#xmet_'+prefix+'_img';
-		var results_uri = 'input:[name=xmet_'+prefix+'_uri]';
-		var results_mol = 'input:[name=xmet_'+prefix+'_mol]';
+		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
+		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		$(results_uri).val(smiles);
 		$(results_mol).val(jme);
 		$(results).empty();
@@ -208,7 +208,7 @@ function toggleDrawUI(prefix, idButton, msg) {
  			$( idButton).text('Show '+msg);
  		} else {
  			$( idButton).text('Hide '+msg);
- 			var results_mol = 'input:[name=xmet_'+prefix+'_mol]';
+ 			var results_mol = 'input[name=xmet_'+prefix+'_mol]';
  			try {
  				var mol = $(results_mol).val();
  				if ((mol===undefined) || (mol== null) || ("" == mol)) {
