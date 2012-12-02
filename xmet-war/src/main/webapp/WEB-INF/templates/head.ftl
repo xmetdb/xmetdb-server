@@ -5,11 +5,11 @@
 
 <link href="/xmetdb/style/ambit.css" rel="stylesheet" type="text/css">
 <!--[if IE 7]><link rel="stylesheet" type="text/css" media="all" href="/xmetdb/style/ambit-msie7.css"><![endif]-->
-<link href="/xmetdb/style/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css">
+<link href="/xmetdb/style/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css">
 <link href="/xmetdb/style/jquery.dataTables.css" rel="stylesheet" type="text/css">
 <link href="/xmetdb/images/favicon.ico" rel="shortcut icon" type="image/ico">
-<script type='text/javascript' src='/xmetdb/jquery/jquery-1.7.2.min.js'></script>
-<script type='text/javascript' src='/xmetdb/jquery/jquery-ui-1.8.18.custom.min.js'></script>
+<script type='text/javascript' src='/xmetdb/jquery/jquery-1.8.3.min.js'></script>
+<script type='text/javascript' src='/xmetdb/jquery/jquery-ui-1.9.2.custom.min.js'></script>
 <script type='text/javascript' charset='utf8' src='/xmetdb/jquery/jquery.dataTables-1.9.0.min.js'></script>
 <script type='text/javascript' src='/xmetdb/jquery/jquery.cookies.2.2.0.min.js'></script>
 <script type='text/javascript' src='/xmetdb/scripts/xmetdb.js'></script>
