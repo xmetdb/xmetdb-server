@@ -102,8 +102,6 @@ ul#navmenu {
 	list-style-type: none;
 	height: 100%;
 	text-align: center;
-	border: 1px solid white;
-	background-color: white;
 }
 
 #navmenu li {
@@ -132,27 +130,19 @@ ul#navmenu {
 }
 
 #navmenu li a:link, #navmenu li a:visited {
-	color: #107FEB;
 	font-size: 0.9em;
 	font-weight: 500;
-	background-color: #d9ecf9;
 }
 
 #navmenu li a:active {
-	color: white;
-	background-color: #109DFF;
 }
 
 #navmenu li a.selected {
-	color: white;
-	background-color: #109DFF;
 	display: block;
 	font-weight: 900;
 }
 
 #navmenu li a.hovered {
-	color: #107FEB !important;
-	background-color: #FFF47A !important;
 	display: block;
 }
 
