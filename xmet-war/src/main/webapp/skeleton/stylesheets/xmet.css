@@ -229,7 +229,7 @@ a.login {
 
 
 A:link {
-	COLOR: #109DFF;
+	COLOR: #516373;
 	FONT-WEIGHT: bolder;
 	font-weight: bold;
 	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
@@ -237,7 +237,7 @@ A:link {
 }
 
 A:visited {
-	COLOR: #109DFF;
+	COLOR: #516373;
 	FONT-WEIGHT: bolder;
 	font-weight: bold;
 	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
@@ -245,7 +245,7 @@ A:visited {
 }
 
 A:active {
-	COLOR: #109DFF;
+	COLOR: #516373;
 	FONT-WEIGHT: bolder;
 	font-weight: bold;
 	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
@@ -253,7 +253,7 @@ A:active {
 }
 
 A:hover {
-	COLOR: #516373;
+	COLOR: #0065A2;
 	FONT-WEIGHT: bolder;
 	font-weight: bold;
 	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
