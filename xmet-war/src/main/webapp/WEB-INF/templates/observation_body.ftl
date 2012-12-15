@@ -11,16 +11,16 @@
 		
 		<!-- Page Content
 		================================================== -->
-    <div class="eleven columns ui-widget-header ui-corner-top" style='margin: 0px'>&nbsp;Observation ID: <span id="xmet_id"></span></div>
+    <div class="twelve columns ui-widget-header ui-corner-top">&nbsp;Observation ID: <span id="xmet_id"></span></div>
 
-	<div class="eleven columns ui-widget-content ui-corner-bottom" style="margin:0;" >
+	<div class="twelve columns ui-widget-content ui-corner-bottom" >
 	<div   style="margin:5px;padding:5px;" class="remove-bottom"> 	
 		
 	<#include "/observation_ro.ftl" >
 	  	
 	</div>
+
 	</div>
-		
 		<!-- Right column and footer
 		================================================== -->
 		<#include "/s_help.ftl">

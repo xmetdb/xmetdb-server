@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<script type="text/javascript" src="ChemDoodleWeb-libs.js"></script>
+<script type="text/javascript" src="ChemDoodleWeb.js"></script>
+<link rel="stylesheet" href="../style/jquery-ui-1.8.7.custom.css" type="text/css">
+<script type="text/javascript" src="../jquery/jquery-ui-1.8.7.custom.min.js"></script>
+<link rel="stylesheet" href="../style/ChemDoodleWeb.css" type="text/css">
+
+<script type="text/javascript" src="ChemDoodleWeb-sketcher.js"></script>
+<script type="text/javascript" src="sketcher.js"></script>
+<title>ChemDoodle Web Component Sketcher</title>
+</head>
+<body>
+<style>
+._ChemDoodle .ui-button-text {
+	padding-top: 3px;
+	padding-right: 8px;
+	padding-bottom: 3px;
+	padding-left: 8px;
+}
+</style>
+<div class="_ChemDoodle" style="margin-bottom:10px;padding:0;">
+<script>
+	// changes the default JMol color of hydrogen to black so it appears on white backgrounds
+	ChemDoodle.ELEMENT['H'].jmolColor = 'black';
+	// darkens the default JMol color of sulfur so it appears on white backgrounds
+	ChemDoodle.ELEMENT['S'].jmolColor = '#B9A130';
+	// initializes the SketcherCanvas; make sure to set the path to the icons correctly!
+	_sketcher.sketcher = new ChemDoodle.SketcherCanvas('chmd', 500, 300, '../images/sketcher/', ChemDoodle.featureDetection.supports_touch(), false);
+	// sets terminal carbon labels to display
+	_sketcher.sketcher.specs.atoms_displayTerminalCarbonLabels_2D = true;
+	// sets atom labels to be colored by JMol colors, which are easy to recognize
+	_sketcher.sketcher.specs.atoms_useJMOLColors = true;
+	// the following two settings add overlap clear widths, so that some depth is introduced to overlapping bonds
+	_sketcher.sketcher.specs.bonds_clearOverlaps_2D = true;
+	_sketcher.sketcher.specs.bonds_overlapClearWidth_2D = 2;
+	// the component needs to be repainted here because we do not call the <em>Canvas.loadMolecule()</em> function
+	_sketcher.sketcher.repaint();
+</script>
+<form name="form_editor">
+<input type="button" value="Update Molecule " onClick = "_sketcher.submitMol2Document(parent.document)">
+</form>    	
+
+</div>
+
+</body>
+</html>

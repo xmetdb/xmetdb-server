@@ -1,4 +1,4 @@
-		<div class="two columns">
+		<div class="one column">
 			Help
 		</div>
 		

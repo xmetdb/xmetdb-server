@@ -24,7 +24,7 @@
 	<!-- XMET specific css
 	================================================== -->
 	<link href="/xmetdb/skeleton/stylesheets/xmet.css"     rel="stylesheet"  type="text/css">
-	<link href="/xmetdb/style/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css">
+	<link href="/xmetdb/style/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css">
 	<link href="/xmetdb/style/jquery.dataTables.css"       rel="stylesheet" type="text/css">	
 		
 	
@@ -39,7 +39,7 @@
 		<!-- JQuery
 	================================================== -->
 	<script type='text/javascript' src='/xmetdb/jquery/jquery-1.8.3.min.js'></script>
-	<script type='text/javascript' src='/xmetdb/jquery/jquery-ui-1.9.2.custom.min.js'></script>
+	<script type='text/javascript' src='/xmetdb/jquery/jquery-ui-1.8.24.custom.min.js'></script>
 	<script type='text/javascript' charset='utf8' src='/xmetdb/jquery/jquery.dataTables-1.9.0.min.js'></script>
 	<script type='text/javascript' src='/xmetdb/jquery/jquery.cookies.2.2.0.min.js'></script>
 	

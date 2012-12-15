@@ -33,14 +33,14 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 	private final static String[] css = new String[] {
 		"<link href=\"%s/style/ambit.css\" rel=\"stylesheet\" type=\"text/css\">\n",
 		"<!--[if IE 7]><link rel='stylesheet' type='text/css' media='all' href='%s/style/ambit-msie7.css'><![endif]-->",
-		"<link href=\"%s/style/jquery-ui-1.9.2.custom.min.css\" rel=\"stylesheet\" type=\"text/css\">\n",
+		"<link href=\"%s/style/jquery-ui-1.8.24.custom.css\" rel=\"stylesheet\" type=\"text/css\">\n",
 		"<link href=\"%s/style/jquery.dataTables.css\" rel=\"stylesheet\" type=\"text/css\">\n",
 		"<link href=\"%s/images/favicon.ico\" rel=\"shortcut icon\" type=\"image/ico\">\n"
 	};
 
 	private final static String[] js = new String[] {
 		"<script type='text/javascript' src='%s/jquery/jquery-1.8.3.min.js'></script>\n",
-		"<script type='text/javascript' src='%s/jquery/jquery-ui-1.9.2.custom.min.js></script>\n",
+		"<script type='text/javascript' src='%s/jquery/jquery-ui-1.8.24.custom.min.js></script>\n",
 		"<script type='text/javascript' charset='utf8' src='%s/jquery/jquery.dataTables-1.9.0.min.js'></script>\n",
 		"<script type='text/javascript' src='%s/scripts/jopentox.js'></script>\n",
 		//"<script type='text/javascript' src='%s/scripts/jendpoints.js'></script>\n",

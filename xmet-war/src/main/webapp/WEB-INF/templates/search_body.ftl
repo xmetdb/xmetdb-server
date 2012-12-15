@@ -2,41 +2,46 @@
 <head>
 <#include "/s_head.ftl" >
 <#include "/search_head.ftl" >
-<link rel="stylesheet" href="/xmetdb/style/form.css" type="text/css">
+<link rel="stylesheet" href="${xmet_root}/style/form.css" type="text/css">
+<script type="text/javascript" src="${xmet_root}/scripts/sketcher.js"></script>
 </head>
 <body>
 
-<div class="container columns" style="margin:0;padding:1;">
+<div class="container columns" style="padding:1;">
+	    
 	<#include "/s_banner.ftl">
 	<#include "/s_menu.ftl">
 		
 	<!-- Page Content
 	================================================== -->
-    <div class="eleven columns ui-widget-header ui-corner-top" style='margin: 0px'>Search XMETDB</div>
-	<div class="eleven columns ui-widget-content ui-corner-bottom" style="margin:0;" >
-	<div   style="margin:5px;padding:5px;" class="remove-bottom"> 	
+	
 
-	<form method="GET" action="/xmetdb/chemical" name="search_form" id="search_form">		
+	    	
+    <div class="twelve columns ui-widget-header ui-corner-top">Search XMETDB</div>
+	<div class="twelve columns ui-widget-content ui-corner-bottom">
+	<div   style="margin:5px;padding:5px;" class="remove-bottom"> 	
+		
+	<form method="GET" action="${xmet_root}/chemical" name="search_form" id="search_form">
+		<div class="row remove-bottom ">
+			<div class="six columns alpha"><label>Define structure</label></div>
+			<div class="ten columns omega"><label>Search options</label></div>
+		</div>			
 		<div class="row remove-bottom ">	
-      		<div class="two columns alpha"><label>Define structure</label></div>
-      		<div class="six columns omega">
+      		<div class="six columns alpha">
       			<input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
       		</div>
-      		<div class="three columns omega">
-      		    <a href='#' title='Launches structure diagram editor' onClick='startEditor("${xmet_root}","search_form");'>Draw (sub)structure</a>
-      		</div>
-    	</div>		
-    	<div class="row remove-bottom">
-      		<div class="two columns alpha"><label>Search options</label></div>
       		<div class="six columns omega">
       		     <input type='radio' id='auto' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
       		     <input type='radio' name='option' id='similarity' value='similarity' checked title='Enter SMILES or draw structure' tabindex='3'/>Similarity
       		     <input type='radio' name='option' id="smarts" value='smarts' title='Enter or draw a SMARTS query' tabindex='5' size='40'/>Substructure
       		</div>
-      		<div class="three columns omega">
+      		<div class="four columns omega">
     		 	   <select title ='Tanimoto similarity threshold' name='threshold' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' >0.4</option><option value='0.3' >0.3</option><option value='0.2' >0.2</option></select>
       		</div>
-    	</div>	   
+    	</div>	       	
+    	<div class="row remove-bottom ">
+    	<iframe class='sixteen columns' style='height:450px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html"></iframe>
+    	</div>
      	<div class="row remove-bottom">
       		<div class="two columns alpha"><label>Search for</label></div>
       		<div class="six columns omega">
@@ -49,7 +54,7 @@
       		</div>      		
     	</div>	     	
 	</form>
-	<form method="GET" action="/xmetdb/protocol" name="form" id="search_protocol_form">		
+	<form method="GET" action="${xmet_root}/protocol" name="form" id="search_protocol_form">		
 	    <div class="row remove-bottom">
       		<div class="two columns alpha"><label>Experiment:</label></div>
       		<div class="eight columns omega">
@@ -87,6 +92,8 @@
       		</div>      		
     	</div>	    	
     </form>
+    
+
 	</div>
 	</div>
 		

@@ -10,7 +10,7 @@
 
 	<!-- Page Content
 		================================================== -->
-		<div class="eleven columns" style="margin:0;padding:0;" >
+		<div class="twelve columns" >
 		
 		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
