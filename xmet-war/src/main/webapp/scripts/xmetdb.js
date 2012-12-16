@@ -61,35 +61,29 @@ function addSearchUI(prefix, xmet_root) {
 	var formName = prefix + 'SearchForm';
 	var resultsName = 'structureSearchResults';
 	var searchUI = 
-	"<div class='ui-widget-header ui-corner-top'><p>Structure search<span style='float:right;'>" +
-	"<a href='#' onClick='useSelected(\"substrate\");return false;'>Use selected structures as a substrate</a>&nbsp;|&nbsp;" +
-	"<a href='#' onClick='useSelected(\"product\");return false;'>Use selected structures as products</a>&nbsp;" +
-	"</span></p></div>"+
-	"<div class='ui-widget-content'>"+
+	"<div class='row ui-widget-header ui-corner-top remove-bottom'>Structure search</div>" +
+	"<div class='ui-widget-content ui-corner-bottom remove-bottom'>"+
+	"<div style='margin:5px;padding:5px;' class='row remove-bottom'>"+ 	
 	"<form method='GET' action='#' name='" + formName+ "'>"+
-	"<table width='100%'>"+
-	"<tr><td>\n"+
-	"   <input type='hidden' name='type' value='smiles'>"+
-	"   <a href='#' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'>Draw (sub)structure</a><br>"+
-	"   <input type='text' name='search' size='40' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>"+
-	"</td>\n"+
-	"<td align='left' valign='top'>\n"+
-	"   <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20'>Auto<br>"+
-	"   <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure'>Similarity&nbsp;"+
-	"   <select title ='Tanimoto similarity threshold' name='threshold'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>"+
-	"   <br>"+
-	"   <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure"+
-	"</td></tr>" +
-	"<tr><td></td><td><input type='submit' value='Search'></td>" +
-	"</tr>\n<tr>" + 
-	"<td colspan='2'><ul id='" + resultsName+ "' class='structresults'></ul></td>"+
-	"</tr>" +
-	"</table></form>"+
+	"	<div class='ten columns alpha '>"+
+	" 	  <input type='hidden' name='type' value='smiles'>"+
+	" 	  <a href='#' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'>Draw (sub)structure</a><br>"+
+	" 	  <input type='text' name='search' class='remove-bottom' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'><br/>"+
+	" 	  <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20'>Auto"+
+	"  	 <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure'>Similarity&nbsp;"+
+	"  	 <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure"+
+	" 	  <select title ='Tanimoto similarity threshold' name='threshold' class='half-bottom'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>"+
+	"		<input type='submit' value='Search' class='remove-bottom'>" +
+	"	</div>"+
+	"	<div class='six columns omega'><br/>"+	
+	"		<a href='#' class='button' onClick='useSelected(\"substrate\");return false;'>Use selected structures as a substrate</a><br/>" +
+	"		<a href='#' class='button' onClick='useSelected(\"product\");return false;'>Use selected structures as products</a>&nbsp;" +
+	"	</div>" +
 	"</div>" +
-	"<div class='ui-widget-header ui-corner-bottom'><p>&nbsp;<span style='float:right;'>" +
-	"<a href='#' class='useSelected' onClick='useSelected(\"substrate\");return false;'>Use selected structures as a substrate</a>&nbsp;|&nbsp;" +
-	"<a href='#' class='useSelected' onClick='useSelected(\"product\");return false;'>Use selected structures as products</a>" +
-	"</span></p></div";
+	"<div style='margin:5px;padding:5px;' class='row remove-bottom'>"+ 	
+	"	<ul id='" + resultsName+ "' class='structresults '></ul>"+
+	"</div></form>"+
+	"</div>";
 	$( searchSelector ).append(searchUI);
 	$( '#'+resultsName ).selectable();
 	
