@@ -27,7 +27,7 @@
 	// darkens the default JMol color of sulfur so it appears on white backgrounds
 	ChemDoodle.ELEMENT['S'].jmolColor = '#B9A130';
 	// initializes the SketcherCanvas; make sure to set the path to the icons correctly!
-	_sketcher.sketcher = new ChemDoodle.SketcherCanvas('chmd', 500, 300, '../images/sketcher/', ChemDoodle.featureDetection.supports_touch(), false);
+	_sketcher.sketcher = new ChemDoodle.SketcherCanvas('chmd', 450, 300, '../images/sketcher/', ChemDoodle.featureDetection.supports_touch(), false);
 	// sets terminal carbon labels to display
 	_sketcher.sketcher.specs.atoms_displayTerminalCarbonLabels_2D = true;
 	// sets atom labels to be colored by JMol colors, which are easy to recognize
