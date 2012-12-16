@@ -45,63 +45,57 @@ $(document).ready(function() {
     <div class="half-bottom ui-widget-content ui-corner-bottom" >
     
     <form method="POST" action="/xmetdb/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
-    
 	<div class='row' style="margin:5px;padding:5px;"> 	
-	    <div class='three columns alpha'>
-	    	Substrate:<em>*</em>
-	    </div>
-	    <div class='eight columns omega'>
-		<!-- the substrate -->
-			<ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
+	 	<div class='three columns alpha'><label>Substrate</label></div>
+	    <div class='five columns omega'>
+		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
-		</div>
-		<div class='five columns omega'>
-			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor</a>
-			<br>	
-			<a href="#" id="buttonSubstrateSearch">Show search options</a>
-			<br/>
-			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20'>
-		</div>			
-	</div>
-	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
-	  <div class='three columns alpha'>Atom uncertainty:<em>*</em></div>
-	  <div class='thirteen columns omega'>
-		<select id="xmet_atom_uncertainty" name="xmet_atom_uncertainty" >
-		<option value="Certain" selected="selected">Certain</option>
-		<option value="Uncertain">Uncertain</option>
-		</select>
-	  </div>
-	</div>
-	<div class='row' style="margin:5px;padding:5px;"> 	
-    	<div class='three columns alpha'>
-    		Product:<em>*</em>
-    	</div>
-	 	<div class='eight columns omega'>
+	    </div>
+		<div class='three columns omega'><label>Product</label></div>
+	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 		</div>
-		<div class='five columns omega'>
-			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor</a>
+	</div>    	
+	<div class='row  remove-bottom' style="margin:5px;padding:5px;"> 	
+	    <div class='eight columns omega '>
+			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor</a> 
+			|	
+			<a href="#" id="buttonSubstrateSearch">Show search options</a> 
 			<br/>
+			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20' class='remove-bottom'>
+	    </div>
+	    <div class='eight columns omega'>
+			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor</a>
+			|
 			<a href="#" id="buttonProductSearch">Show search options</a>
 			<br/>
-			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20'>
-		</div>				
-	</div>
+			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20' class='remove-bottom'>
+		</div>
+	</div>    	
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>
+	<div class='row' style="margin:5px;padding:5px;"> 	
+ 	   <div class='three columns alpha'><label>Atom uncertainty:</label></div>
+	   <div class='five columns omega'>
+			<select id="xmet_atom_uncertainty" name="xmet_atom_uncertainty" >
+			<option value="Certain" selected="selected">Certain</option>
+			<option value="Uncertain">Uncertain</option>
+			</select>
+		</div>
+		<div class='three columns alpha'><label>Product amount:</label></div>
+		 <div class='five columns omega'>
+			<select id="xmet_product_amount" name="xmet_product_amount">
+			<option value="Major" selected="selected">Major</option>
+			<option value="Minor">Minor</option>
+			<option value="Unknown">Unknown</option>
+			</select>
+		 </div>
+	</div> 	
+	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
-	  <div class='three columns alpha'>Product amount:<em>*</em></div>
-	  <div class='thirteen columns omega'>
-		<select id="xmet_product_amount" name="xmet_product_amount">
-		<option value="Major" selected="selected">Major</option>
-		<option value="Minor">Minor</option>
-		<option value="Unknown">Unknown</option>
-		</select>
-	  </div>
-	</div>	
-	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
-		<div class='three columns alpha'>Experiment:<em>*</em></div>
+		<div class='three columns alpha'><label>Experiment:</label></div>
 		<div class='three columns omega'>
 			<select id="xmet_experiment" name="xmet_experiment">
 			<option value="MS" selected="selected">MS (Microsomes)</option>
@@ -109,18 +103,18 @@ $(document).ready(function() {
 			<option value="ENZ">ENZ (Enzyme)</option>
 			</select>
 		</div>
-		<div class='two column omega'>Enzyme</div>
+		<div class='two column omega'><label>Enzyme</label></div>
 		<div class='five columns omega'>
 			<select id="xmet_enzyme" name="xmet_enzyme"></select>
 		</div>
-		<div class='one column omega'>Allele</div>
+		<div class='one column omega'><label>Allele</label></div>
 		<div class='two columns omega'>
 			<select id="xmet_allele" name="xmet_allele"></select>
 		</div>
 	</div>
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'>
-			Reference:<em>*</em>
+			<label>Reference:</label>
 			<input type="hidden" name="published_status"  value="on">
 		</div>
 		<input type="text" name="xmet_reference" title="DOI or free text?" value="" class="eight columns omega remove-bottom">
