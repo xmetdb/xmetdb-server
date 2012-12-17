@@ -2,20 +2,34 @@ package org.xmetdb.xmet.aa;
 
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.idea.restnet.aa.local.UserLoginHTMLReporter;
 import net.idea.restnet.c.ResourceDoc;
+import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
 
 import org.restlet.Request;
+import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
+import org.restlet.representation.Representation;
+import org.restlet.representation.Variant;
+import org.restlet.resource.ResourceException;
 import org.restlet.security.Role;
 import org.restlet.security.User;
+import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.XMETDBRoles;
 
 public class XMETLoginFormReporter<U extends User> extends UserLoginHTMLReporter<U> {
 	
-    public XMETLoginFormReporter(Request ref, ResourceDoc doc) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8716745466718834940L;
+
+
+	public XMETLoginFormReporter(Request ref, ResourceDoc doc) {
     	this(ref,doc,null);
     }
 	public XMETLoginFormReporter(Request ref, ResourceDoc doc,HTMLBeauty htmlBeauty) {
@@ -70,5 +84,8 @@ public class XMETLoginFormReporter<U extends User> extends UserLoginHTMLReporter
 	
 	protected String myWorkspaceLinks() {
 		return null;
-	}	
+	}
+	
+	
+
 }
