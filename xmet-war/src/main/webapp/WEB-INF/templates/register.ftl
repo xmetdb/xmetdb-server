@@ -85,48 +85,67 @@ $().ready(function() {
 			<form action="${xmet_root}/register" id="registerForm"  method="POST" >		
 			
 			<div class='row remove-bottom'>
-				<label class='three columns alpha' for="username">User name</label>
-				<input class='three columns omega half-bottom' type="text" size='40' name='username' id='username' value=''/>
+				<label class='three columns alpha' for="username">User name <em>*</em></label>
+				<input class='three columns alpha half-bottom' type="text" size='40' name='username' id='username' value=''/>
+				<div class='ten columns omega'></div>
 			</div>
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="title">Title</label>
-				<input class='three columns omega half-bottom'  type="text" size='40' name='title' id='title' value=''/>
+				<input class='three columns alpha half-bottom'  type="text" size='40' name='title' id='title' value=''/>
+				<div class='ten columns omega'></div>
 			</div>
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="firstname">First name <em>*</em></label>
-				<input class='eight columns omega half-bottom' type="text" size='40' name='firstname' id='firstname' value=''/>
+				<input class='eight columns alpha half-bottom' type="text" size='40' name='firstname' id='firstname' value=''/>
+				<div class='ten columns omega'></div>
 			</div>
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="lastname">Last name <em>*</em></label>
-				<input class='eight columns omega half-bottom' type="text"  size='40' name='lastname' id='lastname' value=''/></div>
+				<input class='eight columns alpha half-bottom' type="text"  size='40' name='lastname' id='lastname' value=''/>
+				<div class='ten columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="affiliation">Affiliation</label>
-				<input class='eight columns omega half-bottom' type="text"  size='40' name='affiliation' id='affiliation' value=''/></div>
+				<input class='eight columns alpha half-bottom' type="text"  size='40' name='affiliation' id='affiliation' value=''/>
+				<div class='ten columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="email">e-mail <em>*</em></label>
-				<input class='eight columns omega half-bottom' type="text"size='40' name='email' id='email' value=''/></div>
-			
+				<input class='eight columns alpha half-bottom' type="text"size='40' name='email' id='email' value=''/>
+				<div class='ten columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="homepage">WWW</label>
-				<input class='eight columns omega half-bottom' type="text"  size='40' name='homepage' id='homepage' value=''/></div>
+				<input class='eight columns alpha half-bottom' type="text"  size='40' name='homepage' id='homepage' value=''/>
+				<div class='five columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="keywords">Keywords</label>
-				<input class='eight columns omega half-bottom'  type="text"  size='40' name='keywords' id='keywords' value=''/></div>
+				<input class='eight columns alpha half-bottom'  type="text"  size='40' name='keywords' id='keywords' value=''/>
+				<div class='five columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
-				<label class='three columns alpha'  for="reviewer">Available as a reviewer</label>
-				<input class='eight columns omega half-bottom' type="checkbox" name='reviewer' id='reviewer' value=''/></div>
-					
+				<label class='three columns alpha'  for="reviewer">Available as a curator</label>
+				<input class='eight columns alpha half-bottom' type="checkbox" name='reviewer' id='reviewer' value=''/>
+				<div class='five columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd1'>Password <em>*</em></label>
-				<input class='six columns omega half-bottom'  type='password' size='40' id='pwd1' name='pwd1' value=''/></div>
+				<input class='six columns alpha half-bottom'  type='password' size='40' id='pwd1' name='pwd1' value=''/>
+				<div class='five columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd2'>Confirm password <em>*</em></label>
-				<input class='six columns omega half-bottom' type='password' size='40' id='pwd2' name='pwd2' value=''/></div>
+				<input class='six columns alpha half-bottom' type='password' size='40' id='pwd2' name='pwd2' value=''/>
+				<div class='five columns omega'></div>
+			</div>				
 			<div class='row remove-bottom'>
-				<input id='register' name='register' type='submit' class='submit' value='Register'></div>
-
+				<label class='three columns alpha'>&nbsp;</label>
+				<input class='three columns alpha' id='register' name='register' type='submit' class='submit' value='Register'>
+				<div class='ten columns omega'></div>
 			</form>		
 			</div>
+		</div>			
 		</div>
 
 		<!-- twelve -->
