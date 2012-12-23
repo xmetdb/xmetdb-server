@@ -43,6 +43,21 @@ public abstract class GroupDBResource<G extends IDBGroup>	extends XmetdbQueryRes
 	protected boolean singleItem = false;
 	protected boolean editable = true;
 
+	public GroupDBResource() {
+		super();
+		setHtmlbyTemplate(true);
+	}
+	@Override
+	public boolean isHtmlbyTemplate() {
+		return headless?false:htmlbyTemplate;
+		//singleItem?htmlbyTemplate:false;
+	}
+	@Override
+	public String getTemplateName() {
+		return singleItem?"organisation_body.ftl":"organisation_body.ftl";
+	}
+	
+	
 	@Override
 	public RepresentationConvertor createConvertor(Variant variant)
 			throws AmbitException, ResourceException {
@@ -51,14 +66,14 @@ public abstract class GroupDBResource<G extends IDBGroup>	extends XmetdbQueryRes
 				return new StringConvertor(	
 						new GroupQueryURIReporter(getRequest())
 						,MediaType.TEXT_URI_LIST,filenamePrefix);
-				
+		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			return new OutputWriterConvertor(
+					new GroupJSONReporter<IQueryRetrieval<IDBGroup>>(getRequest()),
+					MediaType.APPLICATION_JSON);					
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_N3) ||
-					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES) ||
-					variant.getMediaType().equals(MediaType.APPLICATION_JSON) ||
-					variant.getMediaType().equals(MediaType.TEXT_CSV) 
-					
+					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES) 
 					) {
 				return new RDFJenaConvertor<IDBGroup, IQueryRetrieval<IDBGroup>>(
 						new GroupRDFReporter<IQueryRetrieval<IDBGroup>>(

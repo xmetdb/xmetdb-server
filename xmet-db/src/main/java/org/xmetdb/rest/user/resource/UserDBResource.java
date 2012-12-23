@@ -65,11 +65,12 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 
 	@Override
 	public boolean isHtmlbyTemplate() {
-		return headless?false:singleItem?htmlbyTemplate:false;
+		return headless?false:htmlbyTemplate;
+		//singleItem?htmlbyTemplate:false;
 	}
 	@Override
 	public String getTemplateName() {
-		return "myprofile_body.ftl";
+		return singleItem?"myprofile_body.ftl":"users_body.ftl";
 	}
 	
 	

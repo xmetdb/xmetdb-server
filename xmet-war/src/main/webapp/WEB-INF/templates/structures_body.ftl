@@ -1,7 +1,7 @@
 <#include "/s_html.ftl" >
 <head>
 <#include "/s_head.ftl" >
-<script type='text/javascript' src='/xmetdb/jme/jme.js'></script>
+<script type='text/javascript' src='${xmet_root}/jme/jme.js'></script>
 <#include "/structures_head.ftl" >
 </head>
 <body>

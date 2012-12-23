@@ -1,5 +1,6 @@
-<script type='text/javascript' src='/xmetdb/scripts/myprofile.js'></script>
-<script type='text/javascript' src='/xmetdb/jquery/jquery.validate.min.js'></script>
+<script type='text/javascript' src='${xmet_root}/scripts/myprofile.js'></script>
+<script type='text/javascript' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
+
 <script type='text/javascript'>
 $(document).ready(function() {
 	getMyAccount('${xmet_request_json}');
