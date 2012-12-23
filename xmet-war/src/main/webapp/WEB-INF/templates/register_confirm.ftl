@@ -1,6 +1,6 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
-<#include "/head.ftl" >
+<#include "/s_head.ftl" >
 
 <script type='text/javascript'>
 $(document).ready(function() {
@@ -42,43 +42,50 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-	<div id='wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
 
-	<div class='w_content'>
-		<div class='ui-widget ' style='margin-top: 20px; padding: 0 .7em;'>
-		<div class='ui-widget-header ui-corner-top'><p>Registration</p></div>
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
+		
+		<!-- Page Content
+		================================================== -->
+		<div class="twelve columns" style="padding:0;" >	
+
+		<div class='ui-widget-header ui-corner-top' > XMETDB Registration</div>
 	    <div class='ui-widget-content ui-corner-bottom'>	
-	    	<p>			
-	    	<br>
+	    	<div class='row'></div>
 			<#if xmet_reg_confirmed??>
-			<span id='success' style='display:none'>
-			Your registration is now confirmed and you can <a href="/xmet/login">log in</a> into XMETDB.<br>
-			</span>
+			<div class='row' id='success' style='display:none' style="align:center;padding:1em;margin:1em;">
+			&nbsp;<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
+			Your registration is now confirmed and you can <a href="${xmet_root}/login">log in</a> into XMETDB.
+			</div>
 
-			<span id='failure' style='display:none'>
+			<span id='failure' class='row' style='display:none'>
 				<strong>Invalid confirmation code!</strong>
 			</span>
 			
-			<img id='progress' src="/xmet/images/progress.gif" alt="Please wait..." title="Please wait...">
+			<img id='progress' src="${xmet_root}/images/progress.gif" alt="Please wait..." title="Please wait...">
 			
 			<#else>
+			<div  class='row' style="align;padding:1em;margin:1em;">
+			<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
 			Please follow the instructions in the confirmation mail, in order to complete the registration procedure.
+			</div>
 			</#if>
-			<br>
-			</p>
-		</div>
+			<div class='row'></div>
 		</div>
 		
-	</div> <#-- content -->
+		<!-- twelve -->
+		</div>
+		
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+</div><!-- container -->
 
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
-	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
-<#include "/scripts-welcome.ftl">
+		<#include "/scripts-welcome.ftl">
 </body>
 </html>

@@ -1,32 +1,39 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
-<#include "/head.ftl" >
+<#include "/s_head.ftl" >
 </head>
 <body>
-	<div id='wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
 
-	<div class='w_content'>
-		<div class='ui-widget ' style='margin-top: 20px; padding: 0 .7em;'>
-		<div class='ui-widget-header ui-corner-top'><p>Registration</p></div>
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
+		
+		<!-- Page Content
+		================================================== -->
+		<div class="twelve columns" style="padding:0;" >	
+		
+		<div class='ui-widget-header ui-corner-top'> XMETDB Registration</div>
 	    <div class='ui-widget-content ui-corner-bottom'>	
-	    	<p>			
-	    	<br>
-			Please follow the instructions in the confirmation e-mail, in order to complete the registration procedure.
-			<br>
-			</p>
+	    	<div class='row'></div>
+			<div  class='row' style="align;padding:1em;margin:1em;">
+			<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
+			Please follow the instructions in the confirmation mail, in order to complete the registration procedure.
+			</div>	
+			<div class='row'></div>
 		</div>
+	
+
+		<!-- twelve -->
 		</div>
 		
-	</div> <#-- content -->
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+</div><!-- container -->
 
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
-	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
-<#include "/scripts-welcome.ftl">
+		<#include "/scripts-welcome.ftl">
 </body>
 </html>

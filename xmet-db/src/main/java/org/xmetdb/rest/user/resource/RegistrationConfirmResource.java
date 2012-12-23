@@ -50,7 +50,7 @@ public class RegistrationConfirmResource extends  XmetdbQueryResource<ReadRegist
 			throws ResourceException {
 		Map<String, Object> map =  super.getMap(variant);
 		Object code = getRequest().getResourceRef().getQueryAsForm().getFirstValue(confirmationCode);
-		if (code!=null) map.put("qmrf_reg_confirmed", code);
+		if (code!=null) map.put("xmet_reg_confirmed", code);
 		map.put("searchURI",Resources.confirm);
 		return map;
 	}

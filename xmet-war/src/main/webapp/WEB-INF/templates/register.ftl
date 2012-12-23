@@ -1,7 +1,7 @@
 <#include "/html.ftl" >
 <head>
 <#include "/head.ftl" >
-<script type='text/javascript' src='/xmetdb/jquery/jquery.validate.min.js'></script>
+<script type='text/javascript' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript'>
 
 
@@ -85,7 +85,7 @@ em { font-weight: bold; padding-right: 1em; vertical-align: top; }
 		<div class='ui-widget ' style='padding: 0 .7em;'>
 		<div class='ui-widget-header ui-corner-top'><p>Registration form</p></div>
 	    <div class='ui-widget-content ui-corner-bottom'>					
-			<form action="/xmet/register" id="registerForm"  method="POST" >		
+			<form action="${xmet_root}/register" id="registerForm"  method="POST" >		
 			
 			<p><label for="username">User name<em>*</em></label><input type="text" size='40' name='username' id='username' value=''/></p>
 			<p><label for="title">Title</label><input type="text" size='40' name='title' id='title' value=''/></p>
