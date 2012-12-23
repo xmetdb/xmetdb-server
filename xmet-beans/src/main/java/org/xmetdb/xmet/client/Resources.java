@@ -29,7 +29,7 @@ public class Resources {
 	public static final String admin = String.format("/%s",AdminResource.resource);
 	public static final String task = TaskResource.resource;
 	public static final String alert = "/alert";
-
+	public static final String reset = "/reset";
 	/*
 	public static final String data_training = "/data_training";
 	public static final String data_validation = "/data_validation";

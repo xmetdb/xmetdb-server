@@ -73,7 +73,7 @@ public class PwdResetResource<T> extends MyAccountResource<T> {
 							conn,
 							getToken(),
 							true,
-							usersdbname==null?"tomcat_users":usersdbname
+							usersdbname==null?"xmet_users":usersdbname
 							);
 			} 
 			throw new ResourceException(Status.CLIENT_ERROR_FORBIDDEN);

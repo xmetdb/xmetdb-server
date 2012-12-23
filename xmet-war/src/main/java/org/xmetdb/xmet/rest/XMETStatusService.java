@@ -43,10 +43,15 @@ public class XMETStatusService extends StatusService {
 			if ((status.getThrowable() !=null) && (status.getThrowable() instanceof RResourceException)) 
 				wrapInHTML = ((RResourceException)status.getThrowable()).getVariant().equals(MediaType.TEXT_HTML);
 			else {
-				Form headers = (Form) request.getAttributes().get("org.restlet.http.headers"); 
-				String acceptHeader = headers.getValues("accept");
-				if (acceptHeader!=null)
-					wrapInHTML = acceptHeader.contains("text/html");
+				//MSIE Accept headers are completely ridiculous
+				if ((request.getClientInfo() != null) && "MSIE".equals(request.getClientInfo().getAgentName())) 
+					wrapInHTML = true;
+				else {
+					Form headers = (Form) request.getAttributes().get("org.restlet.http.headers"); 
+					String acceptHeader = headers.getValues("accept");
+					if (acceptHeader!=null)
+						wrapInHTML = acceptHeader.contains("text/html");
+				}
 			}
 			
 			if (wrapInHTML) {
@@ -75,27 +80,42 @@ public class XMETStatusService extends StatusService {
 				String errName = status.getName();
 				String errDescription = status.getDescription();
 				if (Status.CLIENT_ERROR_BAD_REQUEST.equals(status)) errName = "Invalid input";
+
 				if (Status.CLIENT_ERROR_UNAUTHORIZED.equals(status)) {
 					errName = "Invalid user name or password";
-					errDescription = "The password you entered is incorrect.";
+					errDescription = String.format(
+							"The user name or password you provided does not match the XMETDB Database records.<br><br>Please try to <a href='%s%s' title='Login to submit new documents'>login</a> again, or <a href='%s%s' title='Register'>register</a> if you are a new user.<br><br>Log in is only required for submitting new observations!",
+							request.getRootRef(),Resources.login,
+							request.getRootRef(),Resources.register
+							);
 					
 				}
-				if (Status.CLIENT_ERROR_FORBIDDEN.equals(status)) errName = "You are not allowed to access this page";
-				
+				if (Status.CLIENT_ERROR_FORBIDDEN.equals(status)) {
+					details = new StringWriter();
+					details.append(errDescription);
+					errName = "You are not allowed to access this page";
+					errDescription = String.format(
+							"Only logged in users are allowed to submit new documents and edit existing ones.<br><br>Please try to <a href='%s%s' title='Login to submit new observations'>login</a> again, or <a href='%s%s' title='Register'>register</a> if you are a new user.<br><br>Log in is only required for submitting new observations!",
+							request.getRootRef(),Resources.login,
+							request.getRootRef(),Resources.register
+							);					
+				}				
 				w.write(
 						String.format(		
 						"<div class=\"ui-widget \" style=\"margin-top: 20px; padding: 0 .7em;\">\n"+
-						"<div class=\"ui-widget-header ui-corner-top\"><p>Error <a href='%s'>%s</a></p></div>\n"+
+						"<div class=\"ui-widget-header ui-corner-top\">" +
+						"<span class=\"ui-icon ui-icon-alert\" style=\"float: left; margin-right: .3em;\" title='%s'></span>\n"+
+						"<p><a href='%s'>%s</a></p></div>\n"+
 						"<div class=\"ui-widget-content ui-corner-bottom \">\n"+
-						"<p><label title='%s'>%s</label></p><p>"+
+						"<p>%s</p><p>"+
 						"%s\n"+	
 						"</p>\n"+
 						"<div class=\"ui-widget\" style='display: none;' id='details'><p>%s</p></div>\n"+
 						"</div></div>\n",
+						status.getName(),
 						status.getUri(),
 						errName,
 						errDescription,
-						status.getName(),
 						detailsDiv,
 						details==null?"":details
 						)

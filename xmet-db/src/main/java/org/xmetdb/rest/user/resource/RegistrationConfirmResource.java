@@ -69,7 +69,7 @@ public class RegistrationConfirmResource extends  XmetdbQueryResource<ReadRegist
 		if (code==null) return null;
 		ReadRegistration q = new ReadRegistration(code.toString());
 		String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
-		q.setDatabaseName(usersdbname==null?"tomcat_users":usersdbname);
+		q.setDatabaseName(usersdbname==null?"xmet_users":usersdbname);
 		return q;
 	}
 	
@@ -86,7 +86,7 @@ public class RegistrationConfirmResource extends  XmetdbQueryResource<ReadRegist
 			if (code!=null) 
 			try {
 				String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
-				if (usersdbname==null) usersdbname = "tomcat_users";
+				if (usersdbname==null) usersdbname = "xmet_users";
 				UserURIReporter reporter = new UserURIReporter(getRequest(),"");
 				DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 				conn = dbc.getConnection();

@@ -42,6 +42,7 @@ import org.xmetdb.rest.structure.resource.StructureRouter;
 import org.xmetdb.rest.user.UserRouter;
 import org.xmetdb.rest.user.alerts.resource.AlertRouter;
 import org.xmetdb.rest.user.resource.MyAccountResource;
+import org.xmetdb.rest.user.resource.PwdResetResource;
 import org.xmetdb.rest.user.resource.RegistrationConfirmResource;
 import org.xmetdb.rest.user.resource.RegistrationNotifyResource;
 import org.xmetdb.rest.user.resource.RegistrationResource;
@@ -126,6 +127,8 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		MyRouter myAccountRouter = new MyRouter(getContext());
 		myAccountRouter.attachDefault(MyAccountResource.class);
 		myAccountRouter.attach(Resources.alert,alertRouter);
+		myAccountRouter.attach(Resources.reset,PwdResetResource.class);
+		
 		setCookieUserRouter
 				.attach(Resources.myaccount, myAccountRouter);
 		

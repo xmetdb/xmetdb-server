@@ -228,7 +228,7 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 			conn = dbc.getConnection();
 			return new CallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),
-					conn,getToken(),false,usersdbname==null?"tomcat_users":usersdbname);
+					conn,getToken(),false,usersdbname==null?"xmet_users":usersdbname);
 		} catch (Exception x) {
 			try { conn.close(); } catch (Exception xx) {}
 			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);

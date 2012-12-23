@@ -1,5 +1,7 @@
 package org.xmetdb.rest.user.resource;
 
+import java.util.Map;
+
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
@@ -7,7 +9,9 @@ import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Method;
 import org.restlet.data.Status;
+import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.UserHTMLBeauty;
 import org.xmetdb.rest.user.DBUser;
@@ -21,7 +25,18 @@ public class MyAccountResource<T> extends UserDBResource<T> {
 		super.doInit();
 		editable = false;
 		singleItem = true;
+		setHtmlbyTemplate(true);
 	}
+	
+	@Override
+	public boolean isHtmlbyTemplate() {
+		return headless?false:htmlbyTemplate;
+	}
+	@Override
+	public String getTemplateName() {
+		return "myprofile_body.ftl";
+	}
+	
 	@Override
 	protected ReadUser createQuery(Context context, Request request, Response response)
 			throws ResourceException {
@@ -50,6 +65,16 @@ public class MyAccountResource<T> extends UserDBResource<T> {
 		}
 	} 
 	
+
+	@Override
+	protected ReadUser<T> createUpdateQuery(Method method, Context context,
+			Request request, Response response) throws ResourceException {
+		if (Method.PUT.equals(method) || Method.DELETE.equals(method)) {
+			return createQuery(context, request, response);
+		}
+		throw new ResourceException(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+	}
+	
 	@Override
 	protected QueryHTMLReporter createHTMLReporter(boolean headless)
 			throws ResourceException {
@@ -77,4 +102,11 @@ public class MyAccountResource<T> extends UserDBResource<T> {
 		};
 	}
 	
+	@Override
+	protected Map<String, Object> getMap(Variant variant)
+			throws ResourceException {
+		Map<String, Object> map = super.getMap(variant);
+		map.put("myprofile", true);
+		return map;
+	}
 }

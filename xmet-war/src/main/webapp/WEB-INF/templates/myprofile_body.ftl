@@ -13,60 +13,94 @@
 		
 		<!-- Page Content
 		================================================== -->
-		<div class="eleven columns" style="margin:0;padding:0;" >
-						
-		<div class='tabs'>
-		<ul>
-		<li><a href='#tabs-id'>User Profile</a></li>
-		<li><a href='' id='protocoluri'  title='XMEDTB observations'>XMETDB observations</a><span></span></li>
-		<li><a href='' id='alerturi' title='XMETDB alerts alerts'>Saved searches</a><span></span></li>
-		</ul>
-		<!-- user details tab -->
-			<div id='tabs-id'>
-			<span class='summary'>
-			<form action="/xmetdb/myaccount/?method=put" id="form_myaccount" method="POST" >			
-			<#if myprofile>
-				<#assign ro=''>
-			<#else>
-				<#assign ro='readonly'>
-			</#if>
+		<div class="twelve columns remove-bottom" >
+		
+		<#if myprofile>
+			<#assign ro=''>
+		<#else>
+			<#assign ro='readonly'>
+		</#if>
+		<form action="${xmet_root}/myaccount/?method=put" id="form_myaccount" method="POST" >		
 
-			<h2><a href=''><span id='useruri'></span></a></h2>
-			<p class="remove-bottom"><label for="username">User name</label><b><span id='username'></span></b></p>
-			<p class="remove-bottom"><label for="title">Title</label><input type="text" ${ro} size='40' name='title' id='title' value=''/></p>
-			<p class="remove-bottom"><label for="firstname">First name</label><input type="text" ${ro} size='40' name='firstname' id='firstname' value=''/></p>
-			<p class="remove-bottom"><label for="lastname">Last name</label><input type="text" ${ro} size='40' name='lastname' id='lastname' value=''/></p>
-			<p class="remove-bottom"><label for="organisation">Affiliation</label>
-			<table id='organisations'>
+    	<div class="row remove-bottom ui-widget-header ui-corner-top"> <a href='#' id='useruri'></a></div>
+    	<div class="half-bottom ui-widget-content ui-corner-bottom" >
+    			
+		<div class='row' style="margin:5px;padding:5px;"> 	
+		
+			<label class='three columns alpha' for="username">User name</label>
+			<span class="seven columns alpha remove-bottom" id='username'></span>
+			<div class="six columns omega remove-bottom">
+			<#if myprofile>
+					<a href="${xmet_root}/myaccount/reset">Change password</a>&nbsp;
+					<a id="protocoluri" href="#">My Observations</a>&nbsp;
+					<a id="alerturi" href="#">My Alerts</a>
+			<#else>	
+					<a id="protocoluri" href="#">Observations</a>&nbsp;
+					<a id="alerturi" href="#">Alerts</a>
+			</#if>
+			</div>
+		</div>
+		
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label for="title" class='three columns alpha'>Title</label>
+			<input class="three columns alpha remove-bottom" type="text" ${ro} size='40' name='title' id='title' value=''/>
+			<div class="ten columns omega">&nbsp;</div>
+		</div>
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="firstname">First name</label>
+			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='firstname' id='firstname' value=''/>
+			<div class="five columns omega">&nbsp;</div>
+		</div>
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="lastname">Last name</label>
+			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='lastname' id='lastname' value=''/>
+			<div class="five columns omega">&nbsp;</div>
+		</div>
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="organisation">Affiliation</label>
+			<div class="eight columns alpha remove-bottom" >
+				<table id='organisations'>
 				<thead style="display:none;">
 				<th></th>
 				</thead>
 				<tbody></tbody>
-			</table>
-			</p>
+				</table>
+			</div>
+			<div class="five columns omega">&nbsp;</div>
+		</div>
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="email">e-mail</label>
+			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='email' id='email' value=''/>
+			<div class="five columns omega">&nbsp;</div>
+		</div>
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="homepage">WWW</label>
+			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='homepage' id='homepage' value=''/>
+			<div class="five columns omega">&nbsp;</div>
+		</div>		
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="keywords">Keywords</label>
+			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='keywords' id='keywords' value=''/>
+			<div class="five columns omega">&nbsp;</div>
+		</div>		
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="reviewer">Available as a reviewer</label>
+			<input class="one columns alpha remove-bottom" type="checkbox" ${ro} name='reviewer' id='reviewer' value=''/>
+			<div class="seven columns alpha">&nbsp;
+			</div>
+			<div class="five columns omega">&nbsp;</div>
+		</div>		
+		<div class='row' style="margin:5px;padding:5px;"> 	
+			<label class='three columns alpha' for="update">&nbsp;</label>
+			<#if myprofile>
+				<input class="submit three columns alpha" id='update' name='update' type='submit' value='Update'>
+			</#if>
+		</div>	
 
-			<p class="remove-bottom"><label for="email">e-mail</label><input type="text" ${ro} size='40' name='email' id='email' value=''/></p>
-			
-			<p class="remove-bottom"><label for="homepage">WWW</label><input type="text" ${ro} size='40' name='homepage' id='homepage' value=''/></p>
-			<p class="remove-bottom"><label for="keywords">Keywords</label><input type="text" ${ro} size='40' name='keywords' id='keywords' value=''/></p>
-			<p class="remove-bottom"><label for="reviewer">Available as a reviewer</label><input type="checkbox" ${ro} name='reviewer' id='reviewer' value=''/></p>
-			<#if myprofile>
-				<p><label for="update">&nbsp;</label><input id='update' name='update' type='submit' value='Update'></p>
-			</#if>
-			
-			<#if myprofile>
-				<hr>
-				<p class="remove-bottom"><a href="/xmetdb/myaccount/reset">Change password</a></p>			
-			</#if>
-			</form>
-			</span></div>
-		<!-- protocols -->
-			<div id='XMETDB observations'></div>
-		<!-- alerts -->
-			<div id='QMRF_alerts'></div>
-		<!-- wrapping up -->
+		</form>
+		</span>
 		</div>
-		</div>
+		<!-- twelve columns  -->
 
 		</div> 
 		

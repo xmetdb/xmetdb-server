@@ -10,7 +10,7 @@ $(document).ready(function() {
 	    $.ajax({
 	        dataType: "json",
 	        async: false,
-	        url: "/xmetdb/register/confirm?code=${xmet_reg_confirmed}&media=application%2Fjson",
+	        url: "${xmet_root}/register/confirm?code=${xmet_reg_confirmed}&media=application%2Fjson",
 	        success: function(data, status, xhr) {
 	           	$.each(data["confirmation"],function(index, entry) {
 	        		if ('confirmed' == entry["status"]) { 

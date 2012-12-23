@@ -1,4 +1,4 @@
-<div class="two columns" style="padding:0;" >
+<div class="two columns" style="padding:0;margin-right:0px;" >
 <ul id='navmenu'>
 	<li><a class='selectable ui-widget-header' title='Click here to search the Xenobiotics Metabolism Database' href='/xmetdb'>
 		Search

@@ -96,7 +96,7 @@ public class RegistrationNotifyResource  extends CatalogResource<String> {
 	}
 	
 	public String getConfigFile() {
-		return "conf/qmrf-db.pref";
+		return "conf/xmetdb.pref";
 	}
 	
 	@Override

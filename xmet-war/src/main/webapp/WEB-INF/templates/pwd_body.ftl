@@ -1,8 +1,8 @@
-<#include "/html.ftl" >
+<#include "/s_html.ftl" >
 <head>
 
-<#include "/head.ftl" >
-<script type='text/javascript' src='/xmet/jquery/jquery.validate.min.js'></script>
+<#include "/s_head.ftl" >
+<script type='text/javascript' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript'>
 
 
@@ -50,34 +50,53 @@ $().ready(function() {
 
 </head>
 <body>
-	<div class='w_wrap'>
-	<#include "/banner.ftl">
-	<#include "/menu.ftl">
 
-	<div class='w_content'>
-		<div class='ui-widget ' style='margin-top: 20px; padding: 0 .7em;'>
-		<div class='ui-widget-header ui-corner-top'><p>Password change</p></div>
+
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
+		
+		<!-- Page Content
+		================================================== -->
+		<div class="twelve columns" style="padding:0;" >
+		
+
+		<div class='ui-widget-header ui-corner-top'>Password change</div>
 	    <div class='ui-widget-content ui-corner-bottom'>					
-			<form action="/qmrf/myaccount/reset?method=PUT" id="pwdForm"  method="POST" >		
-	    	<table width='80%%'>
-			<tbody>
-			<tr><th colwidth='25%'><label for='pwdold'>Current password</label></th><td align='left'><input type='password' size='40' id='pwdold' name='pwdold' value='' required/></td></tr>
-			<tr><th><label for='pwd1'>New password</label></th><td align='left'><input type='password' size='40' id='pwd1' name='pwd1' value=''/></td></tr>
-			<tr><th><label for='pwd2'>Confirm new password</label></th><td align='left'><input type='password' size='40' id='pwd2' name='pwd2' value=''/></td></tr>
-			<tr><th></th><td align='left' ><input id='updatepwd' name='updatepwd' type='submit' class='submit' value='Submit'></td></tr>
-			</tbody>
-			</table>
+			<form action="${xmet_root}/myaccount/reset?method=PUT" id="pwdForm"  method="POST" >	
+			<div class='row half-bottom' style="margin:5px;padding:5px;"> 	
+				<label class='three columns alpha' for="pwdold">Current password</label>
+				<input class="five columns alpha half-bottom" type='password' size='40' id='pwdold' name='pwdold' value='' required/>
+				<div class="eight columns omega">&nbsp;</div>
+			</div>	
+			<div class='row half-bottom' style="margin:5px;padding:5px;"> 	
+				<label class='three columns alpha' for="pwd1">New password</label>
+				<input class="five columns alpha half-bottom" type='password' size='40' id='pwd1' name='pwd1' value=''/>
+				<div class="eight columns omega">&nbsp;</div>
+			</div>		
+			<div class='row half-bottom' style="margin:5px;padding:5px;"> 	
+				<label class='three columns alpha' for="pwd2">Confirm new password</label>
+				<input class="five columns alpha half-bottom"  type='password' size='40' id='pwd2' name='pwd2' value=''/>
+				<div class="eight columns omega">&nbsp;</div>
+			</div>		
+			<div class='row half-bottom' style="margin:5px;padding:5px;"> 	
+				<label class='three columns alpha' >&nbsp;</label>
+				<input class="three columns alpha half-bottom" id='updatepwd' name='updatepwd' type='submit' class='submit' value='Update'>
+				<div class="eleven columns omega half-bottom">&nbsp;</div>
+			</div>				
 			</form>		
 		</div>
 		
-	</div> <#-- w_content -->
+		
+		</div>
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+</div><!-- container -->
 
-	<#-- Prevents the footer from hiding the last line on smaller screens. -->
-	<div class='pusher'></div>
-	
-	</div> <#-- w_wrap -->
-	
-<#include "/footer.ftl">
-<#include "/scripts-welcome.ftl">
+		<#include "/scripts-welcome.ftl">
 </body>
 </html>

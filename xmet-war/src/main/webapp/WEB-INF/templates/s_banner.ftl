@@ -7,13 +7,14 @@
 	<li class='topLinks'>|</li>
 	<li class='topLinks'>
 		<#if username??>
-			<a class='topLinks login' title='You are currently logged in as "${username}". Click here to log out.' href='#' onClick='document.forms["logoutForm"].submit(); return false;'>Log out [<b>${username}</b>]</a>			   
-			<form id='logoutForm' action='/xmetdb/protected/signout?targetUri=.' method='POST'></form>
+			<a class='topLinks login' title='You are currently logged in as "${username}". Click here to log out.' href='#' onClick='document.forms["logoutForm"].submit(); return false;'>Log out</a>
+			&nbsp;<a class='topLinks' title='You are currently logged in as "${username}".Click here to edit your profile' href='${xmet_root}/myaccount'>[<b>${username}</b>]</a>			   
+			<form id='logoutForm' action='${xmet_root}/protected/signout?targetUri=.' method='POST'></form>
 		<#else>
-			<a class='topLinks login' title='Log in here to submit new observations (not required for searching)' href='/xmetdb/login'>Log in</a>
+			<a class='topLinks login' title='Log in here to submit new observations (not required for searching)' href='${xmet_root}/login'>Log in</a>
 			<li class='topLinks'>|</li>
 			<li class='topLinks'>
-			<a class='topLinks register' title='Register' href='/xmetdb/register'>Register</a>
+			<a class='topLinks register' title='Register' href='${xmet_root}/register'>Register</a>
 			</li>				
 		</#if>			
 	</li>
@@ -21,7 +22,7 @@
 		</div>
 		<div class="three columns">
 			<a href='http://xmetdb.org/'>
-				<img class='scale-with-grid' border='0' src='/xmetdb/images/logo.png' alt='XMETDB logo'>
+				<img class='scale-with-grid' border='0' src='${xmet_root}/images/logo.png' alt='XMETDB logo'>
 			</a>
 		</div>
 		<div class="thirteen columns">
