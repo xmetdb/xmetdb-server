@@ -1,7 +1,7 @@
 <#include "/html.ftl" >
 <head>
 <#include "/head.ftl" >
-<script type='text/javascript' src='/xmetdb/jme/jme.js'></script>
+<script type='text/javascript' src='${xmet_root}/jme/jme.js'></script>
 <#include "/submit_head.ftl" >
 </head>
 <body>
@@ -63,7 +63,7 @@
 	<tr><td colspan="2"><hr></td></tr>
 	</table>
 	
-	<form method="POST" action="/xmetdb/protocol" id="submitForm" ENCTYPE="multipart/form-data">
+	<form method="POST" action="${xmet_root}/protocol" id="submitForm" ENCTYPE="multipart/form-data">
 
 	<p><label for="xmet_substrate_upload">Upload substrate:<em>*</em></label>
 	<input type='file'  class='multi' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='30'>

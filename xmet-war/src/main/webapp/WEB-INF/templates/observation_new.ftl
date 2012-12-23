@@ -44,7 +44,7 @@ $(document).ready(function() {
     <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;New XMETDB observation <span id="xmet_id"></span></div>
     <div class="half-bottom ui-widget-content ui-corner-bottom" >
     
-    <form method="POST" action="/xmetdb/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
+    <form method="POST" action="${xmet_root}/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
 	<div class='row' style="margin:5px;padding:5px;"> 	
 	 	<div class='three columns alpha'><label>Substrate</label></div>
 	    <div class='five columns omega'>
@@ -134,7 +134,7 @@ $(document).ready(function() {
 			<div   style="margin:5px;padding:5px;"> 	
 				&nbsp;
 				<div class='ten columns alpha'>
-					<applet code="JME.class" name="JME" archive="/xmetdb/jme/JME.jar" width="500px" height="400px">
+					<applet code="JME.class" name="JME" archive="${xmet_root}/jme/JME.jar" width="500px" height="400px">
 					<param name="options" value="nohydrogens,polarnitro,nocanonize">
 					You have to enable Java and JavaScript on your machine ! 
 					</applet>

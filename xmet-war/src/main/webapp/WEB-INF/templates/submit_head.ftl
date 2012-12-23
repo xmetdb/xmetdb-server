@@ -4,7 +4,7 @@
     .structresults { list-style-type: none; margin: 0; padding: 0; width: 930px; }
     .structresults li { margin: 3px; padding: 1px; float: left; width: 155px; height: 155px; font-size: 4em; text-align: center; }
 </style>
-<link href="/xmetdb/style/form.css" rel="stylesheet" type="text/css">
+<link href="${xmet_root}/style/form.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$( ".useSelected" ).button();

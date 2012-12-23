@@ -45,7 +45,7 @@
 	
 	<div class='row remove-bottom'>
 		<hr class='half-bottom'/>
-		<a class='button' id="xmet_editor" href="/xmetdb/editor/"  title='Modify the observation'>Edit</a>
+		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Edit</a>
 		&nbsp;|&nbsp;
 		Export observation:&nbsp;
 		<a class='button' id="xmet_export_json" href="${xmet_request}"  title='Export the observation as JSON'>as JSON</a>

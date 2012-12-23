@@ -32,9 +32,9 @@
 		<!-- Download links for the entire list -->
 		<div style='float:right; width:100%; align:center; margin:20px 0 0 0;'>
 		<p>Download as&nbsp;
-		<a href="${xmet_request_csv}" id="downloadcsv"><img id="downloadimg" src="/xmetdb/images/excel.png" alt="text/csv" title="Download as MS Excel" border="0"/></a>
+		<a href="${xmet_request_csv}" id="downloadcsv"><img id="downloadimg" src="${xmet_root}/images/excel.png" alt="text/csv" title="Download as MS Excel" border="0"/></a>
 		&nbsp;
-		<a href="${xmet_request_sdf}" id="downloadsdf"><img id="downloadimg" src="/xmetdb/images/sdf.jpg" alt="chemical/x-mdl-sdfile" title="Download as SDF" border="0"/></a>						
+		<a href="${xmet_request_sdf}" id="downloadsdf"><img id="downloadimg" src="${xmet_root}/images/sdf.jpg" alt="chemical/x-mdl-sdfile" title="Download as SDF" border="0"/></a>						
 		</p></div>
 		<!-- End download links -->
 		
