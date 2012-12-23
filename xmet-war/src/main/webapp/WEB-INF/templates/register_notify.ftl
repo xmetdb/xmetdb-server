@@ -12,10 +12,10 @@
 		================================================== -->
 		<div class="twelve columns" style="padding:0;" >	
 		
-		<div class='ui-widget-header ui-corner-top'> XMETDB Registration</div>
+		<div class='ui-widget-header ui-corner-top'>&nbsp;XMETDB Registration</div>
 	    <div class='ui-widget-content ui-corner-bottom'>	
 	    	<div class='row'></div>
-			<div  class='row' style="align;padding:1em;margin:1em;">
+			<div  class='row' style="text-align:center;">
 			<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
 			Please follow the instructions in the confirmation mail, in order to complete the registration procedure.
 			</div>	

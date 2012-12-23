@@ -51,11 +51,11 @@ $(document).ready(function() {
 		================================================== -->
 		<div class="twelve columns" style="padding:0;" >	
 
-		<div class='ui-widget-header ui-corner-top' > XMETDB Registration</div>
+		<div class='ui-widget-header ui-corner-top' >&nbsp;XMETDB Registration</div>
 	    <div class='ui-widget-content ui-corner-bottom'>	
 	    	<div class='row'></div>
 			<#if xmet_reg_confirmed??>
-			<div class='row' id='success' style='display:none' style="align:center;padding:1em;margin:1em;">
+			<div class='row' id='success' style='display:none;text-align:center;'>
 			&nbsp;<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
 			Your registration is now confirmed and you can <a href="${xmet_root}/login">log in</a> into XMETDB.
 			</div>
@@ -67,7 +67,7 @@ $(document).ready(function() {
 			<img id='progress' src="${xmet_root}/images/progress.gif" alt="Please wait..." title="Please wait...">
 			
 			<#else>
-			<div  class='row' style="align;padding:1em;margin:1em;">
+			<div  class='row' style="text-align:center;">
 			<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
 			Please follow the instructions in the confirmation mail, in order to complete the registration procedure.
 			</div>
