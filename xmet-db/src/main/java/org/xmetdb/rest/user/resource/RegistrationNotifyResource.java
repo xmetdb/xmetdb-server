@@ -46,7 +46,7 @@ public class RegistrationNotifyResource  extends CatalogResource<String> {
 
 	
 	@Override
-	protected void configureTemplateMap(Map<String, Object> map) {
+	public void configureTemplateMap(Map<String, Object> map) {
 	
 		map.put("searchURI",Resources.register);
 		map.put("managerRole", "false");

@@ -30,7 +30,7 @@ public class MyAccountResource<T> extends UserDBResource<T> {
 	
 	@Override
 	public boolean isHtmlbyTemplate() {
-		return headless?false:htmlbyTemplate;
+		return headless?false:freeMarkerSupport.isHtmlbyTemplate();
 	}
 	@Override
 	public String getTemplateName() {

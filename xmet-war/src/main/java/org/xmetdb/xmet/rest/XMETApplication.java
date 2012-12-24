@@ -76,7 +76,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		setAuthor("Developed by Ideaconsult Ltd. (2012) on behalf of xmetdb.org");
 		setConfigFile("config/xmetdb.properties");
 
-		setStatusService(new XMETStatusService());
+		setStatusService(new XMETStatusService(this));
 		setTunnelService(new TunnelService(true, true) {
 			@Override
 			public Filter createInboundFilter(Context context) {

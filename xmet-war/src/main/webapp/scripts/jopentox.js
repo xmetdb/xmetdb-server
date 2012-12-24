@@ -92,7 +92,6 @@ function readTask(root,url) {
 	        success: function(data, status, xhr) {
 	        	$.each(data["task"],function(index, entry) {
 	        		$("#task_started").text(entry["started"]);
-	        		console.log(entry);
 	        		$("#task_name").text(entry["name"]);
 	        		$("#result").prop("href",entry["result"]);
 	        		var img = "progress.gif";

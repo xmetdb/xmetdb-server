@@ -39,7 +39,7 @@ public class XMETTaskResource extends TaskResource<String> {
 	}
 	
 	@Override
-	protected void configureTemplateMap(Map<String, Object> map) {
+	public void configureTemplateMap(Map<String, Object> map) {
         if (getClientInfo().getUser()!=null) 
         	map.put("username", getClientInfo().getUser().getIdentifier());
         map.put("creator","IdeaConsult Ltd.");

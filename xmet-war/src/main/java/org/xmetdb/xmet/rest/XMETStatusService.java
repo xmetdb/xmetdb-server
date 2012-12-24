@@ -2,8 +2,14 @@ package org.xmetdb.xmet.rest;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.exception.RResourceException;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
+import net.idea.restnet.c.freemarker.FreeMarkerSupport;
+import net.idea.restnet.c.freemarker.IFreeMarkerSupport;
 import net.idea.restnet.c.html.HTMLBeauty;
 
 import org.restlet.Request;
@@ -11,6 +17,7 @@ import org.restlet.Response;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
+import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ResourceException;
@@ -18,7 +25,9 @@ import org.restlet.service.StatusService;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
 
-public class XMETStatusService extends StatusService {
+public class XMETStatusService extends StatusService implements IFreeMarkerSupport {
+	protected IFreeMarkerSupport freeMarkerSupport = new FreeMarkerSupport(); 
+	protected FreeMarkerApplicaton app;
 	protected HTMLBeauty htmlBeauty;
 	public HTMLBeauty getHtmlBeauty() {
 		return htmlBeauty;
@@ -28,10 +37,11 @@ public class XMETStatusService extends StatusService {
 		this.htmlBeauty = htmlBeauty;
 	}
 
-	public XMETStatusService() {
+	public XMETStatusService(FreeMarkerApplicaton app) {
 		super();
 		setContactEmail("jeliazkova.nina@gmail.com");
-		
+		this.app = app;
+		setHtmlbyTemplate(true);
 	}
 
 	@Override
@@ -55,28 +65,7 @@ public class XMETStatusService extends StatusService {
 			}
 			
 			if (wrapInHTML) {
-				StringWriter w = new StringWriter();
-				
-				if(htmlBeauty==null) htmlBeauty = new XmetdbHTMLBeauty(Resources.protocol);
-				htmlBeauty.writeHTMLHeader(w, status.getName(), request,null);
-				
-				StringWriter details = null;
-
-				if (status.getThrowable()!= null) {
-					 details = new StringWriter();
-					status.getThrowable().printStackTrace(new PrintWriter(details) {
-						@Override
-						public void print(String s) {
-							super.print(String.format("%s<br>", s));
-							
-						}
-					});
-				} 
-				
-				String detailsDiv = details==null?"":
-					String.format("<a href=\"#\" style=\"background-color: #fff; padding: 5px 10px;\" onClick=\"toggleDiv('%s'); return false;\">Details</a>\n",
-							"details");
-						
+			
 				String errName = status.getName();
 				String errDescription = status.getDescription();
 				if (Status.CLIENT_ERROR_BAD_REQUEST.equals(status)) errName = "Invalid input";
@@ -90,6 +79,7 @@ public class XMETStatusService extends StatusService {
 							);
 					
 				}
+				StringWriter details = null;
 				if (Status.CLIENT_ERROR_FORBIDDEN.equals(status)) {
 					details = new StringWriter();
 					details.append(errDescription);
@@ -100,6 +90,34 @@ public class XMETStatusService extends StatusService {
 							request.getRootRef(),Resources.register
 							);					
 				}				
+			
+				if (status.getThrowable()!= null) {
+					 details = new StringWriter();
+					status.getThrowable().printStackTrace(new PrintWriter(details) {
+						@Override
+						public void print(String s) {
+							super.print(String.format("%s<br>", s));
+							
+						}
+					});
+				} 
+				if (isHtmlbyTemplate()) {
+
+					return getHTMLByTemplate(status,errName,errDescription, details==null?null:details.toString(),request);
+				}
+
+				StringWriter w = new StringWriter();
+
+				if(htmlBeauty==null) htmlBeauty = new XmetdbHTMLBeauty(Resources.protocol);
+				htmlBeauty.writeHTMLHeader(w, status.getName(), request,null);
+				
+
+				
+				String detailsDiv = details==null?"":
+					String.format("<a href=\"#\" style=\"background-color: #fff; padding: 5px 10px;\" onClick=\"toggleDiv('%s'); return false;\">Details</a>\n",
+							"details");
+						
+		
 				w.write(
 						String.format(		
 						"<div class=\"ui-widget \" style=\"margin-top: 20px; padding: 0 .7em;\">\n"+
@@ -156,5 +174,60 @@ public class XMETStatusService extends StatusService {
 		else if (throwable instanceof ResourceException) {
 			return ((ResourceException)throwable).getStatus();
 		} else return new Status(Status.SERVER_ERROR_INTERNAL,throwable);
+	}
+	
+
+	public String getTemplateName() {
+		return "status_body.ftl";
+	}
+
+	public boolean isHtmlbyTemplate() {
+		return freeMarkerSupport.isHtmlbyTemplate();
+	}
+
+	public void setHtmlbyTemplate(boolean htmlbyTemplate) {
+		freeMarkerSupport.setHtmlbyTemplate(htmlbyTemplate);
+	}
+	
+	@Override
+	public void configureTemplateMap(Map<String, Object> map) {
+		freeMarkerSupport.configureTemplateMap(map);
+        map.put("creator","IdeaConsult Ltd.");
+        map.put(Resources.Config.xmet_email.name(),((TaskApplication)app).getProperty(Resources.Config.xmet_email.name()));
+        map.put(Resources.Config.xmet_about.name(),((TaskApplication)app).getProperty(Resources.Config.xmet_about.name()));
+        map.put(Resources.Config.xmet_guide.name(),((TaskApplication)app).getProperty(Resources.Config.xmet_guide.name()));
+        
+	}
+	
+	protected Representation getHTMLByTemplate(Status status,String errName,String errDescription,String details,Request request) throws ResourceException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (request.getClientInfo().getUser()!=null) 
+        	map.put("username", request.getClientInfo().getUser().getIdentifier());
+        map.put("xmet_root",request.getRootRef().toString());
+        map.put("status_code",status.getCode());
+        map.put("status_uri",status.getUri());
+        map.put("status_name",status.getName());
+        map.put("status_error_name",errName);
+        map.put("status_error_description",errDescription);
+        map.put("status_details",details);
+        configureTemplateMap(map);
+        return toRepresentation(map, getTemplateName(), MediaType.TEXT_PLAIN);
+	}
+	
+	protected Representation toRepresentation(Map<String, Object> map,
+            String templateName, MediaType mediaType) {
+        
+		
+        return new TemplateRepresentation(
+        		templateName,
+        		app.getConfiguration(),
+        		map,
+        		MediaType.TEXT_HTML);
+	}	
+	
+	@Override
+	protected void finalize() throws Throwable {
+		app = null;
+		super.finalize();
 	}
 }

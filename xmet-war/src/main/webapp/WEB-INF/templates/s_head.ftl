@@ -46,17 +46,5 @@
 	<!-- XMET JS
 	================================================== -->
 	<script type='text/javascript' src='${xmet_root}/scripts/xmetdb.js'></script>
+	<script type='text/javascript' src='${xmet_root}/scripts/footer.js'></script>
 	
-	<!-- Footer
-	================================================== -->
-<script type="text/javascript">
-<!-- show the footer when the mouse is near -->
-	$(document).ready( function () {
-    	$('div#footer-in').mouseenter( function () {
-    		$('div#footer').stop().animate({bottom: '15px'}, 'fast');
-    	});
-    	$('div#footer-out').mouseleave( function () {
-    		$('div#footer').stop().animate({bottom: '-17px'}, 'slow');
-    	});
-    });
-</script>

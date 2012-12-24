@@ -65,7 +65,7 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 
 	@Override
 	public boolean isHtmlbyTemplate() {
-		return headless?false:htmlbyTemplate;
+		return headless?false:freeMarkerSupport.isHtmlbyTemplate();
 		//singleItem?htmlbyTemplate:false;
 	}
 	@Override
