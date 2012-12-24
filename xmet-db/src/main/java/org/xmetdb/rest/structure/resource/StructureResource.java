@@ -53,7 +53,7 @@ public class StructureResource extends CatalogResource<Structure> {
 		queryService = 
 			//"http://ambit.uni-plovdiv.bg:8080/qmrfdata";
 			((TaskApplication) getApplication()).getProperty(Resources.Config.xmet_ambit_service.name());
-		htmlbyTemplate = true;
+		setHtmlbyTemplate(true);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class StructureResource extends CatalogResource<Structure> {
 	}
 	
 	@Override
-	protected void configureTemplateMap(Map<String, Object> map) {
+	public void configureTemplateMap(Map<String, Object> map) {
 		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
 
 		Reference query = getSearchReference(getContext(),getRequest(),getResponse(),parameters);
