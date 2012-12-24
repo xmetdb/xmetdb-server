@@ -84,3 +84,106 @@ function checkTask(taskURI, resultDOM, statusDOM, imgReady, imgError) {
 	
 	request.send(null);
 }
+
+function readTask(root,url) {
+	  $.ajax({
+	        dataType: "json",
+	        url: url,
+	        success: function(data, status, xhr) {
+	        	$.each(data["task"],function(index, entry) {
+	        		$("#task_started").text(entry["started"]);
+	        		console.log(entry);
+	        		$("#task_name").text(entry["name"]);
+	        		$("#result").prop("href",entry["result"]);
+	        		var img = "progress.gif";
+	        		switch (entry["status"]) {
+	        		case "Completed" : {
+	        			img = "tick.png";
+	        			break;
+	        		}
+	        		case "Error" : {
+	        			img = "error.png";
+	        			break;
+	        		}
+	        		default : {
+	        			img = "progress.gif";	
+	        		}
+	        		}
+	        		$("#status").prop("src",root + "/images/" + img);
+	        		$("#task_errorreport").text(entry["error"]);
+	        		
+	        	});
+	        },
+	        error: function(xhr, status, err) {
+	        },
+	        complete: function(xhr, status) {
+	        }
+	     });
+}
+function defineTaskTable(root,url) {
+
+	var oTable = $('#task').dataTable( {
+		"sAjaxDataProp" : "task",
+		"bProcessing": true,
+		"bServerSide": false,
+		"bStateSave": false,
+		"aoColumnDefs": [
+ 				{ "mDataProp": "id" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 0 ],	
+				  "bSearchable" : true,
+				  "bUseRendered" : false,
+				  "bSortable" : true,
+				  "fnRender" : function(o,val) {
+					  if (o.aData["id"]==null) return "Job";
+					  return "<a href='"+root + "/task/" + o.aData["id"]+"' title='"+o.aData["id"]+"'>Job</a>";
+				  }
+				},
+				{ "mDataProp": "name" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 1 ],	
+				  "bSearchable" : true,
+				  "bUseRendered" : false,
+				  "bSortable" : true,
+				  "fnRender" : function(o,val) {
+					  	if (o.aData["status"]=='Completed') {
+					  		return val + "<a href='"+o.aData["result"]+"'>Ready. Results available.</a>";
+					  	} else if (o.aData["status"]=='Error') {
+					  		return val + error;
+
+					  	} else
+						  	return checkTask(root + "/task/" + o.aData["id"],
+						  			'result', 'status',  
+						  			root + "/images/tick.png",
+						  			root + "/images/cross.png");
+				  }
+				},
+				{ "mDataProp": "started" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 2 ],
+				  "bSearchable" : true,
+				  "bSortable" : true,
+				  "bUseRendered" : false,
+				  "fnRender" : function(o,val) {
+					  return val;
+				  }
+				},
+				{ "mDataProp": "completed" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 3 ],
+					  "bSearchable" : true,
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "fnRender" : function(o,val) {
+						  return val;
+					  }
+				}		
+			],
+		"bJQueryUI" : true,
+		"bPaginate" : true,
+		"bDeferRender": true,
+		"bSearchable": true,
+		"sAjaxSource": url,
+		"oLanguage": {
+	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
+	            "sLoadingRecords": "No records found."
+	    }
+	} );
+	return oTable;
+}
