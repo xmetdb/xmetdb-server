@@ -55,6 +55,7 @@ function defineEndpointsTable(url) {
 					}
 				}				
 			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,

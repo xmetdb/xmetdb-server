@@ -124,6 +124,7 @@ function defineUsersTable(root,url) {
 					  }
 				}				
 			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
@@ -158,6 +159,7 @@ function defineOrganisationTable(root,url) {
 				  }
 				}
 			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,

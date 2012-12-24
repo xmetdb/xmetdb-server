@@ -126,6 +126,7 @@ function defineStructuresTable(url, query_service, similarity) {
 					  "bVisible" : false
 				}							
 			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,

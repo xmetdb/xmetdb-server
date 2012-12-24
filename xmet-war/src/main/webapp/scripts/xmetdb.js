@@ -343,8 +343,11 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				{ "mDataProp": "enzyme.code" , "asSorting": [ "asc", "desc" ], "bSearchable" : true	},
 				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] }
 			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
 		"bJQueryUI" : true,
 		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
 		"bDeferRender": true,
 		"bSearchable": true,
 		/*

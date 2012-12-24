@@ -266,3 +266,153 @@ A:hover {
 .toolbar {
    padding: 4 4 4 4;
 }
+
+
+/*
+ * DataTables framework
+ */
+
+div.dataTables_wrapper {
+}
+
+
+div.dataTables_length {
+	float: left;
+	margin:0;
+	padding:0;
+}
+
+div.dataTables_length select {
+	margin:0;
+	padding:0;
+	width: 5em;
+}
+
+div.dataTables_length label {
+	margin:0;
+	padding:0;
+}
+
+
+div.dataTables_filter {
+	margin:0;
+	padding:0;
+	float: right;
+}
+
+div.dataTables_info {
+	padding: 9px 6px 6px 6px;
+	float: left;
+}
+
+div.dataTables_paginate {
+	float: right;
+}
+
+div.dataTables_length,
+div.dataTables_filter,
+div.dataTables_paginate {
+	padding: 6px;
+}
+
+.dataTables_wrapper:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+html[xmlns] .dataTables_wrapper {
+	display: block;
+}
+ 
+* html .dataTables_wrapper {
+	height: 1%;
+}
+
+
+/*
+ * Table styles
+ */
+table {
+	width: 100%;
+	clear: both;
+}
+
+table td,
+table th {
+	padding: 2px;
+}
+
+/* Header cells */
+table thead th {
+	text-align: center;
+}
+
+/* Body cells */
+table tbody th {
+	text-align: left;
+	vertical-align:top;
+}
+	
+table tbody td {
+	text-align: left;
+	vertical-align:top;
+}
+		
+table tbody tr.odd td { 
+}
+
+
+/*
+ * Pagination
+ */
+a.paginate_button,
+a.paginate_active {
+	display: inline-block;
+	padding: 2px 6px;
+	margin-left: 2px;
+	cursor: pointer;
+	*cursor: hand;
+}
+
+a.paginate_active {
+	background-color: transparent;
+}
+
+a.paginate_button_disabled {
+}
+.paging_full_numbers a:active {
+	outline: none
+}
+.paging_full_numbers a:hover {
+	text-decoration: none;
+}
+
+div.dataTables_paginate span>a {
+	width: 15px;
+	text-align: center;
+}
+
+/* Footer cells */	
+table tfoot th {
+	text-align: left;
+}
+	
+table tfoot td {
+	text-align: center;
+	font-weight: bold;
+}
+
+/* Help */
+.help {
+	font-size: 0.75em;
+	font-weight: bold italic !important;
+	color: #516373;
+}
+
+.help  a {
+	color: #516373;
+}
