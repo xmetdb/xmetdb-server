@@ -49,7 +49,7 @@ public abstract class GroupDBResource<G extends IDBGroup>	extends XmetdbQueryRes
 	}
 	@Override
 	public boolean isHtmlbyTemplate() {
-		return headless?false:htmlbyTemplate;
+		return headless?false:freeMarkerSupport.isHtmlbyTemplate();
 		//singleItem?htmlbyTemplate:false;
 	}
 	@Override
