@@ -25,7 +25,6 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
 import org.xmetdb.rest.protocol.ProtocolFactory;
-import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.xmet.client.Resources;
 

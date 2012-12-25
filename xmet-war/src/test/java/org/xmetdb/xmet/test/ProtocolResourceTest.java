@@ -267,6 +267,13 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		"SELECT p.idprotocol,p.version,idtemplate from protocol_endpoints p where p.idprotocol>3");
 		Assert.assertEquals(1, table.getRowCount());
 		
+		table = c.createQueryTable("A",
+		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,id_srcdataset,published_status,title FROM protocol\n"+
+		"join attachments a using(idprotocol,version)\n"+
+		"left join `ambit2-xmetdb`.src_dataset a1 using(name) where idprotocol>3"
+		);
+		Object dataset = table.getValue(0,"id_srcdataset");
+		Assert.assertNotNull(dataset);
 		c.close();
 	}
 
