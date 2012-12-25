@@ -25,10 +25,8 @@
 		
 		<!-- Page Content
 		================================================== -->
-		<div class="twelve columns" style="padding:0;" >
-				
 		<#if taskid??>
-			
+		<div class="twelve columns" style="padding:0;" >			
 			<div class="ui-widget-header ui-corner-top"><a href='${xmet_root}/task/${taskid}'>Job</a> started <span id=task_started></span> &nbsp;</div>
 			<div class="ui-widget-content ui-corner-bottom">
 			<span id=task_status>
@@ -42,7 +40,7 @@
 			</p>
 			</div>
 		<#else>
-
+		<div class="twelve columns ui-widget-content ui-corner-all" style="padding:0;" >
 			<table id='task'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 			<thead>
 			<th>Job</th>
