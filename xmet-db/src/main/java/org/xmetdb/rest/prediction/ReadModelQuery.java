@@ -33,8 +33,8 @@ public class ReadModelQuery extends AbstractQuery<DBProtocol, Algorithm, EQCondi
 	protected static String sql = 
 		"SELECT idmodel,id_srcdataset,algorithm,dataset,models.name FROM protocol\n"+
 		"join attachments a using(idprotocol,version)\n"+
-		"left join `ambit2-qmrf`.src_dataset a1 using(name)\n"+
-		"join `ambit2-qmrf`.models on\n"+
+		"left join `ambit2-xmetdb`.src_dataset a1 using(name)\n"+
+		"join `ambit2-xmetdb`.models on\n"+
 		"concat(\"%s\",id_srcdataset)=models.dataset\n"+
 		"where idprotocol=? and version=?\n"+
 		"and algorithm=?\n"+
