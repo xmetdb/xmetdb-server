@@ -187,3 +187,40 @@ function defineTaskTable(root,url) {
 	} );
 	return oTable;
 }
+
+
+function defineFacetsTable(root,url) {
+	var oTable = $('#facet').dataTable( {
+		"sAjaxDataProp" : "facet",
+		"bProcessing": true,
+		"bServerSide": false,
+		"bStateSave": false,
+		"aoColumnDefs": [
+ 				{ "mDataProp": "value" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 0 ],	
+				  "bSearchable" : true,
+				  "bUseRendered" : false,
+				  "bSortable" : true,
+				  "fnRender" : function(o,val) {
+					  return "<a href='"+o.aData["uri"]+"' title='"+o.aData["uri"]+"'>"+val+"</a>";
+				  }
+				},
+				{ "mDataProp": "count" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 1 ],	
+				  "bSearchable" : true,
+				  "bSortable" : true
+				}			
+			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"bJQueryUI" : true,
+		"bPaginate" : true,
+		"bDeferRender": true,
+		"bSearchable": true,
+		"sAjaxSource": url,
+		"oLanguage": {
+	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
+	            "sLoadingRecords": "No records found."
+	    }
+	} );
+	return oTable;
+}
