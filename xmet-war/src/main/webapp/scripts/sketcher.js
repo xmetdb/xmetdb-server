@@ -18,7 +18,9 @@ var _sketcher = {
 
 function getMolecule() {
 	 var mol = _sketcher.sketcher.getMolecule();
-	 return ChemDoodle.writeMOL(mol);
+	 if (mol.atoms.length>1)
+		 return ChemDoodle.writeMOL(mol);
+	 else return null;
 }
 
 

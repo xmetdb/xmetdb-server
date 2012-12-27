@@ -173,6 +173,15 @@ public class StructureHTMLReporter extends XmetdbCatalogHTMLReporter<Structure> 
 class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 	protected String queryService;
 	protected List<DBModel> models;
+	protected boolean molFile = false;
+	public boolean isMolFile() {
+		return molFile;
+	}
+
+	public void setMolFile(boolean molFile) {
+		this.molFile = molFile;
+	}
+
 	public List<DBModel> getModels() {
 		return models;
 	}

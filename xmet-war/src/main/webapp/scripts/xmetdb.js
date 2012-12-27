@@ -486,7 +486,7 @@ function searchFormValidation(formName) {
 		},
 		messages : {
 			'search'  : {
-				required: "Please enter a search query <br>(CAS, Chemical Name, SMILES, InChI or SMARTS in case of <i>Substructure</i> search), <br>or use the 'Draw (sub)structure' link to launch JME."
+				required: "Please enter a search query <br>(CAS, Chemical Name, SMILES, InChI or SMARTS in case of <i>Substructure</i> search), <br>or use the structure diagram editor on the left."
 			},
 			'option' : "Please select an option",
 			'threshold'  : {
@@ -516,8 +516,11 @@ function searchFormValidation(formName) {
 		},
 		submitHandler: function(form) {
 			var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
-			console.log(molFile);
-			
+			if (molFile != null) {
+				form.type.value = "b64mol"; 
+				form.search.value=$.base64.encode(molFile);
+			}
+			form.submit();
 		}
 	});
 }

@@ -190,6 +190,11 @@ public class StructureResource extends CatalogResource<Structure> {
 			if ((models!=null) && (models.length>0))
 				parameters.setModels(verifyModels(models));
 		} catch (Exception x) { parameters.setModels(null); x.printStackTrace();}
+		
+		try {
+			String type = form.getFirstValue("type");
+			parameters.setMolFile(type==null?false:"b64mol".equals(type));
+		} catch (Exception x) { parameters.setModels(null); x.printStackTrace();}
 	}
 
 	protected Reference getSearchReference(Context context, Request request,
@@ -219,7 +224,10 @@ public class StructureResource extends CatalogResource<Structure> {
 			ref.addQueryParameter("pagesize", Long.toString(parameters.getPageSize()));
 			ref.addQueryParameter("page", Integer.toString(parameters.getPage()));
 			if (parameters.getSearchQuery() != null) {
-				if (parameters.getSearchQuery().indexOf("#")>=0) //this breasks jquery jsonp even if url encoded, use base64 as workaround
+				if (parameters.isMolFile()) {
+					ref.addQueryParameter("b64search", parameters.getSearchQuery()); //already base64 encoded
+					ref.addQueryParameter("type","mol");
+				} else  if (parameters.getSearchQuery().indexOf("#")>=0) //this breaks jquery jsonp even if url encoded, use base64 as workaround
 					ref.addQueryParameter("b64search", Base64.encode(parameters.getSearchQuery().getBytes()));
 				else
 					ref.addQueryParameter(QueryResource.search_param, parameters.getSearchQuery());
