@@ -27,7 +27,7 @@ $(document).ready(function() {
             event.preventDefault();
             return false;
         });
-		submitFormValidation("#submitForm");
+		//submitFormValidation("#submitForm");
 } );
 
 </script>
@@ -46,13 +46,13 @@ $(document).ready(function() {
     
     <form method="POST" action="${xmet_root}/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
 	<div class='row' style="margin:5px;padding:5px;"> 	
-	 	<div class='three columns alpha'><label>Substrate</label></div>
+	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em></label></div>
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 	    </div>
-		<div class='three columns omega'><label>Product</label></div>
+		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em></label></div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
@@ -61,6 +61,7 @@ $(document).ready(function() {
 	</div>    	
 	<div class='row  remove-bottom' style="margin:5px;padding:5px;"> 	
 	    <div class='eight columns omega '>
+	    	<label for='xmet_substrate_upload'><em></em></label>
 			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor</a> 
 			|	
 			<a href="#" id="buttonSubstrateSearch">Show search options</a> 
@@ -68,6 +69,7 @@ $(document).ready(function() {
 			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20' class='remove-bottom'>
 	    </div>
 	    <div class='eight columns omega'>
+	    	<label for='xmet_product_upload'><em></em></label>
 			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor</a>
 			|
 			<a href="#" id="buttonProductSearch">Show search options</a>
