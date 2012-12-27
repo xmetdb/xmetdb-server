@@ -513,6 +513,11 @@ function searchFormValidation(formName) {
 			search_xmetid : {
 				
 			}
+		},
+		submitHandler: function(form) {
+			var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
+			console.log(molFile);
+			
 		}
 	});
 }

@@ -15,3 +15,10 @@ var _sketcher = {
 		}
 		
 };
+
+function getMolecule() {
+	 var mol = _sketcher.sketcher.getMolecule();
+	 return ChemDoodle.writeMOL(mol);
+}
+
+
