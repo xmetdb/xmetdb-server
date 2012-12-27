@@ -243,7 +243,7 @@ function loadStructures(datasetURI, results, modelURI) {
 */
 function loadObservation(observation_uri) {
 	//fixed uri just for tetsing, otherwise will be read from the observation
-	var model_uri = "http://ambit.uni-plovdiv.bg:8080/xmetdata/model/1";
+	var model_uri = null;//"http://ambit.uni-plovdiv.bg:8080/xmetdata/model/1";
 	
 	var observation;
     $.ajax({
@@ -368,6 +368,20 @@ function defineObservationsTable(tableSelector,observations_uri) {
             "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
             "sLoadingRecords": "No records found."
 		},	    
+		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+		    $.ajax( {
+		        "dataType": 'json',
+		        "type": "GET",
+		        "url": sSource,
+		        "data": aoData,
+		        "contentType" : "application/json",
+		        "success": fnCallback,
+		        "timeout": 15000,  
+		        "error" : function( xhr, textStatus, error ) {
+		        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
+		        }		        
+		    } );
+		},
 		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 				//retrieve the first compound URI from substrates dataset URI
 				 if ((aData.Substrate.dataset.structure === undefined) || (aData.Product.dataset.structure==null)) {
