@@ -268,11 +268,11 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		Assert.assertEquals(1, table.getRowCount());
 		
 		table = c.createQueryTable("A",
-		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,id_srcdataset,published_status,title FROM protocol\n"+
+		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,idquery,published_status,title FROM protocol\n"+
 		"join attachments a using(idprotocol,version)\n"+
-		"left join `ambit2-xmetdb`.src_dataset a1 using(name) where idprotocol>3"
+		"left join `ambit2-xmetdb`.query a1 using(name) where idprotocol>3"
 		);
-		Object dataset = table.getValue(0,"id_srcdataset");
+		Object dataset = table.getValue(0,"idquery");
 		Assert.assertNotNull(dataset);
 		c.close();
 	}
@@ -342,6 +342,22 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				values[i] = "HEP";
 				break;
 			}
+			case xmet_product_uri: {
+				values[i] = "http://localhost:8080/ambit2/compound/1";
+				break;
+			}
+			case xmet_substrate_uri: {
+				values[i] = null;
+				break;
+			}
+			case xmet_substrate_upload: {
+				values[i] = null;
+				break;
+			}
+			case xmet_product_upload: {
+				values[i] = null;
+				break;
+			}
 			/*
 			case endpoint: {
 				values[i] = "CYP3A4";
@@ -375,7 +391,8 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		File file = new File(url.getFile());
 		
 		MultipartEntity rep = getMultipartWebFormRepresentation(names, values,
-				ObservationFields.xmet_substrate_upload.name(),file, 
+				//ObservationFields.xmet_substrate_upload.name(),file,
+				ObservationFields.xmet_substrate_upload.name(),null,
 				ChemicalMediaType.CHEMICAL_MDLSDF.toString());
 
 		IDatabaseConnection c = getConnection();

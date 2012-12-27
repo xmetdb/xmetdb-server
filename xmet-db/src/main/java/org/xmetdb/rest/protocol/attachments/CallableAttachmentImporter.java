@@ -37,6 +37,7 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.attachments.db.UpdateAttachment;
 
 /**
@@ -177,13 +178,22 @@ public class CallableAttachmentImporter extends  CallableDBUpdateTask<DBAttachme
 
 	protected HttpEntity createPOSTEntity(DBAttachment attachment) throws Exception {
 		Charset utf8 = Charset.forName("UTF-8");
-		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,null,utf8);
-		entity.addPart("title", new StringBody(attachment.getTitle(),utf8));
-		entity.addPart("seeAlso", new StringBody(attachment.getDescription(),utf8));
-		entity.addPart("license", new StringBody("XMETDB",utf8));
-		entity.addPart("file", new FileBody(new File(attachment.getResourceURL().toURI())));
+
+		if ("text/uri-list".equals(attachment.getFormat())) {
+			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+			formparams.add(new BasicNameValuePair("title", attachment.getTitle()));
+            formparams.add(new BasicNameValuePair("dataset_uri", attachment.getDescription()));
+            formparams.add(new BasicNameValuePair("folder", attachment_type.data_training.equals(attachment.getType())?"substrate":"product"));
+			return new UrlEncodedFormEntity(formparams, "UTF-8");
+		} else {
+			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,null,utf8);
+			entity.addPart("title", new StringBody(attachment.getTitle(),utf8));
+			entity.addPart("seeAlso", new StringBody(attachment.getDescription(),utf8));
+			entity.addPart("license", new StringBody("XMETDB",utf8));
+			entity.addPart("file", new FileBody(new File(attachment.getResourceURL().toURI())));
+			return entity;
+		}
 //match, seeAlso, license
-		return entity;
 	}
 	
 	protected HttpClient createHTTPClient(String hostName,int port) {

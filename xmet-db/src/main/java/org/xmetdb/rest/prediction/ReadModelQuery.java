@@ -31,11 +31,11 @@ public class ReadModelQuery extends AbstractQuery<DBProtocol, Algorithm, EQCondi
 		this.modelRoot = modelRoot;
 	}
 	protected static String sql = 
-		"SELECT idmodel,id_srcdataset,algorithm,dataset,models.name FROM protocol\n"+
+		"SELECT idmodel,idquery,algorithm,dataset,models.name FROM protocol\n"+
 		"join attachments a using(idprotocol,version)\n"+
-		"left join `ambit2-xmetdb`.src_dataset a1 using(name)\n"+
+		"left join `ambit2-xmetdb`.query a1 using(name)\n"+
 		"join `ambit2-xmetdb`.models on\n"+
-		"concat(\"%s\",id_srcdataset)=models.dataset\n"+
+		"concat(\"%sR\",idquery)=models.dataset\n"+
 		"where idprotocol=? and version=?\n"+
 		"and algorithm=?\n"+
 		"and type='data_training'";
@@ -100,6 +100,6 @@ public class ReadModelQuery extends AbstractQuery<DBProtocol, Algorithm, EQCondi
 	}
 	@Override
 	public String toString() {
-		return getFieldname()==null?"All attachments":String.format("Attachments for QMRF-%s",getFieldname().getID());
+		return getFieldname()==null?"All attachments":String.format("Attachments for XMET%s",getFieldname().getID());
 	}
 }

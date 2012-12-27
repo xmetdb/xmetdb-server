@@ -40,7 +40,7 @@ public class AttachmentJSONReporter  extends QueryReporter<DBAttachment, IQueryR
 		
 	}
 	
-	private static String format = "\n{\n\"uri\":\"%s\",\n\"observation\":{\"uri\":\"%s\"},\n\"title\":\"%s\",\n\"description\":\"%s\",\n\"type\":\"%s\",\n\"format\":\"%s\",\n\"dataset\":{\"uri\":\"%s/dataset/%s\"}\n}";
+	private static String format = "\n{\n\"uri\":\"%s\",\n\"observation\":{\"uri\":\"%s\"},\n\"title\":\"%s\",\n\"description\":\"%s\",\n\"type\":\"%s\",\n\"format\":\"%s\",\n\"dataset\":{\"uri\":\"%s/dataset/R%s\"}\n}";
 	@Override
 	public Object processItem(DBAttachment item) throws Exception {
 		try {

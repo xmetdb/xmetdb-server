@@ -90,7 +90,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 	}
 	
 	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"description\": \"%s\",\n\t\"atom_uncertainty\": \"%s\",\n\t\"product_amount\": \"%s\",\n\t\"enzyme\": {\n\t\t\"code\" :null, \"name\" :null\n\t},\n\t\"updated\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\" :\"%s\",\n\t\t\"username\": \"%s\"\n\t}";
-	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": \"%s/dataset/%d\", \"structure\": null}\n\t}";
+	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": \"%s/dataset/R%d\", \"structure\": null}\n\t}";
 	private static String emptyAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": null, \"structure\": null}\n\t}";
 		
 	@Override

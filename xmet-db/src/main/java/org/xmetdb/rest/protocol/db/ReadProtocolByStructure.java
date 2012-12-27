@@ -36,8 +36,8 @@ public class ReadProtocolByStructure extends ReadProtocolAbstract<Structure> {
 		"select protocol.idprotocol,protocol.version,protocol.title,protocol.qmrf_number,abstract as anabstract,iduser,\n"+
 		"summarySearchable,idproject,idorganisation,filename,template,protocol.updated,status,\n"+
 		"protocol.`created`,published_status,atom_uncertainty,product_amount\n"+
-		"from protocol,attachments a, `ambit2-xmetdb`.src_dataset q\n"+
-		"join `ambit2-xmetdb`.struc_dataset using(id_srcdataset)\n"+
+		"from protocol,attachments a, `ambit2-xmetdb`.query q\n"+
+		"join `ambit2-xmetdb`.query using(idquery)\n"+
 		"join `ambit2-xmetdb`.structure using(idstructure)\n"+
 		"where idchemical=?\n"+
 		"and published_status='published' and a.name=q.name and a.idprotocol=protocol.idprotocol and a.version=protocol.version\n";

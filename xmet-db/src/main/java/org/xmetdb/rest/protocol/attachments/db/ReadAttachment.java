@@ -34,21 +34,21 @@ public class ReadAttachment extends AbstractQuery<DBProtocol, DBAttachment, EQCo
 		format,
 		description,
 		imported,
-		id_srcdataset
+		idquery
 	}
 	protected static String sql = 
-		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,id_srcdataset,published_status,title FROM protocol\n" +
+		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,idquery,published_status,title FROM protocol\n" +
 		"join attachments a using(idprotocol,version)\n" +
-		"left join `ambit2-xmetdb`.src_dataset a1 using(name) where %s ";
+		"left join `ambit2-xmetdb`.query a1 using(name) where %s ";
 	protected static String where_protocol = "protocol.qmrf_number=?";
 	protected static String where_attachment = "idattachment=?";
 	protected static String where_datasetname = "a.name=?";
-	protected static String where_datasetid = "a1.idsrcdatset=?";
+	protected static String where_datasetid = "a1.idquery=?";
 	
 	/**
 	 * get datasets by structure
-SELECT * FROM attachments a, `ambit2-xmetdb`.src_dataset d
-join `ambit2-xmetdb`.struc_dataset using(id_srcdataset)
+SELECT * FROM attachments a, `ambit2-xmetdb`.query d
+join `ambit2-xmetdb`.query using(idquery)
 join `ambit2-xmmetdb`.structure using(idstructure)
 where a.name=d.name
 and idchemical=282
@@ -109,25 +109,33 @@ and idchemical=282
 				String format = rs.getString(_fields.format.name());
 				String name = rs.getString(_fields.name.name());
 				String type = rs.getString(_fields.type.name());
-				url = String.format("file://%s/%s/%s.%s",dir,type,name.replace(" ","%20"),format);
-				DBAttachment attachment = new DBAttachment(new URL(url));
-				if ("pdf".equals(format)) attachment.setMediaType(MediaType.APPLICATION_PDF.toString());
-				else if ("sdf".equals(format)) attachment.setMediaType(ChemicalMediaType.CHEMICAL_MDLSDF.toString());
-				else if ("mol".equals(format)) attachment.setMediaType(ChemicalMediaType.CHEMICAL_MDLMOL.toString());
-				else if ("csv".equals(format)) attachment.setMediaType(MediaType.TEXT_CSV.toString());
-				else if ("txt".equals(format)) attachment.setMediaType(MediaType.TEXT_PLAIN.toString());
-				else if ("smi".equals(format)) attachment.setMediaType(ChemicalMediaType.CHEMICAL_SMILES.toString());
-				else if ("doc".equals(format)) attachment.setMediaType(MediaType.APPLICATION_WORD.toString());
-				else if ("rtf".equals(format)) attachment.setMediaType(MediaType.APPLICATION_RTF.toString());
-				else if ("docx".equals(format)) attachment.setMediaType(MediaType.APPLICATION_MSOFFICE_DOCX.toString());
-				else attachment.setMediaType(MediaType.APPLICATION_ALL.toString());
+				
+				MediaType media = MediaType.APPLICATION_ALL;
+				if ("text/uri-list".equals(format)) { 
+					url = null; media = MediaType.TEXT_URI_LIST; }
+				else {
+					url = String.format("file://%s/%s/%s.%s",dir,type,name.replace(" ","%20"),format);
+					if ("pdf".equals(format)) media = MediaType.APPLICATION_PDF;
+					else if ("sdf".equals(format)) media = ChemicalMediaType.CHEMICAL_MDLSDF;
+					else if ("mol".equals(format)) media =  ChemicalMediaType.CHEMICAL_MDLMOL;
+					else if ("csv".equals(format)) media =  MediaType.TEXT_CSV;
+					else if ("txt".equals(format)) media =   MediaType.TEXT_PLAIN;
+					else if ("smi".equals(format)) media =  ChemicalMediaType.CHEMICAL_SMILES;
+					else if ("doc".equals(format)) media =  MediaType.APPLICATION_WORD;
+					else if ("rtf".equals(format)) media =  MediaType.APPLICATION_RTF;
+					else if ("docx".equals(format)) media =  MediaType.APPLICATION_MSOFFICE_DOCX;
+					else media =  MediaType.APPLICATION_ALL;
+				}
+				DBAttachment attachment = new DBAttachment();
+				attachment.setFormat(format);
+				attachment.setMediaType(media.toString());
 				attachment.setID(rs.getInt(_fields.idattachment.name()));
 				attachment.setTitle(name);
 				attachment.setType(DBAttachment.attachment_type.valueOf(type));
 				attachment.setDescription(rs.getString(_fields.description.name()));
 				attachment.setImported(rs.getBoolean(_fields.imported.name()));
 				try {
-					if (attachment.isImported()) attachment.setIdquerydatabase(rs.getInt(_fields.id_srcdataset.name()));
+					if (attachment.isImported()) attachment.setIdquerydatabase(rs.getInt(_fields.idquery.name()));
 				} catch (Exception x) { attachment.setIdquerydatabase(-1);}
 				//protocol
 				DBProtocol protocol = new DBProtocol();
