@@ -15,7 +15,7 @@
 
 $(document).ready(function() {
 		$( ".useSelected" ).button();
-		loadEnzymesList("${xmet_root}","#xmet_enzyme");
+		loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele");
 		addSearchUI('substrate','${xmet_root}');
 		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch','search options');  return false; });
 		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch','search options');  return false; });

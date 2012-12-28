@@ -6,13 +6,13 @@
 
 
 $(document).ready(function() {
-	loadEnzymesList("${xmet_root}","#search_enzyme");
+	loadEnzymesList("${xmet_root}","#search_enzyme","#search_allele");
 	searchFormValidation("#search_form");
 });
 
 	$(function() {
 		$( "input:submit, a, button", ".search" ).button();
 	});
-	
+
 
 </script>

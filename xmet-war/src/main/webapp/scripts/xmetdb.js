@@ -28,9 +28,9 @@ function renderEnzyme(code,name) {
 	return "<span title='"+ name +"'>" + code + "</span>";
 }
 
-function loadEnzymesList(root,selectTag) {
+function loadEnzymesList(root,selectTag,allelesTag) {
 	  //clear the list	
-	  $(selectTag).html("");
+	$(selectTag).html("");
 	  //get all enzymes
     $.ajax({
         dataType: "json",
@@ -43,8 +43,19 @@ function loadEnzymesList(root,selectTag) {
          		  return (a.code < b.code) ? -1 : 1;
 			  });
           $("<option value=''></option>").appendTo(selectTag);
+          var alleles = {};
       	  data.forEach(function enz(element, index, array) {
       		  $("<option value='" + element.code + "'>" + element.code + "&nbsp;" +element.name + "</option>").appendTo(selectTag);
+      		  alleles[element.code] = element.alleles;
+      	  });
+      	  $(selectTag).change(function() {
+        		var x = $(this).val();
+                $(allelesTag).html("");
+                $("<option value='' selected></option>").appendTo(allelesTag);
+                if (alleles[x]!=undefined)
+	                alleles[x].forEach(function enz(element, index, array) {
+	              		  $("<option value='" + element + "'>" + element + "</option>").appendTo(allelesTag);
+	              	});
       	  });
         },
         error: function(xhr, status, err) { },
