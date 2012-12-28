@@ -43,7 +43,7 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	public static final String[] create_sql = {
 		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created,published_status,atom_uncertainty,product_amount) " +
 		"values (?,?,?,?,?,?,?,?,?,now(),?,?,?)",
-		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where code = ? and idprotocol=? and version=?",
+		"insert into protocol_endpoints select idprotocol,version,idtemplate,? from protocol join template where code = ? and idprotocol=? and version=?",
 		"update protocol set qmrf_number=? where idprotocol=? and version=?"
 	};
 
@@ -79,6 +79,10 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			break;
 		}
 		case 1: {
+			String allele = "";
+			if (getObject().getEndpoint()!= null && getObject().getEndpoint().getAlleles()!=null && getObject().getEndpoint().getAlleles().length>0)
+				allele = getObject().getEndpoint().getAlleles()[0];
+			params1.add(new QueryParam<String>(String.class,allele));
 			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint()==null?"":getObject().getEndpoint().getCode()));
 			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
 			params1.add(ReadProtocol.fields.version.getParam(getObject()));

@@ -25,9 +25,14 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,version,published_status,title FROM protocol where idprotocol=2"));
+				String.format("SELECT idprotocol,version,published_status,title,idtemplate,allele FROM protocol left join protocol_endpoints using(idprotocol,version) where idprotocol=2"));
 		
 		Assert.assertEquals(2,table.getRowCount());
+		//ensure endpoints are copied as well
+		Assert.assertNotNull(table.getValue(0,"idtemplate"));
+		Assert.assertNotNull(table.getValue(1,"idtemplate"));
+		Assert.assertEquals("1A",table.getValue(0,"allele"));
+		Assert.assertEquals("1A",table.getValue(1,"allele"));
 		c.close();	
 	}
 	

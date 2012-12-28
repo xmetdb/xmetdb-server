@@ -61,7 +61,7 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	{ 
 		update_sql,
 		"delete from protocol_endpoints where idprotocol=? and version=?",
-		"insert into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where code = ? and idprotocol=? and version=?"
+		"insert into protocol_endpoints select idprotocol,version,idtemplate,? from protocol join template where code = ? and idprotocol=? and version=?"
 	};
 
 	public UpdateProtocol(DBProtocol ref) {
@@ -100,7 +100,12 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			break;
 		} 
 		case 2: {
+			String allele = "";
+			if (getObject().getEndpoint()!= null && getObject().getEndpoint().getAlleles()!=null && getObject().getEndpoint().getAlleles().length>0)
+				allele = getObject().getEndpoint().getAlleles()[0];
+			params1.add(new QueryParam<String>(String.class,allele));
 			params1.add(new QueryParam<String>(String.class,getObject().getEndpoint()==null?"":getObject().getEndpoint().getCode()));
+			
 			break;
 		}
 		}

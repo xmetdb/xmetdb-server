@@ -66,6 +66,10 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		ref.setAbstract("Hepatocytes");
 		ref.addKeyword("hepatocyte");
 		ref.setPublished(true);
+		Enzyme enzyme = new Enzyme("","");
+		enzyme.setCode("CYP3A4");
+		enzyme.setAlleles(new String[] {"1A"});
+		ref.setEndpoint(enzyme);
 		return (IQueryUpdate<T,DBProtocol>)new UpdateProtocol(ref);
 
 	}
@@ -75,7 +79,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number FROM protocol where idprotocol=3 and version=1"));
+				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number,idtemplate,allele FROM protocol left join protocol_endpoints using(idprotocol,version) where idprotocol=3 and version=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		//we ignore the published flag here! There is a special PublishProtocol query
@@ -85,6 +89,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals("HEP",table.getValue(0,"title"));
 		Assert.assertEquals("Hepatocytes",table.getValue(0,"abstract"));
 		Assert.assertEquals("XMETDB3",table.getValue(0,"qmrf_number"));
+		Assert.assertEquals("1A",table.getValue(0,"allele"));
 		c.close();	
 	}
 	

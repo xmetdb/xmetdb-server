@@ -197,8 +197,10 @@ CREATE TABLE  `protocol_endpoints` (
   `idprotocol` int(10) unsigned NOT NULL,
   `version` int(10) unsigned NOT NULL,
   `idtemplate` int(10) unsigned NOT NULL,
+  `allele` varchar(15) NOT NULL,
   PRIMARY KEY (`idprotocol`,`version`,`idtemplate`) USING BTREE,
   KEY `FK_protocol_template_2` (`idtemplate`),
+  KEY `Index_3` (`idtemplate`,`allele`),
   CONSTRAINT `FK_protocol_template_1` FOREIGN KEY (`idprotocol`, `version`) REFERENCES `protocol` (`idprotocol`, `version`),
   CONSTRAINT `FK_protocol_template_2` FOREIGN KEY (`idtemplate`) REFERENCES `template` (`idtemplate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -278,8 +280,8 @@ begin
     select idprotocol,version_new,protocol_authors.iduser from protocol_authors join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;
 
    	-- copy endpoints
-    insert into protocol_endpoints (idprotocol,version,idtemplate)
-    select idprotocol,version_new,idtemplate from protocol_endpoints join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;
+    insert into protocol_endpoints (idprotocol,version,idtemplate,allele)
+    select idprotocol,version_new,idtemplate,allele from protocol_endpoints join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;
     
    	-- copy keywords
     insert into keywords (idprotocol,version,keywords)

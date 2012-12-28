@@ -61,6 +61,6 @@ public class Enzyme extends Dictionary {
 	}
 	@Override
 	public String toString() {
-		return String.format("%s.%s",getCode(),getName());
+		return String.format("%s.%s",getCode(),getAlleles()==null?"":getAlleles().length==0?"":getAlleles()[0]);
 	}
 }
