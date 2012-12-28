@@ -62,6 +62,7 @@ function defineEndpointsTable(url) {
 					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
 						  var sOut = "<select style='width:5em;'>";
+						  sOut += '<option value="" selected></option>';
 						  $.each(val, function(i) {
 							    sOut += '<option value="' + val[i] + '">' + val[i] + '</option>';
 							});
