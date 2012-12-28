@@ -239,7 +239,7 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 	@Override
 	protected void printUploadForm(Writer output, String uri, DBProtocol protocol) {
 		try {
-			output.write(((XmetdbHTMLBeauty)htmlBeauty).printUploadForm("", uri, protocol,update_mode.attachments,uriReporter.getBaseReference().toString()));
+			//output.write(((XmetdbHTMLBeauty)htmlBeauty).printUploadForm("", uri, protocol,update_mode.attachments,uriReporter.getBaseReference().toString()));
 		} catch (Exception x) {x.printStackTrace();} 
 		
 	}	
