@@ -13,6 +13,7 @@
 
 <script type="text/javascript">
 
+    
 $(document).ready(function() {
 		$( ".useSelected" ).button();
 		loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele");
@@ -30,6 +31,18 @@ $(document).ready(function() {
 		//submitFormValidation("#submitForm");
 } );
 
+
+    <#switch xmet_mode>
+    <#case "newdocument">
+    	<#break>
+    <#case "update">
+		$(document).ready(function() {    
+			editObservation("${xmet_request_json}");
+		});    
+    	<#break>
+    <#default>
+
+    </#switch>
 </script>
 
 
@@ -41,10 +54,20 @@ $(document).ready(function() {
 
     <div class="twelve columns remove-bottom" >
     
-    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;New XMETDB observation <span id="xmet_id"></span></div>
+    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">New XMETDB observation</span></div>
     <div class="half-bottom ui-widget-content ui-corner-bottom" >
     
-    <form method="POST" action="${xmet_root}/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
+    <#switch xmet_mode>
+    <#case "newdocument">
+    	<form method="POST" action="${xmet_root}/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
+    	<#break>
+    <#case "update">
+    	<form method="POST" action="${xmet_request}?method=PUT" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data">
+    	<#break>
+    <#default>
+    	<form method="GET" action="${xmet_root}/protocol" id="submitForm" name="submitForm" ENCTYPE="multipart/form-data"> 
+    </#switch>
+
 	<div class='row' style="margin:5px;padding:5px;"> 	
 	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em></label></div>
 	    <div class='five columns omega'>
@@ -80,38 +103,41 @@ $(document).ready(function() {
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>
 	<div class='row' style="margin:5px;padding:5px;"> 	
  	   <div class='three columns alpha'><label>Atom uncertainty:</label></div>
-	   <div class='five columns omega'>
-			<select id="xmet_atom_uncertainty" name="xmet_atom_uncertainty" >
+	   <div class='six columns omega'>
+			<select id="xmet_atom_uncertainty" name="xmet_atom_uncertainty" class="remove-bottom" >
 			<option value="Certain" selected="selected">Certain</option>
 			<option value="Uncertain">Uncertain</option>
 			</select>
 		</div>
 		<div class='three columns alpha'><label>Product amount:</label></div>
-		 <div class='five columns omega'>
-			<select id="xmet_product_amount" name="xmet_product_amount">
+		 <div class='three columns omega'>
+			<select id="xmet_product_amount" name="xmet_product_amount" class="remove-bottom">
 			<option value="Major" selected="selected">Major</option>
 			<option value="Minor">Minor</option>
 			<option value="Unknown">Unknown</option>
 			</select>
 		 </div>
 	</div> 	
-	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'><label>Experiment:</label></div>
-		<div class='three columns omega'>
-			<select id="xmet_experiment" name="xmet_experiment">
+		<div class='six columns omega'>
+			<select id="xmet_experiment" name="xmet_experiment" class="remove-bottom">
 			<option value="MS" selected="selected">MS (Microsomes)</option>
 			<option value="HEP">HEP (Hepatocytes)</option>
 			<option value="ENZ">ENZ (Enzyme)</option>
 			</select>
 		</div>
-		<div class='two column omega'><label>Enzyme</label></div>
-		<div class='five columns omega'>
-			<select id="xmet_enzyme" name="xmet_enzyme"></select>
+		<div class='seven columns omega'></div>
+	</div>
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+
+		<div class='three columns alpha'><label>Enzyme</label></div>
+		<div class='nine columns omega'>
+			<select id="xmet_enzyme" name="xmet_enzyme" class="remove-bottom" style="width:400px;"></select>
 		</div>
-		<div class='one column omega'><label>Allele</label></div>
+		<div class='two columns omega'><label>Allele</label></div>
 		<div class='two columns omega'>
-			<select id="xmet_allele" name="xmet_allele"></select>
+			<select id="xmet_allele" name="xmet_allele" class="remove-bottom" ></select>
 		</div>
 	</div>
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
@@ -119,7 +145,7 @@ $(document).ready(function() {
 			<label>Reference:</label>
 			<input type="hidden" name="published_status"  value="on">
 		</div>
-		<input type="text" name="xmet_reference" title="Enter reference DOI or free text" value="" class="eight columns omega remove-bottom">
+		<input type="text" name="xmet_reference" id="xmet_reference" title="Enter reference DOI or free text" value="" class="eight columns omega remove-bottom">
 		<input type="submit" class="submit five columns omega" value="Submit observation">
 	</div>
 			

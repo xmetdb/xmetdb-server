@@ -62,6 +62,8 @@ function loadEnzymesList(root,selectTag,allelesTag) {
         complete: function(xhr, status) { }
      });
 }	
+
+
 /**
  * Structure search UI  
  * @param searchSelector
@@ -287,6 +289,7 @@ function loadObservation(observation_uri) {
 	        	  
 	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
 	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
+	        	  
 	          },
 	          error: function(xhr, status, err) { 
 	        	  xmetdblog(status + " " + xhr.responseText);
@@ -297,6 +300,47 @@ function loadObservation(observation_uri) {
 	       });
 }
 
+
+function editObservation(observation_uri) {
+	var model_uri = null;
+	var observation;
+    $.ajax({
+	          dataType: "json",
+	          contentType: 'application/json; charset=utf-8',
+	          url: observation_uri,
+	        	  //"/xmetdb/protocol/XMETDB2?media=application%2Fjson",
+	          success: function(data, status, xhr) {
+	        	  
+	        	  observation = data.observations[0];
+	        	  $('#xmet_id').replaceWith("Modify Observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
+	        	  $('#xmet_atom_uncertainty option[value='+observation["atom_uncertainty"]+']').attr('selected', 'selected');
+	        	  $('#xmet_product_amount option[value='+observation["product_amount"]+']').attr('selected', 'selected');
+	        	  $('#xmet_experiment option[value='+observation["title"]+']').attr('selected', 'selected');
+	        	  loadEnzyme(observation,function(obs) {
+	        		  var allele = obs.enzyme.allele==null?"":obs.enzyme.allele.length>0?obs.enzyme.allele[0]:"";
+	        		  $('#xmet_enzyme option[value='+obs.enzyme.code+']').attr('selected', 'selected');
+	        		  //$('#xmet_enzyme option[value='+obs.enzyme.code+']').change();
+	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
+	        	  });
+	        	  $('#xmet_reference').attr("value",observation["reference"]);
+
+	        	  /*
+	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
+	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate",model_uri);
+	        				  //");
+	        	  
+	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
+	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
+	        		  */
+	          },
+	          error: function(xhr, status, err) { 
+	        	  xmetdblog(status + " " + xhr.responseText);
+	          },
+	          complete: function(xhr, status) { 
+	        	  xmetdblog(status);
+	          }
+	       });
+}
 /*
 * Loads enzyme for a single observation via JSON
 */

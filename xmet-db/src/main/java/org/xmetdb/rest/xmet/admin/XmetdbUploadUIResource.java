@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.restnet.c.TaskApplication;
@@ -38,16 +39,28 @@ public class XmetdbUploadUIResource extends CatalogFTLResource<DBProtocol> {
 	protected DBProtocol protocol = null;
 	protected update_mode mode = update_mode.newdocument;
 
-	@Override
-	public String getTemplateName() {
-		return "observation_new.ftl";
-	}
 
-
-	
 	public XmetdbUploadUIResource() {
 		super();
 		setHtmlbyTemplate(true);
+	}
+	
+	@Override
+	public String getTemplateName() {
+		return mode.equals(update_mode.newdocument)?"observation_new.ftl":"observation_new.ftl";
+	}
+
+	@Override
+	public void configureTemplateMap(Map<String, Object> map) {
+		super.configureTemplateMap(map);
+		Object key = getRequest().getAttributes().get(FileResource.resourceKey);
+		map.put("xmet_mode", mode.name());
+		if (key!=null) {
+			String ref = String.format("%s%s/%s", getRequest().getRootRef(),Resources.protocol, key);
+			map.put("xmet_request",ref);
+			ref = String.format("%s?media=application/json", ref);
+			map.put("xmet_request_json",ref);
+		}
 	}
 	@Override
 	protected Iterator<DBProtocol> createQuery(Context context,
@@ -61,7 +74,7 @@ public class XmetdbUploadUIResource extends CatalogFTLResource<DBProtocol> {
 			try { //add attachments to a protocol
 				protocol = new DBProtocol(key.toString());
 				protocol.setResourceURL(new URL(String.format("%s%s/%s", getRequest().getRootRef(),Resources.protocol, protocol.getIdentifier())));
-				if (update_mode.newdocument.equals(mode)) mode = update_mode.attachments;
+				if (update_mode.newdocument.equals(mode)) mode = update_mode.update;
 			} catch (Exception x) {
 				throw new InvalidXmetdbNumberException(key.toString());
 			}

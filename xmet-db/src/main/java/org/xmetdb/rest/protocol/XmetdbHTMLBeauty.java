@@ -227,12 +227,6 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 				return "Update ";
 			}
 		},
-		attachments {
-			@Override
-			public String toString() {
-				return "Add attachment(s)";
-			}
-		},
 		newdocument {
 			@Override
 			public String toString() {
@@ -796,12 +790,14 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 				String hint = "<p>Upload a QMRF XML file, complying to <a href='http://qmrf.sf.net/qmrf.dtd' target='help'>QMRF DTD</a> schema. The QMRF Editor can be downloaded from <a href='http://qmrf.sf.net' target='help'>http://qmrf.sf.net</a>. </p> ";
 				String submit = "Upload";
 				switch (mode) {
+				/*
 				case attachments: {
 					header = String.format("%s to <a href='%s' >%s</a>",mode.toString(),protocol.getResourceURL(),protocol.getVisibleIdentifier());
 					form = String.format("<form method='%s' action=\"%s\" ENCTYPE=\"multipart/form-data\">","POST",action);
 					hint = "<p>All files are optional, you could select any combination of attachment type(s) to upload.</p>";
 					break;
 				}
+				*/
 				case update : {
 					header = String.format("%s QMRF XML file of <a href='%s' >%s</a>",mode.toString(),protocol.getResourceURL(),protocol.getVisibleIdentifier());
 					form = String.format("<form method='%s' action=\"%s?method=PUT\" ENCTYPE=\"multipart/form-data\">","POST",protocol.getResourceURL());
@@ -924,6 +920,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 
 					break;
 				}				
+				/*
 				case attachments: {
 					for (attachment_type atype: attachment_type.values()) {
 						if (atype.ordinal() % 2 ==0) {
@@ -944,6 +941,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					break;
 					
 				} 
+				*/
 				case newdocument: {
 					
 					content.append(_tdStart);
