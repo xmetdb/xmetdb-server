@@ -1,5 +1,7 @@
 package org.xmetdb.rest.endpoints.db;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -61,9 +63,9 @@ public class QueryOntology<D extends Dictionary>  extends AbstractQuery<Boolean,
 		"order by t1.idtemplate\n";
 	
 	protected String sqlProtocol = 	
-		"SELECT idprotocol,t2.name,t1.name,t2.code as category,t1.code as code FROM\n"+
+		"SELECT idprotocol,t2.name,t1.name,t2.code as category,t1.code as code,t1.uri as uri,pe.allele as allele FROM\n"+
 		"protocol\n"+
-		"left join protocol_endpoints using(idprotocol,version)\n"+
+		"left join protocol_endpoints pe using(idprotocol,version)\n"+
 		"left join template t1 using(idtemplate)\n"+
 		"left join dictionary d on t1.idtemplate=d.idsubject\n"+
 		"left join template t2 on t2.idtemplate=d.idobject\n"+
@@ -154,6 +156,11 @@ public class QueryOntology<D extends Dictionary>  extends AbstractQuery<Boolean,
 			Enzyme result = new Enzyme(rs.getString(3),rs.getString(2));
 			result.setCode(rs.getString("code"));
 			result.setParentCode(rs.getString("category"));
+			try {result.setUri(new URI(rs.getString("uri")));} catch (URISyntaxException x) {}
+			try {
+				String alleles = rs.getString("allele");
+				if (alleles!=null) result.setAlleles(alleles.split(","));
+			} catch (Exception x) {}
 			return (D)result;
 		} catch (SQLException x) {
 			throw new AmbitException(x);

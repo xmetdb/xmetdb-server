@@ -299,6 +299,7 @@ function loadEnzyme(observation, renderEnzyme) {
 	          success: function(data, status, xhr) {
 	        	  observation.enzyme.code = data[0].code;
 	        	  observation.enzyme.name = data[0].name;
+	        	  observation.enzyme['allele'] = data[0].alleles==null?"":data[0].alleles.length>0?data[0].alleles[0]:"";
 	        	  renderEnzyme(observation);
 	          },
 	          error: function(xhr, status, err) {
@@ -313,6 +314,7 @@ function loadEnzyme(observation, renderEnzyme) {
 
 function displayEnzyme(observation) {
 	  $('#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
+	  $('#xmet_allele').replaceWith(observation.enzyme['allele']);
 }
 
 /**
@@ -341,7 +343,10 @@ function defineObservationsTable(tableSelector,observations_uri) {
 	          				return "<span title='"+ o.aData["description"] +"'>" + val + "</span>";
 	        		}
 				},
-				{ "mDataProp": "enzyme.code" , "asSorting": [ "asc", "desc" ], "bSearchable" : true	},
+				{ "mDataProp": "enzyme.code" , 
+				  "asSorting": [ "asc", "desc" ], 
+				  "bSearchable" : true
+				},
 				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] }
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
