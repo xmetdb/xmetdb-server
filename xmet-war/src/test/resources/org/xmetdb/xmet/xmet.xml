@@ -27,21 +27,21 @@
   <keywords idprotocol="3" version="1" keywords="mycrosome"/>
   <user_organisation iduser="1" idorganisation="1" priority="0"/>
   <user_project iduser="1" idproject="1" priority="0"/>
-  <template idtemplate="2" name="cytochrome P450, family 3, subfamily A, polypeptide 4" code="CYP3A4" uri="http://www.uniprot.org/uniprot/P08684"/>
-  <template idtemplate="3" name="cytochrome P450, family 2, subfamily E, polypeptide 1" code="CYP2E1" uri="http://www.uniprot.org/uniprot/P05181"/>
-  <template idtemplate="4" name="cytochrome P450, family 2, subfamily D, polypeptide 6" code="CYP2D6" uri="http://www.uniprot.org/uniprot/P10635"/>
-  <template idtemplate="5" name="cytochrome P450, family 2, subfamily C, polypeptide 9" code="CYP2C9" uri="http://www.uniprot.org/uniprot/P11712"/>
-  <template idtemplate="6" name="cytochrome P450, family 1, subfamily A, polypeptide 2" code="CYP1A2" uri="http://www.uniprot.org/uniprot/P05177"/>
-  <template idtemplate="7" name="cytochrome P450, family 2, subfamily C, polypeptide 19" code="CYP2C19" uri="http://www.uniprot.org/uniprot/P33261"/>
-  <template idtemplate="8" name="cytochrome P450, family 1, subfamily A, polypeptide 1" code="CYP1A1" uri="http://www.uniprot.org/uniprot/P04798"/>
-  <template idtemplate="9" name="cytochrome P450, family 1, subfamily B, polypeptide 1" code="CYP1B1" uri="http://www.uniprot.org/uniprot/Q16678"/>
-  <template idtemplate="10" name="cytochrome P450, family 26, subfamily A, polypeptide 1" code="CYP26A1" uri="http://www.uniprot.org/uniprot/O43174"/>
+  <template idtemplate="2" name="cytochrome P450, family 3, subfamily A, polypeptide 4" code="CYP3A4" uri="http://www.uniprot.org/uniprot/P08684" allele="1A,1B,1C,1E,1F,1G,1H,1J,1K,1L,1M,1N,1P,1Q,1R,1S,1T,2,3,4,5,6,7,8,9,10,11,12,13,14,15A,15B,16A,16B,17,18A,18B,19,20,21,22"/>
+  <template idtemplate="3" name="cytochrome P450, family 2, subfamily E, polypeptide 1" code="CYP2E1" uri="http://www.uniprot.org/uniprot/P05181" allele="1A,1B,1C,1Cx2,2,3,4,5A,5B,6,7A,7B,7C"/>
+  <template idtemplate="4" name="cytochrome P450, family 2, subfamily D, polypeptide 6" code="CYP2D6" uri="http://www.uniprot.org/uniprot/P10635" allele="1A,1B,1C,1D,1E,1XN,2A,2B,2C,2D,2E,2F,2G,2H,2J,2K,2L,2M,2XN,3A,3B,4A,4B,4C,4D,4E,4F,4G,4H,4J,4K,4L,4M,4N,4X2,5,6A,6B,6C,6D,7,8,9,9x2,10A,10B,10C,10D,10X2,11,12,13,14A,14B,15,16,17,17XN,18,19,20,21A,21B,22,23,24,25,26,27,28,29,30,31,32,33,34,35A,35B,35X2,36,37,38,39,40,41,42,43,44,45A,45B,46,47,48,49,50,51,52,53,54,55,56A,56B,57,59,60,61,62,63,64,65,66,67,68A,68B,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84-101,102,103,104,105"/>
+  <template idtemplate="5" name="cytochrome P450, family 2, subfamily C, polypeptide 9" code="CYP2C9" uri="http://www.uniprot.org/uniprot/P11712" allele="1A,1B,1C,2A,2B,2C,3A,3B,4,5,6,7,8,9,10,11A,11B,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,34,33,34,35,36-56,57"/>
+  <template idtemplate="6" name="cytochrome P450, family 1, subfamily A, polypeptide 2" code="CYP1A2" uri="http://www.uniprot.org/uniprot/P05177" allele="1A,1B,1C,1D,1E,1F,1G,1H,1J,1K,1L,1M,1N,1P,1Q,1R,1S,1T,1U,1V,1W,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21"/>
+  <template idtemplate="7" name="cytochrome P450, family 2, subfamily C, polypeptide 19" code="CYP2C19" uri="http://www.uniprot.org/uniprot/P33261" allele="1A,1B,1C,2A,2B,2C,2D,3A,3B,4A,4B,5A,5B,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28"/>
+  <template idtemplate="8" name="cytochrome P450, family 1, subfamily A, polypeptide 1" code="CYP1A1" uri="http://www.uniprot.org/uniprot/P04798" allele="1,2A,2B,2C,3,4,5,6,7,8,9,10,11"/>
+  <template idtemplate="9" name="cytochrome P450, family 1, subfamily B, polypeptide 1" code="CYP1B1" uri="http://www.uniprot.org/uniprot/Q16678" allele="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26"/>
+  <template idtemplate="10" name="cytochrome P450, family 26, subfamily A, polypeptide 1" code="CYP26A1" uri="http://www.uniprot.org/uniprot/O43174" allele="1,2,3,4"/>
   <template idtemplate="11" name="cytochrome P450, family 26, subfamily B, polypeptide 1" code="CYP26B1" uri="http://www.uniprot.org/uniprot/Q9NR63"/>
-  <template idtemplate="12" name="cytochrome P450, family 2, subfamily S, polypeptide 1" code="CYP2S1" uri="http://www.uniprot.org/uniprot/Q96SQ9"/>
-  <template idtemplate="13" name="cytochrome P450, family 4, subfamily B, polypeptide 1" code="CYP4B1" uri="http://www.uniprot.org/uniprot/P13584"/>
-  <template idtemplate="14" name="cytochrome P450, family 2, subfamily W, polypeptide 1" code="CYP2W1" uri="http://www.uniprot.org/uniprot/Q8TAV3"/>
-  <template idtemplate="15" name="cytochrome P450, family 2, subfamily C, polypeptide 8" code="CYP2C8" uri="http://www.uniprot.org/uniprot/P10632"/>
-  <template idtemplate="16" name="cytochrome P450, family 3, subfamily A, polypeptide 5" code="CYP3A5" uri="http://www.uniprot.org/uniprot/P20815"/>
+  <template idtemplate="12" name="cytochrome P450, family 2, subfamily S, polypeptide 1" code="CYP2S1" uri="http://www.uniprot.org/uniprot/Q96SQ9" allele="1A,1B,1C,1D,1E,1F,1G,1H,2,3,4,5A,5B"/>
+  <template idtemplate="13" name="cytochrome P450, family 4, subfamily B, polypeptide 1" code="CYP4B1" uri="http://www.uniprot.org/uniprot/P13584" allele="1,2A,2B,3,4,5,6,7"/>
+  <template idtemplate="14" name="cytochrome P450, family 2, subfamily W, polypeptide 1" code="CYP2W1" uri="http://www.uniprot.org/uniprot/Q8TAV3" allele="1A,1B,2,3,4,5,6"/>
+  <template idtemplate="15" name="cytochrome P450, family 2, subfamily C, polypeptide 8" code="CYP2C8" uri="http://www.uniprot.org/uniprot/P10632" allele="1A,1B,1C,2,3,4,5,6,7,8,9,10,11,12,13,14"/>
+  <template idtemplate="16" name="cytochrome P450, family 3, subfamily A, polypeptide 5" code="CYP3A5" uri="http://www.uniprot.org/uniprot/P20815" allele="1A,1B,1C,1D,1E,2,3A,3B,3C,3D,3E,3F,3G,3H,3I,3J,3K,3L,4,5,6,7,8,9,10,11"/>
   <template idtemplate="1"/>
   <dictionary idsubject="2" relationship="is_part_of" idobject="1"/>
   <dictionary idsubject="3" relationship="is_part_of" idobject="1"/>

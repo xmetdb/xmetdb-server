@@ -86,7 +86,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 	}	
 	@Override
 	protected QueryURIReporter createURIReporter(Request request, ResourceDoc doc) {
-		return new DictionaryURIReporter(request,doc);
+		return new EnzymeURIReporter(request,doc);
 	}
 	
 	public String toURI(D record) {
@@ -113,7 +113,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 		
 		return String.format("%s%s",
 				uriReporter.getBaseReference(),
-				EndpointsResource.resource
+				EnzymesResource.resource
 			);
 
 		
@@ -192,7 +192,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 			output.write(String.format(url, 
 					query instanceof QueryOntology?"pselectable":"current",
 					uriReporter.getBaseReference(),
-					EndpointsResource.resource,
+					EnzymesResource.resource,
 					"All",
 					"",
 					"",
@@ -215,7 +215,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 					output.write(String.format(url, 
 							"current",
 							uriReporter.getBaseReference(),
-							EndpointsResource.resource,
+							EnzymesResource.resource,
 							"All",
 							Reference.encode(et.getName()),
 							et.getName(),

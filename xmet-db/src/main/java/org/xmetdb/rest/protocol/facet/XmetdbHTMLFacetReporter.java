@@ -11,7 +11,7 @@ import net.idea.restnet.db.facet.FacetURIReporter;
 
 import org.restlet.Request;
 import org.xmetdb.rest.XmetdbHTMLReporter;
-import org.xmetdb.rest.endpoints.EndpointsResource;
+import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 
 @Deprecated
@@ -37,7 +37,7 @@ public class XmetdbHTMLFacetReporter extends XmetdbHTMLReporter<EndpointProtocol
 			w.write(String.format("<div class='ui-widget' style='margin-top:18px'><p><strong>%s<strong><span style='float:right;'><a href='%s%s'>%s</a></span></p></div>",
 					"XMETDB observations by enzymes",
 					uriReporter.getBaseReference(),
-					EndpointsResource.resource,
+					EnzymesResource.resource,
 					"Enzymes catalog"
 					));
 			//w.write("<div class='protocol'>");

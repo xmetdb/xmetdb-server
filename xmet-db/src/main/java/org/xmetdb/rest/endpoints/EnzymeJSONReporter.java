@@ -5,14 +5,14 @@ import java.io.Writer;
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.r.QueryReporter;
 
-public class DictionaryJSONReporter extends QueryReporter<Enzyme, IQueryRetrieval<Enzyme>,Writer>  {
+public class EnzymeJSONReporter extends QueryReporter<Enzyme, IQueryRetrieval<Enzyme>,Writer>  {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3537339785122677311L;
 	protected String comma = null;
-	public DictionaryJSONReporter() {
+	public EnzymeJSONReporter() {
 		super();
 	}
 	

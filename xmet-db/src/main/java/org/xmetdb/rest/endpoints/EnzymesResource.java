@@ -36,7 +36,7 @@ import ambit2.base.data.Dictionary;
  * @author nina
  *
  */
-public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource<IQueryRetrieval<D>, D> {
+public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<IQueryRetrieval<D>, D> {
 	
 	public static String resource = "/catalog";
 	public static String resourceParent = "subject";
@@ -45,7 +45,7 @@ public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource
 	public static String resourceTree = String.format("/{%s}/{%s}/view/{tree}",resourceParent,resourceKey);
 	protected boolean isRecursive = false;
 	
-	public EndpointsResource() {
+	public EnzymesResource() {
 		super();
 		setHtmlbyTemplate(true);
 	}
@@ -98,12 +98,12 @@ public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource
 		} else 
 		*/
 		if (variant.getMediaType().equals(MediaType.TEXT_URI_LIST)) {
-				DictionaryURIReporter r = new DictionaryURIReporter(getRequest(),null);
+				EnzymeURIReporter r = new EnzymeURIReporter(getRequest(),null);
 				r.setDelimiter("\n");
 				return new StringConvertor(	r,MediaType.TEXT_URI_LIST,filenamePrefix);
 				
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
-				DictionaryJSONReporter r = new DictionaryJSONReporter();
+				EnzymeJSONReporter r = new EnzymeJSONReporter();
 				return new StringConvertor(	r,MediaType.APPLICATION_JSON,filenamePrefix);
 				
 		} else 			
@@ -197,6 +197,6 @@ public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource
 	@Override
 	protected QueryURIReporter<D, IQueryRetrieval<D>> getURUReporter(
 			Request baseReference) throws ResourceException {
-		return new DictionaryURIReporter(getRequest(),getDocumentation());
+		return new EnzymeURIReporter(getRequest(),getDocumentation());
 	}
 }

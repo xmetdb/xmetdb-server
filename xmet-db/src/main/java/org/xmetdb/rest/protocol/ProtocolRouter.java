@@ -4,7 +4,7 @@ import net.idea.restnet.c.routers.MyRouter;
 
 import org.restlet.Context;
 import org.xmetdb.rest.FileResource;
-import org.xmetdb.rest.endpoints.EndpointsResource;
+import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.protocol.attachments.AttachmentDatasetResource;
 import org.xmetdb.rest.protocol.attachments.ProtocolAttachmentResource;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
@@ -30,7 +30,7 @@ public class ProtocolRouter extends MyRouter {
 							DatasetResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.versions), ProtocolVersionDBResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.authors), ProtocolAuthorsResource.class);
-		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.endpoint), EndpointsResource.class);
+		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.endpoint), EnzymesResource.class);
 
 		//	setCookieUserRouter.attach(Resources.dataset, DatasetResource.class);
 		

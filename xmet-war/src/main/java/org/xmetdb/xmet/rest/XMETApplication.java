@@ -31,7 +31,7 @@ import org.restlet.security.RoleAuthorizer;
 import org.restlet.security.SecretVerifier;
 import org.restlet.security.User;
 import org.restlet.service.TunnelService;
-import org.xmetdb.rest.endpoints.EndpointsResource;
+import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.groups.OrganisationRouter;
 import org.xmetdb.rest.groups.ProjectRouter;
 import org.xmetdb.rest.protocol.ProtocolRouter;
@@ -166,11 +166,11 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		
 		
 		Router endpointsRouter = new MyRouter(getContext());
-		endpointsRouter.attachDefault(EndpointsResource.class);
-		endpointsRouter.attach(EndpointsResource.resourceID,EndpointsResource.class);
-		endpointsRouter.attach(EndpointsResource.resourceKey,EndpointsResource.class);
-		endpointsRouter.attach(EndpointsResource.resourceTree, EndpointsResource.class);
-		setCookieUserRouter.attach(EndpointsResource.resource, endpointsRouter);
+		endpointsRouter.attachDefault(EnzymesResource.class);
+		endpointsRouter.attach(EnzymesResource.resourceID,EnzymesResource.class);
+		endpointsRouter.attach(EnzymesResource.resourceKey,EnzymesResource.class);
+		endpointsRouter.attach(EnzymesResource.resourceTree, EnzymesResource.class);
+		setCookieUserRouter.attach(EnzymesResource.resource, endpointsRouter);
 		
 		router.attach(auth);
 		/**

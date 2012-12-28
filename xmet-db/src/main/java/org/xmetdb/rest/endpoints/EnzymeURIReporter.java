@@ -14,20 +14,20 @@ import ambit2.base.data.Dictionary;
  * @author nina
  *
  */
-public class DictionaryURIReporter<D extends Dictionary> extends QueryURIReporter<D, IQueryRetrieval<D>> {
+public class EnzymeURIReporter<D extends Dictionary> extends QueryURIReporter<D, IQueryRetrieval<D>> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 711954935147788056L;
 
-	public DictionaryURIReporter(Reference baseRef,ResourceDoc doc) {
+	public EnzymeURIReporter(Reference baseRef,ResourceDoc doc) {
 		super(baseRef,doc);
 	}
-	public DictionaryURIReporter(Request ref,ResourceDoc doc) {
+	public EnzymeURIReporter(Request ref,ResourceDoc doc) {
 		super(ref,doc);
 	}
-	public DictionaryURIReporter() {
+	public EnzymeURIReporter() {
 		this((Request)null,null);
 	}
 	@Override
@@ -37,7 +37,7 @@ public class DictionaryURIReporter<D extends Dictionary> extends QueryURIReporte
 		
 		return String.format("%s%s/%s/%s%s",
 			ref,
-			EndpointsResource.resource,
+			EnzymesResource.resource,
 			record.getReference()==null?"All":
 			Reference.encode(record.getTitle().replace("/", "_")),
 			Reference.encode(record.getName().replace("/", "_")),

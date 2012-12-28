@@ -74,3 +74,36 @@ ALTER TABLE `protocol` ADD COLUMN `atom_uncertainty` ENUM('Certain','Uncertain')
  ADD INDEX `Index_9`(`atom_uncertainty`),
  ADD INDEX `Index_10`(`product_amount`);
  insert into version (idmajor,idminor,comment) values (2,8,"Atom uncertainty and product amount fields");
+ 
+ -- ----------------------------------------------------------
+-- 2.8 to 2.9 
+-- ----------------------------------------------------------
+ALTER TABLE `template` ADD COLUMN `allele` TEXT DEFAULT null AFTER `uri`;
+update template set allele="1A,1B,1C,1E,1F,1G,1H,1J,1K,1L,1M,1N,1P,1Q,1R,1S,1T,2,3,4,5,6,7,8,9,10,11,12,13,14,15A,15B,16A,16B,17,18A,18B,19,20,21,22"
+where code='CYP3A4';
+update template set allele="1A,1B,1C,1Cx2,2,3,4,5A,5B,6,7A,7B,7C" where code='CYP2E1';
+update template set allele="1A,1B,1C,1D,1E,1XN,2A,2B,2C,2D,2E,2F,2G,2H,2J,2K,2L,2M,2XN,3A,3B,4A,4B,4C,4D,4E,4F,4G,4H,4J,4K,4L,4M,4N,4X2,5,6A,6B,6C,6D,7,8,9,9x2,10A,10B,10C,10D,10X2,11,12,13,14A,14B,15,16,17,17XN,18,19,20,21A,21B,22,23,24,25,26,27,28,29,30,31,32,33,34,35A,35B,35X2,36,37,38,39,40,41,42,43,44,45A,45B,46,47,48,49,50,51,52,53,54,55,56A,56B,57,59,60,61,62,63,64,65,66,67,68A,68B,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84-101,102,103,104,105"
+where code='CYP2D6';
+update template set allele="1A,1B,1C,2A,2B,2C,3A,3B,4,5,6,7,8,9,10,11A,11B,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,34,33,34,35,36-56,57"
+where code='CYP2C9';
+update template set allele="1A,1B,1C,1D,1E,1F,1G,1H,1J,1K,1L,1M,1N,1P,1Q,1R,1S,1T,1U,1V,1W,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21"
+where code='CYP1A2';
+update template set allele="1A,1B,1C,2A,2B,2C,2D,3A,3B,4A,4B,5A,5B,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28"
+where code='CYP2C19';
+update template set allele="1,2A,2B,2C,3,4,5,6,7,8,9,10,11"
+where code='CYP1A1';
+update template set allele="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26"
+where code='CYP1B1';
+update template set allele="1A,1B,1C,1D,1E,1F,1G,1H,2,3,4,5A,5B"
+where code='CYP2S1';
+update template set allele="1A,1B,1C,1D,1E,2,3A,3B,3C,3D,3E,3F,3G,3H,3I,3J,3K,3L,4,5,6,7,8,9,10,11"
+where code='CYP3A5';
+update template set allele="1A,1B,1C,2,3,4,5,6,7,8,9,10,11,12,13,14"
+where code='CYP2C8';
+update template set allele="1,2A,2B,3,4,5,6,7"
+where code='CYP4B1';
+update template set allele="1A,1B,2,3,4,5,6"
+where code='CYP2W1';
+update template set allele="1,2,3,4"
+where code='CYP26A1';
+insert into version (idmajor,idminor,comment) values (2,9,"Alleles");
