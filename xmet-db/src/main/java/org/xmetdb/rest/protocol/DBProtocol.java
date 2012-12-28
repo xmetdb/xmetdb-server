@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import net.toxbank.client.resource.Protocol;
+import net.toxbank.client.resource.Template;
 
 import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
@@ -150,5 +151,14 @@ public class DBProtocol extends Protocol {
 
 	public void setPublishedStatus(PublishedStatus publishedStatus) {
 		this.publishedStatus = publishedStatus;
+	}
+	
+	public void setReference(String reference) {
+		if (getDataTemplate()==null) setDataTemplate(new Template());
+		getDataTemplate().setTitle(reference);
+	}
+	public String getReference() {
+		if (getDataTemplate()==null) return null;
+		else return getDataTemplate().getTitle();
 	}
 }

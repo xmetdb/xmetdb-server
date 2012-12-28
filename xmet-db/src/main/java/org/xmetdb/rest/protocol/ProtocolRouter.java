@@ -31,11 +31,5 @@ public class ProtocolRouter extends MyRouter {
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.versions), ProtocolVersionDBResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.authors), ProtocolAuthorsResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.endpoint), EnzymesResource.class);
-
-		//	setCookieUserRouter.attach(Resources.dataset, DatasetResource.class);
-		
-		
-	//	attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.previous), ProtocolPreviousVersionDBResource.class);
-		
 	}
 }

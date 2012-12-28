@@ -119,7 +119,7 @@ $(document).ready(function() {
 			<label>Reference:</label>
 			<input type="hidden" name="published_status"  value="on">
 		</div>
-		<input type="text" name="xmet_reference" title="DOI or free text?" value="" class="eight columns omega remove-bottom">
+		<input type="text" name="xmet_reference" title="Enter reference DOI or free text" value="" class="eight columns omega remove-bottom">
 		<input type="submit" class="submit five columns omega" value="Submit observation">
 	</div>
 			

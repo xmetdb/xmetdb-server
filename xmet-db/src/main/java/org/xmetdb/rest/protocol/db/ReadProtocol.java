@@ -17,6 +17,7 @@ import net.toxbank.client.resource.Organisation;
 import net.toxbank.client.resource.Project;
 import net.toxbank.client.resource.Protocol;
 import net.toxbank.client.resource.Protocol.STATUS;
+import net.toxbank.client.resource.Template;
 
 import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.groups.DBOrganisation;
@@ -47,7 +48,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			fields.published_status,
 			fields.created,
 			fields.updated,
-			fields.filename,
+			fields.reference,
 			fields.title,
 			fields.anabstract,
 			fields.author_uri,
@@ -123,7 +124,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public QueryParam getParam(DBProtocol protocol) {
 				String title = getValue(protocol).toString();
-				return new QueryParam<String>(String.class, title.length()>255?title.substring(0,254).trim():title.trim());
+				return new QueryParam<String>(String.class, title.length()>32?title.substring(0,31).trim():title.trim());
 			}			
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
@@ -141,7 +142,8 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 		anabstract {
 			@Override
 			public QueryParam getParam(DBProtocol protocol) {
-				return new QueryParam<String>(String.class, (String) getValue(protocol));
+				String title = getValue(protocol).toString();
+				return new QueryParam<String>(String.class, title.length()>255?title.substring(0,254).trim():title.trim());
 			}	
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
@@ -430,6 +432,27 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 				return String.format("<a href='%s%s'>Authors list</a>",uri,Resources.user);
 			}
 		
+		},		
+		reference {
+			@Override
+			public QueryParam getParam(DBProtocol protocol) {
+				String title = getValue(protocol).toString();
+				return new QueryParam<String>(String.class, title.length()>255?title.substring(0,254).trim():title.trim());
+			}			
+			@Override
+			public void setParam(DBProtocol protocol, ResultSet rs) throws SQLException {
+				Template t = new Template();
+				t.setTitle(rs.getString(name()));
+				protocol.setDataTemplate(t);
+			}		
+			@Override
+			public Object getValue(DBProtocol protocol) {
+				return protocol==null?null:protocol.getDataTemplate()==null?null:protocol.getDataTemplate().getTitle();
+			}
+			
+			public String getCondition() {
+				return String.format(" protocol.%s regexp ? ",name());
+			}
 		},		
 		filename {
 			@Override
@@ -838,7 +861,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 		fields.idproject,
 		fields.iduser,
 		fields.idorganisation,
-		fields.filename,
+		fields.reference,
 		fields.status,
 		fields.published_status,
 		fields.atom_uncertainty,

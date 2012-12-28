@@ -85,15 +85,15 @@ DROP TABLE IF EXISTS `protocol`;
 CREATE TABLE  `protocol` (
   `idprotocol` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `version` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'Version',
-  `title` varchar(255) NOT NULL COMMENT 'Title',
+  `title` varchar(32) NOT NULL COMMENT 'Title',
   `qmrf_number` varchar(36) NOT NULL COMMENT 'QMRF Number',
-  `abstract` text,
+  `abstract` varchar(255) DEFAULT NULL,
   `summarySearchable` tinyint(1) NOT NULL DEFAULT '1',
   `iduser` int(10) unsigned NOT NULL COMMENT 'Link to user table',
   `idproject` int(10) unsigned NOT NULL COMMENT 'Link to projects table',
   `idorganisation` int(10) unsigned NOT NULL COMMENT 'Link to org table',
   `filename` text COMMENT 'Path to file name',
-  `template` text COMMENT 'Data template',
+  `reference` varchar(255) DEFAULT NULL COMMENT 'Reference',
   `status` enum('RESEARCH','SOP') NOT NULL DEFAULT 'RESEARCH' COMMENT 'Research or Standard Operating Procedure',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated',
   `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -110,10 +110,12 @@ CREATE TABLE  `protocol` (
   KEY `Index_8` (`published_status`),
   KEY `Index_9` (`atom_uncertainty`),
   KEY `Index_10` (`product_amount`),
+  KEY `Index_11` (`reference`),
   CONSTRAINT `FK_protocol_1` FOREIGN KEY (`idproject`) REFERENCES `project` (`idproject`),
   CONSTRAINT `FK_protocol_2` FOREIGN KEY (`idorganisation`) REFERENCES `organisation` (`idorganisation`),
   CONSTRAINT `FK_protocol_3` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- -----------------------------------------------------
 -- Protocol authors
 -- -----------------------------------------------------
@@ -237,7 +239,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,8,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,10,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version

@@ -364,6 +364,10 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				break;
 			}
 			*/
+			case xmet_reference: {
+				values[i] = "XMET Reference";
+				break;
+			}			
 			case xmet_enzyme: {
 				values[i] = "CYP3A4";
 				break;

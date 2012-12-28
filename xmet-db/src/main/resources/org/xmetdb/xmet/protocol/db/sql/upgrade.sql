@@ -163,3 +163,12 @@ end $$
 
 DELIMITER ;
 insert into version (idmajor,idminor,comment) values (2,9,"Alleles");
+
+-- ----------------------------------------------------------
+-- 2.9 to 2.10 
+-- ----------------------------------------------------------
+ALTER TABLE `protocol` MODIFY COLUMN `title` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Title',
+ MODIFY COLUMN `abstract` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ CHANGE COLUMN `template` `reference` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Reference',
+ ADD INDEX `Index_11`(`reference`);
+insert into version (idmajor,idminor,comment) values (2,10,"References");

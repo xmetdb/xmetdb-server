@@ -50,7 +50,7 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			ReadProtocol.fields.title,
 			ReadProtocol.fields.anabstract,
 			ReadProtocol.fields.summarySearchable,
-			ReadProtocol.fields.filename,
+			ReadProtocol.fields.reference,
 			ReadProtocol.fields.idproject,
 			ReadProtocol.fields.idorganisation,
 			ReadProtocol.fields.iduser,

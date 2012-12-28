@@ -29,7 +29,8 @@ public class ReadProtocolTest extends QueryTest<ReadProtocol> {
 			Assert.assertNotNull(protocol.getOwner());
 			Assert.assertEquals(AtomUncertainty.Certain,protocol.getAtomUncertainty());
 			Assert.assertEquals(ProductAmount.Major,protocol.getProductAmount());
-			//Assert.assertNotNull(protocol.getOwner().getFirstname());
+			Assert.assertNotNull(protocol.getDataTemplate());
+			Assert.assertEquals("TEST Reference",protocol.getDataTemplate().getTitle());
 			records++;
 		}
 		Assert.assertEquals(1,records);

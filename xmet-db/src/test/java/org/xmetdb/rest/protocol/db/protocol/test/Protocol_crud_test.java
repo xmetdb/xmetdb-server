@@ -58,19 +58,20 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	@Override
 	protected IQueryUpdate<T,DBProtocol> createQuery() throws Exception {
 
-		DBProtocol ref = new DBProtocol(); //id2v1);
-		ref.setID(3);
-		ref.setVersion(1);
+		DBProtocol observation = new DBProtocol(); //id2v1);
+		observation.setID(3);
+		observation.setVersion(1);
 		//ref.setAbstract(IOUtils.toString(in, "UTF-8"));
-		ref.setTitle("HEP");
-		ref.setAbstract("Hepatocytes");
-		ref.addKeyword("hepatocyte");
-		ref.setPublished(true);
+		observation.setTitle("HEP");
+		observation.setAbstract("Hepatocytes");
+		observation.addKeyword("hepatocyte");
+		observation.setPublished(true);
+		observation.setReference("Test Reference");
 		Enzyme enzyme = new Enzyme("","");
 		enzyme.setCode("CYP3A4");
 		enzyme.setAlleles(new String[] {"1A"});
-		ref.setEndpoint(enzyme);
-		return (IQueryUpdate<T,DBProtocol>)new UpdateProtocol(ref);
+		observation.setEndpoint(enzyme);
+		return (IQueryUpdate<T,DBProtocol>)new UpdateProtocol(observation);
 
 	}
 
@@ -79,7 +80,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number,idtemplate,allele FROM protocol left join protocol_endpoints using(idprotocol,version) where idprotocol=3 and version=1"));
+				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number,idtemplate,allele,reference FROM protocol left join protocol_endpoints using(idprotocol,version) where idprotocol=3 and version=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		//we ignore the published flag here! There is a special PublishProtocol query
@@ -90,6 +91,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals("Hepatocytes",table.getValue(0,"abstract"));
 		Assert.assertEquals("XMETDB3",table.getValue(0,"qmrf_number"));
 		Assert.assertEquals("1A",table.getValue(0,"allele"));
+		Assert.assertEquals("Test Reference",table.getValue(0,"reference"));
 		c.close();	
 	}
 	
@@ -160,23 +162,24 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 	@Override
 	protected IQueryUpdate<T, DBProtocol> createQueryNew()
 			throws Exception {
-		DBProtocol ref = new DBProtocol();
+		DBProtocol observation = new DBProtocol();
 		DBUser user = new DBUser();
 		user.setID(3);
-		ref.setOwner(user);
-		ref.setProject(new DBProject(1));	
-		ref.setOrganisation(new DBOrganisation(1));
-		ref.setSearchable(true);
-		ref.setStatus(STATUS.SOP);
-		ref.setPublished(false);
-		ref.setIdentifier("");
-		ref.setEndpoint(new Enzyme(null,null));
-		ref.getEndpoint().setCode("CYP3A4");
-		ref.setAbstract("Hepatocytes");
-		ref.setTitle("HEP");
-		ref.setProductAmount(ProductAmount.Major);
-		ref.setAtomUncertainty(AtomUncertainty.Certain);
-		return (IQueryUpdate<T, DBProtocol>)new CreateProtocol(ref);
+		observation.setOwner(user);
+		observation.setProject(new DBProject(1));	
+		observation.setOrganisation(new DBOrganisation(1));
+		observation.setSearchable(true);
+		observation.setStatus(STATUS.SOP);
+		observation.setPublished(false);
+		observation.setIdentifier("");
+		observation.setEndpoint(new Enzyme(null,null));
+		observation.getEndpoint().setCode("CYP3A4");
+		observation.setAbstract("Hepatocytes");
+		observation.setTitle("HEP");
+		observation.setReference("Test reference");
+		observation.setProductAmount(ProductAmount.Major);
+		observation.setAtomUncertainty(AtomUncertainty.Certain);
+		return (IQueryUpdate<T, DBProtocol>)new CreateProtocol(observation);
 	}
 
 	@Override
@@ -184,7 +187,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status,atom_uncertainty,product_amount FROM protocol where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
+				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status,atom_uncertainty,product_amount,reference FROM protocol where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"summarySearchable"));
@@ -192,6 +195,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals(AtomUncertainty.Certain.toString(),table.getValue(0,"atom_uncertainty"));
 		Assert.assertEquals(ProductAmount.Major.toString(),table.getValue(0,"product_amount"));
 		Assert.assertTrue(table.getValue(0,"qmrf_number").toString().startsWith("XMETDB"));
+		Assert.assertEquals("Test reference",table.getValue(0,"reference"));
 		c.close();		
 	}
 

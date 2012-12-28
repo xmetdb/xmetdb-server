@@ -270,7 +270,7 @@ function loadObservation(observation_uri) {
 	        	  $('#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
-	        	  $('#xmet_reference').replaceWith("TODO");
+	        	  $('#xmet_reference').replaceWith(observation["reference"]);
 	        	  
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);

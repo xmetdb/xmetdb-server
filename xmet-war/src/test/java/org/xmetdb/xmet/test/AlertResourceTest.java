@@ -49,7 +49,7 @@ public class AlertResourceTest extends ResourceTest {
 		testGet(getTestURI(),MediaType.TEXT_URI_LIST);
 	}
 	/**
-	 * The URI should be /protocol/P1/datatemplate
+	 * 
 	 */
 	@Override
 	public boolean verifyResponseURI(String uri, MediaType media, InputStream in)
