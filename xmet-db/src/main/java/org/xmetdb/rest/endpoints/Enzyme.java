@@ -1,5 +1,7 @@
 package org.xmetdb.rest.endpoints;
 
+import java.net.URI;
+
 import ambit2.base.data.Dictionary;
 
 public class Enzyme extends Dictionary {
@@ -9,6 +11,24 @@ public class Enzyme extends Dictionary {
 	private static final long serialVersionUID = -5987449761837302780L;
 	protected String code;
 	protected String parentCode;
+	protected String[] alleles = null;
+	protected URI uri = null;
+	public URI getUri() {
+		return uri;
+	}
+
+	public void setUri(URI uri) {
+		this.uri = uri;
+	}
+
+	public String[] getAlleles() {
+		return alleles;
+	}
+
+	public void setAlleles(String[] alleles) {
+		this.alleles = alleles;
+	}
+
 	public String getParentCode() {
 		return parentCode;
 	}

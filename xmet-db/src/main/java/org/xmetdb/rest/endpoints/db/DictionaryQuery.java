@@ -29,18 +29,21 @@
 
 package org.xmetdb.rest.endpoints.db;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.xmetdb.rest.endpoints.Enzyme;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 import net.idea.modbcum.q.conditions.StringCondition;
 import net.idea.modbcum.q.query.AbstractQuery;
+
+import org.xmetdb.rest.endpoints.Enzyme;
+
 import ambit2.base.data.Dictionary;
 
 
@@ -51,7 +54,7 @@ public abstract class DictionaryQuery<T extends Dictionary> extends AbstractQuer
 	 */
 	private static final long serialVersionUID = -7315142224794511557L;
 	public static final String SQL = 
-		"select tObject.name as category,tSubject.name as field,relationship,tObject.code as catCode,tSubject.code as code  from dictionary d "+
+		"select tObject.name as category,tSubject.name as field,relationship,tObject.code as catCode,tSubject.code as code,tSubject.uri as uri, tSubject.allele as allele  from dictionary d "+
 		"join template as tSubject on d.idsubject=tSubject.idtemplate "+
 		"join template as tObject on d.idobject=tObject.idtemplate "+
 		"where %s.name %s ? order by tObject.idtemplate";
@@ -85,6 +88,9 @@ public abstract class DictionaryQuery<T extends Dictionary> extends AbstractQuer
 			Enzyme var = new Enzyme(rs.getString(2),rs.getString(1),rs.getString(3));
 			var.setCode(rs.getString("code"));
 			var.setParentCode(rs.getString("category"));
+			try {var.setUri(new URI(rs.getString("uri")));} catch (URISyntaxException x) {}
+			String alleles = rs.getString("allele");
+			if (alleles!=null) var.setAlleles(alleles.split(","));
 			return (T) var;
 		} catch (SQLException x) {
 			throw new AmbitException(x);
