@@ -368,6 +368,10 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				values[i] = "CYP3A4";
 				break;
 			}
+			case xmet_allele: {
+				values[i] = "1B";
+				break;				
+			}
 			case identifier: {
 				values[i] = null;
 				break;

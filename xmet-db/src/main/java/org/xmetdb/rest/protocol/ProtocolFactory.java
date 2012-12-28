@@ -33,6 +33,7 @@ public class ProtocolFactory {
 		identifier, xmet_experiment, xmet_experimentdescription, published_status, 
 		xmet_substrate_upload, xmet_product_upload, 
 		xmet_substrate_uri, xmet_product_uri,
+		xmet_allele,
 		project_uri, organisation_uri, user_uri, iduser, author_uri, 
 		summarySearchable, status, xmlkeywords, 
 		xmet_enzyme, xmet_atom_uncertainty, xmet_product_amount, allowReadByUser, allowReadByGroup;
@@ -278,6 +279,15 @@ public class ProtocolFactory {
 					} catch (Exception x) {
 					}
 					break;
+				}
+				case xmet_allele: {
+					try {
+						if (protocol.getEndpoint() == null)
+							protocol.setEndpoint(new Enzyme(null, null));
+						protocol.getEndpoint().setAlleles(new String[] {fi.getString(utf8)});
+					} catch (Exception x) {
+					}
+					break;					
 				}
 				case allowReadByUser: {
 					String s = fi.getString(utf8);
