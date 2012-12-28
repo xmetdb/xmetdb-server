@@ -8,18 +8,18 @@ $(document).ready(function() {
 
   	var oTable = defineStructuresTable(url,'${queryService}','${query.option!""}' == 'similarity');
     <!-- Details panel -->	
-	$('#structures tbody td .zoomstruc img').live(
+	$('#structures tbody td .zoomstruc').live(
 			'click',
 			function() {
 				var nTr = $(this).parents('tr')[0];
 				if (oTable.fnIsOpen(nTr)) {
-					this.src = "${xmet_root}/images/zoom_in.png";
-					this.alt = "Zoom in";
+					$(this).removeClass("ui-icon-folder-open");
+					$(this).addClass("ui-icon-folder-collapsed");
 					this.title='Click to show XMETDB observations';
 					oTable.fnClose(nTr);
 				} else {
-				    this.alt = "Zoom out";
-					this.src = "${xmet_root}/images/zoom_out.png";
+					$(this).removeClass("ui-icon-folder-collapsed");
+					$(this).addClass("ui-icon-folder-open");
 					this.title='Click to close XMETDB observations list';
 					var id = 'v'+getID();
 					oTable.fnOpen(nTr, fnStructureXMETObservationsList(oTable,nTr,id),	'details');

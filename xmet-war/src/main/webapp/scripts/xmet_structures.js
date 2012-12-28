@@ -14,7 +14,7 @@ function defineStructuresTable(url, query_service, similarity) {
 					"mDataProp" : null,
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
-							return "<span class='zoomstruc'><img border='0' src='/xmetdb/images/zoom_in.png' alt='zoom in' title='Click to show compound details'></span>";
+						 return  "<span class='ui-icon ui-icon-folder-collapsed zoomstruc' style='float: left; margin: .1em;' title='Click to show XMETDB observations'></span>";			
 					}
 				},			
 				{ "mDataProp": "compound.URI" , "asSorting": [ "asc", "desc" ],
