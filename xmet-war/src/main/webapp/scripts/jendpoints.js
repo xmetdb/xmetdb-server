@@ -18,7 +18,9 @@ function defineEndpointsTable(url) {
 						 if (count == null) return "";
 						 else {
 							 if ((o.aData["parentName"] == "") && (o.aData["name"]=="Other")) return ""; //workaround
-							 return "<span class='zoomqmrf'><img border='0' src='/xmetdb/images/zoom_in.png' alt='zoom in' title='Click to show compound details'></span>";
+							 
+							 return  "<span class='ui-icon ui-icon-folder-collapsed zoomxmet' style='float: left; margin: .1em;' title='Click to show XMETDB observations'></span>"+
+							 		"<label>("+count + ")</label>";
 						 }
 					}
 				},			
@@ -39,21 +41,34 @@ function defineEndpointsTable(url) {
 					  return "<a href='/xmetdb/catalog/"+ parent +"/"+ encodeURIComponent(o.aData["name"]) +"'>" + o.aData["name"] + "</a>";
 				  }
 				},
-				{ //0
-					"aTargets": [ 3 ],	
-					"sClass" : "center",
-					"bSortable" : false,
-					"bSearchable" : false,
-					"mDataProp" : null,
-					"bUseRendered" : true,
-					sWidth : "32px",
-					"fnRender" : function(o,val) {
-						 var count = facet[o.aData["name"]];	
-						 if (count == null) return "";
-						 else 
-						 return count;
-					}
-				}				
+				{ "mDataProp": "uri" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 3 ],
+					  "bSearchable" : true,
+					  "sWidth" : "10%",
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "fnRender" : function(o,val) {
+						  var n = val.lastIndexOf("/");
+						  var id = val;
+						  if (n>=0) id = val.substring(n+1);
+						  return "<a href='"+ val + "' target='uniprot'>" + id + "</a>";
+					  }
+				},
+				{ "mDataProp": "alleles" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 4 ],
+					  "bSearchable" : true,
+					  "sWidth" : "6em",
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "fnRender" : function(o,val) {
+						  var sOut = "<select style='width:5em;'>";
+						  $.each(val, function(i) {
+							    sOut += '<option value="' + val[i] + '">' + val[i] + '</option>';
+							});
+						  sOut += "</select>";
+						  return sOut;
+					  }
+				}	
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"bJQueryUI" : true,

@@ -8,18 +8,18 @@ $(document).ready(function() {
   	var oTable = defineEndpointsTable("${xmet_request_json}");
 
     <!-- Details panel -->	
-	$('#endpoints tbody td .zoomqmrf img').live(
+	$('#endpoints tbody td .zoomxmet').live(
 			'click',
 			function() {
 				var nTr = $(this).parents('tr')[0];
 				if (oTable.fnIsOpen(nTr)) {
-					this.src = "${xmet_root}/images/zoom_in.png";
-					this.alt = "Zoom in";
+					$(this).removeClass("ui-icon-folder-open");
+					$(this).addClass("ui-icon-folder-collapsed");
 					this.title='Click to show XMETDB observations';
 					oTable.fnClose(nTr);
 				} else {
-				    this.alt = "Zoom out";
-					this.src = "${xmet_root}/images/zoom_out.png";
+					$(this).removeClass("ui-icon-folder-collapsed");
+					$(this).addClass("ui-icon-folder-open");
 					this.title='Click to close XMETDB observations list';
 					var id = 'v'+getID();
 					oTable.fnOpen(nTr, fnEndpointXMETDBList(oTable,nTr,id),	'details');
@@ -41,10 +41,11 @@ $(document).ready(function() {
 		
 		<table id='endpoints'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>
-		<th></th>
+		<th>XMETDB observations</th>
 		<th>Code</th>
 		<th>Name</th>
-		<th>XMETDB observations</th>
+		<th>UniProt ID</th>
+		<th>Alleles</th>
 		</thead>
 		<tbody></tbody>
 		</table>
