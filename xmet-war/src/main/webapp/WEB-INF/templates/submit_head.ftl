@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$( ".useSelected" ).button();
-		loadEnzymesList("#search_enzyme");
+		loadEnzymesList("${xmet_root}","#search_enzyme");
 		addSearchUI('substrate','${xmet_root}');
 		addSearchUI('product','${xmet_root}');
 		$( "#buttonSubstrateSearch" ).click(function() {  

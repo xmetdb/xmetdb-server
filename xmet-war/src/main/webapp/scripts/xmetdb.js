@@ -28,13 +28,13 @@ function renderEnzyme(code,name) {
 	return "<span title='"+ name +"'>" + code + "</span>";
 }
 
-function loadEnzymesList(selectTag) {
+function loadEnzymesList(root,selectTag) {
 	  //clear the list	
 	  $(selectTag).html("");
 	  //get all enzymes
     $.ajax({
         dataType: "json",
-        url: "/xmetdb/catalog?media=application%2Fjson",
+        url: root + "/catalog?media=application%2Fjson",
         success: function(data, status, xhr) {
         	  data.sort(function sortfunction(a,b){
         		  if(a.code == b.code){
@@ -42,6 +42,7 @@ function loadEnzymesList(selectTag) {
 	          	  }
          		  return (a.code < b.code) ? -1 : 1;
 			  });
+          $("<option value=''></option>").appendTo(selectTag);
       	  data.forEach(function enz(element, index, array) {
       		  $("<option value='" + element.code + "'>" + element.code + "&nbsp;" +element.name + "</option>").appendTo(selectTag);
       	  });

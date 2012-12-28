@@ -6,7 +6,7 @@
 
 
 $(document).ready(function() {
-	loadEnzymesList("#search_enzyme");
+	loadEnzymesList("${xmet_root}","#search_enzyme");
 	searchFormValidation("#search_form");
 });
 

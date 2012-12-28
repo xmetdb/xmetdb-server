@@ -17,13 +17,13 @@
 	
 
 	    	
-    <div class="twelve columns ui-widget-header ui-corner-top">Search XMETDB</div>
+    <div class="twelve columns ui-widget-header ui-corner-top">&nbsp;Search XMETDB</div>
 	<div class="twelve columns remove-bottom ui-widget-content ui-corner-bottom">
 	<div  style="margin:5px;padding:5px;" class="remove-bottom"> 	
 		
-	<form method="GET" action="${xmet_root}/chemical" name="search_form" id="search_form">
+	<form method="GET" action="${xmet_root}/chemical" name="search_form" id="search_form" class="remove-bottom">
 		<div class="row remove-bottom ">
-	    	<iframe class="twelve columns alpha remove-bottom" style='height:450px;width:500px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html"></iframe>	
+	    	<iframe class="twelve columns alpha remove-bottom" style='height:420px;width:500px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html"></iframe>	
 			<div class="four columns omega remove-bottom ">
 				<br/>
 			    <label>Search for</label>
@@ -50,7 +50,7 @@
 			</div>
     	</div>	       	
 	</form>
-	<form method="GET" action="${xmet_root}/protocol" name="form" id="search_protocol_form">		
+	<form method="GET" action="${xmet_root}/protocol" name="form" id="search_protocol_form" class="remove-bottom">		
 	    <div class="row remove-bottom">
       		<div class="two columns alpha"><label>Experiment:</label></div>
       		<div class="eight columns omega">
@@ -61,32 +61,39 @@
     	</div>	
 	    <div class="row remove-bottom">
       		<div class="two columns alpha"><label>Enzyme:</label></div>
-      		<div class="eight columns omega">
-				<!-- option=qmrfnumber | endpoint| title | text | author-->
+      		<div class="nine columns omega">
 				<input type='hidden' name="option" value='endpointcode'>
-				<select id="search_enzyme" name="search" multiple tabindex='9'></select>
+				<select id="search_enzyme" name="search" multiple tabindex='9' style='width:400px;'></select>
+      		</div>
+      		<div class="one column omega">
+      		      <label>Allele</label>
       		</div>
       		<div class="two columns omega">
-      				Allele
-      				<select id="search_allele" name="search_allele" multiple tabindex='10'>
+     				<select id="search_allele" name="search_allele" multiple tabindex='10'>
 					</select>
       		</div>
     	</div>	    	
     	<div class="row remove-bottom">
-      		<div class="two columns alpha"><label>XMETID:</label></div>
+      		<div class="two columns alpha"><label>Reference:</label></div>
       		<div class="six columns omega">
-				<input class="ui-widget" type='text' id="search_xmetid" name="search_xmetid" tabindex='11'>
+				<input class="ui-widget" type='text' id="search_reference" name="search_reference" tabindex='11' style='width:400px;'>
       		</div>
+   		
     	</div>	
-     	<div class="row remove-bottom">
-      		<div class="two columns alpha"><label>Number of hits</label></div>
-      		<div class="eight columns omega">
-      		   	<input type='text' size='3' name='pagesize' value='100' tabindex='12'>
+    	<div class="row remove-bottom">
+      		<div class="two columns alpha"><label>XMETID:</label></div>
+      		<div class="four columns omega">
+				<input class="ui-widget" type='text' id="search_xmetid" name="search_xmetid" tabindex='12' style="width:10em;">
       		</div>
+      		<div class="two columns alpha"><label>Number of hits</label></div>
+      		<div class="two columns omega">
+      		   	<input type='text' size='3' name='pagesize' value='100' tabindex='12' style="width:3em;">
+      		</div>         		
       		<div class="six columns omega">
-    		 	   <input type="submit" class="search" value="Search observation" tabindex='13'>
-      		</div>      		
+    		 	   <input type="submit" class="search" value="Observations search" tabindex='13'>
+      		</div>       		
     	</div>	    	
+ 	
     </form>
     
 
