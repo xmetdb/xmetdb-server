@@ -136,7 +136,7 @@ public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource
 			if (term!=null) {
 				QueryOntology q = new QueryOntology();
 				q.setIncludeParent(RetrieveMode.all);
-				q.setValue(new EndpointTest(term,term));
+				q.setValue(new Enzyme(term,term));
 				return q;
 			}
 		} catch (Exception x) {
@@ -159,7 +159,7 @@ public class EndpointsResource<D extends Dictionary> extends XmetdbQueryResource
 		if (key != null) {
 			QueryOntology q = new QueryOntology();
 			q.setIncludeParent(RetrieveMode.child);
-			q.setValue(key==null?null:new EndpointTest(Reference.decode(key.toString().replace("_", "/")),null));
+			q.setValue(key==null?null:new Enzyme(Reference.decode(key.toString().replace("_", "/")),null));
 			return q;
 		} else {
 			key =  request.getAttributes().get(resourceParent);

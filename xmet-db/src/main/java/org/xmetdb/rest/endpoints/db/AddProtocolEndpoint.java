@@ -5,19 +5,19 @@ import java.util.List;
 
 import org.xmetdb.rest.db.exceptions.InvalidEndpointException;
 import org.xmetdb.rest.db.exceptions.InvalidProtocolException;
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.DBProtocol;
 
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 import net.idea.modbcum.q.update.AbstractUpdate;
 
-public class AddProtocolEndpoint  extends AbstractUpdate<EndpointTest,DBProtocol> {
+public class AddProtocolEndpoint  extends AbstractUpdate<Enzyme,DBProtocol> {
 	public static final String[] sql_addEndpoints = new String[] { 
 			"insert ignore into protocol_endpoints select idprotocol,version,idtemplate from protocol join template where code=? and name=? and qmrf_number = ? "
 	};
 	
-	public AddProtocolEndpoint(EndpointTest endpoint,DBProtocol protocol) {
+	public AddProtocolEndpoint(Enzyme endpoint,DBProtocol protocol) {
 		super(protocol);
 		setGroup(endpoint);
 	}

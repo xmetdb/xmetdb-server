@@ -34,7 +34,7 @@ import net.idea.modbcum.i.query.IQueryUpdate;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.endpoints.db.AddProtocolEndpoint;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
@@ -77,7 +77,7 @@ public final class ProtocolEndpoint_crud_test<T extends Object>  extends CRUDTes
 	@Override
 	protected IQueryUpdate<T,DBProtocol> updateQuery() throws Exception {
 		DBProtocol protocol = new DBProtocol(idxmet2);
-		EndpointTest endpoint = new EndpointTest("cytochrome P450, family 3, subfamily A, polypeptide 4",null);
+		Enzyme endpoint = new Enzyme("cytochrome P450, family 3, subfamily A, polypeptide 4",null);
 		endpoint.setCode("CYP3A4");
 		IQueryUpdate<T,DBProtocol> q = (IQueryUpdate<T,DBProtocol>)new AddProtocolEndpoint(endpoint,protocol);
 		return q;

@@ -2,7 +2,7 @@ package org.xmetdb.rest.endpoints;
 
 import ambit2.base.data.Dictionary;
 
-public class EndpointTest extends Dictionary {
+public class Enzyme extends Dictionary {
 	/**
 	 * 
 	 */
@@ -26,11 +26,11 @@ public class EndpointTest extends Dictionary {
 		this.id = id;
 	}
 
-	public EndpointTest(String arg1,String arg2) {
+	public Enzyme(String arg1,String arg2) {
 		super(arg1,arg2);
 	}
 	
-	public EndpointTest(String arg1,String arg2,String arg3) {
+	public Enzyme(String arg1,String arg2,String arg3) {
 		super(arg1,arg2,arg3);
 	}
 	public String getCode() {

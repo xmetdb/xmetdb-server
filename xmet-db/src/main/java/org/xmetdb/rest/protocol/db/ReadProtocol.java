@@ -18,7 +18,7 @@ import net.toxbank.client.resource.Project;
 import net.toxbank.client.resource.Protocol;
 import net.toxbank.client.resource.Protocol.STATUS;
 
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.groups.DBOrganisation;
 import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.DBProtocol;
@@ -594,7 +594,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
 				protocol.getEndpoint().setCode(rs.getString("code"));
 			}
 			@Override
@@ -623,7 +623,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
 				protocol.getEndpoint().setCode(rs.getString("name"));
 			}			
 		},		
@@ -644,7 +644,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
 				protocol.getEndpoint().setCode(rs.getString("parentcode"));
 			}
 			@Override
@@ -669,7 +669,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new EndpointTest(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
 				protocol.getEndpoint().setCode(rs.getString("parentname"));
 			}
 			@Override

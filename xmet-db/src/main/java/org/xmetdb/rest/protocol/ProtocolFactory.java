@@ -15,7 +15,7 @@ import net.toxbank.client.resource.User;
 import org.apache.commons.fileupload.FileItem;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.groups.DBOrganisation;
 import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.CallableProtocolUpload.UpdateMode;
@@ -273,7 +273,7 @@ public class ProtocolFactory {
 				case xmet_enzyme: {
 					try {
 						if (protocol.getEndpoint() == null)
-							protocol.setEndpoint(new EndpointTest(null, null));
+							protocol.setEndpoint(new Enzyme(null, null));
 						protocol.getEndpoint().setCode(fi.getString(utf8));
 					} catch (Exception x) {
 					}

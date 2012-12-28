@@ -34,7 +34,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
@@ -82,7 +82,7 @@ public abstract class DictionaryQuery<T extends Dictionary> extends AbstractQuer
 	}
 	public T getObject(ResultSet rs) throws AmbitException {
 		try {
-			EndpointTest var = new EndpointTest(rs.getString(2),rs.getString(1),rs.getString(3));
+			Enzyme var = new Enzyme(rs.getString(2),rs.getString(1),rs.getString(3));
 			var.setCode(rs.getString("code"));
 			var.setParentCode(rs.getString("category"));
 			return (T) var;

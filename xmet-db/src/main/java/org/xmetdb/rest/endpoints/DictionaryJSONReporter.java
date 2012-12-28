@@ -27,11 +27,11 @@ public class DictionaryJSONReporter<D extends Dictionary> extends QueryReporter<
 	@Override
 	public Object processItem(D item) throws Exception {
 		try {
-			String code = ((EndpointTest)item).getCode()==null?"":((EndpointTest)item).getCode();
+			String code = ((Enzyme)item).getCode()==null?"":((Enzyme)item).getCode();
 			String name = item.getName()==null?"":item.getName();
 			if (comma!=null) getOutput().write(comma);
 			getOutput().write(String.format("\n{\"parentCode\":\"%s\",\"parentName\":\"%s\",\"code\":\"%s\",\"name\":\"%s\",\"label\":\"%s %s\"}",
-					((EndpointTest)item).getParentCode()==null?"":((EndpointTest)item).getParentCode(),		
+					((Enzyme)item).getParentCode()==null?"":((Enzyme)item).getParentCode(),		
 					item.getParentTemplate()==null?"":item.getParentTemplate(),			
 					code,
 					name,

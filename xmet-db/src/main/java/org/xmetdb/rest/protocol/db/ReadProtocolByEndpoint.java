@@ -3,12 +3,12 @@ package org.xmetdb.rest.protocol.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 
-public class ReadProtocolByEndpoint extends ReadProtocolAbstract<EndpointTest> {
+public class ReadProtocolByEndpoint extends ReadProtocolAbstract<Enzyme> {
 
 	/**
 	 * 

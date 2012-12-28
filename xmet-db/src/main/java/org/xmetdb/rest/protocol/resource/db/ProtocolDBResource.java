@@ -45,7 +45,7 @@ import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.db.exceptions.InvalidXmetdbNumberException;
 import org.xmetdb.rest.db.exceptions.MethodNotAllowedException;
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.CallableProtocolUpload;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
@@ -325,7 +325,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				}		
 				case endpointcode: {
 					IQueryRetrieval<DBProtocol> query = new ReadProtocolByEndpoint();
-					EndpointTest endpointTest = new EndpointTest(null,null);
+					Enzyme endpointTest = new Enzyme(null,null);
 					endpointTest.setCode("undefined".equals(search)?null:search.toString().trim());
 					((ReadProtocolByEndpoint)query).setFieldname(endpointTest);
 					editable = showCreateLink;

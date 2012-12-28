@@ -125,8 +125,8 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 		try {
 			output.write("<tr>");
 			output.write("<td>");
-			if (((EndpointTest)record).getCode()!=null)
-				output.write(((EndpointTest)record).getCode());
+			if (((Enzyme)record).getCode()!=null)
+				output.write(((Enzyme)record).getCode());
 			output.write("</td>");
 			/*
 			output.write("<td>");
@@ -140,7 +140,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 				getUriReporter().getBaseReference(),
 				Resources.protocol,
 				SearchMode.endpointcode,
-				Reference.encode(((EndpointTest)record).getCode()),
+				Reference.encode(((Enzyme)record).getCode()),
 				"XMETDB documents"
 			));
 			
@@ -198,7 +198,7 @@ public class EndpointsHTMLReporter<D extends Dictionary> extends XmetdbHTMLRepor
 					"",
 					"All enzymes"));
 			if (query instanceof QueryOntology) {
-					EndpointTest et = ((QueryOntology<EndpointTest>)query).getValue();
+					Enzyme et = ((QueryOntology<Enzyme>)query).getValue();
 					/*
 					if (et.getReference()!=null)
 					output.write(String.format(url, 

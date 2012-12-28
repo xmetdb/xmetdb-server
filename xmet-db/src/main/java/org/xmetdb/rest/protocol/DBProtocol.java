@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import net.toxbank.client.resource.Protocol;
 
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.xmet.client.AtomUncertainty;
 import org.xmetdb.xmet.client.ProductAmount;
@@ -23,7 +23,7 @@ public class DBProtocol extends Protocol {
 	protected int ID;
 	protected int year;
 	public static final String QMRFNUMBER = "qmrf_number";
-	protected EndpointTest endpoint;
+	protected Enzyme endpoint;
 	protected PublishedStatus publishedStatus = PublishedStatus.draft;
 	protected AtomUncertainty atomUncertainty = AtomUncertainty.Uncertain;
 	public AtomUncertainty getAtomUncertainty() {
@@ -44,11 +44,11 @@ public class DBProtocol extends Protocol {
 
 	protected ProductAmount productAmount = ProductAmount.Unknown;
 
-	public EndpointTest getEndpoint() {
+	public Enzyme getEndpoint() {
 		return endpoint;
 	}
 
-	public void setEndpoint(EndpointTest endpoint) {
+	public void setEndpoint(Enzyme endpoint) {
 		this.endpoint = endpoint;
 	}
 

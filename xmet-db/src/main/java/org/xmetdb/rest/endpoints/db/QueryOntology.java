@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
@@ -151,7 +151,7 @@ public class QueryOntology<D extends Dictionary>  extends AbstractQuery<Boolean,
 
 	public D getObject(ResultSet rs) throws AmbitException {
 		try {
-			EndpointTest result = new EndpointTest(rs.getString(3),rs.getString(2));
+			Enzyme result = new Enzyme(rs.getString(3),rs.getString(2));
 			result.setCode(rs.getString("code"));
 			result.setParentCode(rs.getString("category"));
 			return (D)result;

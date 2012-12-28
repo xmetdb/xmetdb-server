@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xmetdb.rest.db.exceptions.InvalidProtocolException;
-import org.xmetdb.rest.endpoints.EndpointTest;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.DBProtocol;
 
 import net.idea.modbcum.i.exceptions.AmbitException;
@@ -16,14 +16,14 @@ import net.idea.modbcum.q.update.AbstractUpdate;
  * @author nina
  *
  */
-public class DeleteProtocolEndpoint  extends AbstractUpdate<DBProtocol,EndpointTest> {
+public class DeleteProtocolEndpoint  extends AbstractUpdate<DBProtocol,Enzyme> {
 	protected static final String[] sql = new String[] {
 		"DELETE from protocol_endpoints a, protocol p where p.idprotocol=a.idprotocol and p.version=a.version and qmrf_number=? and code=? and name=? "
 	};
 	protected static final String[] sql_all = new String[] {
 		"DELETE from protocol_endpoint a, protocol p where p.idprotocol=a.idprotocol and p.version=a.version and qmrf_number=?"
 	};
-	public DeleteProtocolEndpoint(DBProtocol protocol,EndpointTest endpoint) {
+	public DeleteProtocolEndpoint(DBProtocol protocol,Enzyme endpoint) {
 		super(endpoint);
 		setGroup(protocol);
 	}
