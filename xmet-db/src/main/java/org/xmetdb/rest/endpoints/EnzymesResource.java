@@ -107,19 +107,10 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 				return new StringConvertor(	r,MediaType.APPLICATION_JSON,filenamePrefix);
 				
 		} else 			
-			return new OutputWriterConvertor(
-					createHTMLReporter(headless)
-					,MediaType.TEXT_HTML);
+			return new OutputWriterConvertor(new EnzymeJSONReporter(),MediaType.TEXT_HTML);
 	}
 
-	@Override
-	protected QueryHTMLReporter createHTMLReporter(boolean headless)
-			throws ResourceException {
-		return new EndpointsHTMLReporter(getRequest(),
-				DisplayMode.table,
-				//!isRecursive()?DisplayMode.table:DisplayMode.singleitem,
-						getHTMLBeauty());
-	}
+
 	
 	@Override
 	protected HTMLBeauty getHTMLBeauty() {

@@ -83,7 +83,9 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 		return new FactoryTaskConvertorRDF(storage,getHTMLBeauty());
 	}
 	
-	protected abstract QueryHTMLReporter createHTMLReporter(boolean headless) throws ResourceException;
+	protected QueryHTMLReporter createHTMLReporter(boolean headless) throws ResourceException {
+		return null;
+	}
 	
 	@Override
 	protected Task<Reference, Object> addTask(
