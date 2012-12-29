@@ -9,19 +9,20 @@ import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
+import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolVersions;
 
 public class ProtocolVersionDBResource<Q extends ReadProtocol> extends ProtocolDBResource<Q> {
 
 	@Override
-	protected Q getProtocolQuery(Object key,int userID, Object search,Object modified,boolean showCreateLink) throws ResourceException {
+	protected Q getProtocolQuery(Object key, int userID, DBProtocol query)
+			throws ResourceException {
 		version = true;
 		if (key==null) {
 			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 		}			
 		else {
-			editable = showCreateLink;
 			singleItem = false;
 			return (Q)new ReadProtocolVersions(Reference.decode(key.toString()));
 		}

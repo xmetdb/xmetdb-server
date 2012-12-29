@@ -3,6 +3,7 @@ package org.xmetdb.rest.protocol.resource.db;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 import net.idea.modbcum.i.IQueryObject;
@@ -13,7 +14,6 @@ import net.idea.restnet.c.PageParams;
 import net.idea.restnet.c.RepresentationConvertor;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.TaskApplication;
-import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.c.task.FactoryTaskConvertor;
@@ -21,7 +21,6 @@ import net.idea.restnet.c.task.TaskCreator;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryResource;
 import net.idea.restnet.db.QueryURIReporter;
-import net.idea.restnet.db.convertors.OutputStreamConvertor;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
@@ -43,18 +42,13 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
-import org.xmetdb.rest.db.exceptions.InvalidXmetdbNumberException;
 import org.xmetdb.rest.db.exceptions.MethodNotAllowedException;
 import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.CallableProtocolUpload;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
-import org.xmetdb.rest.protocol.db.ReadProtocolByAuthor;
-import org.xmetdb.rest.protocol.db.ReadProtocolByEndpoint;
-import org.xmetdb.rest.protocol.db.ReadProtocolByEndpointString;
 import org.xmetdb.rest.protocol.db.ReadProtocolByStructure;
-import org.xmetdb.rest.protocol.db.ReadProtocolByTextSearch;
 import org.xmetdb.rest.structure.resource.Structure;
 import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.db.ReadUser;
@@ -69,20 +63,18 @@ import org.xmetdb.xmet.client.Resources;
  */
 public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends XmetdbQueryResource<Q,DBProtocol> {
 	public enum SearchMode {
-		title,
-		text,
-		endpoint,
-		endpointcode,
-		author,
-		software,
-		descriptor,
-		qmrfnumber
+		xmet_number,
+		xmet_enzyme,
+		xmet_allele,
+		xmet_exp_ms,
+		xmet_exp_hep,
+		xmet_exp_enz,
+		xmet_reference,
+		modifiedSince
 	}
 	
 	protected boolean singleItem = false;
 	protected boolean version = false;
-	protected boolean editable = true;
-	protected boolean details = true;
 	protected Object structure;
 
 	public ProtocolDBResource() {
@@ -152,7 +144,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	
 	@Override
 	protected QueryHTMLReporter createHTMLReporter(boolean headless) throws ResourceException {
-		ProtocolQueryHTMLReporter rep = new ProtocolQueryHTMLReporter(getRequest(),!singleItem,isEditable(),structure==null,details);
+		ProtocolQueryHTMLReporter rep = new ProtocolQueryHTMLReporter(getRequest(),!singleItem,false,structure==null,true);
 		rep.setHeadless(headless);
 		rep.setHtmlBeauty(getHTMLBeauty());
 		return rep;
@@ -166,43 +158,20 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		return htmlBeauty;
 	}
 	
-	protected boolean isEditable() {
-		return editable
-			   ?version?true:!singleItem	
-			   :false;
-	}
 
-	protected Q getProtocolQuery(Object key,int userID,Object search, Object modified, boolean showCreateLink) throws ResourceException {
+	protected Q getProtocolQuery(Object key,int userID,DBProtocol query) throws ResourceException {
 		
 		if (key==null) {
-			ReadProtocol query = new ReadProtocol();
-			
-			if (search != null) {
-				DBProtocol p = new DBProtocol();
-				p.setTitle(search.toString());
-				query.setValue(p);
-			} else if (modified != null) try {
-				DBProtocol p = new DBProtocol();
-				p.setTimeModified(Long.parseLong(modified.toString()));
-				query.setValue(p);
-			} catch (Exception x) {x.printStackTrace();}
-//			query.setFieldname(search.toString());
-			editable = showCreateLink;
+			ReadProtocol dbQuery = new ReadProtocol();
+			dbQuery.setValue(query);
 			if (userID>0) {
-				query.setFieldname(new DBUser(userID));
-			} else query.setShowUnpublished(false);
-			return (Q)query;
-		}			
-		else {
-			editable = showCreateLink;
-			singleItem = true;
-			/*
-			int id[] = ReadProtocol.parseIdentifier(Reference.decode(key.toString()));
-			ReadProtocol query =  new ReadProtocol(id[0],id[1],id[2]);
-			*/
-			ReadProtocol query = new ReadProtocol(Reference.decode(key.toString()));
-			query.setShowUnpublished(true);
-			if (userID>0) query.setFieldname(new DBUser(userID));
+				dbQuery.setFieldname(new DBUser(userID));
+			} else dbQuery.setShowUnpublished(false);
+			return (Q)dbQuery;
+		} else {
+			ReadProtocol dbQuery = new ReadProtocol(Reference.decode(key.toString()));
+			dbQuery.setShowUnpublished(true);
+			if (userID>0) dbQuery.setFieldname(new DBUser(userID));
 			return (Q)query;
 		}
 	}
@@ -238,53 +207,29 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			throws ResourceException {
 		
 		Form form = request.getResourceRef().getQueryAsForm();
-
-		Object search = null;
-		try {
-			search = form.getFirstValue("search").toString();
-		} catch (Exception x) {
-			search = null;
-		}		
-		details = true;
-		try {
-			details = Boolean.parseBoolean(form.getFirstValue("details").toString());
-		} catch (Exception x) {
-			details = true;
-		}				
-		Object modified = null;
-		try {
-			modified = form.getFirstValue("modifiedSince").toString();
-		} catch (Exception x) {
-			modified = null;
-		}			
-		boolean showCreateLink = false;
-		try {
-			String n = form.getFirstValue("new");
-			showCreateLink = n==null?false:Boolean.parseBoolean(n);
-		} catch (Exception x) {
-			showCreateLink = false;
-		}
+		/**
+		 * Retrieve observation by structure
+		 */
 		structure = null;
 		try {
 			structure = form.getFirstValue("structure").toString();
+			if ((structure!=null) && structure.toString().startsWith("http")) {
+				IQueryRetrieval<DBProtocol> query = new ReadProtocolByStructure();
+				Structure record = new Structure();
+				record.setResourceIdentifier(new URL(structure.toString()));
+				Object[] ids = record.parseURI(new Reference(getQueryService()));
+				record.setIdchemical((Integer)ids[0]);
+				record.setIdstructure((Integer)ids[1]);
+				((ReadProtocolByStructure)query).setFieldname(record);
+				singleItem = false;				
+				return (Q)query;
+			}			
 		} catch (Exception x) {
 			structure = null;
-		}			
-		SearchMode option = SearchMode.text;
-		try {
-			option = SearchMode.valueOf(form.getFirstValue("option").toLowerCase());
-		} catch (Exception x) {
-			option = SearchMode.text;
 		}		
-			
-		Object key = request.getAttributes().get(FileResource.resourceKey);
-		int userID = -1;
-		try {
-			Object userKey = request.getAttributes().get(UserDBResource.resourceKey);
-			if (userKey!=null)
-				userID = ReadUser.parseIdentifier(userKey.toString());
-		} catch (Exception x) {}
-
+		/**
+		 * Other types of search
+		 */
 		StringCondition c = StringCondition.getInstance(StringCondition.C_REGEXP);
 		String param = getParams().getFirstValue(QueryResource.condition.toString());
 		try {
@@ -294,94 +239,77 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				else
 					c = StringCondition.getInstance(param);
 			}
-		} catch (Exception x) {	
-		} finally {
-		}		
+		} catch (Exception x) {}			
+		Object key = request.getAttributes().get(FileResource.resourceKey);
+		int userID = -1;
 		try {
-			if (search!=null)
-				switch (option) {
-				case author: {
-					IQueryRetrieval<DBProtocol> query = new ReadProtocolByAuthor();
-					
-					((ReadProtocolByAuthor)query).setFieldname(search.toString().trim());
-					editable = showCreateLink;
-					singleItem = false;				
-					return (Q)query;
-				}
-				case text: {
-					IQueryRetrieval<DBProtocol> query = new ReadProtocolByTextSearch();
-					
-					((ReadProtocolByTextSearch)query).setFieldname(search.toString().trim());
-					editable = showCreateLink;
-					singleItem = false;				
-					return (Q)query;
-				}		
-				case endpointcode: {
-					IQueryRetrieval<DBProtocol> query = new ReadProtocolByEndpoint();
-					Enzyme endpointTest = new Enzyme(null,null);
-					endpointTest.setCode("undefined".equals(search)?null:search.toString().trim());
-					((ReadProtocolByEndpoint)query).setFieldname(endpointTest);
-					editable = showCreateLink;
-					singleItem = false;				
-					return (Q)query;
-				}				
-				case endpoint: {
-					IQueryRetrieval<DBProtocol> query = new ReadProtocolByEndpointString();
-					
-					((ReadProtocolByEndpointString)query).setFieldname(search.toString().trim());
-					((ReadProtocolByEndpointString)query).setCondition(c);
-					editable = showCreateLink;
-					singleItem = false;				
-					return (Q)query;
-				}
-				case qmrfnumber: {
-					try {
-						IQueryRetrieval<DBProtocol> query = new ReadProtocol(search.toString().trim());
-						editable = showCreateLink;
-						singleItem = false;				
-						return (Q)query;						
-					} catch (Exception x) {
-						throw new InvalidXmetdbNumberException(search.toString());
-
-					}
-
-				}		
+			Object userKey = request.getAttributes().get(UserDBResource.resourceKey);
+			if (userKey!=null)
+				userID = ReadUser.parseIdentifier(userKey.toString());
+		} catch (Exception x) {}
+		
+		DBProtocol query = new DBProtocol();
+		for (SearchMode option: SearchMode.values()) {
+			
+			String search = form.getFirstValue(option.name());
+			if ((search==null) || "".equals(search.trim())) continue;
+			else search = search.trim();
+			  
+			System.out.println(String.format("%s = %s",option,search));
+			switch (option) {
+			case xmet_number: {
+				query.setIdentifier(search.toString());
+				return (Q) new ReadProtocol(search);
+			}
+			case xmet_enzyme: {
+				String allele = form.getFirstValue(SearchMode.xmet_allele.name());
+				Enzyme enzyme = new Enzyme(null,null);
+				enzyme.setCode("undefined".equals(search)?null:search);
+				if (allele!=null && !"".equals(allele)) enzyme.setAlleles(new String[] {allele});
+				query.setEndpoint(enzyme);
 				/*
-				case modifiedSince: {
-					try {
-						Long.parseLong(search.toString().trim());
-						modified = search.toString();
-						structure = null;
-						search = null;
-						//go to the standard processing 
-					} catch (Exception x) {
-						throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST.getCode(),
-								String.format("Invalid date %s",new Date(search.toString())),
-								String.format("The date entered is not valid",search),
-								null
-								);
-					}
-				}
-				*/
-				}
-			if ((structure!=null) && structure.toString().startsWith("http")) {
-				IQueryRetrieval<DBProtocol> query = new ReadProtocolByStructure();
-				Structure record = new Structure();
-				record.setResourceIdentifier(new URL(structure.toString()));
-
-				Object[] ids = record.parseURI(new Reference(getQueryService()));
-				record.setIdchemical((Integer)ids[0]);
-				record.setIdstructure((Integer)ids[1]);
-				((ReadProtocolByStructure)query).setFieldname(record);
-				editable = showCreateLink;
-				singleItem = false;				
+				IQueryRetrieval<DBProtocol> dbQuery = new ReadProtocolByEndpoint();
+				((ReadProtocolByEndpoint)dbQuery).setFieldname(enzyme);
 				return (Q)query;
-			} else return getProtocolQuery(key,userID,search,modified,showCreateLink);
-		}catch (ResourceException x) {
-			throw x;
-		} catch (Exception x) {
-			throw new InvalidXmetdbNumberException(key==null?"":key.toString());
+				*/
+				break;
+			}
+			case xmet_allele: break; //handled by the enzyme
+			case xmet_reference: {
+				query.setReference(search);
+				break;
+			}
+			case xmet_exp_enz: {
+				if ("on".equals(search)) query.setTitle("ENZ");
+				break;
+			}
+			case xmet_exp_hep: {
+				if ("on".equals(search)) query.setTitle("HEP");
+				break;
+			}
+			case xmet_exp_ms: {
+				if ("on".equals(search)) query.setTitle("MS");
+				break;
+			}
+			case modifiedSince: {
+				try {
+					Long.parseLong(search.toString().trim());
+					query.setTimeModified(Long.parseLong(search.trim()));
+				} catch (Exception x) {
+					throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST.getCode(),
+							String.format("Invalid date %s",new Date(search.toString())),
+							String.format("The date entered is not valid",search),
+							null
+							);
+				}			
+				break;
+			}
+			default: {
+				
+			}
+			}	
 		}
+		return getProtocolQuery(key, userID, query);
 	} 
 
 	@Override

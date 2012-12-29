@@ -8,6 +8,7 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolPreviousVersion;
 
@@ -20,13 +21,13 @@ import org.xmetdb.rest.protocol.db.ReadProtocolPreviousVersion;
 public class ProtocolPreviousVersionDBResource<Q extends ReadProtocol> extends ProtocolDBResource<Q> {
 
 	@Override
-	protected Q getProtocolQuery(Object key,int userID, Object search,Object modified,boolean showCreateLink) throws ResourceException {
+	protected Q getProtocolQuery(Object key, int userID, DBProtocol query)
+			throws ResourceException {
 		version = true;
 		if (key==null) {
 			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 		}			
 		else {
-			editable = showCreateLink;
 			singleItem = false;
 			return (Q)new ReadProtocolPreviousVersion(Reference.decode(key.toString()));
 		}

@@ -50,47 +50,47 @@
 			</div>
     	</div>	       	
 	</form>
+	<!-- Search observations -->
 	<form method="GET" action="${xmet_root}/protocol" name="form" id="search_protocol_form" class="remove-bottom">		
 	    <div class="row remove-bottom">
       		<div class="two columns alpha"><label>Experiment:</label></div>
       		<div class="eight columns omega">
-				<input class="ui-widget" type='checkbox' name="search_exp_ms"  id="search_exp_ms"  tabindex='6'>MS (Microsomes)&nbsp;
-				<input class="ui-widget" type='checkbox' name="search_exp_hep"  id="search_exp_hep" tabindex='7'>HEP (Hepatocytes)&nbsp;
-				<input class="ui-widget" type='checkbox' name="search_exp_enz" id="search_exp_enz" tabindex='8'>ENZ (Enzyme)
+				<input class="ui-widget" type='checkbox' name="xmet_exp_ms"  id="search_exp_ms"  tabindex='1'>MS (Microsomes)&nbsp;
+				<input class="ui-widget" type='checkbox' name="xmet_exp_hep"  id="search_exp_hep" tabindex='2'>HEP (Hepatocytes)&nbsp;
+				<input class="ui-widget" type='checkbox' name="xmet_exp_enz" id="search_exp_enz" tabindex='3'>ENZ (Enzyme)
       		</div>
     	</div>	
 	    <div class="row remove-bottom">
       		<div class="two columns alpha"><label>Enzyme:</label></div>
       		<div class="nine columns omega">
-				<input type='hidden' name="option" value='endpointcode'>
-				<select id="search_enzyme" name="search" multiple tabindex='9' style='width:400px;'></select>
+				<select id="xmet_enzyme" name="xmet_enzyme" multiple tabindex='4' style='width:400px;'></select>
       		</div>
       		<div class="one column omega">
       		      <label>Allele</label>
       		</div>
       		<div class="two columns omega">
-     				<select id="search_allele" name="search_allele" multiple tabindex='10'>
+     				<select id="xmet_allele" name="xmet_allele" multiple tabindex='5'>
 					</select>
       		</div>
     	</div>	    	
     	<div class="row remove-bottom">
       		<div class="two columns alpha"><label>Reference:</label></div>
       		<div class="six columns omega">
-				<input class="ui-widget" type='text' id="search_reference" name="search_reference" tabindex='11' style='width:400px;'>
+				<input class="ui-widget" type='text' id="xmet_reference" name="xmet_reference" tabindex='6' style='width:400px;'>
       		</div>
    		
     	</div>	
     	<div class="row remove-bottom">
       		<div class="two columns alpha"><label>XMETID:</label></div>
       		<div class="four columns omega">
-				<input class="ui-widget" type='text' id="search_xmetid" name="search_xmetid" tabindex='12' style="width:10em;">
+				<input class="ui-widget" type='text' id="xmet_number" name="xmet_number" tabindex='7' style="width:10em;">
       		</div>
       		<div class="two columns alpha"><label>Number of hits</label></div>
       		<div class="two columns omega">
-      		   	<input type='text' size='3' name='pagesize' value='100' tabindex='12' style="width:3em;">
+      		   	<input type='text' size='3' name='pagesize' value='100' tabindex='8' style="width:3em;">
       		</div>         		
       		<div class="six columns omega">
-    		 	   <input type="submit" class="search" value="Observations search" tabindex='13'>
+    		 	   <input type="submit" class="search" value="Observations search" tabindex='9'>
       		</div>       		
     	</div>	    	
  	

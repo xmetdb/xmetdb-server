@@ -617,6 +617,8 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 		}	
 	
 		protected String searchMenu(Reference baseReference,Form form)  {
+			return "";
+			/*
 			String pageSize = "10";
 			String structure = null;
 			try {
@@ -665,7 +667,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 				stringBuilder.append("&nbsp;\n");
 				stringBuilder.append("<div class='structureright'>%s</div>");
 				stringBuilder.append(_divEnd);
-				
+
 				return String.format(
 						stringBuilder.toString(),
 						hint,
@@ -682,6 +684,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 						structure==null?"":structure,
 						imgURI
 			   );
+			   */
 		}
 		
 		@Override
