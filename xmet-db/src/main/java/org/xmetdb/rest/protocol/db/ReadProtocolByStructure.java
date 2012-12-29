@@ -34,7 +34,7 @@ public class ReadProtocolByStructure extends ReadProtocolAbstract<Structure> {
 	};	
 	protected static String sql = 
 		"select protocol.idprotocol,protocol.version,protocol.title,protocol.qmrf_number,abstract as anabstract,iduser,\n"+
-		"summarySearchable,idproject,idorganisation,reference,template,protocol.updated,status,\n"+
+		"summarySearchable,idproject,idorganisation,reference,protocol.updated,status,\n"+
 		"protocol.`created`,published_status,atom_uncertainty,product_amount\n"+
 		"from protocol,attachments a, `ambit2-xmetdb`.query q\n"+
 		"join `ambit2-xmetdb`.query_results using(idquery)\n"+
