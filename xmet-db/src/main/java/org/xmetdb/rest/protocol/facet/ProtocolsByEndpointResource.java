@@ -6,7 +6,6 @@ import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.facet.IFacet;
 import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
-import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.facet.FacetResource;
 
 import org.restlet.Context;
@@ -56,13 +55,7 @@ public class ProtocolsByEndpointResource extends FacetResource<IQueryRetrieval<I
 			throws ResourceException {
 		return false;
 	}
-	
-	@Override
-	protected QueryHTMLReporter getHTMLReporter(Request request) {
-		XmetdbHTMLBeauty hb = (XmetdbHTMLBeauty)getHTMLBeauty();
-		hb.setSearchURI(Resources.endpoint);
-		return new XmetdbHTMLFacetReporter(request,true,null,hb);
-	}
+
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
         if (getClientInfo().getUser()!=null) 
