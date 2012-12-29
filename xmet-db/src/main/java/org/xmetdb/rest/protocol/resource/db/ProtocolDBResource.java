@@ -147,13 +147,6 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				};
 		} else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
 			return new OutputWriterConvertor(createHTMLReporter(headless),MediaType.TEXT_HTML);
-		} else if (singleItem && (structure==null)) {
-			
-			Object fileNamePrefix = getRequest().getAttributes().get(FileResource.resourceKey);
-			return new OutputStreamConvertor(new XmetdbReporter(getRequest(),variant.getMediaType(),
-					((FreeMarkerApplicaton<String>)getApplication()).getConfiguration()
-					),
-					variant.getMediaType(),filenamePrefix);		
 		} else return new OutputWriterConvertor(createHTMLReporter(headless),MediaType.TEXT_HTML);		
 	}
 	
