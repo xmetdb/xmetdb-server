@@ -6,6 +6,7 @@ import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.restnet.c.RepresentationConvertor;
 import net.idea.restnet.c.StringConvertor;
+import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.c.task.FactoryTaskConvertor;
@@ -48,7 +49,15 @@ public class AlertDBResource	extends XmetdbQueryResource<ReadAlert,DBAlert> {
 	protected boolean singleItem = false;
 	protected boolean editable = true;
 	
-
+	public AlertDBResource() {
+		super();
+		setHtmlbyTemplate(true);
+	}
+	
+	@Override
+	public String getTemplateName() {
+		return "alerts_body.ftl";
+	}
 	@Override
 	public RepresentationConvertor createConvertor(Variant variant)
 			throws AmbitException, ResourceException {
@@ -64,12 +73,16 @@ public class AlertDBResource	extends XmetdbQueryResource<ReadAlert,DBAlert> {
 				return new StringConvertor(	
 						new AlertURIReporter<IQueryRetrieval<DBAlert>>(getRequest())
 						,MediaType.TEXT_URI_LIST,filenamePrefix);
+		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			String queryService = ((TaskApplication) getApplication())
+									.getProperty(Resources.Config.xmet_ambit_service.name());
+			AlertJSONReporter r = new AlertJSONReporter(getRequest());
+			return new StringConvertor(	r,MediaType.APPLICATION_JSON,filenamePrefix);
 				
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_N3) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES) ||
-					variant.getMediaType().equals(MediaType.APPLICATION_JSON) ||
 					variant.getMediaType().equals(MediaType.TEXT_CSV) 
 					
 					) {

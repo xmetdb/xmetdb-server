@@ -168,7 +168,94 @@ function defineOrganisationTable(root,url) {
 		"oLanguage": {
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No records found."
-	    }
+	    },
+		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+		    $.ajax( {
+		        "dataType": 'json',
+		        "type": "GET",
+		        "url": sSource,
+		        "data": aoData,
+		        "contentType" : "application/json",
+		        "success": fnCallback,
+		        "timeout": 15000,  
+		        "error" : function( xhr, textStatus, error ) {
+		        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
+		        }		        
+		    } );
+		}		    
+	} );
+	return oTable;
+}
+
+function defineAlertsTable(root,url) {
+
+	var oTable = $('#alerts').dataTable( {
+		"sAjaxDataProp" : "alert",
+		"bProcessing": true,
+		"bServerSide": false,
+		"bStateSave": false,
+		"aoColumnDefs": [
+ 				{ "mDataProp": "created" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 0 ],	
+				  "bSearchable" : true,
+				  "bUseRendered" : false,
+				  "bSortable" : true,
+				  "fnRender" : function(o,val) {
+					  return val;
+				  }
+				},
+ 				{ "mDataProp": "title" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 1 ],	
+					  "bSearchable" : true,
+					  "bUseRendered" : false,
+					  "bSortable" : true,
+					  "fnRender" : function(o,val) {
+						  return val;
+					  }
+				},
+ 				{ "mDataProp": "frequency" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 2 ],	
+					  "bSearchable" : true,
+					  "bUseRendered" : false,
+					  "bSortable" : true,
+					  "fnRender" : function(o,val) {
+						  return val;
+					  }
+				},
+ 				{ "mDataProp": "sent" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 3 ],	
+					  "bSearchable" : true,
+					  "bUseRendered" : false,
+					  "bSortable" : true,
+					  "fnRender" : function(o,val) {
+						  return val;
+					  }
+				}				
+			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"bJQueryUI" : true,
+		"bPaginate" : true,
+		"bDeferRender": true,
+		"bSearchable": true,
+		"sAjaxSource": url,
+		"oLanguage": {
+	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
+	            "sLoadingRecords": "No records found."
+	    },
+		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+		    $.ajax( {
+		        "dataType": 'json',
+		        "type": "GET",
+		        "url": sSource,
+		        "data": aoData,
+		        "contentType" : "application/json",
+		        "success": fnCallback,
+		        "timeout": 15000,  
+		        "error" : function( xhr, textStatus, error ) {
+		        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
+		        }		        
+		    } );
+		}	    
 	} );
 	return oTable;
 }
