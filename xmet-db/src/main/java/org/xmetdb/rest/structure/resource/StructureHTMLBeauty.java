@@ -13,6 +13,13 @@ import org.xmetdb.xmet.client.Resources;
 
 public class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 	protected List<String> folder = new ArrayList<String>();
+	public List<String> getFolder() {
+		return folder;
+	}
+
+	public void setFolder(List<String> folder) {
+		this.folder = folder;
+	}
 	protected String queryService;
 	protected List<DBModel> models;
 	protected boolean molFile = false;

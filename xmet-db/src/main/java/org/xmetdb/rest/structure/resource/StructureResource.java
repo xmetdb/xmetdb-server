@@ -195,6 +195,19 @@ public class StructureResource extends CatalogResource<Structure> {
 			String type = form.getFirstValue("type");
 			parameters.setMolFile(type==null?false:"b64mol".equals(type));
 		} catch (Exception x) { parameters.setModels(null); x.printStackTrace();}
+		
+		parameters.getFolder().clear();
+		try {
+			String folder = form.getFirstValue("search_substrates");
+			if ("on".equals(folder))
+				parameters.getFolder().add("substrate");
+		} catch (Exception x) { }
+		
+		try {
+			String folder = form.getFirstValue("search_products");
+			if ("on".equals(folder))
+				parameters.getFolder().add("product");
+		} catch (Exception x) { }		
 	}
 
 	protected Reference getSearchReference(Context context, Request request,
@@ -206,18 +219,13 @@ public class StructureResource extends CatalogResource<Structure> {
 					queryService));
 			switch (parameters.option) {
 			case similarity: {
-				//String smiles = name2Structure(parameters.getSearchQuery());
-				//if (smiles!=null) parameters.setSearchQuery(smiles);
-				ref = new Reference(String.format(
-						"%s/query/similarity?threshold=%3.2f", queryService,
-						parameters.threshold));
+				ref = new Reference(String.format("%s/query/similarity?threshold=%3.2f", queryService,parameters.threshold));
+				for (String f : parameters.getFolder())	ref.addQueryParameter("folder", f);
 				break;
 			}
 			case smarts: {
-				//String smiles = name2Structure(parameters.getSearchQuery());
-				//if (smiles!=null) parameters.setSearchQuery(smiles);
-				ref = new Reference(String.format("%s/query/smarts",
-						queryService));
+				ref = new Reference(String.format("%s/query/smarts",queryService));
+				for (String f : parameters.getFolder())	ref.addQueryParameter("folder", f);
 				break;
 			}
 			}
