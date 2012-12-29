@@ -112,7 +112,7 @@ function fnEndpointXMETDBList(oTable, nTr, id) {
 	var details = '#' + id + '_xmetdb';
 
 	var code = encodeURIComponent(obj["code"]);
-	var qmrf_query = "/xmetdb/protocol?option=endpointcode&search=" + code + "&media=application%2Fjson";
+	var qmrf_query = "/xmetdb/protocol?xmet_enzyme=" + code + "&media=application%2Fjson";
       $.ajax({
           dataType: "json",
           url: qmrf_query,
