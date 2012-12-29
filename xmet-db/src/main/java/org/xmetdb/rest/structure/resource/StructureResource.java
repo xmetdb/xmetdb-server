@@ -288,10 +288,7 @@ public class StructureResource extends CatalogResource<Structure> {
 
 	@Override
 	protected Reporter createHTMLReporter(boolean headles) {
-		StructureHTMLReporter reporter = new StructureHTMLReporter(getRequest(), null, getHTMLBeauty());
-		reporter.setSingleItem(singleItem);
-		reporter.setHeadless(headless);
-		return reporter;
+		return null;
 	}
 
 	@Override
