@@ -4,6 +4,7 @@ package org.xmetdb.rest.protocol.resource.db;
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Form;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
@@ -21,7 +22,7 @@ import org.xmetdb.rest.protocol.db.ReadProtocolPreviousVersion;
 public class ProtocolPreviousVersionDBResource<Q extends ReadProtocol> extends ProtocolDBResource<Q> {
 
 	@Override
-	protected Q getProtocolQuery(Object key, int userID, DBProtocol query)
+	protected Q getProtocolQuery(Object key, int userID, Form form)
 			throws ResourceException {
 		version = true;
 		if (key==null) {

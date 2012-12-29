@@ -47,7 +47,9 @@ import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.CallableProtocolUpload;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
+import org.xmetdb.rest.protocol.db.QueryProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
+import org.xmetdb.rest.protocol.db.ReadProtocolByEndpoint;
 import org.xmetdb.rest.protocol.db.ReadProtocolByStructure;
 import org.xmetdb.rest.structure.resource.Structure;
 import org.xmetdb.rest.user.DBUser;
@@ -159,20 +161,26 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	}
 	
 
-	protected Q getProtocolQuery(Object key,int userID,DBProtocol query) throws ResourceException {
+	protected Q getProtocolQuery(Object key,int userID,Form form) throws ResourceException {
 		
 		if (key==null) {
-			ReadProtocol dbQuery = new ReadProtocol();
-			dbQuery.setValue(query);
-			if (userID>0) {
-				dbQuery.setFieldname(new DBUser(userID));
-			} else dbQuery.setShowUnpublished(false);
-			return (Q)dbQuery;
+			if (form==null) {
+				ReadProtocol dbQuery = new ReadProtocol();
+				if (userID>0) {
+					dbQuery.setFieldname(new DBUser(userID));
+				} else dbQuery.setShowUnpublished(false);
+				return (Q)dbQuery;
+			} else {
+				QueryProtocol dbQuery = new QueryProtocol();
+				dbQuery.setFieldname(form);
+				return (Q)dbQuery;				
+			}
 		} else {
+			singleItem = true;
 			ReadProtocol dbQuery = new ReadProtocol(Reference.decode(key.toString()));
 			dbQuery.setShowUnpublished(true);
 			if (userID>0) dbQuery.setFieldname(new DBUser(userID));
-			return (Q)query;
+			return (Q)dbQuery;
 		}
 	}
 	
@@ -248,6 +256,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				userID = ReadUser.parseIdentifier(userKey.toString());
 		} catch (Exception x) {}
 		
+		int queries = 0;
 		DBProtocol query = new DBProtocol();
 		for (SearchMode option: SearchMode.values()) {
 			
@@ -255,61 +264,30 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			if ((search==null) || "".equals(search.trim())) continue;
 			else search = search.trim();
 			  
-			System.out.println(String.format("%s = %s",option,search));
 			switch (option) {
 			case xmet_number: {
+				singleItem = true;
 				query.setIdentifier(search.toString());
 				return (Q) new ReadProtocol(search);
 			}
-			case xmet_enzyme: {
-				String allele = form.getFirstValue(SearchMode.xmet_allele.name());
-				Enzyme enzyme = new Enzyme(null,null);
-				enzyme.setCode("undefined".equals(search)?null:search);
-				if (allele!=null && !"".equals(allele)) enzyme.setAlleles(new String[] {allele});
-				query.setEndpoint(enzyme);
-				/*
-				IQueryRetrieval<DBProtocol> dbQuery = new ReadProtocolByEndpoint();
-				((ReadProtocolByEndpoint)dbQuery).setFieldname(enzyme);
-				return (Q)query;
-				*/
-				break;
-			}
-			case xmet_allele: break; //handled by the enzyme
-			case xmet_reference: {
-				query.setReference(search);
-				break;
-			}
 			case xmet_exp_enz: {
-				if ("on".equals(search)) query.setTitle("ENZ");
+				if ("on".equals(search)) queries++;
 				break;
 			}
 			case xmet_exp_hep: {
-				if ("on".equals(search)) query.setTitle("HEP");
+				if ("on".equals(search)) queries++;
 				break;
 			}
 			case xmet_exp_ms: {
-				if ("on".equals(search)) query.setTitle("MS");
+				if ("on".equals(search)) queries++;
 				break;
-			}
-			case modifiedSince: {
-				try {
-					Long.parseLong(search.toString().trim());
-					query.setTimeModified(Long.parseLong(search.trim()));
-				} catch (Exception x) {
-					throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST.getCode(),
-							String.format("Invalid date %s",new Date(search.toString())),
-							String.format("The date entered is not valid",search),
-							null
-							);
-				}			
-				break;
-			}
+			}			
 			default: {
-				
+				queries ++;
 			}
 			}	
 		}
-		return getProtocolQuery(key, userID, query);
+		return getProtocolQuery(key, userID, queries>0?form:null);
 	} 
 
 	@Override

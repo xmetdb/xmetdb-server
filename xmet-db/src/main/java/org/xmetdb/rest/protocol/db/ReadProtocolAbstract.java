@@ -31,10 +31,7 @@ public abstract class ReadProtocolAbstract<T> extends AbstractQuery<T, DBProtoco
 	public void setShowUnpublished(Boolean showUnpublished) {
 		this.showUnpublished = showUnpublished;
 	}
-	//renumbering on the fly <QMRF_number chapter="10.1" help="" name="QMRF number"></QMRF_number>
-	//protected static String qmrfNumber = 
-	//	"updateXML(abstract,\"//QMRF_number\",concat(\" <QMRF_number chapter='10.1' name='QMRF number'>\",'QMRF-',year(created),'-',idprotocol,'-',version,'</QMRF_number> ')) ";
-	
+
 	protected static String sql_withkeywords =  //for text search
 		"select idprotocol,version,protocol.title,qmrf_number,abstract as anabstract,iduser,summarySearchable," +
 		"idproject," +
@@ -101,7 +98,7 @@ public abstract class ReadProtocolAbstract<T> extends AbstractQuery<T, DBProtoco
 				String qmrf_number = rs.getString(DBProtocol.QMRFNUMBER);
 				p.setIdentifier(qmrf_number);
 			} catch (Exception x) {
-				throw new AmbitException("Error when reading QMRF number",x);
+				throw new AmbitException("Error when reading XMETDB number",x);
 				
 			}				
 			return p;
@@ -116,27 +113,11 @@ public abstract class ReadProtocolAbstract<T> extends AbstractQuery<T, DBProtoco
 	}
 	@Override
 	public String toString() {
-		return getValue()==null?"All protocols":String.format("Protocol id=P%s",getValue().getID());
+		return getValue()==null?"All observations":String.format("Observation id=XMETDB%s",getValue().getID());
 	}
 
 	public static String generateIdentifier(DBProtocol protocol) throws ResourceException {
 		return protocol.getIdentifier();
-		//return String.format("QMRF-%d-%d-%d", protocol.getYear(),protocol.getID(),protocol.getVersion());
 	}
-	/*
-	public static int[] parseIdentifier(String identifier) throws ResourceException {
-		String ids[] = identifier.split("-");
-		if ((ids.length!=4) || !identifier.startsWith(DBProtocol.prefix)) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Invalid format");
-		
-		int[] id = new int[3];
-		id[2] = Integer.parseInt(ids[1]); //year ; added last for compatibility
-		for (int i=0; i < 2; i++)
-			try {
-				id[i] = Integer.parseInt(ids[i+2]);
-			} catch (NumberFormatException x) {
-				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,x);
-			}
-		return id;
-	}
-	*/
+
 }
