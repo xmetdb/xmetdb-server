@@ -76,23 +76,6 @@ public class MyAccountResource<T> extends UserDBResource<T> {
 	}
 	
 	@Override
-	protected QueryHTMLReporter createHTMLReporter(boolean headless)
-			throws ResourceException {
-		UserHTMLReporter rep = new UserHTMLReporter(getRequest(),!singleItem,editable,(UserHTMLBeauty)getHTMLBeauty()) {
-			@Override
-			public String getTitle() {
-				return null;
-			}
-			@Override
-			protected void printPageNavigator(IQueryRetrieval<DBUser> query)
-					throws Exception {
-			}
-		};
-		
-		rep.setHeadless(headless);
-		return rep;
-	}
-	@Override
 	protected HTMLBeauty getHTMLBeauty() {
 		return new UserHTMLBeauty() {
 			@Override

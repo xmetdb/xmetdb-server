@@ -120,19 +120,17 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 						return TOXBANK.URI;
 					}					
 				};
-		} else //html
-				return new OutputWriterConvertor(
-						createHTMLReporter(headless),
-						MediaType.TEXT_HTML);
+		} else //html should be rendered by FTL
+			return new OutputWriterConvertor(
+					new UserJSONReporter<IQueryRetrieval<DBUser>>(getRequest()),
+					MediaType.APPLICATION_JSON);		
 
 	}
 	
 	@Override
 	protected QueryHTMLReporter createHTMLReporter(boolean headless)
 			throws ResourceException {
-		UserHTMLReporter rep = new UserHTMLReporter(getRequest(),!singleItem,editable,(UserHTMLBeauty)getHTMLBeauty());
-		rep.setHeadless(headless);
-		return rep;
+		return null;
 	}
 
 	protected ReadUser getUserQuery(Object key,String search_name,Object search_value) throws ResourceException {

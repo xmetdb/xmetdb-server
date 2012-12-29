@@ -84,24 +84,14 @@ public abstract class GroupDBResource<G extends IDBGroup>	extends XmetdbQueryRes
 						return TOXBANK.URI;
 					}					
 				};
-		} else //if (variant.getMediaType().equals(MediaType.TEXT_HTML))
-				return new OutputWriterConvertor(
-						createHTMLReporter(headless),MediaType.TEXT_HTML);
+		} else //html shoud be rendered by the Fremarker template, not by this convertor
+			return new OutputWriterConvertor(
+					new GroupJSONReporter<IQueryRetrieval<IDBGroup>>(getRequest()),
+					MediaType.APPLICATION_JSON);	
 	}
 	@Override
 	protected QueryHTMLReporter createHTMLReporter(boolean headless) throws ResourceException {
-		GroupHTMLReporter rep = new GroupHTMLReporter(getRequest(),!singleItem,editable,(XmetdbHTMLBeauty)getHTMLBeauty()) {
-			@Override
-			public String getBackLink() {
-				return getGroupBackLink();
-			}
-			@Override
-			public String getTitle() {
-				return getGroupTitle();
-			}
-		};
-		rep.setHeadless(headless);
-		return rep;
+		return null;
 	}
 	
 	public abstract ReadGroup<G> createGroupQuery(Integer key,String search, String groupName);
