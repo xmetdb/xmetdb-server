@@ -77,13 +77,15 @@ public class StructureResource extends CatalogResource<Structure> {
 		Reference query = getSearchReference(getContext(),getRequest(),getResponse(),parameters);
 		
 
-		Reference qmrf_request = query.clone();
-		qmrf_request.addQueryParameter("media",MediaType.TEXT_CSV.toString());
-		map.put("xmet_request_csv",qmrf_request.toString());
+		Reference xmet_request = query.clone();
+		map.put("xmet_request",xmet_request.toString());
 		
-		qmrf_request = query.clone();
-		qmrf_request.addQueryParameter("media",ChemicalMediaType.CHEMICAL_MDLSDF.toString());
-		map.put("xmet_request_sdf",qmrf_request.toString());		
+		xmet_request.addQueryParameter("media",MediaType.TEXT_CSV.toString());
+		map.put("xmet_request_csv",xmet_request.toString());
+		
+		xmet_request = query.clone();
+		xmet_request.addQueryParameter("media",ChemicalMediaType.CHEMICAL_MDLSDF.toString());
+		map.put("xmet_request_sdf",xmet_request.toString());		
 		
 		query.addQueryParameter("media",MediaType.APPLICATION_JAVASCRIPT.toString());
 		map.put("xmet_request_jsonp",query.toString());
@@ -103,6 +105,7 @@ public class StructureResource extends CatalogResource<Structure> {
 		}
 		map.put("creator","Ideaconsult Ltd.");
 	    map.put("xmet_root",getRequest().getRootRef());
+	    map.put("this_url",getRequest().getResourceRef());
 	    map.put("searchURI",htmlBeauty==null || htmlBeauty.getSearchURI()==null?"":htmlBeauty.getSearchURI());
 	    map.put("queryService",((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name()));
         map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));

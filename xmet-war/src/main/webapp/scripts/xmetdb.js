@@ -301,7 +301,7 @@ function loadObservation(observation_uri) {
 }
 
 
-function editObservation(observation_uri) {
+function editObservation(root,observation_uri) {
 	var model_uri = null;
 	var observation;
     $.ajax({
@@ -312,6 +312,8 @@ function editObservation(observation_uri) {
 	          success: function(data, status, xhr) {
 	        	  
 	        	  observation = data.observations[0];
+	        	  $('#breadCrumb_xmet_id').html("<a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
+	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ root + "/editor/"+ observation["identifier"] + "' title='Click to edit the observation'>Modify</a>");
 	        	  $('#xmet_id').replaceWith("Modify Observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
 	        	  $('#xmet_atom_uncertainty option[value='+observation["atom_uncertainty"]+']').attr('selected', 'selected');
 	        	  $('#xmet_product_amount option[value='+observation["product_amount"]+']').attr('selected', 'selected');
@@ -506,7 +508,7 @@ function defineObservationsTable(tableSelector,observations_uri) {
 	} );
 }
 function xmetdblog(msg) {
-	try { console.log(msg); } catch (e) { alert(msg); }
+	//try { console.log(msg); } catch (e) { alert(msg); }
 }
 
 

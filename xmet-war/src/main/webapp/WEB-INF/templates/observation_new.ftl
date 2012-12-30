@@ -40,8 +40,9 @@ $(document).ready(function() {
     	<#break>
     <#case "update">
 		$(document).ready(function() {    
-			editObservation("${xmet_request_json}");
-			jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="Modify an existing observation">Modify observation</a></li>');
+			editObservation("${xmet_root}","${xmet_request_json}");
+			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
+			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Modify an existing observation">Modify</a></li>');
 			jQuery("#breadCrumb").jBreadCrumb();
 		});    
     	<#break>
