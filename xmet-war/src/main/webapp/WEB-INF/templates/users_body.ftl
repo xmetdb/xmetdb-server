@@ -12,6 +12,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/admin" title="XMETDB admin">Admin</a></li>');
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/user" title="XMETDB users">Users</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })

@@ -7,19 +7,19 @@ import java.util.List;
 
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.restnet.c.html.HTMLBeauty;
-import net.idea.restnet.c.resource.CatalogResource;
 
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.CatalogFTLResource;
 import org.xmetdb.rest.db.DatabaseResource;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.xmet.admin.XmetdbCatalogHTMLReporter;
 import org.xmetdb.xmet.client.Resources;
 
 
-public class XMETAdminResource extends CatalogResource<AdminItem> {
+public class XMETAdminResource extends CatalogFTLResource<AdminItem> {
 	public static final String resource = "admin";
 	protected List<AdminItem> topics = new ArrayList<AdminItem>();
 	public XMETAdminResource() {
@@ -30,7 +30,12 @@ public class XMETAdminResource extends CatalogResource<AdminItem> {
 		topics.add(new AdminItem("Users","user?pagesize=10","Browse registered users"));
 		topics.add(new AdminItem("Organisations","organisation?pagesize=10","Browse users affiliations"));
 		topics.add(new AdminItem("System jobs","task?pagesize=10","Browse jobs status"));
-
+		setHtmlbyTemplate(true);
+	}
+	
+	@Override
+	public String getTemplateName() {
+		return "admin_body.ftl";
 	}
 	@Override
 	protected Iterator<AdminItem> createQuery(Context context, Request request,

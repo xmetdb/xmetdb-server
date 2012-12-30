@@ -1,0 +1,59 @@
+<#include "/s_html.ftl" >
+<head>
+<#include "/s_head.ftl" >
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/admin" title="Admin tasks">Admin</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
+
+</head>
+<body>
+
+<div class="container columns" style="margin:0;padding:0;">
+		<#include "/s_banner.ftl">
+	 	<#include "/s_menu.ftl">
+		
+		<!-- Page Content
+		================================================== -->
+		<div class="twelve columns remove-bottom" >
+
+    	<div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;XMETDB admin tasks</div>
+    	<div class="half-bottom ui-widget-content ui-corner-bottom" >
+    			
+		<div class='row' style="margin:5px;padding:5px;"> 	
+		<div class="three columns">Database admin</div>
+		<div class="thirteen columns"><a href='${xmet_root}/admin/database'>Create or inspect the database</a></div>
+		</div>
+		
+		<div class='row' style="margin:5px;padding:5px;">
+		<div class="three columns">Users</div>
+		<div class="thirteen columns"><a href='${xmet_root}/user'>Browse registered users</a></div>
+		</div>
+		
+		<div class='row' style="margin:5px;padding:5px;">
+		<div class="three columns">Organisations</div>
+		<div class="thirteen columns"><a href='${xmet_root}/organisation'>Browse users affiliations</a></div>
+		</div>
+		
+		<div class='row' style="margin:5px;padding:5px;">
+		<div class="three columns">System jobs</div>
+		<div class="thirteen columns"><a href='${xmet_root}/task'>Browse jobs status</a></div>
+		</div>		
+		
+		</div>
+		<!-- twelve columns  -->
+		</div> 
+		
+		<!-- Right column and footer
+		================================================== -->
+		<#include "/s_help.ftl">
+		<#include "/s_footer.ftl">
+		
+</div><!-- container -->
+
+		<#include "/scripts-welcome.ftl">
+</body>
+</html>
