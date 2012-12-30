@@ -2,6 +2,14 @@
 <head>
 <#include "/s_head.ftl" >
 <#include "/protocols_head.ftl" >
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB observations">Observations</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 <div class="container columns" style="margin:0;padding:0;">

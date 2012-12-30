@@ -2,6 +2,16 @@
 <head>
 <#include "/s_head.ftl" >
 <#include "/observation_head.ftl" >
+
+
+<script type="text/javascript">
+       jQuery(document).ready(function()
+       {
+           jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB Home">Observations</a></li>');
+           jQuery("#breadCrumb").jBreadCrumb();
+       })
+</script>
+       
 </head>
 <body>
 

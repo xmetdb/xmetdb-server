@@ -1,6 +1,14 @@
 <#include "/s_html.ftl" >
 <head>
 <#include "/s_head.ftl" >
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMETDB registration">Register</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/notify" title="XMETDB registration">Notify</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 

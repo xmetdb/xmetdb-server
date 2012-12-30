@@ -24,14 +24,20 @@
 			<a href='http://xmetdb.org/'>
 				<img class='scale-with-grid' border='0' src='${xmet_root}/images/logo.png' alt='XMETDB logo'>
 			</a>
+			<h5>Version 1.0</h5>
 		</div>
 		<div class="thirteen columns">
 			<h1 class="remove-bottom">
 			Xenobiotics Metabolism Database			
 			</h1>
-			<h5>Version 1.0</h5>
+			<div id="breadCrumb" class="row breadCrumb module remove-bottom">
+                    <ul>
+                        <li>
+                            <a href="${xmet_root}" title="XMETDB Home">Home</a>
+                        </li>
+                    </ul>
+			</div>
 		</div>
 		<div class="sixteen columns" >
 			<div id="header_bottom" class="remove-bottom">&nbsp;</div>
 		</div>
-

@@ -3,6 +3,15 @@
 <#include "/s_head.ftl" >
 <script type='text/javascript' src='${xmet_root}/jme/jme.js'></script>
 <#include "/structures_head.ftl" >
+
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/chemical" title="XMETDB structure">Chemical structures</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 <div class="container columns" style="margin:0;padding:0;">

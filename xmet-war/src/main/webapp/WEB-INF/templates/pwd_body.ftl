@@ -48,6 +48,14 @@ $().ready(function() {
 }
 </style>
 
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMETDB profile">My profile</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount/reset" title="Change password">Change password</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 

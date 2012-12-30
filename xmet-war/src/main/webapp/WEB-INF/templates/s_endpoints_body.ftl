@@ -28,6 +28,14 @@ $(document).ready(function() {
 		});
 } );
 </script>
+
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMETDB enzymes">Enzymes</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 

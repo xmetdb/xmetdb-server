@@ -12,7 +12,6 @@
 </style>
 
 <script type="text/javascript">
-
     
 $(document).ready(function() {
 		$( ".useSelected" ).button();
@@ -29,15 +28,21 @@ $(document).ready(function() {
             return false;
         });
 		//submitFormValidation("#submitForm");
+	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB observations">Observations</a></li>');
 } );
-
 
     <#switch xmet_mode>
     <#case "newdocument">
+    	$(document).ready(function() {    
+    		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/editor" title="Create new observation">New observation</a></li>');
+    		jQuery("#breadCrumb").jBreadCrumb();
+    	});    
     	<#break>
     <#case "update">
 		$(document).ready(function() {    
 			editObservation("${xmet_request_json}");
+			jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="Modify an existing observation">Modify observation</a></li>');
+			jQuery("#breadCrumb").jBreadCrumb();
 		});    
     	<#break>
     <#default>

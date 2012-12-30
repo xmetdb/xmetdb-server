@@ -40,6 +40,14 @@ $(document).ready(function() {
 	</#if>
 });
 </script>
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMETDB registration">Register</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/confirm" title="XMETDB confirm registration">Confirm</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 

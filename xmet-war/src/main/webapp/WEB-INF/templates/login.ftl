@@ -1,6 +1,13 @@
 <#include "/s_html.ftl">
 <head>
   <#include "/s_head.ftl">
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/login" title="XMETDB log in">Log in</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>  
 </head>
 <body>
 

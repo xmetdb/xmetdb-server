@@ -3,6 +3,13 @@
 <#include "/s_head.ftl" >
 <#include "/users_head.ftl" >
 
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMETDB profile">My profile</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 
 </head>
 <body>

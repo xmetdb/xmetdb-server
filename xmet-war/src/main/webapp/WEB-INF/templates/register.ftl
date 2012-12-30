@@ -67,6 +67,13 @@ $().ready(function() {
 });
 	
 </script>
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMETDB registration">Register</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 
 <body>

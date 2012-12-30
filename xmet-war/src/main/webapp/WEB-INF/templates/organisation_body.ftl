@@ -10,6 +10,14 @@ $(document).ready(function() {
 });
 </script>
 
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/organisation" title="XMETDB organisations">Organisations</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
+
 </head>
 <body>
 

@@ -4,6 +4,13 @@
 <#include "/search_head.ftl" >
 <link rel="stylesheet" href="${xmet_root}/style/form.css" type="text/css">
 <script type="text/javascript" src="${xmet_root}/scripts/sketcher.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 

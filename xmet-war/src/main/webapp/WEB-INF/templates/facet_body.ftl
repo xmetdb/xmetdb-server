@@ -8,7 +8,12 @@ $(document).ready(function() {
 	var oTable = defineFacetsTable("${xmet_root}","${xmet_request_json}");
 });
 </script>
-
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    jQuery("#breadCrumb").jBreadCrumb();
+})
+</script>
 </head>
 <body>
 
