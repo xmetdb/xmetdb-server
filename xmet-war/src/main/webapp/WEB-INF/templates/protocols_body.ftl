@@ -7,6 +7,7 @@ jQuery(document).ready(function()
 {
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB observations">Observations</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="XMETDB search results">${xmet_breadcrumb}</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>

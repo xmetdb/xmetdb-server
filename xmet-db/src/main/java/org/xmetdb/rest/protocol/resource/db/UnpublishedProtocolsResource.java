@@ -19,6 +19,7 @@ public class UnpublishedProtocolsResource<Q extends IQueryRetrieval<DBProtocol>>
 			throws ResourceException {
 		
 		if (key==null) {
+			visibleQuery = "Unpublished observations";
 			ReadProtocol dbQuery = new ReadProtocol();
 			dbQuery.setOnlyUnpublished(true);
 			dbQuery.setShowUnpublished(true);
@@ -31,6 +32,7 @@ public class UnpublishedProtocolsResource<Q extends IQueryRetrieval<DBProtocol>>
 		else {
 			singleItem = true;
 			ReadProtocol dbQuery =  new ReadProtocol(Reference.decode(key.toString()));
+			visibleQuery = Reference.decode(key.toString());
 			dbQuery.setShowUnpublished(true);
 			if (userID>0) dbQuery.setFieldname(new DBUser(userID));
 			return (Q)dbQuery;

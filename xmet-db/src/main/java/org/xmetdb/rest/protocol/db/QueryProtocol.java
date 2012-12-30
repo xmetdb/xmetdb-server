@@ -157,5 +157,63 @@ public class QueryProtocol extends ReadProtocolAbstract<Form>  implements IQuery
 		}
 		return params;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		for (SearchMode mode: SearchMode.values()) {
+			String[] values = getFieldname().getValuesArray(mode.name());
+			if ((values==null) || (values.length==0)) continue;
+			for (String search:values)
+				if (search==null || "".equals(search.trim())) continue;
+				else
+				switch (mode) {
+				case xmet_number: {
+					b.append("&nbsp;");
+					b.append(value);
+					break;
+				}
+				case xmet_exp_enz: {
+					if ("on".equals(search)) {
+						b.append("&nbsp;ENZ");
+					}
+					break;
+				}
+				case xmet_exp_hep: {
+					if ("on".equals(search)) {
+						b.append("&nbsp;HEP");					}
+					break;
+				}
+				case xmet_exp_ms: {
+					if ("on".equals(search)) {
+						b.append("&nbsp;MS");
+					}
+					break;
+				}			
+				case xmet_enzyme: {
+					b.append("&nbsp;");
+					b.append("Enzyme:");
+					b.append(search);
+					break;
+				}
+				case xmet_allele: {
+					b.append(".");
+					b.append(search);
+					break;
+				}				
+				case xmet_reference: {
+					b.append("&nbsp;Reference:");
+					b.append(search);
+					break;
+				}		
+				case modifiedSince: {
+					break;
+				}
+				default: 
+				}
+		}
+		if (b.length()==0) b.append("All observations");
+		return b.toString();
+	}
 
 }

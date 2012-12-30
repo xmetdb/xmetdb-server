@@ -27,6 +27,7 @@ public class SingleProtocolResource  extends ProtocolDBResource<ReadProtocol> {
 	protected ReadProtocol createQuery(Context context, Request request, Response response)
 			throws ResourceException {
 		final Object key = request.getAttributes().get(FileResource.resourceKey);		
+		visibleQuery = key.toString();
 		try {
 			if (key==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			else {

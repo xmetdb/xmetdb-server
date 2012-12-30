@@ -1,6 +1,8 @@
 package org.xmetdb.rest.protocol.resource.db;
 
 
+import java.util.Map;
+
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -8,14 +10,19 @@ import org.restlet.data.Form;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
+import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
-import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolVersions;
 
 public class ProtocolVersionDBResource<Q extends ReadProtocol> extends ProtocolDBResource<Q> {
 
+	@Override
+	public String getTemplateName() {
+		return "protocols_body.ftl";
+	}
+	
 	@Override
 	protected Q getProtocolQuery(Object key, int userID, Form form)
 			throws ResourceException {
@@ -25,6 +32,7 @@ public class ProtocolVersionDBResource<Q extends ReadProtocol> extends ProtocolD
 		}			
 		else {
 			singleItem = false;
+			visibleQuery = Reference.decode(key.toString());
 			return (Q)new ReadProtocolVersions(Reference.decode(key.toString()));
 		}
 	}
@@ -42,4 +50,5 @@ public class ProtocolVersionDBResource<Q extends ReadProtocol> extends ProtocolD
 		}
 		throw new ResourceException(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
 	}	
+
 }

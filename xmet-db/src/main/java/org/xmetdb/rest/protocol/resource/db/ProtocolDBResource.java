@@ -3,8 +3,8 @@ package org.xmetdb.rest.protocol.resource.db;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.idea.modbcum.i.IQueryObject;
 import net.idea.modbcum.i.IQueryRetrieval;
@@ -43,13 +43,11 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.db.exceptions.MethodNotAllowedException;
-import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.CallableProtocolUpload;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.QueryProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
-import org.xmetdb.rest.protocol.db.ReadProtocolByEndpoint;
 import org.xmetdb.rest.protocol.db.ReadProtocolByStructure;
 import org.xmetdb.rest.structure.resource.Structure;
 import org.xmetdb.rest.user.DBUser;
@@ -66,11 +64,11 @@ import org.xmetdb.xmet.client.Resources;
 public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends XmetdbQueryResource<Q,DBProtocol> {
 	public enum SearchMode {
 		xmet_number,
-		xmet_enzyme,
-		xmet_allele,
 		xmet_exp_ms,
 		xmet_exp_hep,
 		xmet_exp_enz,
+		xmet_enzyme,
+		xmet_allele,
 		xmet_reference,
 		modifiedSince
 	}
@@ -78,6 +76,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	protected boolean singleItem = false;
 	protected boolean version = false;
 	protected Object structure;
+	protected String visibleQuery = "Search results";
 
 	public ProtocolDBResource() {
 		super();
@@ -166,6 +165,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		if (key==null) {
 			if (form==null) {
 				ReadProtocol dbQuery = new ReadProtocol();
+				visibleQuery = "All observations";
 				if (userID>0) {
 					dbQuery.setFieldname(new DBUser(userID));
 				} else dbQuery.setShowUnpublished(false);
@@ -173,9 +173,11 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			} else {
 				QueryProtocol dbQuery = new QueryProtocol();
 				dbQuery.setFieldname(form);
+				visibleQuery = dbQuery.toString();
 				return (Q)dbQuery;				
 			}
 		} else {
+			visibleQuery = Reference.decode(key.toString());
 			singleItem = true;
 			ReadProtocol dbQuery = new ReadProtocol(Reference.decode(key.toString()));
 			dbQuery.setShowUnpublished(true);
@@ -404,5 +406,13 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		TaskCreator taskCreator = super.getTaskCreator(entity,variant,method,async);
 		taskCreator.getProcessors().setAbortOnError(true);
 		return taskCreator;
+	}
+	
+	@Override
+	protected Map<String, Object> getMap(Variant variant)
+			throws ResourceException {
+		 Map<String, Object> map = super.getMap(variant);
+		 map.put("xmet_breadcrumb", visibleQuery);
+		 return map;
 	}
 }
