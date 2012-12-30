@@ -24,7 +24,7 @@
 			<a href='http://xmetdb.org/'>
 				<img class='scale-with-grid' border='0' src='${xmet_root}/images/logo.png' alt='XMETDB logo'>
 			</a>
-			<h5>Version 1.0</h5>
+			<h5 class='help'>Version 1.0</h5>
 		</div>
 		<div class="thirteen columns">
 			<h1 class="remove-bottom">
