@@ -52,7 +52,9 @@
 	================================================== -->
 	<link rel="stylesheet" href="${xmet_root}/style/jqBreadCrumbBase.css" type="text/css">
     <link rel="stylesheet" href="${xmet_root}/style/jqBreadCrumb.css" type="text/css">
+    <!--
     <script src="${xmet_root}/jquery/jquery.easing.1.3.js" type="text/javascript" language="JavaScript"></script>
+    -->
     <script src="${xmet_root}/jquery/jquery.jBreadCrumb.1.1.js" type="text/javascript" language="JavaScript"></script>
 	
 	
