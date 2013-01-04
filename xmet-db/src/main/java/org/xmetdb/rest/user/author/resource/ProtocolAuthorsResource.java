@@ -1,6 +1,9 @@
 package org.xmetdb.rest.user.author.resource;
 
 
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
+
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
@@ -8,9 +11,7 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.protocol.DBProtocol;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.author.db.ReadAuthor;
-import org.xmetdb.rest.user.db.ReadUser;
 import org.xmetdb.rest.user.resource.UserDBResource;
 
 public class ProtocolAuthorsResource extends UserDBResource<DBProtocol> {

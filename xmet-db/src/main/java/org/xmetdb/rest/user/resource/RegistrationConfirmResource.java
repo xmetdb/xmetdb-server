@@ -14,6 +14,7 @@ import net.idea.restnet.u.RegistrationJSONReporter;
 import net.idea.restnet.u.UserRegistration;
 import net.idea.restnet.u.db.ConfirmRegistration;
 import net.idea.restnet.u.db.ReadRegistration;
+import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Context;
 import org.restlet.Request;

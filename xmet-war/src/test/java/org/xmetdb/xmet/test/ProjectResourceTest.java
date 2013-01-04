@@ -9,6 +9,8 @@ import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
+import net.idea.restnet.groups.DBGroup;
+import net.idea.restnet.groups.db.ReadProject;
 import net.toxbank.client.io.rdf.ProjectIO;
 import net.toxbank.client.resource.Project;
 
@@ -23,8 +25,6 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
-import org.xmetdb.rest.groups.DBGroup;
-import org.xmetdb.rest.groups.db.ReadProject;
 import org.xmetdb.xmet.client.Resources;
 
 import com.hp.hpl.jena.ontology.OntModel;

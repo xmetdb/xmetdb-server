@@ -24,6 +24,12 @@ import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
+import net.idea.restnet.user.resource.UserCSVReporter;
+import net.idea.restnet.user.resource.UserJSONReporter;
+import net.idea.restnet.user.resource.UserRDFReporter;
+import net.idea.restnet.user.resource.UserURIReporter;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.restlet.Context;
@@ -39,9 +45,7 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.protocol.UserHTMLBeauty;
 import org.xmetdb.rest.task.UserTaskHTMLReporter;
-import org.xmetdb.rest.user.CallableUserCreator;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
+import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
 
@@ -102,10 +106,6 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 			return new OutputWriterConvertor(
 					new UserJSONReporter<IQueryRetrieval<DBUser>>(getRequest()),
 					MediaType.APPLICATION_JSON);			
-		} else if (variant.getMediaType().equals(MediaType.TEXT_XML)) {
-			return new OutputWriterConvertor(
-					new UserXMLReporter<IQueryRetrieval<DBUser>>(getRequest().getResourceRef()),
-					MediaType.TEXT_XML);			
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_N3) ||
@@ -225,7 +225,7 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 			UserURIReporter reporter = new UserURIReporter(getRequest(),"");
 			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 			conn = dbc.getConnection();
-			return new CallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),
+			return new XMETCallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),
 					conn,getToken(),false,usersdbname==null?"xmet_users":usersdbname);
 		} catch (Exception x) {
 			try { conn.close(); } catch (Exception xx) {}

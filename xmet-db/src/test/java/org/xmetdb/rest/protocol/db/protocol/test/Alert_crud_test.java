@@ -5,16 +5,16 @@ import java.math.BigInteger;
 
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.alerts.db.AddAlert;
+import net.idea.restnet.user.alerts.db.DBAlert;
+import net.idea.restnet.user.alerts.db.DeleteAlert;
+import net.idea.restnet.user.alerts.db.UpdateAlertSentTimeStamp;
 import net.toxbank.client.resource.Alert.RecurrenceFrequency;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.alerts.db.AddAlert;
-import org.xmetdb.rest.user.alerts.db.DBAlert;
-import org.xmetdb.rest.user.alerts.db.DeleteAlert;
-import org.xmetdb.rest.user.alerts.db.UpdateAlertSentTimeStamp;
 
 public class Alert_crud_test  extends CRUDTest<DBUser,DBAlert>  {
 

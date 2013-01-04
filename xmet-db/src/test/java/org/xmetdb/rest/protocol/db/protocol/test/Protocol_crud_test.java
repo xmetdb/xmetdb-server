@@ -31,14 +31,15 @@ package org.xmetdb.rest.protocol.db.protocol.test;
 
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.user.DBUser;
 import net.toxbank.client.resource.Protocol.STATUS;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.junit.Test;
 import org.xmetdb.rest.endpoints.Enzyme;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.DBProject;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.CreateProtocol;
 import org.xmetdb.rest.protocol.db.DeleteProtocol;
@@ -46,7 +47,6 @@ import org.xmetdb.rest.protocol.db.PublishProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.author.db.AddAuthor;
 import org.xmetdb.xmet.client.AtomUncertainty;
 import org.xmetdb.xmet.client.ProductAmount;

@@ -10,6 +10,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
+import net.idea.restnet.user.db.ReadUser;
 import net.toxbank.client.io.rdf.UserIO;
 import net.toxbank.client.resource.User;
 
@@ -24,7 +25,6 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
-import org.xmetdb.rest.user.db.ReadUser;
 import org.xmetdb.xmet.client.Resources;
 
 import com.hp.hpl.jena.ontology.OntModel;

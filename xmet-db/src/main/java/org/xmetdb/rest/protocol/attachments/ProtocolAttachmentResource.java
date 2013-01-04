@@ -15,6 +15,7 @@ import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.c.task.TaskCreator;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
+import net.idea.restnet.user.DBUser;
 
 import org.apache.commons.fileupload.FileItem;
 import org.restlet.Context;
@@ -37,7 +38,6 @@ import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.rest.protocol.resource.db.DownloadDocumentConvertor;
 import org.xmetdb.rest.protocol.resource.db.FileReporter;
 import org.xmetdb.rest.protocol.resource.db.ProtocolQueryURIReporter;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.xmet.client.Resources;
 
 public class ProtocolAttachmentResource extends XmetdbQueryResource<IQueryRetrieval<DBAttachment>,DBAttachment> {

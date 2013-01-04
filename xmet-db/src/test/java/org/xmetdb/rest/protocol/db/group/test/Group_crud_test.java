@@ -2,14 +2,14 @@ package org.xmetdb.rest.protocol.db.group.test;
 
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.IDBGroup;
+import net.idea.restnet.groups.db.CreateGroup;
+import net.idea.restnet.groups.db.DeleteGroup;
+import net.idea.restnet.groups.db.UpdateGroup;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.IDBGroup;
-import org.xmetdb.rest.groups.db.CreateGroup;
-import org.xmetdb.rest.groups.db.DeleteGroup;
-import org.xmetdb.rest.groups.db.UpdateGroup;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 
 public class Group_crud_test  extends CRUDTest<Object,IDBGroup>  {

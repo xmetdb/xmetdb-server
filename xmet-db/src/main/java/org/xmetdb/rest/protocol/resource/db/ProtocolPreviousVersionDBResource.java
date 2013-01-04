@@ -9,7 +9,6 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolPreviousVersion;
 

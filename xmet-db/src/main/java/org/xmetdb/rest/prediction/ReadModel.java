@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.protocol.DBProtocol;
-
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
@@ -14,6 +12,8 @@ import net.idea.modbcum.q.conditions.EQCondition;
 import net.idea.modbcum.q.query.AbstractQuery;
 import net.idea.opentox.cli.algorithm.Algorithm;
 import net.idea.opentox.cli.dataset.Dataset;
+
+import org.xmetdb.rest.protocol.DBProtocol;
 
 public class ReadModel  extends AbstractQuery<DBProtocol, DBModel, EQCondition, DBModel>  implements IQueryRetrieval<DBModel> {
 

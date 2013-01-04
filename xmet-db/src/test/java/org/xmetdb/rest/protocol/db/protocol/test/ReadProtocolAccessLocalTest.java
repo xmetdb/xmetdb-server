@@ -2,14 +2,14 @@ package org.xmetdb.rest.protocol.db.protocol.test;
 
 import java.sql.ResultSet;
 
+import junit.framework.Assert;
+import net.toxbank.client.policy.AccessRights;
+import net.toxbank.client.policy.PolicyRule;
+
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolAccessLocal;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 import org.xmetdb.rest.protocol.db.test.QueryTest;
-
-import junit.framework.Assert;
-import net.toxbank.client.policy.AccessRights;
-import net.toxbank.client.policy.PolicyRule;
 
 /**
  * Tests local access policy (based on published flag)

@@ -14,6 +14,9 @@ import net.idea.restnet.c.task.FactoryTaskConvertor;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
+import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Context;
 import org.restlet.Request;
@@ -23,9 +26,7 @@ import org.restlet.data.Method;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.task.UserTaskHTMLReporter;
-import org.xmetdb.rest.user.CallableUserCreator;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
+import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources.Config;
 
 public class PwdResetResource<T> extends MyAccountResource<T> {
@@ -64,7 +65,7 @@ public class PwdResetResource<T> extends MyAccountResource<T> {
 				UserURIReporter reporter = new UserURIReporter(getRequest(),"");
 				DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 				conn = dbc.getConnection();
-				return new CallableUserCreator(
+				return new XMETCallableUserCreator(
 							method,
 							item,
 							reporter, 

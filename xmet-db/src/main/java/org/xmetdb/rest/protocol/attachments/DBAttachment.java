@@ -3,9 +3,9 @@ package org.xmetdb.rest.protocol.attachments;
 import java.io.File;
 import java.net.URL;
 
-import org.xmetdb.rest.protocol.DBProtocol;
-
 import net.toxbank.client.resource.Document;
+
+import org.xmetdb.rest.protocol.DBProtocol;
 
 public class DBAttachment extends Document {
 

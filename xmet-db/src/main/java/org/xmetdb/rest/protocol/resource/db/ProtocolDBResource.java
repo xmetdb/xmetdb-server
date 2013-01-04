@@ -26,6 +26,8 @@ import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.apache.commons.fileupload.FileItem;
@@ -50,8 +52,6 @@ import org.xmetdb.rest.protocol.db.QueryProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolByStructure;
 import org.xmetdb.rest.structure.resource.Structure;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
 import org.xmetdb.rest.user.resource.UserDBResource;
 import org.xmetdb.xmet.client.Resources;
 

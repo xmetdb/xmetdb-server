@@ -3,13 +3,13 @@ package org.xmetdb.rest.user.author.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmetdb.rest.db.exceptions.InvalidProtocolException;
-import org.xmetdb.rest.protocol.DBProtocol;
-import org.xmetdb.rest.user.DBUser;
-
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 import net.idea.modbcum.q.update.AbstractUpdate;
+import net.idea.restnet.user.DBUser;
+
+import org.xmetdb.rest.db.exceptions.InvalidProtocolException;
+import org.xmetdb.rest.protocol.DBProtocol;
 
 /**
  * Removes an author of a given protocol. Does not delete the user itself.

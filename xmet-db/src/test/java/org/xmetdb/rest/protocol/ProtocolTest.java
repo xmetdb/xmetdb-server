@@ -7,7 +7,6 @@ import junit.framework.Assert;
 import net.toxbank.client.resource.Document;
 
 import org.junit.Test;
-import org.xmetdb.rest.protocol.DBProtocol;
 
 public class ProtocolTest {
 

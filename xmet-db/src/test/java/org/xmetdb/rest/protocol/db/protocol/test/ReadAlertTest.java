@@ -2,12 +2,12 @@ package org.xmetdb.rest.protocol.db.protocol.test;
 
 import java.sql.ResultSet;
 
-import org.xmetdb.rest.protocol.db.test.QueryTest;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.alerts.db.DBAlert;
-import org.xmetdb.rest.user.alerts.db.ReadAlert;
-
 import junit.framework.Assert;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.alerts.db.DBAlert;
+import net.idea.restnet.user.alerts.db.ReadAlert;
+
+import org.xmetdb.rest.protocol.db.test.QueryTest;
 
 /**
  * Test for {@link ReadAlert}

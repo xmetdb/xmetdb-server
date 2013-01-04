@@ -2,14 +2,14 @@ package org.xmetdb.rest.protocol.db.protocol.test;
 
 import java.sql.ResultSet;
 
+import junit.framework.Assert;
+import net.idea.restnet.user.DBUser;
+
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.test.QueryTest;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.xmet.client.AtomUncertainty;
 import org.xmetdb.xmet.client.ProductAmount;
-
-import junit.framework.Assert;
 
 
 public class ReadProtocolByUserTest extends QueryTest<ReadProtocol> {

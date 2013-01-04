@@ -2,11 +2,11 @@ package org.xmetdb.rest.protocol.db.user.test;
 
 import java.sql.ResultSet;
 
-import org.xmetdb.rest.protocol.db.test.QueryTest;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
-
 import junit.framework.Assert;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
+
+import org.xmetdb.rest.protocol.db.test.QueryTest;
 
 
 public class ReadUserTest  extends QueryTest<ReadUser> {

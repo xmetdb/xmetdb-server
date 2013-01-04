@@ -20,6 +20,8 @@ import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.i.task.ICallableTask;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Context;
 import org.restlet.Request;
@@ -34,8 +36,7 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.XmetdbHTMLReporter;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.task.RegistrationTaskHTMLReporter;
-import org.xmetdb.rest.user.CallableUserCreator;
-import org.xmetdb.rest.user.DBUser;
+import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
 
@@ -108,7 +109,7 @@ public class RegistrationResource extends CatalogResource<DBUser> {
 			UserURIReporter reporter = new UserURIReporter(getRequest(),"");
 			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 			conn = dbc.getConnection();
-			return new CallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),
+			return new XMETCallableUserCreator(method,item,reporter, form,getRequest().getRootRef().toString(),
 					conn,getToken(),false,usersdbname==null?"xmet_users":usersdbname);
 		} catch (Exception x) {
 			try { conn.close(); } catch (Exception xx) {}

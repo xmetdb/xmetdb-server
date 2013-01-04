@@ -17,6 +17,13 @@ import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.alerts.db.DBAlert;
+import net.idea.restnet.user.alerts.db.ReadAlert;
+import net.idea.restnet.user.alerts.resource.AlertJSONReporter;
+import net.idea.restnet.user.alerts.resource.AlertRDFReporter;
+import net.idea.restnet.user.alerts.resource.AlertURIReporter;
+import net.idea.restnet.user.alerts.resource.CallableAlertCreator;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.restlet.Context;
@@ -31,9 +38,6 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.alerts.db.DBAlert;
-import org.xmetdb.rest.user.alerts.db.ReadAlert;
 import org.xmetdb.rest.user.resource.UserDBResource;
 import org.xmetdb.xmet.client.Resources;
 

@@ -2,11 +2,12 @@ package org.xmetdb.rest.endpoints;
 
 import java.sql.ResultSet;
 
+import junit.framework.Assert;
+
 import org.xmetdb.rest.endpoints.db.QueryOntology;
 import org.xmetdb.rest.endpoints.db.QueryOntology.RetrieveMode;
 import org.xmetdb.rest.protocol.db.test.QueryTest;
 
-import junit.framework.Assert;
 import ambit2.base.data.Dictionary;
 
 public class QueryOntologyTest extends QueryTest<QueryOntology> {

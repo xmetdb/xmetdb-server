@@ -3,13 +3,13 @@ package org.xmetdb.rest.protocol.db.attachments.test;
 import java.net.URL;
 import java.sql.ResultSet;
 
+import junit.framework.Assert;
+
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 import org.xmetdb.rest.protocol.db.test.QueryTest;
-
-import junit.framework.Assert;
 
 /**
  * Attachments

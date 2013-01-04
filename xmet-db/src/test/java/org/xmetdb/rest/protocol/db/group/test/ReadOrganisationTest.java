@@ -2,11 +2,11 @@ package org.xmetdb.rest.protocol.db.group.test;
 
 import java.sql.ResultSet;
 
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.db.ReadOrganisation;
-import org.xmetdb.rest.protocol.db.test.QueryTest;
-
 import junit.framework.Assert;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.db.ReadOrganisation;
+
+import org.xmetdb.rest.protocol.db.test.QueryTest;
 
 
 public class ReadOrganisationTest extends QueryTest<ReadOrganisation> {

@@ -11,21 +11,21 @@ import net.idea.modbcum.p.MasterDetailsProcessor;
 import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.db.convertors.QueryRDFReporter;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.IDBGroup;
+import net.idea.restnet.groups.resource.GroupQueryURIReporter;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.resource.UserURIReporter;
 import net.toxbank.client.io.rdf.ProtocolIO;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.restlet.Request;
 import org.restlet.data.MediaType;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.IDBGroup;
-import org.xmetdb.rest.groups.resource.GroupQueryURIReporter;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.AttachmentURIReporter;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.resource.UserURIReporter;
 import org.xmetdb.xmet.client.Resources;
 
 import com.hp.hpl.jena.rdf.model.Model;

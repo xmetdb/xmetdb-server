@@ -2,11 +2,11 @@ package org.xmetdb.rest.protocol.db.group.test;
 
 import java.sql.ResultSet;
 
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.db.ReadProject;
-import org.xmetdb.rest.protocol.db.test.QueryTest;
-
 import junit.framework.Assert;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.db.ReadProject;
+
+import org.xmetdb.rest.protocol.db.test.QueryTest;
 
 
 public class ReadProjectTest  extends QueryTest<ReadProject> {

@@ -35,17 +35,17 @@ import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
 import net.idea.restnet.u.UserCredentials;
 import net.idea.restnet.u.UserRegistration;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.CreateUser;
+import net.idea.restnet.user.db.DeleteUser;
+import net.idea.restnet.user.db.UpdateCredentials;
+import net.idea.restnet.user.db.UpdateUser;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.junit.Test;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.CreateUser;
-import org.xmetdb.rest.user.db.DeleteUser;
-import org.xmetdb.rest.user.db.UpdateCredentials;
-import org.xmetdb.rest.user.db.UpdateUser;
 
 public final class User_crud_test<T extends Object>  extends CRUDTest<T,DBUser>  {
 

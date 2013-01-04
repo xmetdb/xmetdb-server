@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.idea.restnet.c.AbstractResource;
 import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.c.html.HTMLBeauty;
+import net.idea.restnet.user.alerts.db.DBAlert;
 import net.toxbank.client.resource.Query;
 
 import org.restlet.Request;
@@ -18,12 +18,10 @@ import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.security.Role;
 import org.restlet.security.User;
-import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource.SearchMode;
-import org.xmetdb.rest.user.alerts.db.DBAlert;
-import org.xmetdb.xmet.client.XMETDBRoles;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public class XmetdbHTMLBeauty extends HTMLBeauty {
 	

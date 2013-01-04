@@ -12,19 +12,19 @@ import net.idea.modbcum.p.DefaultAmbitProcessor;
 import net.idea.modbcum.p.MasterDetailsProcessor;
 import net.idea.modbcum.r.QueryReporter;
 import net.idea.restnet.db.QueryURIReporter;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.IDBGroup;
+import net.idea.restnet.groups.resource.GroupQueryURIReporter;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Request;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.IDBGroup;
-import org.xmetdb.rest.groups.resource.GroupQueryURIReporter;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.AttachmentURIReporter;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.resource.UserURIReporter;
 
 public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrieval<DBProtocol>,Writer>  {
 

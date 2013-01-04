@@ -2,9 +2,8 @@ package org.xmetdb.rest.user.resource;
 
 import java.util.Map;
 
-import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.restnet.c.html.HTMLBeauty;
-import net.idea.restnet.db.convertors.QueryHTMLReporter;
+import net.idea.restnet.user.db.ReadUser;
 
 import org.restlet.Context;
 import org.restlet.Request;
@@ -14,8 +13,6 @@ import org.restlet.data.Status;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.UserHTMLBeauty;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
 import org.xmetdb.xmet.client.Resources;
 
 public class MyAccountResource<T> extends UserDBResource<T> {

@@ -7,12 +7,13 @@ import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.db.QueryURIReporter;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.alerts.db.DBAlert;
+import net.idea.restnet.user.alerts.resource.AlertURIReporter;
 
 import org.restlet.Request;
 import org.xmetdb.rest.XmetdbHTMLReporter;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.alerts.db.DBAlert;
 import org.xmetdb.xmet.client.Resources;
 
 @Deprecated

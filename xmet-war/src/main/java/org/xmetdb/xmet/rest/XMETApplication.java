@@ -44,7 +44,7 @@ import org.xmetdb.rest.user.alerts.resource.AlertRouter;
 import org.xmetdb.rest.user.resource.MyAccountResource;
 import org.xmetdb.rest.user.resource.PwdResetResource;
 import org.xmetdb.rest.user.resource.RegistrationConfirmResource;
-import org.xmetdb.rest.user.resource.RegistrationNotifyResource;
+import org.xmetdb.rest.user.resource.XMETRegistrationNotifyResource;
 import org.xmetdb.rest.user.resource.RegistrationResource;
 import org.xmetdb.xmet.aa.UserAuthorizer;
 import org.xmetdb.xmet.aa.XMETLoginFormResource;
@@ -109,7 +109,17 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	@Override
 	public Restlet createInboundRoot() {
 
-		Router router = new MyRouter(this.getContext());
+		Router router = new MyRouter(this.getContext()) {
+			public void handle(Request request, Response response) {
+				//to use within riap calls
+				String rootUrl = getContext().getParameters().getFirstValue(Resources.BASE_URL); 
+				if ((rootUrl == null) && request.getRootRef().toString().startsWith("http")) { 
+                    rootUrl = request.getRootRef().toString(); 
+                    getContext().getParameters().set(Resources.BASE_URL,rootUrl,true);
+				}
+				super.handle(request, response);
+			};
+		};
 		// here we check if the cookie contains auth token, if not just consider
 		// the user notlogged in
 		boolean testAuthZ = "true".equalsIgnoreCase(getContext().getParameters().getFirstValue("TESTAUTHZ"));
@@ -193,7 +203,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 
 		router.attach(Resources.register, RegistrationResource.class);
 		router.attach(String.format("%s%s", Resources.register, Resources.confirm), RegistrationConfirmResource.class);
-		router.attach(String.format("%s%s", Resources.register, Resources.notify), RegistrationNotifyResource.class);
+		router.attach(String.format("%s%s", Resources.register, Resources.notify), XMETRegistrationNotifyResource.class);
 
 		router.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
 		router.setRoutingMode(Router.MODE_BEST_MATCH);

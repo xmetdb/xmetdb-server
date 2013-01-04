@@ -11,7 +11,12 @@ import net.idea.modbcum.p.QueryExecutor;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.modbcum.q.conditions.EQCondition;
 import net.idea.restnet.c.task.CallableProtectedTask;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.db.CreateGroup;
 import net.idea.restnet.i.task.TaskResult;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
 import net.toxbank.client.policy.AccessRights;
 import net.toxbank.client.resource.User;
 
@@ -23,9 +28,6 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.db.CreateGroup;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.AddAttachment;
 import org.xmetdb.rest.protocol.db.CreateProtocol;
@@ -37,8 +39,6 @@ import org.xmetdb.rest.protocol.db.ReadProtocolByID;
 import org.xmetdb.rest.protocol.db.UpdateFreeTextIndex;
 import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.resource.db.ProtocolQueryURIReporter;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
 import org.xmetdb.xmet.client.Resources;
 
 

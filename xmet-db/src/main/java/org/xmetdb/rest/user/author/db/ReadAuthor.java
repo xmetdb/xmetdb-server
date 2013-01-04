@@ -3,14 +3,14 @@ package org.xmetdb.rest.user.author.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.idea.modbcum.i.exceptions.AmbitException;
+import net.idea.modbcum.i.query.QueryParam;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.db.ReadUser;
+
 import org.xmetdb.rest.db.exceptions.InvalidProtocolException;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.db.ReadUser;
-
-import net.idea.modbcum.i.exceptions.AmbitException;
-import net.idea.modbcum.i.query.QueryParam;
 
 
 public class ReadAuthor extends ReadUser<DBProtocol> {

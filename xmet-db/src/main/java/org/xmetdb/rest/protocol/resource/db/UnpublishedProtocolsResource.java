@@ -2,6 +2,7 @@ package org.xmetdb.rest.protocol.resource.db;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.restnet.c.html.HTMLBeauty;
+import net.idea.restnet.user.DBUser;
 
 import org.restlet.data.Form;
 import org.restlet.data.Reference;
@@ -9,7 +10,6 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.xmet.client.Resources;
 
 public class UnpublishedProtocolsResource<Q extends IQueryRetrieval<DBProtocol>> extends ProtocolDBResource<Q> {

@@ -45,7 +45,13 @@
   	    	<type>jar</type>
   	    	<scope>compile</scope>
   	    </dependency>
-  	    
+  	     <dependency>
+  	    	<groupId>net.ideaconsult.restnet</groupId>
+  	    	<artifactId>restnet-userdb</artifactId>
+  	    	<version>${restnet.version}</version>
+  	    	<type>jar</type>
+  	    	<scope>compile</scope>
+  	    </dependency>  	    
   	    <dependency>
 		<groupId>org.xmetdb</groupId>
   	    	<artifactId>xmet-beans</artifactId>

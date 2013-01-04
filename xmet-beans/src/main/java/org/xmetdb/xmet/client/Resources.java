@@ -5,6 +5,7 @@ import net.idea.restnet.aa.resource.AdminResource;
 import net.idea.restnet.c.resource.TaskResource;
 
 public class Resources {
+	public static final String BASE_URL = "BASE_URL";
 	public static final String search = "/search";
 	public static final String protocol = "/protocol";
 	public static final String unpublished = "/unpublished";

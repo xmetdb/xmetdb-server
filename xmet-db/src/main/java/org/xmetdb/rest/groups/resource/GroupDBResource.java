@@ -9,8 +9,14 @@ import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
+import net.idea.restnet.groups.IDBGroup;
+import net.idea.restnet.groups.db.ReadGroup;
+import net.idea.restnet.groups.resource.GroupJSONReporter;
+import net.idea.restnet.groups.resource.GroupQueryURIReporter;
+import net.idea.restnet.groups.resource.GroupRDFReporter;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
+import net.idea.restnet.user.DBUser;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.restlet.Context;
@@ -25,10 +31,6 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
-import org.xmetdb.rest.groups.IDBGroup;
-import org.xmetdb.rest.groups.db.ReadGroup;
-import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.resource.UserDBResource;
 
 /**

@@ -8,22 +8,22 @@ import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.db.QueryURIReporter;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.IDBGroup;
+import net.idea.restnet.groups.resource.GroupQueryURIReporter;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Request;
 import org.restlet.data.ClientInfo;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
 import org.xmetdb.rest.XmetdbHTMLReporter;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.IDBGroup;
-import org.xmetdb.rest.groups.resource.GroupQueryURIReporter;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty.update_mode;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.resource.UserURIReporter;
 import org.xmetdb.xmet.client.Resources;
 
 @Deprecated

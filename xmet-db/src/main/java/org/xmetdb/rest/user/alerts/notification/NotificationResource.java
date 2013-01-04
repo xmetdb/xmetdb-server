@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import net.idea.modbcum.i.IQueryCondition;
 import net.idea.modbcum.i.IQueryRetrieval;
+import net.idea.modbcum.i.exceptions.NotFoundException;
 import net.idea.modbcum.p.MasterDetailsProcessor;
 import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.task.CallableProtectedTask;
@@ -18,6 +19,13 @@ import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.i.task.ICallableTask;
 import net.idea.restnet.i.task.Task;
+import net.idea.restnet.user.DBUser;
+import net.idea.restnet.user.alerts.db.DBAlert;
+import net.idea.restnet.user.alerts.db.ReadAlert;
+import net.idea.restnet.user.alerts.notification.CallableNotification;
+import net.idea.restnet.user.db.ReadUser;
+import net.idea.restnet.user.db.ReadUsersByAlerts;
+import net.idea.restnet.user.resource.UserURIReporter;
 import net.toxbank.client.resource.Alert.RecurrenceFrequency;
 
 import org.restlet.Context;
@@ -30,13 +38,9 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.user.DBUser;
-import org.xmetdb.rest.user.alerts.db.DBAlert;
-import org.xmetdb.rest.user.alerts.db.ReadAlert;
-import org.xmetdb.rest.user.db.ReadUser;
-import org.xmetdb.rest.user.db.ReadUsersByAlerts;
 import org.xmetdb.rest.user.resource.UserDBResource;
-import org.xmetdb.rest.user.resource.UserURIReporter;
+import org.xmetdb.xmet.client.Resources;
+
 
 
 public class NotificationResource<T> extends UserDBResource<T> {
@@ -95,8 +99,16 @@ public class NotificationResource<T> extends UserDBResource<T> {
 			UserURIReporter reporter = new UserURIReporter(getRequest(),"");
 			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 			conn = dbc.getConnection();
-			CallableNotification callable = new CallableNotification(method,item,reporter, form,getRequest().getRootRef().toString(),conn,getToken());
-			callable.setNotification(new SimpleNotificationEngine());
+			CallableNotification callable = new CallableNotification(method,item,reporter, form,getRequest().getRootRef().toString(),conn,getToken()) {
+				@Override
+				protected String retrieveEmail(DBUser user, String token)
+						throws Exception {
+					return user.getEmail();
+				}
+			};
+			String root = getContext().getParameters().getFirstValue(Resources.BASE_URL);
+			callable.setNotification(new XMETNotificationEngine(root==null?getRequest().getRootRef():new Reference(root)));
+			
 			return callable;
 		} catch (Exception x) {
 			try { conn.close(); } catch (Exception xx) {}
@@ -134,14 +146,16 @@ public class NotificationResource<T> extends UserDBResource<T> {
 					DBUser item) throws ResourceException {
 					return addTask(callable, item,reference);
 				}
-		
+			
 			@Override
 			public List<UUID> process(IQueryRetrieval<DBUser> query)
 					throws Exception {
+
 				return super.process(query);
 			}
 			@Override
 			public Object processItem(DBUser item) throws Exception {
+
 				return super.processItem(item);
 			}
 		};
@@ -191,11 +205,22 @@ public class NotificationResource<T> extends UserDBResource<T> {
 	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
-		params = new Form(entity);
+		try {
+			params = entity.isAvailable()?new Form(entity):null;
+		} catch (Exception x) {
+			//should work with empty form as well
+		}
 		synchronized (this) {
-			return processAndGenerateTask(Method.POST, null, variant,true);
+			try {
+				return processAndGenerateTask(Method.POST, null, variant,true);
+			} catch (ResourceException x) {
+				if ((x.getStatus()!=null) && (x.getStatus().getThrowable() instanceof NotFoundException)) {
+					//then it's fine, just no alerts to worry about. Upgrade restnet for a better 'not found' handler!
+					throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND,x.getStatus().getThrowable());
+				} else throw x;
+			}
 		}
 	}
-		
+	
 	
 }

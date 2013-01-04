@@ -1,8 +1,6 @@
 package org.xmetdb.rest.protocol.resource.db;
 
 
-import java.util.Map;
-
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -10,7 +8,6 @@ import org.restlet.data.Form;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
-import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.protocol.db.ReadProtocol;

@@ -5,16 +5,16 @@ import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.DBProject;
+import net.idea.restnet.groups.IDBGroup;
+import net.idea.restnet.groups.user.db.AddGroupsPerUser;
+import net.idea.restnet.groups.user.db.DeleteGroupsPerUser;
+import net.idea.restnet.user.DBUser;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.DBProject;
-import org.xmetdb.rest.groups.IDBGroup;
-import org.xmetdb.rest.groups.user.db.AddGroupsPerUser;
-import org.xmetdb.rest.groups.user.db.DeleteGroupsPerUser;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
-import org.xmetdb.rest.user.DBUser;
 
 public class Group_user_crud_test  extends CRUDTest<DBUser,List<IDBGroup>> {
 

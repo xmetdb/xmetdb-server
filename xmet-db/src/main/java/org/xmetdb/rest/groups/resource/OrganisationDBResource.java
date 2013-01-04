@@ -5,18 +5,19 @@ import java.sql.Connection;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.db.DBConnection;
+import net.idea.restnet.groups.CallableGroupCreator;
+import net.idea.restnet.groups.DBOrganisation;
+import net.idea.restnet.groups.GroupType;
+import net.idea.restnet.groups.db.ReadGroup;
+import net.idea.restnet.groups.db.ReadOrganisation;
+import net.idea.restnet.groups.resource.GroupQueryURIReporter;
+import net.idea.restnet.user.DBUser;
 
 import org.restlet.data.Form;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.groups.CallableGroupCreator;
-import org.xmetdb.rest.groups.DBOrganisation;
-import org.xmetdb.rest.groups.GroupType;
-import org.xmetdb.rest.groups.db.ReadGroup;
-import org.xmetdb.rest.groups.db.ReadOrganisation;
-import org.xmetdb.rest.user.DBUser;
 import org.xmetdb.rest.user.resource.UserDBResource;
 import org.xmetdb.xmet.client.Resources;
 
