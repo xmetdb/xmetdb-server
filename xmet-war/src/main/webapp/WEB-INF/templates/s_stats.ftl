@@ -5,14 +5,6 @@
 			</tr>
 			<tr class='w_tr'>
 				<td class='w_td_param'>
-					Datasets
-				</td>
-				<td class='w_td_value'>
-					<span id='valueDatasets'></span>
-				</td>
-			</tr>
-			<tr class='w_tr'>
-				<td class='w_td_param'>
 					Chemical structures
 				</td>
 				<td class='w_td_value'>
