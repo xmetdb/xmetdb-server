@@ -3,6 +3,7 @@
 <#include "/s_head.ftl" >
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript' src='${xmet_root}/scripts/myprofile.js'></script>
+<script type='text/javascript' src='${xmet_root}/scripts/jopentox.js'></script>
 <script type='text/javascript'>
 
 $().ready(function() {
@@ -120,7 +121,7 @@ jQuery(document).ready(function()
 				<div class='ten columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
-				<label class='three columns alpha'  for="affiliation">Affiliation</label>
+				<label class='three columns alpha'  for="affiliation">Affiliation<em>*</em></label>
 				<input class='eight columns alpha half-bottom' type="text"  size='40' name='affiliation' id='affiliation' value=''/>
 				<div class='ten columns omega'></div>
 			</div>				
