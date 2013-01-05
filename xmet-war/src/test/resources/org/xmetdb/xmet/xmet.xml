@@ -58,8 +58,10 @@
   <dictionary idsubject="14" relationship="is_part_of" idobject="1"/>
   <dictionary idsubject="15" relationship="is_part_of" idobject="1"/>
   <dictionary idsubject="16" relationship="is_part_of" idobject="1"/>
-  <alert idquery="1" name="cell" query="cell" qformat="FREETEXT" rfrequency="daily" rinterval="1" iduser="2" sent="2012-01-16 09:30:51.000000000"/>
-  <alert idquery="2" name="toxicity" query="toxicity" qformat="FREETEXT" rfrequency="weekly" rinterval="1" iduser="2" sent="2012-01-16 09:30:51.000000000"/>
    <protocol_authors idprotocol="1" version="1" iduser="2"/>
    <protocol_endpoints idprotocol="1" version="1" idtemplate="2" allele="1A"/>
+ 
+  <alert idquery="1" name="cell" query="cell" qformat="FREETEXT" rfrequency="daily" rinterval="1" iduser="3" sent="2012-01-16 09:30:51.000000000"/>
+  <alert idquery="2" name="toxicity" query="toxicity" qformat="FREETEXT" rfrequency="weekly" rinterval="1" iduser="3" sent="2012-01-16 09:30:51.000000000"/>
+   
 </dataset>
