@@ -3,6 +3,7 @@
   <user iduser="1" username="admin" title="" firstname="Administrator" lastname="" institute="" weblog="" homepage="http://www.example.com"  address="" email="" keywords="" reviewer="true"/>
   <user iduser="2" username="guest" title="" firstname="Guest" lastname="User" institute="" weblog="" homepage="" address="" email="" keywords="" reviewer="true"/>
   <user iduser="3" username="test" title="" firstname="Test" lastname="User" institute="" weblog="" homepage="" address="" email="" keywords="" reviewer="true"/>
+    <user iduser="4" username="tobedeleted" title="" firstname="to be deleted" lastname="User" institute="" weblog="" homepage="" address="" email="" keywords="" reviewer="true"/>
   <project idproject="1" name="XMETDB" ldapgroup="xmetdb"/>
   <project idproject="2" name="TEST" ldapgroup="test"/>
   <project idproject="3" name="ToDelete" />

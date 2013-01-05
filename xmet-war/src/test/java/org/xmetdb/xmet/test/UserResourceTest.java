@@ -60,7 +60,7 @@ public class UserResourceTest extends ResourceTest {
 			Assert.assertTrue(line.startsWith(String.format("http://localhost:%d%s/U",port,Resources.user)));
 			count++;
 		}
-		return count==3;
+		return count==4;
 	}	
 	
 	
@@ -116,17 +116,19 @@ public class UserResourceTest extends ResourceTest {
 	@Test
 	public void testCreateUserFromName() throws Exception {
 		cleanUsers();
+		
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		formparams.add(new BasicNameValuePair(ReadUser.fields.firstname.name(),  "Alice"));
 		formparams.add(new BasicNameValuePair(ReadUser.fields.lastname.name(),  "B."));
 		formparams.add(new BasicNameValuePair("pwd1",  "test"));
 		formparams.add(new BasicNameValuePair("pwd2",  "test"));
-		formparams.add(new BasicNameValuePair(ReadUser.fields.username.name(),  "alice"));
+		//formparams.add(new BasicNameValuePair("affiliation",  "test"));
+		formparams.add(new BasicNameValuePair(ReadUser.fields.username.name(),  "test123"));
 		formparams.add(new BasicNameValuePair(ReadUser.fields.email.name(),  "noone@example.org"));
 		
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM user");
-		Assert.assertEquals(3,table.getRowCount());
+		Assert.assertEquals(4,table.getRowCount());
 		c.close();
 
 		RemoteTask task = testAsyncPoll(new Reference(String.format("http://localhost:%d%s", port,
@@ -143,13 +145,12 @@ public class UserResourceTest extends ResourceTest {
 
         c = getConnection();	
 		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user");
-		Assert.assertEquals(4,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title from user where iduser>3 and firstName='Alice' and lastName='B.'" );
+		Assert.assertEquals(5,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title from user where iduser>4 and firstName='Alice' and lastName='B.'" );
 		Assert.assertEquals(1,table.getRowCount());
 		c.close();
 
 	}		
-	
 	@Test
 	public void testRegisterUser() throws Exception {
 		testCreateEntryFromWebForm(Resources.register);
@@ -179,13 +180,14 @@ public class UserResourceTest extends ResourceTest {
 			}
 			}
 		}
+		formparams.add(new BasicNameValuePair("affiliation",  "My new affiliation"));
 		formparams.add(new BasicNameValuePair("organisation_uri",  String.format("http://localhost:%d%s/G1",port,Resources.organisation)));
-		formparams.add(new BasicNameValuePair("organisation_uri",  String.format("http://localhost:%d%s/G2",port,Resources.organisation)));
+		//formparams.add(new BasicNameValuePair("organisation_uri",  String.format("http://localhost:%d%s/G2",port,Resources.organisation)));
 		formparams.add(new BasicNameValuePair("project_uri",  String.format("http://localhost:%d%s/G2",port,Resources.project)));
 
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM user");
-		Assert.assertEquals(3,table.getRowCount());
+		Assert.assertEquals(4,table.getRowCount());
 		c.close();
 
 		RemoteTask task = testAsyncPoll(new Reference(String.format("http://localhost:%d%s", port,
@@ -199,12 +201,14 @@ public class UserResourceTest extends ResourceTest {
 
         c = getConnection();	
 		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user");
-		Assert.assertEquals(4,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title from user where iduser>3 and username='username'");
+		Assert.assertEquals(5,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title from user where iduser>4 and username='username'");
 		Assert.assertEquals(1,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT iduser,idorganisation from user_organisation where iduser>3 and (idorganisation=1 or idorganisation=2)");
-		Assert.assertEquals(2,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT iduser,idproject from user_project where iduser>3 and idproject=2");
+		table = 	c.createQueryTable("EXPECTED","SELECT iduser,idorganisation from user_organisation where iduser>4 and idorganisation=1");
+		Assert.assertEquals(1,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED","SELECT iduser,idorganisation,name from user_organisation join organisation using(idorganisation) where iduser>4 and name='My new affiliation'");
+		Assert.assertEquals(1,table.getRowCount());
+		table = 	c.createQueryTable("EXPECTED","SELECT iduser,idproject from user_project where iduser>4 and idproject=2");
 		Assert.assertEquals(1,table.getRowCount());		
 		c.close();
 
@@ -214,21 +218,20 @@ public class UserResourceTest extends ResourceTest {
 	@Test
 	public void testDelete() throws Exception {
 		IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=3");
-		Assert.assertEquals(new BigInteger("3"),table.getValue(0,"iduser"));
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT iduser FROM user where iduser=4");
+		Assert.assertEquals(new BigInteger("4"),table.getValue(0,"iduser"));
 		c.close();		
-		String org = String.format("http://localhost:%d%s/U3", port,Resources.user);
+		String org = String.format("http://localhost:%d%s/U4", port,Resources.user);
 		RemoteTask task = testAsyncPoll(new Reference(org),
 				MediaType.TEXT_URI_LIST, null,
 				Method.DELETE);
 		Assert.assertEquals(Status.SUCCESS_OK.getCode(), task.getStatus());
 		//Assert.assertNull(task.getResult());
 		c = getConnection();	
-		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user where iduser=3");
+		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user where iduser=4");
 		Assert.assertEquals(0,table.getRowCount());
 		c.close();			
 	}
-	
 	
 	@Test
 	public void testUpdateUser() throws Exception {
@@ -257,7 +260,7 @@ public class UserResourceTest extends ResourceTest {
 
         c = getConnection();	
 		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user");
-		Assert.assertEquals(3,table.getRowCount());
+		Assert.assertEquals(4,table.getRowCount());
 		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title from user where iduser=3 and firstName='Alice' and lastName='B.'" );
 		Assert.assertEquals(1,table.getRowCount());
 		c.close();
