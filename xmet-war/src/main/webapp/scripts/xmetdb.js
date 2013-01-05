@@ -406,7 +406,7 @@ function defineObservationsTable(tableSelector,observations_uri) {
 				},
 				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] }
 			],
-		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',	
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"sPaginationType": "full_numbers",
@@ -428,6 +428,7 @@ function defineObservationsTable(tableSelector,observations_uri) {
 		},		
 		*/
 		"oLanguage": {
+			"sSearch": "Filter:",
             "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
             "sLoadingRecords": "No records found."
 		},	    

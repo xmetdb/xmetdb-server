@@ -72,6 +72,7 @@ function defineEndpointsTable(url) {
 				}	
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
+		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,

@@ -152,6 +152,7 @@ function defineStructuresTable(url, query_service, similarity) {
 		      } );
 		},
 		"oLanguage": {
+				"sSearch": "Filter:",
 	            "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No records found."
 	    },

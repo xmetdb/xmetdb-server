@@ -174,13 +174,14 @@ function defineTaskTable(root,url) {
 					  }
 				}		
 			],
-		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
 		"oLanguage": {
+				"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No records found."
 	    }
@@ -211,13 +212,14 @@ function defineFacetsTable(root,url) {
 				  "bSortable" : true
 				}			
 			],
-		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',	
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
 		"oLanguage": {
+				"sSearch": "Filter:",
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No records found."
 	    }
