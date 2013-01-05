@@ -23,22 +23,13 @@ function getMyAccount(root,url,readonly) {
         		
         		$("#protocoluri").prop("href",protocolURI);
         		$("#alerturi").prop("href",alertURI);
+        		$("#breadCrumbUser").html(entry["username"]);
         		
         		var sOrg = "";
         		$.each(entry["organisation"],function(index,value) {
-        			sOrg += "<p><label for='affiliation'>Affiliation</label>";
-        			sOrg += "<input type='text' size='40' name='affiliation' class='affiliation' value='"+value.title+"'"+ (readonly?" readonly ":"") +"/>";
-        			sOrg += "<em></em></p>\n";
+        			$("#affiliation").prop("value",value.title);
+        			//update allows only one affiliation, although the db model allows multiple
         		});
-        		if (sOrg=="") {
-        			sOrg += "<p><label for='affiliation'>Affiliation</label>";
-        			sOrg += "<input type='text' size='40' name='affiliation' class='affiliation' value=''"+ (readonly?" readonly ":"") +"/>";
-        			sOrg += "<em></em></p>\n";
-        		};
-    			$("#organisations").html(sOrg);        		
-        		
-        		//reload tabs
-        		$(function() {$( ".tabs" ).tabs({cache: true});});
         	});
         },
         error: function(xhr, status, err) {
@@ -278,4 +269,26 @@ function defineAlertsTable(root,url) {
 		}	    
 	} );
 	return oTable;
+}
+
+function setAutocompleteOrgs(root,id) {
+		$(id).autocomplete({
+			source: function (request, response) {
+				$.ajax({
+	                url: root + "/organisation?media=application/json&search="+request.term,
+	                contentType: "application/json; charset=utf-8",
+	                dataType: "json",
+	                success: function (data) {
+	                    response(
+	                    $.map(data.group, function (item) {
+	                        return {
+	                            label: item.title,
+	                            value: item.title
+	                        }
+	                    }));
+	                }
+	            })
+			},
+            minLength: 2	            
+        });
 }

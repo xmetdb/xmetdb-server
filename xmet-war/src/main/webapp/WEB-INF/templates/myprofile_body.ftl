@@ -6,7 +6,13 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMETDB profile">My profile</a></li>');
+	<#if myprofile>
+		setAutocompleteOrgs("${xmet_root}","#affiliation");
+		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMETDB profile">My profile</a></li>');
+	<#else>
+		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/users" title="All Users">Users</a></li>');
+	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" id="breadCrumbUser" title="User">User</a></li>');
+	</#if>   
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>
@@ -64,17 +70,10 @@ jQuery(document).ready(function()
 			<div class="five columns omega">&nbsp;</div>
 		</div>
 		<div class='row' style="margin:5px;padding:5px;"> 	
-			<label class='three columns alpha' for="organisation">Affiliation</label>
-			<div class="eight columns alpha remove-bottom" >
-				<table id='organisations'>
-				<thead style="display:none;">
-				<th></th>
-				</thead>
-				<tbody></tbody>
-				</table>
-			</div>
+			<label class='three columns alpha' for="affiliation">Affiliation</label>
+			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='affiliation' id='affiliation' value=''/>
 			<div class="five columns omega">&nbsp;</div>
-		</div>
+		</div>		
 		<div class='row' style="margin:5px;padding:5px;"> 	
 			<label class='three columns alpha' for="email">e-mail</label>
 			<input class="eight columns alpha remove-bottom" type="text" ${ro} size='40' name='email' id='email' value=''/>

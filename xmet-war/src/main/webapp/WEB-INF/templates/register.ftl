@@ -2,11 +2,13 @@
 <head>
 <#include "/s_head.ftl" >
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
+<script type='text/javascript' src='${xmet_root}/scripts/myprofile.js'></script>
 <script type='text/javascript'>
-
 
 $().ready(function() {
 	// validate the comment form when it is submitted
+	setAutocompleteOrgs("${xmet_root}","#affiliation");
+	
 	$("#registerForm").validate({
 		rules : {
 			'username': {
@@ -20,6 +22,9 @@ $().ready(function() {
 			'lastname': {
 				required : true
 			},
+			'affiliation': {
+				required : true
+			},		
 			'email': {
 				required : true,
 				email: true
@@ -46,6 +51,9 @@ $().ready(function() {
 			'lastname'  : {
 				required: " Please provide your last name"
 			},
+			'affiliation'  : {
+				required: "Please provide your affiliation"
+			},					
 			'email'     : {
 				required: " Please provide valid e-mail",
 				email: " Please provide valid e-mail"
@@ -133,7 +141,7 @@ jQuery(document).ready(function()
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="reviewer">Available as a curator</label>
-				<input class='eight columns alpha half-bottom' type="checkbox" name='reviewer' id='reviewer' value=''/>
+				<input class='eight columns alpha half-bottom' type="checkbox" name='reviewer' id='reviewer' value='' style='width:3em;'/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
