@@ -1,11 +1,6 @@
 <#include "/s_html.ftl">
 <head>
   <#include "/s_head.ftl">
-<script type='text/javascript'>  
-  function toggleDiv(divId) {
-		$('#'+divId).toggle();
-  }		
-</script>  
 </head>
 <body>
 
@@ -27,7 +22,7 @@
 				<span id='error_description'>${status_error_description}</span>
 			</div>
 			<div class='row help' style='text-align:right;margin:10px;'>
-					<a href='#' style='background-color: #fff; padding: 5px 10px;' onClick="toggleDiv('details'); return false;">Details</a>
+					<a href='#' style='background-color: #fff; padding: 5px 10px;' onClick="$('#details').toggle(); return false;">Details</a>
 			</div>
 			<div class='row help' style='display: none;text-align:right;margin:10px;' id='details'>
 				<#if status_details??>
