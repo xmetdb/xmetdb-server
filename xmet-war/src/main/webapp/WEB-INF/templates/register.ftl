@@ -158,8 +158,8 @@ jQuery(document).ready(function()
 				<label class='three columns alpha'>&nbsp;</label>
 				<input class='three columns alpha' id='register' name='register' type='submit' class='submit' value='Register'>
 				<div class='ten columns omega'></div>
-			</form>		
 			</div>
+			</form>	
 		</div>			
 		</div>
 
