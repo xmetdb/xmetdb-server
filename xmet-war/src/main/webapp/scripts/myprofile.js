@@ -123,7 +123,14 @@ function defineUsersTable(root,url) {
 		"oLanguage": {
 				"sSearch": "Filter:",
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
-	            "sLoadingRecords": "No records found."
+	            "sLoadingRecords": "No user entries found.",
+	            "sLengthMenu": 'Display <select>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="50">50</option>' +
+                '<option value="100">100</option>' +
+                '<option value="-1">all</option>' +
+                '</select> users'	            
 	    }
 	} );
 	return oTable;
