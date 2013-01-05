@@ -17,7 +17,8 @@
 					  <option value="daily">Daily</option>				
 					  <option value="" title='${freq_hint}'>Never</option>
 				    </select>
-					<input class='remove-bottom' type='submit' title='${alert_hint} ${freq_hint}' value='Save'/>
+					<input class='half-bottom' type='submit' title='${alert_hint} ${freq_hint}' value='Save'/>
 				</form>
+				<a href='${xmet_root}/myaccount/alert' title='Show all saved searches'>My alerts</a>
 				</div>
 				</div>
