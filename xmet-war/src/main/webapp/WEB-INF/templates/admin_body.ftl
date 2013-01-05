@@ -43,6 +43,17 @@ jQuery(document).ready(function()
 		<div class="thirteen columns"><a href='${xmet_root}/task'>Browse jobs status</a></div>
 		</div>		
 		
+		<div class='row' style="margin:5px;padding:5px;">
+		<div class="three columns">Saved searches</div>
+		<div class="thirteen columns">
+		<a href='${xmet_root}/admin/notification'>Active notifications</a><br>
+		Browse users:&nbsp;
+		<a href='${xmet_root}/admin/notification?search=daily'>with defined daily alerts</a>|
+		<a href='${xmet_root}/admin/notification?search=weekly'>with defined weekly alerts</a>|
+		<a href='${xmet_root}/admin/notification?search=monthly'>with defined monthly alerts</a>
+		</div>
+		</div>		
+				
 		</div>
 		<!-- twelve columns  -->
 		</div> 

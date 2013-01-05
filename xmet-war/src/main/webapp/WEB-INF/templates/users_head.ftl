@@ -3,7 +3,7 @@
 
 <script type='text/javascript'>
 $(document).ready(function() {
-	getMyAccount('${xmet_root}','${xmet_request_json}');
+	getMyAccount('${xmet_root}','${xmet_request_json}',true);
 	
 		// validate the comment form when it is submitted
 	$("#form_myaccount").validate({

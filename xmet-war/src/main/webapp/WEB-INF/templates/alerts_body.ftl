@@ -14,7 +14,7 @@ $(document).ready(function() {
 <script type="text/javascript">
        jQuery(document).ready(function()
        {
-           jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/alert" title="XMETDB Home">Alerts</a></li>');
+           jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount/alert" title="XMETDB Home">Alerts</a></li>');
            jQuery("#breadCrumb").jBreadCrumb();
        })
 </script>
@@ -35,8 +35,8 @@ $(document).ready(function() {
 		<th>Created</th>
 		<th>Alert</th>
 		<th>Recurrence</th>
-		<th>Delete</th>
 		<th>Sent at</th>
+		<th>Delete</th>
 		</thead>
 		<tbody></tbody>
 		</table>

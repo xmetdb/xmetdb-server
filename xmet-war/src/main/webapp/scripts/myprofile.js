@@ -1,4 +1,4 @@
-function getMyAccount(root,url) {
+function getMyAccount(root,url,readonly) {
 	var facet = {};	
 
     $.ajax({
@@ -24,29 +24,19 @@ function getMyAccount(root,url) {
         		$("#protocoluri").prop("href",protocolURI);
         		$("#alerturi").prop("href",alertURI);
         		
-        		var oTable = $('#organisations').dataTable( {
-        			"bPaginate"  : false,
-        			"bAutoWidth" : false,
-        			"jQuery" : true,
-        			"sDom"   : "t",
-        			"aaData" : entry.organisation,
-        			"bFilter": false,
-        			"aoColumnDefs": [
-        			 				{ //0
-        			 					"aTargets": [ 0 ],	
-        			 					"mDataProp" : "uri",
-        			 					"bInfo"  : false,
-        			 					"bLengthChange" : false,
-        			 					"bUseRendered"  : false,
-        								"fnRender"      : function(o,val) {
-        									 if ((o.aData["title"] === undefined) || (o.aData["title"] == ""))
-        									 	return "<a href='"+ o.aData["uri"]+"' target=_blank>N/A</a>";
-        									 else
-        										 return "<a href='"+ o.aData["uri"]+"' target=_blank>"+o.aData["title"]+"</a>";
-        								}
-        			 				}        			 				
-        			 			]
+        		var sOrg = "";
+        		$.each(entry["organisation"],function(index,value) {
+        			sOrg += "<p><label for='affiliation'>Affiliation</label>";
+        			sOrg += "<input type='text' size='40' name='affiliation' class='affiliation' value='"+value.title+"'"+ (readonly?" readonly ":"") +"/>";
+        			sOrg += "<em></em></p>\n";
         		});
+        		if (sOrg=="") {
+        			sOrg += "<p><label for='affiliation'>Affiliation</label>";
+        			sOrg += "<input type='text' size='40' name='affiliation' class='affiliation' value=''"+ (readonly?" readonly ":"") +"/>";
+        			sOrg += "<em></em></p>\n";
+        		};
+    			$("#organisations").html(sOrg);        		
+        		
         		//reload tabs
         		$(function() {$( ".tabs" ).tabs({cache: true});});
         	});
@@ -124,13 +114,14 @@ function defineUsersTable(root,url) {
 					  }
 				}				
 			],
-		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
 		"oLanguage": {
+				"sSearch": "Filter:",
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No records found."
 	    }
@@ -159,13 +150,15 @@ function defineOrganisationTable(root,url) {
 				  }
 				}
 			],
-		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',		
+		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
 		"oLanguage": {
+				"sSearch": "Filter:",
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No records found."
 	    },
@@ -201,16 +194,18 @@ function defineAlertsTable(root,url) {
 				  "bUseRendered" : false,
 				  "bSortable" : true,
 				  "fnRender" : function(o,val) {
-					  return val;
+					  return new Date(val).toDateString();
 				  }
 				},
- 				{ "mDataProp": "title" , "asSorting": [ "asc", "desc" ],
+ 				{ "mDataProp": "content" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 1 ],	
 					  "bSearchable" : true,
 					  "bUseRendered" : false,
 					  "bSortable" : true,
+					  "sWidth":"35%",
 					  "fnRender" : function(o,val) {
-						  return val;
+						  var q = root + o.aData["title"] + "?" + o.aData["content"];
+						  return "<a href='"+q+"' title='Go to search results'>"+(val.replace("pagesize=100","").replace(/&/g," ").replace(/xmet_/g," "))+"</a>\n";
 					  }
 				},
  				{ "mDataProp": "frequency" , "asSorting": [ "asc", "desc" ],
@@ -228,19 +223,37 @@ function defineAlertsTable(root,url) {
 					  "bUseRendered" : false,
 					  "bSortable" : true,
 					  "fnRender" : function(o,val) {
-						  return val;
+						  return new Date(val).toDateString();
 					  }
-				}				
+				},
+ 				{ "mDataProp": "uri" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 4 ],	
+					  "bSearchable" : true,
+					  "bUseRendered" : false,
+					  "bSortable" : true,
+					  "fnRender" : function(o,val) {
+						  return "<form method='POST' action='"+val+"?method=DELETE'><input class='remove-bottom' type='submit' value='Delete'></form>\n";
+					  }
+				}					
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',			
+		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
 		"oLanguage": {
+				"sSearch": "Filter:",
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
-	            "sLoadingRecords": "No records found."
+	            "sLoadingRecords": "No records found.",
+	            "sLengthMenu": 'Display <select>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="50">50</option>' +
+                '<option value="100">100</option>' +
+                '<option value="-1">all</option>' +
+                '</select> alerts'	            
 	    },
 		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 		    $.ajax( {
