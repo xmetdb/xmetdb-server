@@ -12,7 +12,6 @@
 	
 	$(document).ready(function() {
 	  	var oTable = defineTaskTable("${xmet_root}","${xmet_request_json}");
-	  	console.log(oTable);
 	});
 	</script>
 </#if>
@@ -53,8 +52,8 @@ jQuery(document).ready(function()
 			<thead>
 			<th>Job</th>
 			<th>Status</th>
-			<th>Start time</th>
-			<th>Elapsed time</th>
+			<th>Started at</th>
+			<th>Completed at</th>
 			</thead>
 			<tbody></tbody>
 			</table>

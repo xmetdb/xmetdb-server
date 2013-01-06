@@ -106,7 +106,7 @@ function readTask(root,url) {
 	        url: url,
 	        success: function(data, status, xhr) {
 	        	$.each(data["task"],function(index, entry) {
-	        		try {$("#task_started").text(new Date(entry["started"]));} catch (error) {}
+	        		try {$("#task_started").text(new Date(entry["started"]).toUTCString());} catch (error) {}
 	        		$("#task_name").text(entry["name"]);
 	        		$("#result").prop("href",entry["result"]);
 	        		var img = "progress.gif";
@@ -176,7 +176,7 @@ function defineTaskTable(root,url) {
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
-					  return val;
+					  return (val==undefined)?"":(val==null)?"":new Date(val).toUTCString();
 				  }
 				},
 				{ "mDataProp": "completed" , "asSorting": [ "asc", "desc" ],
@@ -185,7 +185,7 @@ function defineTaskTable(root,url) {
 					  "bSortable" : true,
 					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
-						  return val;
+						  return (val==undefined)?"":(val==null)?"":new Date(val).toUTCString();
 					  }
 				}		
 			],
