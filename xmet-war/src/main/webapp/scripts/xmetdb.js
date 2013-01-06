@@ -1,4 +1,5 @@
 function cmp2image(val) {
+		var cmpURI = val;
 		if (val.indexOf("/conformer")>=0) {
 			cmpURI = val.substring(0,val.indexOf("/conformer"));
 		}								
@@ -125,7 +126,7 @@ function getQueryURL(queryService,option) {
 }
 
 function runSearch(queryService,form,results) {
-	var sSource = queryService + '/query/similarity?media=application/x-javascript&'+ form.serialize();
+	var sSource = queryService + '?media=application/x-javascript&'+ form.serialize();
 	var search = "";
 	jQuery.each(form.serializeArray(),function(index,entry){
 		if ('search' == entry.name) search = entry.value;
@@ -138,9 +139,11 @@ function runSearch(queryService,form,results) {
 	        "crossDomain": true,  //bloody IE
 	        "contentType" : "application/x-javascript",
 	        "success": function(json) {
+	        	/*
 	        	$(results).append('<li class="ui-state-default" ><img src="'+
 	        			queryService + '/depict/cdk/kekule?search=' + encodeURIComponent(search) +
 	        			'&w=150&h=150" alt="'+ search +'"></li>');
+	        			*/
    	        	json.dataEntry.forEach(function img(element, index, array) {
 	        		$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
 	        	  });

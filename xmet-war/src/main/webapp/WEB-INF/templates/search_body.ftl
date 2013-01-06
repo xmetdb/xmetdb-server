@@ -53,6 +53,7 @@ jQuery(document).ready(function()
     		 	<br/>
     		 	<input type='text' name='search' size='60' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
    				<input type='hidden' name='type' value='smiles'>
+   				
     		 	<input type="submit" class="search" value="Structure search" tabindex='13'>
 			</div>
     	</div>	       	

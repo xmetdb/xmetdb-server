@@ -32,7 +32,11 @@ $(document).ready(function() {
 				this.type.value = "smiles"; 
 				this.b64search.value = "";
 			}
-        	runSearch('${queryService}',$(this),'#structureSearchResults');
+			var queryService = '${queryService}';
+			if (this.similarity["checked"]) queryService += "/query/similarity";
+			else if (this.smarts["checked"]) queryService += "/query/smarts";
+			else queryService += "/query/compound/search/all";
+        	runSearch(queryService,$(this),'#structureSearchResults');
             event.preventDefault();
             return false;
         });
@@ -206,7 +210,7 @@ $(document).ready(function() {
 					<div class='six columns omega'>
 						<label>Use selected structures as </label> 
 						<a href='#' class='button' onClick='useSelected("substrate");return false;'>a substrate</a>
-						<a href='#' class='button' onClick='useSelected("product");return false;'>as products</a>
+						<a href='#' class='button' onClick='useSelected("product");return false;'>a product(s)</a>
 					</div>
 				</div>
 				<div class='row'>
