@@ -106,13 +106,13 @@ $(document).ready(function() {
 	    	<label for='xmet_substrate_upload'><em></em></label>
 			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor and search options</a>
 			<br/>
-			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20' class='remove-bottom'>
+			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20' class='remove-bottom' onClick='clearStructure("substrate")'>
 	    </div>
 	    <div class='eight columns omega'>
 	    	<label for='xmet_product_upload'><em></em></label>
 			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor and search options</a>
 			<br/>
-			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20' class='remove-bottom'>
+			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20' class='remove-bottom' onClick='clearStructure("product")'>
 		</div>
 	</div>    	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>

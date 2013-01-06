@@ -72,6 +72,7 @@ function loadEnzymesList(root,selectTag,allelesTag) {
 function useSelected(prefix) {
 	$( '#structureSearchResults li.ui-selected img').each(function (index,entry) {
 		var results = '#xmet_'+prefix+'_img';
+		$('input[name=xmet_'+prefix+'_uppload]').val();
 		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		if (entry.alt.indexOf('http')==0) {
@@ -88,10 +89,20 @@ function useSelected(prefix) {
 	});
 }
 
+function clearStructure(prefix) {
+	$("#xmet_"+prefix+"_img").empty();
+	/*
+	<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
+	<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
+	<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
+	*/
+}
+
 function useDrawn(queryService,prefix) {
 	var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
 	if ((molFile!==undefined) && (molFile != null)) {
 		var results = '#xmet_'+prefix+'_img';
+		$('input[name=xmet_'+prefix+'_uppload]').val();
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		$(results_mol).val(molFile);
 		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
