@@ -2,8 +2,9 @@
 <head>
 <#include "/s_head.ftl" >
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
-<script type='text/javascript' src='${xmet_root}/jme/jme.js'></script>
+<script type="text/javascript" src="${xmet_root}/scripts/sketcher.js"></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.MultiFile.pack.js'></script>
+<script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.base64.min.js'></script>
 <style>
     .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
     .structresults .ui-selected { background: #F39814; border-color: #F39814; }
@@ -22,11 +23,21 @@ $(document).ready(function() {
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
  			$( "#divresults").show();
+			var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
+			if ((molFile!==undefined) && (molFile != null)) {
+				this.type.value = "mol"; 
+				this.b64search.value = $.base64.encode(molFile);
+				this.search.value= "";
+			} else {
+				this.type.value = "smiles"; 
+				this.b64search.value = "";
+			}
         	runSearch('${queryService}',$(this),'#structureSearchResults');
             event.preventDefault();
             return false;
         });
 		//submitFormValidation("#submitForm");
+		//searchFormValidation("#substrateSearchForm");
 	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB observations">Observations</a></li>');
 } );
 
@@ -162,16 +173,15 @@ $(document).ready(function() {
 		<div class='row ui-widget-header ui-corner-top remove-bottom'>Draw the structure or search by structure</div>
 		<div class='ui-widget-content ui-corner-bottom half-bottom'>
 			<div class='row'  style="margin:5px;padding:5px;"> 	
-				&nbsp;
-				<div class='ten columns alpha'>
-					<applet code="JME.class" name="JME" archive="${xmet_root}/jme/JME.jar" width="500px" height="400px">
-					<param name="options" value="nohydrogens,polarnitro,nocanonize">
-					You have to enable Java and JavaScript on your machine ! 
-					</applet>
-				</div>
-				<div class='four columns alpha'>
-					<form method='GET' action='#' name='substrateSearchForm'>
-					<input type='hidden' name='type' value='smiles'>
+				<form method='GET' action='#' name='substrateSearchForm'>
+				<iframe class="ten columns alpha remove-bottom" style='height:420px;width:500px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html"></iframe>
+				<div class='six columns omega remove-bottom'>
+					<label>Use the drawn structure</label>
+	   				<input type='hidden' name='type' value='smiles'>
+	   				<input type='hidden' name='b64search' value=''>
+					<a href='#' class='button remove-bottom' onClick='useDrawn("${queryService}","substrate");return false;'>as a substrate</a>
+					&nbsp;
+					<a href='#' class='button ' onClick='useDrawn("${queryService}","product");return false;'>as a product</a>&nbsp;
 					<label>Search options</label>
 					<br/>
 					<input type='radio' id='auto' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
@@ -184,26 +194,19 @@ $(document).ready(function() {
 	    		 	<label>Chemical identifier</label>
 	    		 	<br/>
 	    		 	<input type='text' name='search' size='60' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
-	   				<input type='hidden' name='type' value='smiles'>
 	    		 	<input type="submit" class="search" value="Structure search" tabindex='13'>
 
-					</form>
 				</div>
-				<div class='two columns omega'>
-					<a href='#' class='button' onClick='useDrawn("${queryService}","substrate");return false;'>Use the structure as a substrate</a>
-					<a href='#' class='button' onClick='useDrawn("${queryService}","product");return false;'>Use the structures as a product</a>&nbsp;
-				</div>
+				</form>
 			</div>
 
-			<div style='display:none;' id='divresults' class='remove-bottom'  >
+			<div id='divresults' class='remove-bottom' style="display:none;margin:5px;padding:5px;" >
 				<div class='row remove-bottom'>
-					<div class='one column alpha'>&nbsp;</div>
-					<div class='nine columns alpha'><label>Search results</label><span class='details'>Click on the structure diagram to select the structure.<br>Ctrl + click to select multiple structures.</span></div>
-					<div class='three columns alpha'>
-						<a href='#' class='button' onClick='useSelected("substrate");return false;'>Use selected structures as a substrate</a>
-					</div>
-					<div class='three columns omega'>
-						<a href='#' class='button' onClick='useSelected("product");return false;'>Use selected structures as products</a>
+					<div class='ten columns alpha' style='width:500px;'><label>Search results</label><span class='details'>Click on the structure diagram to select the structure.<br>Ctrl + click to select multiple structures.</span></div>
+					<div class='six columns omega'>
+						<label>Use selected structures as </label> 
+						<a href='#' class='button' onClick='useSelected("substrate");return false;'>a substrate</a>
+						<a href='#' class='button' onClick='useSelected("product");return false;'>as products</a>
 					</div>
 				</div>
 				<div class='row'>
