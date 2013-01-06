@@ -15,14 +15,13 @@
     
 $(document).ready(function() {
 		$( ".useSelected" ).button();
+		$( "#structureSearchResults" ).selectable();
 		loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele");
-		addSearchUI('substrate','${xmet_root}');
-		$( "#buttonSubstrateSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch','search options');  return false; });
-		$( "#buttonProductSearch" ).click(function() {  toggleSearchUI('#searchUI','.buttonSearch','search options');  return false; });
 		$( "#buttonSubstrateDraw" ).click(function() {  toggleDrawUI('substrate','.buttonDraw','structure diagram editor');  return false; });
 		$( "#buttonProductDraw" ).click(function() {  toggleDrawUI('product','.buttonDraw','structure diagram editor');  return false; });		
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
+ 			$( "#divresults").show();
         	runSearch('${queryService}',$(this),'#structureSearchResults');
             event.preventDefault();
             return false;
@@ -91,17 +90,13 @@ $(document).ready(function() {
 	<div class='row  remove-bottom' style="margin:5px;padding:5px;"> 	
 	    <div class='eight columns omega '>
 	    	<label for='xmet_substrate_upload'><em></em></label>
-			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor</a> 
-			|	
-			<a href="#" id="buttonSubstrateSearch">Show search options</a> 
+			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor and search options</a>
 			<br/>
 			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20' class='remove-bottom'>
 	    </div>
 	    <div class='eight columns omega'>
 	    	<label for='xmet_product_upload'><em></em></label>
-			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor</a>
-			|
-			<a href="#" id="buttonProductSearch">Show search options</a>
+			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor and search options</a>
 			<br/>
 			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20' class='remove-bottom'>
 		</div>
@@ -158,14 +153,15 @@ $(document).ready(function() {
 	</form>	
     </div>
 
-	<!-- searchUI starts -->
+	<!-- searchUI starts 
 	<div id="searchUI" class="structresults remove-bottom" style='width:100%;display:none;'></div>
+	-->
 	<br/>
 	<!-- Structure diagram editor -->
 	<div id="drawUI" class="remove-bottom" style='display:none;'>
 		<div class='row ui-widget-header ui-corner-top remove-bottom'>Structure diagram editor</div>
-		<div class='row ui-widget-content ui-corner-bottom' >
-			<div   style="margin:5px;padding:5px;"> 	
+		<div class='ui-widget-content ui-corner-bottom half-bottom'>
+			<div class='row'  style="margin:5px;padding:5px;"> 	
 				&nbsp;
 				<div class='ten columns alpha'>
 					<applet code="JME.class" name="JME" archive="${xmet_root}/jme/JME.jar" width="500px" height="400px">
@@ -173,11 +169,38 @@ $(document).ready(function() {
 					You have to enable Java and JavaScript on your machine ! 
 					</applet>
 				</div>
-				<div class='six columns omega'>
-					<br/>
+				<div class='four columns alpha'>
+					<form method='GET' action='#' name='substrateSearchForm'>
+					<input type='hidden' name='type' value='smiles'>
+					 <input type='text' name='search' class='remove-bottom' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'><br/>
+					 <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20'>Auto
+				     <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure'>Similarity
+					 <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure
+					 <select title ='Tanimoto similarity threshold' name='threshold' class='half-bottom'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>
+					 <input type='submit' value='Search' class='remove-bottom'>
+					</form>
+				</div>
+				<div class='two columns omega'>
 					<a href='#' class='button' onClick='useDrawn("${queryService}","substrate");return false;'>Use the structure as a substrate</a>
-					<br/>
 					<a href='#' class='button' onClick='useDrawn("${queryService}","product");return false;'>Use the structures as a product</a>&nbsp;
+				</div>
+			</div>
+
+			<div style='display:none;' id='divresults' class='remove-bottom'  >
+				<div class='row remove-bottom'>
+					<div class='two columns alpha'>&nbsp;</div>
+					<div class='eight columns alpha'>Search results</div>
+					<div class='three columns alpha'>
+						<a href='#' class='button' onClick='useSelected("substrate");return false;'>Use selected structures as a substrate</a>
+					</div>
+					<div class='three columns omega'>
+						<a href='#' class='button' onClick='useSelected("product");return false;'>Use selected structures as products</a>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='sixteen columns alpha'>
+						<ul id='structureSearchResults' class='structresults remove-bottom'></ul>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -65,46 +65,6 @@ function loadEnzymesList(root,selectTag,allelesTag) {
 
 
 /**
- * Structure search UI  
- * @param searchSelector
- * @param tableid
- */
-//addSearchUI('#substratesearch','substrateSearchUI','${xmet_root}','substrateSearchForm','substrateResults');
-function addSearchUI(prefix, xmet_root) {
-	var searchSelector = '#searchUI';
-	var formName = prefix + 'SearchForm';
-	var resultsName = 'structureSearchResults';
-	var searchUI = 
-	"<div class='row ui-widget-header ui-corner-top remove-bottom'>Structure search</div>" +
-	"<div class='ui-widget-content ui-corner-bottom remove-bottom'>"+
-	"<div style='margin:5px;padding:5px;' class='row remove-bottom'>"+ 	
-	"<form method='GET' action='#' name='" + formName+ "'>"+
-	"	<div class='ten columns alpha '>"+
-	" 	  <input type='hidden' name='type' value='smiles'>"+
-	" 	  <a href='#' title='Launches structure diagram editor' onClick='startEditor(\""+ xmet_root +"\",\""+formName+"\");'>Draw (sub)structure</a><br>"+
-	" 	  <input type='text' name='search' class='remove-bottom' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'><br/>"+
-	" 	  <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20'>Auto"+
-	"  	 <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure'>Similarity&nbsp;"+
-	"  	 <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure"+
-	" 	  <select title ='Tanimoto similarity threshold' name='threshold' class='half-bottom'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>"+
-	"		<input type='submit' value='Search' class='remove-bottom'>" +
-	"	</div>"+
-	"	<div class='six columns omega'><br/>"+	
-	"		<a href='#' class='button' onClick='useSelected(\"substrate\");return false;'>Use selected structures as a substrate</a><br/>" +
-	"		<a href='#' class='button' onClick='useSelected(\"product\");return false;'>Use selected structures as products</a>&nbsp;" +
-	"	</div>" +
-	"</div>" +
-	"<div style='margin:5px;padding:5px;' class='row remove-bottom'>"+ 	
-	"	<ul id='" + resultsName+ "' class='structresults '></ul>"+
-	"</div></form>"+
-	"</div>";
-	$( searchSelector ).append(searchUI);
-	$( '#'+resultsName ).selectable();
-	
-}		
-
-
-/**
  * Fills in two hidden text fields with selected compound URIs
  * @param prefix
  */
@@ -199,20 +159,10 @@ function runSearch(queryService,form,results) {
 	        }
 	      } );
 }
-/**
- * Toggles search UI visibility
- * @param id
- * @param idButton
- */
-function toggleSearchUI(id, idButton, msg) {
- 	$( id ).toggle( 'blind', {}, function(x) {
- 		$( idButton).text($(id).is(":hidden")?'Show '+msg:'Hide '+msg);
- 	});
-}      
 
 function toggleDrawUI(prefix, idButton, msg) {
  	$( '#drawUI').toggle( 'blind', {}, function(x) {
- 		if ($('#drawUI').is(":hidden")) {
+ 		if ($('#drawUI').css('display') == 'none') {
  			$( idButton).text('Show '+msg);
  		} else {
  			$( idButton).text('Hide '+msg);
@@ -220,11 +170,11 @@ function toggleDrawUI(prefix, idButton, msg) {
  			try {
  				var mol = $(results_mol).val();
  				if ((mol===undefined) || (mol== null) || ("" == mol)) {
- 					document.JME.reset();
+ 					//document.JME.readMolFile("");
  				} else
  					document.JME.readMolFile(mol);
  			} catch (err) {
- 				document.JME.reset();
+ 				//document.JME.readMolFile("");
  			}
  		} 
  	});
