@@ -89,20 +89,20 @@ function useSelected(prefix) {
 }
 
 function useDrawn(queryService,prefix) {
-	var smiles = document.JME.smiles();
-	var jme = document.JME.molFile();
-	if (smiles == "") {
-		alert("Nothing to submit");
-	} else {
+	var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
+	if ((molFile!==undefined) && (molFile != null)) {
 		var results = '#xmet_'+prefix+'_img';
 		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
-		$(results_uri).val(smiles);
-		$(results_mol).val(jme);
+		$(results_uri).val();
+		$(results_mol).val(molFile);
 		$(results).empty();
 		$(results).append('<li class="ui-state-default" ><img border="0" src="'+
-    			queryService + '/depict/cdk/kekule?search=' + encodeURIComponent(smiles) +
-    			'&w=150&h=150" alt="'+ smiles +'"></li>');
+    			queryService + '/depict/cdk/kekule?type=mol&b64search=' + encodeURIComponent($.base64.encode(molFile)) +
+    			'&w=150&h=150" alt="'+ molFile +'"></li>');
+		
+	} else {
+		alert("Sorry, can't use an empty molecule as a "+prefix + ". Please use the structure diagram editor on the left to draw a chemical structure.");
 	}
 }
 
