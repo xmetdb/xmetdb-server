@@ -159,7 +159,7 @@ $(document).ready(function() {
 	<br/>
 	<!-- Structure diagram editor -->
 	<div id="drawUI" class="remove-bottom" style='display:none;'>
-		<div class='row ui-widget-header ui-corner-top remove-bottom'>Structure diagram editor</div>
+		<div class='row ui-widget-header ui-corner-top remove-bottom'>Draw the structure or search by structure</div>
 		<div class='ui-widget-content ui-corner-bottom half-bottom'>
 			<div class='row'  style="margin:5px;padding:5px;"> 	
 				&nbsp;
@@ -172,12 +172,21 @@ $(document).ready(function() {
 				<div class='four columns alpha'>
 					<form method='GET' action='#' name='substrateSearchForm'>
 					<input type='hidden' name='type' value='smiles'>
-					 <input type='text' name='search' class='remove-bottom' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'><br/>
-					 <input type='radio' value='auto' name='option'  title='Exact structure or search by identifier' size='20'>Auto
-				     <input type='radio' name='option' value='similarity' checked title='Enter SMILES or draw structure'>Similarity
-					 <input type='radio' name='option' value='smarts' title='Enter or draw a SMARTS query' size='20'>Substructure
-					 <select title ='Tanimoto similarity threshold' name='threshold' class='half-bottom'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' selected >0.4</option><option value='0.3' selected >0.3</option><option value='0.2' selected >0.2</option></select>
-					 <input type='submit' value='Search' class='remove-bottom'>
+					<label>Search options</label>
+					<br/>
+					<input type='radio' id='auto' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
+					</br>
+	      		    <input type='radio' name='option' id='similarity' value='similarity' checked title='Enter SMILES or draw structure' tabindex='3'/>Similarity
+	      		    </br>
+	      		    <input type='radio' name='option' id="smarts" value='smarts' title='Enter or draw a SMARTS query' tabindex='5' size='40'/>Substructure
+					<br/>
+	    		 	<select title ='Tanimoto similarity threshold' name='threshold' style='width:6em;' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' >0.4</option><option value='0.3' >0.3</option><option value='0.2' >0.2</option></select>
+	    		 	<label>Chemical identifier</label>
+	    		 	<br/>
+	    		 	<input type='text' name='search' size='60' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
+	   				<input type='hidden' name='type' value='smiles'>
+	    		 	<input type="submit" class="search" value="Structure search" tabindex='13'>
+
 					</form>
 				</div>
 				<div class='two columns omega'>
@@ -188,8 +197,8 @@ $(document).ready(function() {
 
 			<div style='display:none;' id='divresults' class='remove-bottom'  >
 				<div class='row remove-bottom'>
-					<div class='two columns alpha'>&nbsp;</div>
-					<div class='eight columns alpha'>Search results</div>
+					<div class='one column alpha'>&nbsp;</div>
+					<div class='nine columns alpha'><label>Search results</label><span class='details'>Click on the structure diagram to select the structure.<br>Ctrl + click to select multiple structures.</span></div>
 					<div class='three columns alpha'>
 						<a href='#' class='button' onClick='useSelected("substrate");return false;'>Use selected structures as a substrate</a>
 					</div>
