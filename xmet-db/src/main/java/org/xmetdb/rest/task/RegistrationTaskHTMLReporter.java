@@ -13,11 +13,12 @@ import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.reporters.TaskHTMLReporter;
 import net.idea.restnet.i.task.ITaskStorage;
 import net.idea.restnet.i.task.Task;
-import net.idea.restnet.i.task.TaskResult;
 import net.idea.restnet.i.task.Task.TaskStatus;
+import net.idea.restnet.i.task.TaskResult;
 
 import org.restlet.Request;
 
+@Deprecated
 public class RegistrationTaskHTMLReporter<USERID> extends TaskHTMLReporter<USERID> {
 
 	/**
@@ -32,6 +33,7 @@ public class RegistrationTaskHTMLReporter<USERID> extends TaskHTMLReporter<USERI
 		super(storage,ref,doc,htmlbeauty);
 	}
 
+	
 	public void header(Writer output, Iterator<UUID> query) {
 		
 		try {

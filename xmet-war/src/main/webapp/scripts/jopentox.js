@@ -45,6 +45,10 @@ function runTask(modelURI, datasetURI, resultDOM, statusDOM, imgRunning, imgRead
 	request.send(reqBody);
 }
 
+
+function getResponseTitle(request, description) {
+	return '<span title=\"' + request.status + ' ' + request.statusText + '\">'+description+'</span>';
+}
 function checkTask(taskURI, resultDOM, statusDOM, imgReady, imgError) {
 	
 	var request = new XMLHttpRequest();
@@ -58,23 +62,34 @@ function checkTask(taskURI, resultDOM, statusDOM, imgReady, imgError) {
 		if (request.readyState != 4) { return false; }
 		switch (request.status) {
 			case 200:
-				document.getElementById(resultDOM).innerHTML = '<span title=\"' + request.status + ' ' + request.statusText + '\">Ready. Results available.</span>';
+				document.getElementById(resultDOM).innerHTML = getResponseTitle(request,"Ready. Results available.");
 				document.getElementById(resultDOM).href = request.responseText;
 				document.getElementById(statusDOM).src = imgReady;
 				document.getElementById(resultDOM).style.display = 'inline';
 				document.getElementById(statusDOM).style.display = 'inline';
+				if (request.responseText.indexOf("register/notify")>=0) {
+					//ok, redundant, but just in case 
+					window.location.href = request.responseText; 
+				} else if (request.responseText.indexOf("http")>=0) {
+					window.location.href = request.responseText; 
+				} else { 
+					//smth wrong with the result URI 
+				}
 				break;
 			case 201:
 				taskURI = request.responseText; // and then fall down
 			case 202:
-				document.getElementById(resultDOM).innerHTML = '<span title=\'' + request.status + ' ' + request.statusText + '\'>Waiting ...</span>';
+				document.getElementById(resultDOM).innerHTML =  getResponseTitle(request,"Waiting ...");
 				document.getElementById(resultDOM).href = request.responseText;
 				var taskTimer = window.setTimeout(function() {
 					checkTask(taskURI, resultDOM, statusDOM, imgReady, imgError);
 				}, 1000);
 				break;
+			case 303:
+				window.location.href = request.responseText; 
+				break;
 			default:
-				document.getElementById(resultDOM).innerHTML = '<span title=\'' + request.status + ' ' + request.statusText + '\'>Error</span>';
+				document.getElementById(resultDOM).innerHTML = getResponseTitle(request,"Error ");
 				document.getElementById(statusDOM).src = imgError;
 				document.getElementById(resultDOM).style.display = 'inline';
 				document.getElementById(statusDOM).style.display = 'inline';
@@ -91,7 +106,7 @@ function readTask(root,url) {
 	        url: url,
 	        success: function(data, status, xhr) {
 	        	$.each(data["task"],function(index, entry) {
-	        		$("#task_started").text(entry["started"]);
+	        		try {$("#task_started").text(new Date(entry["started"]));} catch (error) {}
 	        		$("#task_name").text(entry["name"]);
 	        		$("#result").prop("href",entry["result"]);
 	        		var img = "progress.gif";

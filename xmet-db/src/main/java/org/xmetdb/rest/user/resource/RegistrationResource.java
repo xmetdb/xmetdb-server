@@ -27,10 +27,12 @@ import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.XmetdbHTMLReporter;
@@ -140,7 +142,18 @@ public class RegistrationResource extends CatalogResource<DBUser> {
 			public synchronized Reporter<Iterator<UUID>, Writer> createTaskReporterHTML(
 					Request request,ResourceDoc doc,HTMLBeauty htmlbeauty) throws AmbitException, ResourceException {
 				return	new RegistrationTaskHTMLReporter(storage,request,doc,htmlbeauty);
-			}			
+			}	
+			@Override
+			public synchronized Representation createTaskRepresentation(
+					UUID task, Variant variant, Request request,
+					Response response, ResourceDoc doc)
+					throws ResourceException {
+				String locationRef = String.format("%s/task/%s", getRequest().getRootRef(),task);
+				Representation r = new StringRepresentation(locationRef+"\n",MediaType.TEXT_URI_LIST);				
+				response.redirectSeeOther(locationRef);
+				return r;
+			}
+			
 		};
 	}
 	
@@ -148,4 +161,11 @@ public class RegistrationResource extends CatalogResource<DBUser> {
 	protected String getTaskTitle(DBUser item, Reference source) {
 		return "New user registration";
 	}
+	@Override
+	protected Representation processAndGenerateTask(Method method,
+			Representation entity, Variant variant, boolean async)
+			throws ResourceException {
+		return super.processAndGenerateTask(method, entity, variant, async);
+	}
+	
 }
