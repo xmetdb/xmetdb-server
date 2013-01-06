@@ -2,7 +2,6 @@
 <head>
 <#include "/s_head.ftl" >
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
-<script type="text/javascript" src="${xmet_root}/scripts/sketcher.js"></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.MultiFile.pack.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.base64.min.js'></script>
 <style>
@@ -18,8 +17,8 @@ $(document).ready(function() {
 		$( ".useSelected" ).button();
 		$( "#structureSearchResults" ).selectable();
 		loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele");
-		$( "#buttonSubstrateDraw" ).click(function() {  toggleDrawUI('substrate','.buttonDraw','structure diagram editor');  return false; });
-		$( "#buttonProductDraw" ).click(function() {  toggleDrawUI('product','.buttonDraw','structure diagram editor');  return false; });		
+		$( "#buttonSubstrateDraw" ).click(function() {  toggleDrawUI('substrate','#buttonSubstrateDraw','structure diagram editor and search');  return false; });
+		$( "#buttonProductDraw" ).click(function() {  toggleDrawUI('product','#buttonProductDraw','structure diagram editor and search');  return false; });		
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
         .submit(function(event){
  			$( "#divresults").show();

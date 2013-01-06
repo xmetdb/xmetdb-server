@@ -92,14 +92,30 @@ function useDrawn(queryService,prefix) {
 	var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
 	if ((molFile!==undefined) && (molFile != null)) {
 		var results = '#xmet_'+prefix+'_img';
-		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
-		$(results_uri).val();
 		$(results_mol).val(molFile);
+		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
+		$(results_uri).val();
 		$(results).empty();
-		$(results).append('<li class="ui-state-default" ><img border="0" src="'+
-    			queryService + '/depict/cdk/kekule?type=mol&b64search=' + encodeURIComponent($.base64.encode(molFile)) +
-    			'&w=150&h=150" alt="'+ molFile +'"></li>');
+		runSearchURI(queryService + '/query/compound/search/all?media=application/x-javascript&type=mol&max=1&b64search=' 
+								  + encodeURIComponent($.base64.encode(molFile)),
+				results,
+				function(json) {
+					var found = 0;
+					$(results_mol).val(molFile);
+					$(results).empty();
+       				json.dataEntry.forEach(function img(element, index, array) {
+       					$(results_uri).val(element.compound.URI);
+       					$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
+       					found++;
+       				});
+       				if (found==0) {
+       					$(results).append('<li class="ui-state-default" ><img border="1" src="'+
+       			    			queryService + '/depict/cdk/kekule?type=mol&b64search=' + encodeURIComponent($.base64.encode(molFile)) +
+       			    			'&w=150&h=150" alt="'+ molFile +'"></li>');
+       				}
+
+		});
 		
 	} else {
 		alert("Sorry, can't use an empty molecule as a "+prefix + ". Please use the structure diagram editor on the left to draw a chemical structure.");
@@ -126,11 +142,16 @@ function getQueryURL(queryService,option) {
 }
 
 function runSearch(queryService,form,results) {
-	var sSource = queryService + '?media=application/x-javascript&'+ form.serialize();
-	var search = "";
-	jQuery.each(form.serializeArray(),function(index,entry){
-		if ('search' == entry.name) search = entry.value;
-	});
+	runSearchURI(queryService + '?media=application/x-javascript&'+ form.serialize(),
+				results,
+				function(json) {
+       				json.dataEntry.forEach(function img(element, index, array) {
+       				$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
+       				});
+	});	 
+}
+
+function runSearchURI(sSource,results,callback, errorcallback) {
 	$(results).empty(); 
 	$.ajax( {
 	        "type": "GET",
@@ -139,14 +160,7 @@ function runSearch(queryService,form,results) {
 	        "crossDomain": true,  //bloody IE
 	        "contentType" : "application/x-javascript",
 	        "success": function(json) {
-	        	/*
-	        	$(results).append('<li class="ui-state-default" ><img src="'+
-	        			queryService + '/depict/cdk/kekule?search=' + encodeURIComponent(search) +
-	        			'&w=150&h=150" alt="'+ search +'"></li>');
-	        			*/
-   	        	json.dataEntry.forEach(function img(element, index, array) {
-	        		$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
-	        	  });
+	        	callback(json);
 	        },
 	        "cache": false,
 	        "statusCode" : {
@@ -159,6 +173,7 @@ function runSearch(queryService,form,results) {
 	        },
 	        "error" : function( xhr, textStatus, error ) {
 	        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
+	        	if (errorcallback!=undefined) errorcalback();
 	        }
 	      } );
 }
@@ -169,13 +184,16 @@ function toggleDrawUI(prefix, idButton, msg) {
  			$( idButton).text('Show '+msg);
  		} else {
  			$( idButton).text('Hide '+msg);
+ 			
  			var results_mol = 'input[name=xmet_'+prefix+'_mol]';
  			try {
- 				var mol = $(results_mol).val();
- 				if ((mol===undefined) || (mol== null) || ("" == mol)) {
+ 				var molFile = $(results_mol).val();
+ 				if ((molFile===undefined) || (molFile== null) || ("" == molFile)) {
  					//document.JME.readMolFile("");
- 				} else
- 					document.JME.readMolFile(mol);
+ 				} else {
+ 					//doesn't work. how to set molecule to the sketcher? 
+ 					//document.getElementById("iframeSketcher").contentWindow.???
+ 				}
  			} catch (err) {
  				//document.JME.readMolFile("");
  			}
