@@ -33,6 +33,7 @@ public class ProtocolFactory {
 		identifier, xmet_experiment, xmet_experimentdescription, published_status, 
 		xmet_substrate_upload, xmet_product_upload, 
 		xmet_substrate_uri, xmet_product_uri,
+		xmet_substrate_mol, xmet_product_mol,
 		xmet_allele, xmet_reference,
 		project_uri, organisation_uri, user_uri, iduser, author_uri, 
 		summarySearchable, status, xmlkeywords, 

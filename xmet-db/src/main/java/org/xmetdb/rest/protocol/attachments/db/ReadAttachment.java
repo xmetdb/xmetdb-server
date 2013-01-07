@@ -109,12 +109,14 @@ and idchemical=282
 				String format = rs.getString(_fields.format.name());
 				String name = rs.getString(_fields.name.name());
 				String type = rs.getString(_fields.type.name());
-				
+				DBAttachment attachment = null;
 				MediaType media = MediaType.APPLICATION_ALL;
 				if ("text/uri-list".equals(format)) { 
-					url = null; media = MediaType.TEXT_URI_LIST; }
-				else {
+					url = null; media = MediaType.TEXT_URI_LIST;
+					attachment = new DBAttachment();
+				} else {
 					url = String.format("file://%s/%s/%s.%s",dir,type,name.replace(" ","%20"),format);
+					attachment = new DBAttachment(new URL(url));
 					if ("pdf".equals(format)) media = MediaType.APPLICATION_PDF;
 					else if ("sdf".equals(format)) media = ChemicalMediaType.CHEMICAL_MDLSDF;
 					else if ("mol".equals(format)) media =  ChemicalMediaType.CHEMICAL_MDLMOL;
@@ -126,7 +128,6 @@ and idchemical=282
 					else if ("docx".equals(format)) media =  MediaType.APPLICATION_MSOFFICE_DOCX;
 					else media =  MediaType.APPLICATION_ALL;
 				}
-				DBAttachment attachment = new DBAttachment();
 				attachment.setFormat(format);
 				attachment.setMediaType(media.toString());
 				attachment.setID(rs.getInt(_fields.idattachment.name()));

@@ -186,6 +186,7 @@ public class CallableAttachmentImporter extends  CallableDBUpdateTask<DBAttachme
             formparams.add(new BasicNameValuePair("folder", attachment_type.data_training.equals(attachment.getType())?"substrate":"product"));
 			return new UrlEncodedFormEntity(formparams, "UTF-8");
 		} else {
+			if (attachment.getResourceURL()==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Attachment resource URL is null! ");
 			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,null,utf8);
 			entity.addPart("title", new StringBody(attachment.getTitle(),utf8));
 			entity.addPart("seeAlso", new StringBody(attachment.getDescription(),utf8));
