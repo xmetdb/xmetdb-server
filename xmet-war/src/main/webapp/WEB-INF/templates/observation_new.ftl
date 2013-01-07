@@ -41,7 +41,7 @@ $(document).ready(function() {
         });
 		//submitFormValidation("#submitForm");
 		//searchFormValidation("#substrateSearchForm");
-	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB observations">Observations</a></li>');
+	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
 } );
 
     <#switch xmet_mode>
@@ -73,7 +73,7 @@ $(document).ready(function() {
 
     <div class="twelve columns remove-bottom" >
     
-    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">New XMETDB observation</span></div>
+    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">New XMetDB observation</span></div>
     <div class="half-bottom ui-widget-content ui-corner-bottom" >
     
     <#switch xmet_mode>

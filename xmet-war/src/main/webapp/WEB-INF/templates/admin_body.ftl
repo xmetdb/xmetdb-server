@@ -20,7 +20,7 @@ jQuery(document).ready(function()
 		================================================== -->
 		<div class="twelve columns remove-bottom" >
 
-    	<div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;XMETDB admin tasks</div>
+    	<div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;XMetDB admin tasks</div>
     	<div class="half-bottom ui-widget-content ui-corner-bottom" >
     			
 		<div class='row' style="margin:5px;padding:5px;"> 	

@@ -15,12 +15,12 @@ $(document).ready(function() {
 				if (oTable.fnIsOpen(nTr)) {
 					$(this).removeClass("ui-icon-folder-open");
 					$(this).addClass("ui-icon-folder-collapsed");
-					this.title='Click to show XMETDB observations';
+					this.title='Click to show XMetDB observations';
 					oTable.fnClose(nTr);
 				} else {
 					$(this).removeClass("ui-icon-folder-collapsed");
 					$(this).addClass("ui-icon-folder-open");
-					this.title='Click to close XMETDB observations list';
+					this.title='Click to close XMetDB observations list';
 					var id = 'v'+getID();
 					oTable.fnOpen(nTr, fnEndpointXMETDBList(oTable,nTr,id),	'details');
 											       
@@ -32,7 +32,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMETDB enzymes">Enzymes</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMetDB enzymes">Enzymes</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>
@@ -49,7 +49,7 @@ jQuery(document).ready(function()
 		
 		<table id='endpoints'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>
-		<th>XMETDB observations</th>
+		<th>XMetDB observations</th>
 		<th>Code</th>
 		<th>Name</th>
 		<th>UniProt ID</th>

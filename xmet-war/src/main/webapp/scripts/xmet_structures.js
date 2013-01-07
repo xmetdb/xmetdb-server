@@ -14,7 +14,7 @@ function defineStructuresTable(url, query_service, similarity) {
 					"mDataProp" : null,
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
-						 return  "<span class='ui-icon ui-icon-folder-collapsed zoomstruc' style='float: left; margin: .1em;' title='Click to show XMETDB observations'></span>";			
+						 return  "<span class='ui-icon ui-icon-folder-collapsed zoomstruc' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span>";			
 					}
 				},			
 				{ "mDataProp": "compound.URI" , "asSorting": [ "asc", "desc" ],
@@ -205,7 +205,7 @@ function fnStructureXMETObservationsList(oTable, nTr, id) {
 	var obj = oTable.fnGetData(nTr);
 	var details = id + '_xmetdb';
 	var sOut = '<div class="ui-widget-content" id="' + id + '">';
-	sOut = sOut + "<div id='" + details + "' >Please wait while XMETDB observations list is loading...</div>";
+	sOut = sOut + "<div id='" + details + "' >Please wait while XMetDB observations list is loading...</div>";
 	sOut += "</div>";	
 
 	var uri = encodeURIComponent(obj["compound"]["URI"]);
@@ -244,7 +244,7 @@ function fnStructureXMETObservationsList(oTable, nTr, id) {
         	  if (status=404)
         		  $(details).html('No observations found');
         	  else
-        		  $(details).html('Error retrieving XMETDB observations [' + status + '] ' +err);
+        		  $(details).html('Error retrieving XMetDB observations [' + status + '] ' +err);
           },
           complete: function(xhr, status) {
           }

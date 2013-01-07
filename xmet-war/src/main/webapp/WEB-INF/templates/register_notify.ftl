@@ -4,8 +4,8 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMETDB registration">Register</a></li>');
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/notify" title="XMETDB registration">Notify</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMetDB registration">Register</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/notify" title="XMetDB registration">Notify</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>
@@ -20,7 +20,7 @@ jQuery(document).ready(function()
 		================================================== -->
 		<div class="twelve columns" style="padding:0;" >	
 		
-		<div class='ui-widget-header ui-corner-top'>&nbsp;XMETDB Registration</div>
+		<div class='ui-widget-header ui-corner-top'>&nbsp;XMetDB Registration</div>
 	    <div class='ui-widget-content ui-corner-bottom'>	
 	    	<div class='row'></div>
 			<div  class='row' style="text-align:center;">

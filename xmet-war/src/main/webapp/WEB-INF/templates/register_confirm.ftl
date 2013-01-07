@@ -43,8 +43,8 @@ $(document).ready(function() {
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMETDB registration">Register</a></li>');
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/confirm" title="XMETDB confirm registration">Confirm</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMetDB registration">Register</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/confirm" title="XMetDB confirm registration">Confirm</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>
@@ -59,13 +59,13 @@ jQuery(document).ready(function()
 		================================================== -->
 		<div class="twelve columns" style="padding:0;" >	
 
-		<div class='ui-widget-header ui-corner-top' >&nbsp;XMETDB Registration</div>
+		<div class='ui-widget-header ui-corner-top' >&nbsp;XMetDB Registration</div>
 	    <div class='ui-widget-content ui-corner-bottom'>	
 	    	<div class='row'></div>
 			<#if xmet_reg_confirmed??>
 			<div class='row' id='success' style='display:none;text-align:center;'>
 			&nbsp;<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
-			Your registration is now confirmed and you can <a href="${xmet_root}/login">log in</a> into XMETDB.
+			Your registration is now confirmed and you can <a href="${xmet_root}/login">log in</a> into XMetDB.
 			</div>
 
 			<span id='failure' class='row' style='display:none'>

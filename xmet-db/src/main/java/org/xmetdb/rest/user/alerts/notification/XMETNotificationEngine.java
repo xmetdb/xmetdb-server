@@ -23,7 +23,7 @@ public class XMETNotificationEngine extends SimpleNotificationEngine {
 	protected ProtocolIO ioClass = new ProtocolIO();
     public XMETNotificationEngine(Reference root) throws IOException {
 	    super(root,"config/xmetdb.properties");
-	    setNotificationSubject("XMETDB Alert Updates");
+	    setNotificationSubject("XMetDB Alert Updates");
 	}
     @Override
     protected List<String> retrieve(Reference ref) throws Exception {

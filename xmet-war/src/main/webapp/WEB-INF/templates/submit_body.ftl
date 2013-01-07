@@ -10,7 +10,7 @@
 	<#include "/menu.ftl">
 			
 	<div class='w_content ui-widget ' style='margin-top: 25px; margin-left: 0px;  margin-right: 10px; padding: 0 .1em;'>
-	<div class='ui-widget-header ui-corner-top'><p>New XMETDB observation <span id="xmet_id"></span></p></div>
+	<div class='ui-widget-header ui-corner-top'><p>New XMetDB observation <span id="xmet_id"></span></p></div>
 	<div class='ui-widget-content ui-corner-bottom' style='margin: 0 0 0 0; padding: 0 0 0 0;' />
 	<!-- Don't expect this to work! -->
 

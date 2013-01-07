@@ -5,9 +5,9 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMETDB observations">Observations</a></li>');
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="XMETDB search results">${xmet_breadcrumb}</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMetDB search">Search</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="XMetDB search results">${xmet_breadcrumb}</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>
@@ -23,7 +23,7 @@ jQuery(document).ready(function()
 		
 		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
-		<th>XMETDBID</th>
+		<th>XMetDB ID</th>
 		<th>Substrate</th>
 		<th>Product</th>
 		<th>Product amount</th>

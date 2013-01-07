@@ -112,7 +112,7 @@ public abstract class XmetdbHTMLReporter<T,Q extends IQueryRetrieval<T>>  extend
 			
 			if (!headless && (record==(query.getPage()*query.getPageSize()))) {
 				if (((XmetdbHTMLBeauty)htmlBeauty).getSearchQuery()==null) {
-					 output.write(((XmetdbHTMLBeauty)htmlBeauty).printWidget("You haven't specified a XMETDB document search query", "Please try the documents search menu."));
+					 output.write(((XmetdbHTMLBeauty)htmlBeauty).printWidget("You haven't specified a XMetDB document search query", "Please try the documents search menu."));
 				} else  
 					output.write(((XmetdbHTMLBeauty)htmlBeauty).printWidget(
 							record==0?"Query returns no results":"No more results", 

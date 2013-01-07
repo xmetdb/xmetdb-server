@@ -9,20 +9,20 @@
 jQuery(document).ready(function()
 {
 	
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMetDB search">Search</a></li>');
     jQuery("#breadCrumb ul").append('<li>Chemical structures</li>');
     <#switch query.option>
     <#case "similarity">
-    	jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMETDB similarity search">Similarity search results</a></li>');
+    	jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMetDB similarity search">Similarity search results</a></li>');
     	<#break>
     <#case "substructure">
-		jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMETDB substructure search">Substructure search results</a></li>');
+		jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMetDB substructure search">Substructure search results</a></li>');
 		<#break>    
     <#case "auto">
-		jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMETDB chemical identifier search">Chemical identifier search results</a></li>');
+		jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMetDB chemical identifier search">Chemical identifier search results</a></li>');
 		<#break>
     <#default>
-		jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMETDB structure search">Structure search results</a></li>');
+		jQuery("#breadCrumb ul").append('<li><a href="${this_url}" title="XMetDB structure search">Structure search results</a></li>');
 		<#break>
     </#switch>
     jQuery("#breadCrumb").jBreadCrumb();
@@ -44,7 +44,7 @@ jQuery(document).ready(function()
 		<th>Structure</th>
 		<th>Name</th>
 		<th>CAS</th>
-		<th>XMETDB observations</th>
+		<th>XMetDB observations</th>
 		<th>Similarity</th>
 		<th>SMILES</th>
 		<th>InChI</th>

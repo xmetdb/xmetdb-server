@@ -19,7 +19,7 @@ function defineEndpointsTable(url) {
 						 else {
 							 if ((o.aData["parentName"] == "") && (o.aData["name"]=="Other")) return ""; //workaround
 							 
-							 return  "<span class='ui-icon ui-icon-folder-collapsed zoomxmet' style='float: left; margin: .1em;' title='Click to show XMETDB observations'></span>"+
+							 return  "<span class='ui-icon ui-icon-folder-collapsed zoomxmet' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span>"+
 							 		"<label>("+count + ")</label>";
 						 }
 					}
@@ -110,11 +110,11 @@ function defineEndpointsTable(url) {
 	return oTable;
 }
 
-/* QMRF list per structure */
+/* XMetDB list per structure */
 function fnEndpointXMETDBList(oTable, nTr, id) {
 	var obj = oTable.fnGetData(nTr);
 	var sOut = '<div class="ui-widget-content ui-corner-all" id="' + id + '">';
-	sOut = sOut + "<div id='" + id + "_xmetdb' >Please wait while XMETDB observations list is loading...</div>";
+	sOut = sOut + "<div id='" + id + "_xmetdb' >Please wait while XMetDB observations list is loading...</div>";
 	sOut += "</div>";	
 	
 	var details = '#' + id + '_xmetdb';
@@ -128,7 +128,7 @@ function fnEndpointXMETDBList(oTable, nTr, id) {
         	  var dataSize = data.observations.length;
         	  $(details).empty();
         	  $(details).append('<table id="' + id + '_table"  cellpadding="1" border="1" width="100%" cellspacing="1"><thead>\n');
-        	  $(details).append('<th class="contentTable" >XMETID</th>');
+        	  $(details).append('<th class="contentTable" >XMetDB ID</th>');
         	  $(details).append('<th class="contentTable">Experiment&nbsp;</th>');
         	  $(details).append('<th class="contentTable">Product amount&nbsp;</th>');
         	  $(details).append('<th class="contentTable">Atom uncertainty&nbsp;</th>');

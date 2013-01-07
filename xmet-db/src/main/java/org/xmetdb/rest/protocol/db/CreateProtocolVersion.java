@@ -31,7 +31,7 @@ public class CreateProtocolVersion  extends AbstractUpdate<String,DBProtocol> im
 		this(DBProtocol.generateIdentifier(),null);
 	}		
 	public List<QueryParam> getParameters(int index) throws AmbitException {
-		if (getGroup()==null) throw new AmbitException("The new XMETDB number is not specified!");
+		if (getGroup()==null) throw new AmbitException("The new XMetDB number is not specified!");
 		if (!getObject().isValidIdentifier()) throw new AmbitException("No protocol ID");
 		
 		

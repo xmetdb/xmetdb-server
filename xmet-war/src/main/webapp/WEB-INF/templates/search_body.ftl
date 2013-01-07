@@ -7,7 +7,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMETDB search">Search</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMetDB search">Search</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>
@@ -24,7 +24,7 @@ jQuery(document).ready(function()
 	
 
 	    	
-    <div class="twelve columns ui-widget-header ui-corner-top">&nbsp;Search XMETDB</div>
+    <div class="twelve columns ui-widget-header ui-corner-top">&nbsp;Search XMetDB</div>
 	<div class="twelve columns remove-bottom ui-widget-content ui-corner-bottom">
 	<div  style="margin:5px;padding:5px;" class="remove-bottom"> 	
 		

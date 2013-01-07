@@ -11,7 +11,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMETDB enzymes">Enzymes</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMetDB enzymes">Enzymes</a></li>');
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="Only enzymes with observations available">Only enzymes with observations available</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })

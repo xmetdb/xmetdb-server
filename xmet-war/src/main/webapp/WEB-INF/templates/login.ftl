@@ -4,7 +4,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/login" title="XMETDB log in">Log in</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/login" title="XMetDB log in">Log in</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>  

@@ -33,7 +33,7 @@
 <div id='footer-in'>
 <div id='footer'>
 	<a class='footerLink' href='http://www.ideaconsult.net/'>IdeaConsult Ltd.</a> 
-	(2012) on behalf of <a class='footerLink' href='http://xmetdb.org'>XMETDB</a>
+	(2012-2013) on behalf of <a class='footerLink' href='http://xmetdb.org'>XMetDB</a>
 </div>
 </div>
 </div>

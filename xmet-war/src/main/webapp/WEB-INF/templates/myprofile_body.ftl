@@ -8,7 +8,7 @@ jQuery(document).ready(function()
 {
 	<#if myprofile>
 		setAutocompleteOrgs("${xmet_root}","#affiliation");
-		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMETDB profile">My profile</a></li>');
+		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMetDB profile">My profile</a></li>');
 	<#else>
 		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/users" title="All Users">Users</a></li>');
 	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" id="breadCrumbUser" title="User">User</a></li>');

@@ -95,7 +95,7 @@ public class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 		
 		
 		searchTitle = attachment==null?getSearchTitle():
-				String.format("<a href='%s%s/%s' title='XMETDB document'>%s</a>&nbsp;<a href='%s%s/%s%s/A%d' title='%s'>%s</a>",
+				String.format("<a href='%s%s/%s' title='XMetDB document'>%s</a>&nbsp;<a href='%s%s/%s%s/A%d' title='%s'>%s</a>",
 							baseReference,Resources.protocol,attachment.getProtocol().getIdentifier(),attachment.getProtocol().getVisibleIdentifier(),
 							baseReference,Resources.protocol,attachment.getProtocol().getIdentifier(),Resources.attachment,attachment.getID(),
 							attachment.getDescription(),attachment.getType().toString());

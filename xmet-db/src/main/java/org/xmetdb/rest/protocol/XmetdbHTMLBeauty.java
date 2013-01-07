@@ -184,7 +184,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 		"<div id='footer'>\n" +
 		"Developed by <a class='footerLink' href='http://www.ideaconsult.net/'>" +
 		"IDEAconsult Ltd.</a> (2012) on behalf of " +
-		"<a class='footerLink' href='http://xmetdb.org/'>XMETDB</a>" +
+		"<a class='footerLink' href='http://xmetdb.org/'>XMetDB</a>" +
 		"</div>\n" +
 		"</div>\n" +
 		"</div>\n";
@@ -445,9 +445,9 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 			
 			//menu
 			String[][] menu = {
-					{ Resources.protocol, "Observations", "10", "Search all published XMETDB documents" },
+					{ Resources.protocol, "Observations", "10", "Search all published XMetDB documents" },
 					{ Resources.chemical, "Structures search", "10", "Search chemical structures by identifiers, similarity or substructure" },
-					{ Resources.endpoint, "Enzymes", null, "XMETDB documents by enzymes" },
+					{ Resources.endpoint, "Enzymes", null, "XMetDB documents by enzymes" },
 			};
 
 			w.write(
@@ -616,73 +616,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 	
 		protected String searchMenu(Reference baseReference,Form form)  {
 			return "";
-			/*
-			String pageSize = "10";
-			String structure = null;
-			try {
-				if ((form != null) && (form.size()>0)) {
-					searchQuery = form.getFirstValue(AbstractResource.search_param)==null?"":form.getFirstValue(AbstractResource.search_param);
-					pageSize = form.getFirstValue("pagesize")==null?"10":form.getFirstValue("pagesize");
-					structure = form.getFirstValue("structure");
-				}
-			} catch (Exception x) {
-				searchQuery = "";
-				pageSize = "10";
-			}
-			option = SearchMode.text;
-			try {
-				option = SearchMode.valueOf(form.getFirstValue("option").toLowerCase());
-			} catch (Exception x) {
-				option = SearchMode.text;
-			}
-			condition = "";
-			try {
-				condition = form.getFirstValue("condition").toLowerCase();
-			} catch (Exception x) {
-				condition = "";
-			}
-			String hint = "";
-			String imgURI = (structure==null) || !structure.startsWith("http")?"":
-				String.format("<img border='0' title='Showing XMETDB documents for this chemical' width='150' height='150' src='%s?media=%s&w=150&h=150'><br>Showing QMRF documents\n",
-						structure,Reference.encode("image/png"));
 			
-				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append("<div class='search ui-widget'>\n");
-				stringBuilder.append("<p title='%s'>%s</p>\n");
-				stringBuilder.append("<form method='GET' action='%s%s?pagesize=10'>\n");
-				stringBuilder.append("<table width='200px'>\n");
-				stringBuilder.append("<tr><td colspan='2'><input type='text' name='search' size='20' value='%s' tabindex='0' title='Enter search query'></td></tr>\n");
-				stringBuilder.append("<tr><td colspan='2'><input %s tabindex='1' type='radio' value='title' name='option' title='Title' size='20'>Title</td></tr>\n");
-				stringBuilder.append("<tr><td colspan='2'><input %s tabindex='1' type='radio' value='text' name='option' title='Free text search' size='20'>Free text</td></tr>\n");
-				stringBuilder.append("<tr><td><input %s type='radio' tabindex='2' name='option' value='endpoint' title='Search by endpoint'>Endpoint</td>\n");
-				stringBuilder.append("<tr><td colspan='2'><input %s tabindex='3' type='radio' value='author' name='option' title='Search by author' size='20'>Author</td></tr>\n");
-				stringBuilder.append("<tr><td><input %s type='radio' tabindex='4' name='option' value='qmrfnumber' title='Search by QMRF number'>QMRF number</td>\n");
-				stringBuilder.append("<tr><td>Number of hits</td><td align='left'><input type='text' size='3' name='pagesize' value='%s'></td></tr>\n");
-				stringBuilder.append("<input type='hidden' name='structure' value='%s'>\n");
-				stringBuilder.append("<tr><td colspan='2' align='center'><input type='submit' id='submit' tabindex='4' value='Search'/></td></tr>\n");
-				stringBuilder.append("</table>\n");
-				stringBuilder.append("</form> \n");
-				stringBuilder.append("&nbsp;\n");
-				stringBuilder.append("<div class='structureright'>%s</div>");
-				stringBuilder.append(_divEnd);
-
-				return String.format(
-						stringBuilder.toString(),
-						hint,
-						getSearchTitle(),
-						baseReference,
-						getSearchURI(),
-						searchQuery==null?"":searchQuery,
-						SearchMode.title.equals(option)?"checked":"",
-						SearchMode.text.equals(option)?"checked":"",
-						SearchMode.endpoint.equals(option)?"checked":"",
-						SearchMode.author.equals(option)?"checked":"",
-						SearchMode.qmrfnumber.equals(option)?"checked":"",
-						pageSize,
-						structure==null?"":structure,
-						imgURI
-			   );
-			   */
 		}
 		
 		@Override
@@ -906,7 +840,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					content.append(_tdEnd);
 					content.append(_trEnd); 
 					content.append(_trStart);						
-					content.append("<th width='15%%'>XMETDB identifier</th>");
+					content.append("<th width='15%%'>XMetDB identifier</th>");
 					content.append("<th>");
 					content.append(String.format("Q%s-%s-%s",new SimpleDateFormat("yy").format(new Date()),
 								"endpoint","number of QMRF documents published in the specified year"));

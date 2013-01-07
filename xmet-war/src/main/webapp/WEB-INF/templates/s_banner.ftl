@@ -33,7 +33,7 @@
 			<div id="breadCrumb" class="row breadCrumb module remove-bottom">
                     <ul>
                         <li>
-                            <a href="${xmet_root}" title="XMETDB Home">Home</a>
+                            <a href="${xmet_root}" title="XMetDB Home">Home</a>
                         </li>
                     </ul>
 			</div>

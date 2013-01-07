@@ -15,12 +15,12 @@ $(document).ready(function() {
 				if (oTable.fnIsOpen(nTr)) {
 					$(this).removeClass("ui-icon-folder-open");
 					$(this).addClass("ui-icon-folder-collapsed");
-					this.title='Click to show XMETDB observations';
+					this.title='Click to show XMetDB observations';
 					oTable.fnClose(nTr);
 				} else {
 					$(this).removeClass("ui-icon-folder-collapsed");
 					$(this).addClass("ui-icon-folder-open");
-					this.title='Click to close XMETDB observations list';
+					this.title='Click to close XMetDB observations list';
 					var id = 'v'+getID();
 					oTable.fnOpen(nTr, fnStructureXMETObservationsList(oTable,nTr,id),	'details');
 											       

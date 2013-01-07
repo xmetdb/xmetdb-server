@@ -18,8 +18,8 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/admin" title="XMETDB admin">Admin</a></li>');
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/task" title="XMETDB tasks">Jobs</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/admin" title="XMetDB admin">Admin</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/task" title="XMetDB tasks">Jobs</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
 })
 </script>

@@ -21,7 +21,7 @@ public class XMETCallableUserCreator extends CallableUserCreator {
 						boolean passwordChange,
 						String usersdbname)  {
 		super(method,item,reporter, input,baseReference, connection,token,passwordChange,usersdbname);
-		subject = "XMETDB User Confirmation";
+		subject = "XMetDB User Confirmation";
 	}
 
 	
@@ -44,6 +44,6 @@ public class XMETCallableUserCreator extends CallableUserCreator {
 
 	@Override
 	protected String getSystemName() {
-		return "XMETDB";
+		return "XMetDB";
 	}
 }
