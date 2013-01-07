@@ -271,22 +271,18 @@ function loadObservation(observation_uri) {
 	        	  if ((observation.Substrate!=undefined)  && (observation.Substrate!=null) && (observation.Substrate.dataset.uri!=null)) {
 	        		  $('#xmet_export_substrate').attr("href",observation.Substrate.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        	  	  $('#xmet_export_substrate').show();
+	        	  	loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate",model_uri);
 	        	  } else {
 	        		  $('#xmet_export_substrate').hide();
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 	        		  $('#xmet_export_product').attr("href",observation.Product.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        		  $('#xmet_export_product').show();
+	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
 	          	  } else {
 	          		 $('#xmet_export_product').hide();
 	          	  }
 	        	  loadEnzyme(observation);
-	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate",model_uri);
-	        				  //");
-	        	  
-	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
 	        	  
 	          },
 	          error: function(xhr, status, err) { 
@@ -323,15 +319,20 @@ function editObservation(root,observation_uri) {
 	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
 	        	  });
 	        	  $('#xmet_reference').attr("value",observation["reference"]);
+	        	  $('#xmet_substrate_type').val('uri');
+	        	  $('#xmet_product_type').val('uri');
+	        	  $('#xmet_substrate_upload').val('');
+	        	  $('#xmet_product_upload').val('');
+	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
+	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
+	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img",model_uri);
+	        	  }
+	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
+		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
+		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img",model_uri);
+	        	  }
 
-	        	  /*
-	        	  if ((observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        		  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate",model_uri);
-	        				  //");
-	        	  
-	        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
-	        		  */
+
 	          },
 	          error: function(xhr, status, err) { 
 	        	  xmetdblog(status + " " + xhr.responseText);
