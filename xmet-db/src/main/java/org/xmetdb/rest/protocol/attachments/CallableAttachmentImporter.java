@@ -107,6 +107,16 @@ public class CallableAttachmentImporter extends  CallableDBUpdateTask<DBAttachme
 			String dataset_uri = "dataset_uri";
 			URL dataset = task.getResult();
 			if (task.isCompletedOK()) {
+				if (!"text/uri-list".equals(attachment.getFormat())) { //was a file
+					//now post the dataset uri to get the /R datasets (query table)
+					attachment.setFormat("text/uri-list");
+					attachment.setDescription(dataset.toExternalForm());
+					task = new RemoteTask(client, 
+							new URL(String.format("%s/dataset",queryService)), 
+							"text/uri-list", createPOSTEntity(attachment), HttpPost.METHOD_NAME);
+					task = wait(task, System.currentTimeMillis());
+				}
+				
 				Form form = new Form();
 				form.add(dataset_uri, dataset.toURI().toString());
 				for (String algorithm: algorithms) { //just launch tasks and don't wait
