@@ -90,7 +90,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 	}
 	
 	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"description\": \"%s\",\n\t\"atom_uncertainty\": \"%s\",\n\t\"product_amount\": \"%s\",\n\t\"enzyme\": {\n\t\t\"code\" :null, \"name\" :null\n\t},\n\t\"reference\": \"%s\",\n\t\"updated\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\" :\"%s\",\n\t\t\"username\": \"%s\"\n\t}";
-	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": \"%s/dataset/R%d\", \"structure\": null}\n\t}";
+	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": %s, \"structure\": null}\n\t}";
 	private static String emptyAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": null, \"structure\": null}\n\t}";
 		
 	@Override
@@ -124,8 +124,8 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 				for (DBAttachment attachment : item.getAttachments()) {
 					getOutput().write(String.format(formatAttachments,
 							attachment.getType().toString(),
-							queryService,
-							attachment.getIdquerydatabase()));
+							attachment.getIdquerydatabase()>0?String.format("\"%s/dataset/R%d\"", queryService,attachment.getIdquerydatabase()):"null"
+							));
 				}		
 			else {
 				for (attachment_type at : attachment_type.values()) {
