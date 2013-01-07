@@ -86,11 +86,13 @@ function useSelected(prefix) {
 			$(results).append('<li class="ui-state-default" ><img border="0" src="'+entry.src+'"></li>');
 			$(results_mol).val('');
 		}
+			$("#xmet_"+prefix+"_type").val("uri");
 	});
 }
 
 function clearStructure(prefix) {
 	$("#xmet_"+prefix+"_img").empty();
+	$("#xmet_"+prefix+"_type").val("file");
 	/*
 	<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 	<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
@@ -107,6 +109,7 @@ function useDrawn(queryService,prefix) {
 		$(results_mol).val(molFile);
 		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
 		$(results_uri).val();
+		$("#xmet_"+prefix+"_type").val("mol");
 		$(results).empty();
 		runSearchURI(queryService + '/query/compound/search/all?media=application/x-javascript&type=mol&max=1&b64search=' 
 								  + encodeURIComponent($.base64.encode(molFile)),
@@ -124,6 +127,8 @@ function useDrawn(queryService,prefix) {
        					$(results).append('<li class="ui-state-default" ><img border="1" src="'+
        			    			queryService + '/depict/cdk/kekule?type=mol&b64search=' + encodeURIComponent($.base64.encode(molFile)) +
        			    			'&w=150&h=150" alt="'+ molFile +'"></li>');
+       				} else {
+       					$("#xmet_"+prefix+"_type").val("uri");
        				}
 
 		});

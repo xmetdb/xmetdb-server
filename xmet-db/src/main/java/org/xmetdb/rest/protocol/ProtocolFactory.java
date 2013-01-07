@@ -1,6 +1,7 @@
 package org.xmetdb.rest.protocol;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -28,9 +29,10 @@ import org.xmetdb.xmet.client.PublishedStatus;
 
 public class ProtocolFactory {
 	protected static final String utf8 = "UTF-8";
-
+	public enum StructureUploadType {uri,mol,file};
 	public enum ObservationFields {
 		identifier, xmet_experiment, xmet_experimentdescription, published_status, 
+		xmet_substrate_type,xmet_product_type,
 		xmet_substrate_upload, xmet_product_upload, 
 		xmet_substrate_uri, xmet_product_uri,
 		xmet_substrate_mol, xmet_product_mol,
@@ -72,6 +74,12 @@ public class ProtocolFactory {
 
 		if (protocol == null)
 			protocol = new DBProtocol();
+		
+		DBAttachment[] s_attachments = new DBAttachment[StructureUploadType.values().length];
+		DBAttachment[] p_attachments = new DBAttachment[StructureUploadType.values().length];
+		StructureUploadType s_upload = null;
+		StructureUploadType p_upload = null;
+		
 		for (final Iterator<FileItem> it = items.iterator(); it.hasNext();) {
 			FileItem fi = it.next();
 
@@ -93,6 +101,14 @@ public class ProtocolFactory {
 					if ((s != null) && !"".equals(s))
 						protocol.setIdentifier(s);
 					break;
+				}
+				case xmet_substrate_type: {
+					String s = fi.getString(utf8);
+					try {if (s!=null) s_upload = StructureUploadType.valueOf(s.trim());} catch (Exception x) {}
+				}
+				case xmet_product_type: {
+					String s = fi.getString(utf8);
+					try {if (s!=null) p_upload = StructureUploadType.valueOf(s.trim());} catch (Exception x) {}
 				}
 				case published_status: {
 					String s = fi.getString(utf8);
@@ -129,31 +145,51 @@ public class ProtocolFactory {
 					break;
 				}
 				case xmet_substrate_uri : {
-					DBAttachment attachment = createAttachment(fi, protocol,
-							attachment_type.data_training, null);
-					if (attachment != null)
-						protocol.getAttachments().add(attachment);
+					if ((s_upload==null) || StructureUploadType.uri.equals(s_upload)) {
+						DBAttachment attachment = createAttachment(StructureUploadType.uri,fi, protocol,
+								attachment_type.data_training, dir);
+						s_attachments[StructureUploadType.uri.ordinal()] = attachment;
+					}
 					break;					
 				}
 				case xmet_product_uri : {
-					DBAttachment attachment = createAttachment(fi, protocol,
-							attachment_type.data_validation, null);
-					if (attachment != null)
-						protocol.getAttachments().add(attachment);
+					if ((p_upload==null) || StructureUploadType.uri.equals(p_upload)) {
+						DBAttachment attachment = createAttachment(StructureUploadType.uri,fi, protocol,
+								attachment_type.data_validation, dir);
+						p_attachments[StructureUploadType.uri.ordinal()] = attachment;
+					}
 					break;					
 				}
+				case xmet_substrate_mol : {
+					if ((s_upload==null) || StructureUploadType.mol.equals(s_upload)) {
+						DBAttachment attachment = createAttachment(StructureUploadType.mol,fi, protocol,
+								attachment_type.data_training, dir);
+						s_attachments[StructureUploadType.mol.ordinal()] = attachment;
+					}
+					break;					
+				}
+				case xmet_product_mol : {
+					if ((p_upload==null) || StructureUploadType.mol.equals(p_upload)) {
+						DBAttachment attachment = createAttachment(StructureUploadType.mol,fi, protocol,
+								attachment_type.data_validation, dir);
+						p_attachments[StructureUploadType.mol.ordinal()] = attachment;
+					}
+					break;					
+				}				
 				case xmet_substrate_upload: {
-					DBAttachment attachment = createAttachment(fi, protocol,
-							attachment_type.data_training, dir);
-					if (attachment != null)
-						protocol.getAttachments().add(attachment);
+					if ((s_upload==null) || StructureUploadType.file.equals(s_upload)) {
+						DBAttachment attachment = createAttachment(StructureUploadType.file,fi, protocol,
+								attachment_type.data_training, dir);
+						s_attachments[StructureUploadType.file.ordinal()] = attachment;
+					}
 					break;
 				}
 				case xmet_product_upload: {
-					DBAttachment attachment = createAttachment(fi, protocol,
-							attachment_type.data_validation, dir);
-					if (attachment != null)
-						protocol.getAttachments().add(attachment);
+					if ((p_upload==null) || StructureUploadType.file.equals(p_upload)) {
+						DBAttachment attachment = createAttachment(StructureUploadType.file,fi, protocol,
+								attachment_type.data_validation, dir);
+						p_attachments[StructureUploadType.file.ordinal()] = attachment;
+					}
 					break;
 				}
 					/*
@@ -357,82 +393,86 @@ public class ProtocolFactory {
 			}
 
 		}
+		if ((s_upload!=null) && (s_attachments[s_upload.ordinal()]!=null)) 
+				protocol.getAttachments().add(s_attachments[s_upload.ordinal()]);
+		if ((p_upload!=null) && (s_attachments[p_upload.ordinal()]!=null)) 
+			protocol.getAttachments().add(p_attachments[p_upload.ordinal()]);		
 		return protocol;
 	}
 
-	protected static DBAttachment createAttachment(FileItem fi,
+	protected static DBAttachment createAttachment(StructureUploadType supType,FileItem fi,
 			DBProtocol protocol, attachment_type type, File dir)
 			throws Exception {
 		if (fi.getSize()==0) return null;
+		try {if ((dir != null) && !dir.exists())	dir.mkdir();} catch (Exception x) {	dir = null;	}
+		try {
+			dir = new File(dir == null ? new File(System.getProperty("java.io.tmpdir")) : dir,type.name());
+			if ((dir != null) && !dir.exists())	dir.mkdir();
+		} catch (Exception x) {	dir = null;	}
+		
+		DBAttachment attachment  = null;
 		if (fi.isFormField()) {
-			// TODO URI or smiles specification of substrate & product
-			// protocol.setDataTemplate(new Template(new
-			// URL(fi.getString(utf8))))
-			DBAttachment attachment = new DBAttachment();
-			String newName = String.format("xmet%d_%s_%s",
-					protocol.getID() > 0 ? protocol.getID() : 0,
-					type.getXmetName(), DBProtocol.generateIdentifier()
-					);
-			attachment.setTitle(newName);
-			attachment.setFormat("text/uri-list");
-			attachment.setDescription(fi.getString(utf8));
-			attachment.setType(type);
-			attachment.setOriginalFileName(null);
-			attachment.setImported(false);
-			return attachment;
+			if (StructureUploadType.uri.equals(supType)) {
+				attachment = new DBAttachment();
+				String newName = String.format("xmet%d_%s_%s",
+						protocol.getID() > 0 ? protocol.getID() : 0,
+						type.getXmetName(), DBProtocol.generateIdentifier()
+						);
+				attachment.setTitle(newName);
+				attachment.setType(type);
+				attachment.setOriginalFileName(null);
+				attachment.setDescription(fi.getString(utf8));
+				attachment.setFormat("text/uri-list");
+				attachment.setImported(false);
+				return attachment;
+			} else {
+				String content = fi.getString(utf8);
+				File file = generateFileName("wwwformsubmitted.mol", dir, type, protocol);
+				FileWriter writer=null;
+				try {
+					writer = new FileWriter(file);
+					writer.write(content);
+				} finally {
+					try {writer.close();} catch (Exception x) {}
+				}
+				//System.out.println(file.getAbsolutePath());
+				if (file.exists())
+						return DBAttachment.file2attachment(file, "Web form MOL file","form.mol", type);
+				else return null;
+			}
 		} else {
-			String originalName = "";
+		//otherwise it is a file
+			String originalName= "";
 			String description = "";
-			if (fi.getSize() == 0)
-				return null;
+			if (fi.getSize() == 0)	return null;
 			File file = null;
 			if (fi.getName() == null)
-				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,
-						"File name can't be empty!");
+				throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"File name can't be empty!");
 			else {
-				try {
-					if ((dir != null) && !dir.exists())
-						dir.mkdir();
-				} catch (Exception x) {
-					dir = null;
-				}
-				try {
-					dir = new File(dir == null ? new File(
-							System.getProperty("java.io.tmpdir")) : dir,
-							type.name());
-					if ((dir != null) && !dir.exists())
-						dir.mkdir();
-				} catch (Exception x) {
-					dir = null;
-				}
-				// stupid File class ...
-				int lastIndex = fi.getName().lastIndexOf("\\");
-				if (lastIndex < 0)
-					lastIndex = fi.getName().lastIndexOf("/");
-				description = stripFileName(fi.getName());
-				int extIndex = fi.getName().lastIndexOf(".");
-				String ext = extIndex > 0 ? fi.getName().substring(extIndex)
-						: "";
-
-				// generate new file name
 				originalName = fi.getName();
-				String newName = String.format("xmet%d_%s_%s%s",
-						protocol.getID() > 0 ? protocol.getID() : 0,
-						type.getXmetName(), DBProtocol.generateIdentifier(),
-						ext);
-				file = new File(String.format("%s/%s",
-						dir == null ? System.getProperty("java.io.tmpdir")
-								: dir, newName));
+				description = stripFileName(fi.getName());
+				file = generateFileName(fi.getName(),dir,type,protocol);
 			}
 			fi.write(file);
-
-			return DBAttachment.file2attachment(file, description,
-					originalName, type);
-
+			return DBAttachment.file2attachment(file, description,originalName, type);
 		}
+
 	}
 
+	protected static File generateFileName(String filename, File dir, attachment_type type, DBProtocol protocol) {
 
+		// stupid File class ...
+		int lastIndex = filename.lastIndexOf("\\");
+		if (lastIndex < 0)	lastIndex = filename.lastIndexOf("/");
+		int extIndex = filename.lastIndexOf(".");
+		String ext = extIndex > 0 ? filename.substring(extIndex): "";
+			// generate new file name
+		String newName = String.format("xmet%d_%s_%s%s",
+				protocol.getID() > 0 ? protocol.getID() : 0,
+				type.getXmetName(), DBProtocol.generateIdentifier(),ext);
+		return  new File(String.format("%s/%s",
+				dir == null ? System.getProperty("java.io.tmpdir")	: dir, newName));
+	}
 	public static String stripFileName(String fileName) {
 		int lastIndex = fileName.lastIndexOf("\\");
 		if (lastIndex < 0)

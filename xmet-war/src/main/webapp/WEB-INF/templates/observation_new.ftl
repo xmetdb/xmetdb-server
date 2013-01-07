@@ -93,12 +93,14 @@ $(document).ready(function() {
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
+			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
 	    </div>
 		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em></label></div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
+			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
 		</div>
 	</div>    	
 	<div class='row  remove-bottom' style="margin:5px;padding:5px;"> 	

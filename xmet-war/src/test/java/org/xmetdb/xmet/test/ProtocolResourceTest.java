@@ -27,6 +27,7 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.xmetdb.rest.protocol.ProtocolFactory;
 import org.xmetdb.rest.protocol.ProtocolFactory.ObservationFields;
+import org.xmetdb.rest.protocol.ProtocolFactory.StructureUploadType;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.xmet.client.PublishedStatus;
 import org.xmetdb.xmet.client.Resources;
@@ -343,6 +344,10 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				values[i] = "HEP";
 				break;
 			}
+			case xmet_product_type: {
+				values[i] = StructureUploadType.uri.name();
+				break;
+			}
 			case xmet_product_uri: {
 				values[i] = "http://localhost:8080/ambit2/compound/1";
 				break;
@@ -357,6 +362,10 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 			}			
 			case xmet_substrate_uri: {
 				values[i] = null;
+				break;
+			}
+			case xmet_substrate_type: {
+				values[i] = StructureUploadType.uri.name();
 				break;
 			}
 			case xmet_substrate_upload: {
