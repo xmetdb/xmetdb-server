@@ -24,9 +24,7 @@ jQuery(document).ready(function()
 		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
 		<th>XMETDBID</th>
-		<th>Substrate (dataset)</th>
 		<th>Substrate</th>
-		<th>Product (dataset)</th>
 		<th>Product</th>
 		<th>Product amount</th>
 		<th>Experiment</th>
