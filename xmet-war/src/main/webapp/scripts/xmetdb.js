@@ -376,7 +376,7 @@ function displayEnzyme(observation) {
 /**
 * Defines dataTable for a list of observations, retrieved via JSON
 */
-function defineObservationsTable(tableSelector,observations_uri) {
+function defineObservationsTable(tableSelector,observations_uri,root) {
 	$(tableSelector).dataTable( {
 		"sAjaxDataProp" : "observations",
 		"bProcessing": true,
@@ -426,7 +426,7 @@ function defineObservationsTable(tableSelector,observations_uri) {
 		*/
 		"oLanguage": {
 			"sSearch": "Filter:",
-            "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
+            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
             "sLoadingRecords": "No records found.",
             "sLengthMenu": 'Display <select>' +
             '<option value="10">10</option>' +
@@ -461,7 +461,11 @@ function defineObservationsTable(tableSelector,observations_uri) {
 					          success: function(data, status, xhr) {
 					        	  if (data.dataEntry.length>0) {
 						        	  aData.Substrate.dataset.structure = data.dataEntry[0].compound.URI;
-						        	  $('td:eq(1)', nRow).html(cmp2image( aData.Substrate.dataset.structure));
+						        	  $('td:eq(1)', nRow).html(
+						        			  cmp2image( aData.Substrate.dataset.structure)
+						        			  + "<br>" +
+						        			  searchSimilar(aData.Substrate.dataset.structure)
+						        			  );
 					          	  } else {
 					          		$('td:eq(1)', nRow).html("N/A");
 					          	  }
@@ -470,7 +474,10 @@ function defineObservationsTable(tableSelector,observations_uri) {
 					          complete: function(xhr, status) { }
 					       });
 					 } else {
-						 $('td:eq(1)', nRow).html(cmp2image(aData.Substrate.dataset.structure));
+						 $('td:eq(1)', nRow).html(
+								 	cmp2image(aData.Substrate.dataset.structure) + "<br>" +
+								 	searchSimilar(aData.Substrate.dataset.structure)
+								 	);
 					 }	
 				 }
 				//retrieve the first compound URI from products dataset URI
@@ -483,7 +490,10 @@ function defineObservationsTable(tableSelector,observations_uri) {
 					          success: function(data, status, xhr) {
 					        	  if (data.dataEntry.length>0) {
 					        		  aData.Product.dataset.structure = data.dataEntry[0].compound.URI;
-					        		  $('td:eq(2)', nRow).html(cmp2image( aData.Product.dataset.structure));
+					        		  $('td:eq(2)', nRow).html(cmp2image( aData.Product.dataset.structure)
+						        			  + "<br>" +
+						        			  searchSimilar(aData.Product.dataset.structure)
+					        				  );
 					        	  } else {
 					        		  $('td:eq(2)', nRow).html("N/A");
 					        	  }
@@ -496,7 +506,10 @@ function defineObservationsTable(tableSelector,observations_uri) {
 					          }
 					       });
 					 } else {
-						 $('td:eq(2)', nRow).html(cmp2image(aData.Product.dataset.structure));
+						 $('td:eq(2)', nRow).html(cmp2image(aData.Product.dataset.structure)
+			        			  + "<br>" +
+			        			  searchSimilar(aData.Product.dataset.structure)
+								 );
 					 }
 				 }
 				 //retrieve the enzyme from /protocol/id/endpoint URI
@@ -522,6 +535,10 @@ function xmetdblog(msg) {
 	//try { console.log(msg); } catch (e) { alert(msg); }
 }
 
+function searchSimilar(uri) {
+	var query = "/xmetdb/protocol?structure=" + encodeURIComponent(uri);
+	return "<a href='"+query+"'><span class='ui-icon ui-icon-search' title='Click to search for observations involving the same chemical'></span></a>"
+}
 
 function searchFormValidation(formName) {
 	$(formName).validate({
