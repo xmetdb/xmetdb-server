@@ -4,6 +4,7 @@
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.MultiFile.pack.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.base64.min.js'></script>
+<script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.autogrow.js'></script>
 <style>
     .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
     .structresults .ui-selected { background: #F39814; border-color: #F39814; }
@@ -39,6 +40,7 @@ $(document).ready(function() {
             event.preventDefault();
             return false;
         });
+        $('#xmet_comment').autogrow();
 		//submitFormValidation("#submitForm");
 		//searchFormValidation("#substrateSearchForm");
 	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
@@ -163,9 +165,16 @@ $(document).ready(function() {
 			<input type="hidden" name="published_status"  value="on">
 		</div>
 		<input type="text" name="xmet_reference" id="xmet_reference" title="Enter reference DOI or free text" value="" class="eight columns omega remove-bottom">
-		<input type="submit" class="submit five columns omega" value="Submit observation">
+		<div class="five columns omega">&nbsp;</div>
+
 	</div>
-			
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+		<div class='three columns alpha'>
+			<label>Comment:</label>
+		</div>
+		<textarea name="keywords" id="xmet_comment" title="Note" value="" row="1" class="eight columns omega remove-bottom"></textarea>
+		<input type="submit" class="submit five columns omega" value="Submit observation">
+	</div>			
 	</form>	
     </div>
 
