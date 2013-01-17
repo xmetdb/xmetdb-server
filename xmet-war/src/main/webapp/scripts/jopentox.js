@@ -161,7 +161,7 @@ function defineTaskTable(root,url) {
 					  	if (o.aData["status"]=='Completed') {
 					  		return val + "<a href='"+o.aData["result"]+"'>Ready. Results available.</a>";
 					  	} else if (o.aData["status"]=='Error') {
-					  		return val + error;
+					  		return val + o.aData["error"];
 
 					  	} else
 						  	return checkTask(root + "/task/" + o.aData["id"],
