@@ -38,7 +38,7 @@ function defineEndpointsTable(url) {
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
 					  var parent = o.aData["parentName"] == ""?"All":encodeURIComponent(o.aData["parentName"]);	
-					  return "<a href='/xmetdb/catalog/"+ parent +"/"+ encodeURIComponent(o.aData["name"]) +"'>" + o.aData["name"] + "</a>";
+					  return "<a title='Click to display the available observations for this enzyme' href='/xmetdb/protocol?xmet_enzyme=" + encodeURIComponent(o.aData["code"]) + "'>"+o.aData["name"]+"</a>";
 				  }
 				},
 				{ "mDataProp": "uri" , "asSorting": [ "asc", "desc" ],
