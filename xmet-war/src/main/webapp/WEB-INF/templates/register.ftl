@@ -137,7 +137,7 @@ jQuery(document).ready(function()
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="keywords">Keywords</label>
-				<input class='eight columns alpha half-bottom'  type="text"  size='40' name='keywords' id='keywords' value=''/>
+				<input class='eight columns alpha half-bottom'  type="text"  size='40' name='keywords' id='keywords' value=' '/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
@@ -147,12 +147,12 @@ jQuery(document).ready(function()
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd1'>Password <em>*</em></label>
-				<input class='six columns alpha half-bottom'  type='password' size='40' id='pwd1' name='pwd1' value=''/>
+				<input class='six columns alpha half-bottom'  type='password' size='40' id='pwd1' name='pwd1' value=' '/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd2'>Confirm password <em>*</em></label>
-				<input class='six columns alpha half-bottom' type='password' size='40' id='pwd2' name='pwd2' value=''/>
+				<input class='six columns alpha half-bottom' type='password' size='40' id='pwd2' name='pwd2' value=' '/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
