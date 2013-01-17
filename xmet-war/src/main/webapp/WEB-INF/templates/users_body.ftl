@@ -35,7 +35,7 @@ jQuery(document).ready(function()
 		<th>Affiliation</th>
 		<th>e-mail</th>
 		<th>Keywords</th>
-		<th>Reviewer</th>
+		<th>Curator</th>
 		</thead>
 		<tbody></tbody>
 		</table>

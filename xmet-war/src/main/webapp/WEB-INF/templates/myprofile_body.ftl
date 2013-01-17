@@ -90,7 +90,7 @@ jQuery(document).ready(function()
 			<div class="five columns omega">&nbsp;</div>
 		</div>		
 		<div class='row' style="margin:5px;padding:5px;"> 	
-			<label class='three columns alpha' for="reviewer">Available as a reviewer</label>
+			<label class='three columns alpha' for="reviewer">Available as a curator</label>
 			<input class="one columns alpha remove-bottom" type="checkbox" ${ro} name='reviewer' id='reviewer' value=''/>
 			<div class="seven columns alpha">&nbsp;
 			</div>
