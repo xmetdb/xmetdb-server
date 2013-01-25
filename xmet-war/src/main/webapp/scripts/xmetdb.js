@@ -9,7 +9,7 @@ function cmp2image(val) {
 		//		cmpURI = opentox["model_uri"] + "?dataset_uri=" + cmpURI + "&media=image/png";
 		//}
 		//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
-		var id= cmpURI.replace(/:/g,"").replace(/\//g,"");;
+		var id= cmpURI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
 		return '<img border="0" alt="'+val+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
@@ -23,7 +23,7 @@ function cmpatoms2image(uri, model_uri) {
 		cmpURI = model_uri + "?dataset_uri=" + cmpURI + "&media=image/png";
 	}
 	//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
-	var id= uri.replace(/:/g,"").replace(/\//g,"");
+	var id= uri.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
 	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
@@ -235,7 +235,7 @@ function loadStructures(datasetURI, results, modelURI) {
 	        	  $(results).empty();
 	        	  for (i = 0; i < dataSize; i++) {
 	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,modelURI)+'</li>');
-	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"");
+	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
 	        		  createImageMap(data.dataEntry[i].compound.URI, '150','150', '#i'+id, '#m'+id);
 	        	  };
 	          },
