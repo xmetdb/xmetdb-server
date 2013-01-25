@@ -9,7 +9,8 @@ function cmp2image(val) {
 		//		cmpURI = opentox["model_uri"] + "?dataset_uri=" + cmpURI + "&media=image/png";
 		//}
 		//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
-		return '<img border="0" alt="'+val+'" src="'+cmpURI+'&w=150&h=150">';
+		var id= cmpURI.replace(/:/g,"").replace(/\//g,"");;
+		return '<img border="0" alt="'+val+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
 function cmpatoms2image(uri, model_uri) {
@@ -22,7 +23,8 @@ function cmpatoms2image(uri, model_uri) {
 		cmpURI = model_uri + "?dataset_uri=" + cmpURI + "&media=image/png";
 	}
 	//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
-	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150">';
+	var id= uri.replace(/:/g,"").replace(/\//g,"");
+	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
 function renderEnzyme(code,name) {
@@ -86,7 +88,7 @@ function useSelected(prefix) {
 			$(results).append('<li class="ui-state-default" ><img border="0" src="'+entry.src+'"></li>');
 			$(results_mol).val('');
 		}
-			$("#xmet_"+prefix+"_type").val("uri");
+		$("#xmet_"+prefix+"_type").val("uri");
 	});
 }
 
@@ -223,7 +225,7 @@ function toggleDrawUI(prefix, idButton, msg) {
 function loadStructures(datasetURI, results, modelURI) {
 	if ((datasetURI===undefined) || (datasetURI==null)) {
 		  $(results).empty();
-	} else
+	} else {
 	      $.ajax({
 	          dataType: "jsonp",
 	          "crossDomain": true,  //bloody IE
@@ -233,12 +235,15 @@ function loadStructures(datasetURI, results, modelURI) {
 	        	  $(results).empty();
 	        	  for (i = 0; i < dataSize; i++) {
 	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,modelURI)+'</li>');
+	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"");
+	        		  createImageMap(data.dataEntry[i].compound.URI, '150','150', '#i'+id, '#m'+id);
 	        	  };
 	          },
 	          error: function(xhr, status, err) { 
 	          },
 	          complete: function(xhr, status) { }
 	       });
+	}
 }
 
 /*

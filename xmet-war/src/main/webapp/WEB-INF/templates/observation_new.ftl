@@ -1,10 +1,13 @@
 <#include "/s_html.ftl" >
 <head>
 <#include "/s_head.ftl" >
+
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.MultiFile.pack.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.base64.min.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.autogrow.js'></script>
+<script  type="text/javascript" src="${xmet_root}/jquery/jquery.imagemapster.min.js"></script>
+<script  type="text/javascript" src="${xmet_root}/scripts/jopentox-ui-atoms.js"></script>
 <style>
     .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
     .structresults .ui-selected { background: #F39814; border-color: #F39814; }
@@ -13,7 +16,9 @@
 </style>
 
 <script type="text/javascript">
-    
+function atomNumber(num) {
+	//console.log(num);
+}	    
 $(document).ready(function() {
 		$( ".useSelected" ).button();
 		$( "#structureSearchResults" ).selectable();
