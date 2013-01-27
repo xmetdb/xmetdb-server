@@ -105,10 +105,12 @@ public class ProtocolFactory {
 				case xmet_substrate_type: {
 					String s = fi.getString(utf8);
 					try {if (s!=null) s_upload = StructureUploadType.valueOf(s.trim());} catch (Exception x) {}
+					break;
 				}
 				case xmet_product_type: {
 					String s = fi.getString(utf8);
 					try {if (s!=null) p_upload = StructureUploadType.valueOf(s.trim());} catch (Exception x) {}
+					break;
 				}
 				case published_status: {
 					String s = fi.getString(utf8);
@@ -395,7 +397,7 @@ public class ProtocolFactory {
 		}
 		if ((s_upload!=null) && (s_attachments[s_upload.ordinal()]!=null)) 
 				protocol.getAttachments().add(s_attachments[s_upload.ordinal()]);
-		if ((p_upload!=null) && (s_attachments[p_upload.ordinal()]!=null)) 
+		if ((p_upload!=null) && (p_attachments[p_upload.ordinal()]!=null)) 
 			protocol.getAttachments().add(p_attachments[p_upload.ordinal()]);		
 		return protocol;
 	}
