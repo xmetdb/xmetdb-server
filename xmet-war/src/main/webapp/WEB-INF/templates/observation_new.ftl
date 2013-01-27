@@ -177,7 +177,7 @@ $(document).ready(function() {
 		<div class='three columns alpha'>
 			<label>Comment:</label>
 		</div>
-		<textarea name="keywords" id="xmet_comment" title="Note" value="" row="1" class="eight columns omega remove-bottom"></textarea>
+		<textarea name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="eight columns omega remove-bottom"></textarea>
 		<input type="submit" class="submit five columns omega" value="Submit observation">
 	</div>			
 	</form>	

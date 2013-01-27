@@ -80,7 +80,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number,idtemplate,allele,reference FROM protocol left join protocol_endpoints using(idprotocol,version) where idprotocol=3 and version=1"));
+				String.format("SELECT idprotocol,version,published_status,title,abstract,qmrf_number,idtemplate,allele,reference,keywords FROM protocol left join protocol_endpoints using(idprotocol,version) left join keywords using(idprotocol,version) where idprotocol=3 and version=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		//we ignore the published flag here! There is a special PublishProtocol query
@@ -92,6 +92,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals("XMETDB3",table.getValue(0,"qmrf_number"));
 		Assert.assertEquals("1A",table.getValue(0,"allele"));
 		Assert.assertEquals("Test Reference",table.getValue(0,"reference"));
+		Assert.assertEquals("hepatocyte",table.getValue(0,"keywords"));
 		c.close();	
 	}
 	
@@ -177,6 +178,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		observation.setAbstract("Hepatocytes");
 		observation.setTitle("HEP");
 		observation.setReference("Test reference");
+		observation.addKeyword("hepatocyte");
 		observation.setProductAmount(ProductAmount.Major);
 		observation.setAtomUncertainty(AtomUncertainty.Certain);
 		return (IQueryUpdate<T, DBProtocol>)new CreateProtocol(observation);
@@ -187,7 +189,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status,atom_uncertainty,product_amount,reference FROM protocol where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
+				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status,atom_uncertainty,product_amount,reference,keywords FROM protocol left join keywords using(idprotocol,version) where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"summarySearchable"));
@@ -196,6 +198,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		Assert.assertEquals(ProductAmount.Major.toString(),table.getValue(0,"product_amount"));
 		Assert.assertTrue(table.getValue(0,"qmrf_number").toString().startsWith("XMETDB"));
 		Assert.assertEquals("Test reference",table.getValue(0,"reference"));
+		Assert.assertEquals("hepatocyte",table.getValue(0,"keywords"));
 		c.close();		
 	}
 

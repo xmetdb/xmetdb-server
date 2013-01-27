@@ -267,6 +267,7 @@ function loadObservation(observation_uri) {
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
 	        	  $('#xmet_reference').replaceWith(observation["reference"]);
+	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
 	        	  
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
@@ -324,6 +325,7 @@ function editObservation(root,observation_uri) {
 	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
 	        	  });
 	        	  $('#xmet_reference').attr("value",observation["reference"]);
+	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
 	        	  $('#xmet_substrate_type').val('uri');
 	        	  $('#xmet_product_type').val('uri');
 	        	  $('#xmet_substrate_upload').val('');
@@ -657,7 +659,10 @@ function submitFormValidation(formName) {
 			},
 			'xmet_reference': {
 				
-			}
+			},
+			'xmet_comments': {
+				
+			}			
 		},
 		messages : {
 			'xmet_substrate_uri'  : {

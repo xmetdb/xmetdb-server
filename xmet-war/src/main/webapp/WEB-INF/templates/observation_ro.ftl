@@ -43,6 +43,12 @@
       		</div>
     </div>	
 	
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+		<div class='three columns alpha'>
+			<label>Comment:</label>
+		</div>
+		<textarea name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="eight columns omega remove-bottom" readonly></textarea>
+	</div>		
 	<div class='row remove-bottom'>
 		<hr class='half-bottom'/>
 		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Edit</a>

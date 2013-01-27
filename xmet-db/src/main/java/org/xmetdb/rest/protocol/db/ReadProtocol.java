@@ -454,6 +454,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 				return String.format(" protocol.%s regexp ? ",name());
 			}
 		},		
+		
 		filename {
 			@Override
 			public QueryParam getParam(DBProtocol protocol) {
@@ -920,7 +921,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 		
 		if (getValue()!=null) {
 			if (getValue().getIdentifier()!=null) {
-					return String.format(sql_nokeywords,"where",
+					return String.format(sql_withkeywords,"where",
 							String.format("%s %s %s",
 									fields.identifier.getCondition(),
 									byUser==null?"":" and ",
@@ -929,14 +930,14 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 
 			} else 
 				if (getValue().getTitle()!=null)
-					return String.format(sql_nokeywords,"where",
+					return String.format(sql_withkeywords,"where",
 										String.format("%s %s %s %s",
 												fields.title.getCondition(),
 												byUser==null?"":" and ",
 												byUser==null?"":byUser,
 												publishedOnly));
 				else if (getValue().getTimeModified()!=null)
-					return String.format(sql_nokeywords,"where",
+					return String.format(sql_withkeywords,"where",
 									String.format("%s %s %s %s",
 											fields.updated.getCondition(),
 											byUser==null?"":" and ",
@@ -944,12 +945,12 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 											publishedOnly));			
 		} 
 		String sql = onlyUnpublished?
-				String.format(sql_nokeywords,
+				String.format(sql_withkeywords,
 						"where",byUser==null?"published_status!='published'":String.format("%s %s",byUser,publishedOnly))
 				:getShowUnpublished()?
-				String.format(sql_nokeywords,
+				String.format(sql_withkeywords,
 						"where",byUser==null?"":byUser):
-				String.format(sql_nokeywords,
+				String.format(sql_withkeywords,
 						"where",byUser==null?"published_status='published'":String.format("%s %s",byUser,publishedOnly)); //published only
 		return sql;
 	}

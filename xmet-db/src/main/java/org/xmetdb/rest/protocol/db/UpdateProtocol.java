@@ -60,6 +60,7 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	private String[] update =   
 	{ 
 		update_sql,
+		"insert into keywords values (?,?,?) on duplicate key update keywords=values(keywords)",
 		"delete from protocol_endpoints where idprotocol=? and version=?",
 		"insert into protocol_endpoints select idprotocol,version,idtemplate,? from protocol join template where code = ? and idprotocol=? and version=?"
 	};
@@ -96,10 +97,17 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			break;
 		}
 		case 1: {
+			List<String> comments = getObject().getKeywords();
+			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
+			params1.add(ReadProtocol.fields.version.getParam(getObject()));
+			params1.add(new QueryParam<String>(String.class,comments.size()==0?"":comments.get(0)));
+			return params1;
+		} 		
+		case 2: {
 			//none
 			break;
 		} 
-		case 2: {
+		case 3: {
 			String allele = "";
 			if (getObject().getEndpoint()!= null && getObject().getEndpoint().getAlleles()!=null && getObject().getEndpoint().getAlleles().length>0)
 				allele = getObject().getEndpoint().getAlleles()[0];

@@ -36,19 +36,10 @@ public abstract class ReadProtocolAbstract<T> extends AbstractQuery<T, DBProtoco
 		"select idprotocol,version,protocol.title,qmrf_number,abstract as anabstract,iduser,summarySearchable," +
 		"idproject," +
 		"idorganisation,user.username,user.firstname,user.lastname," +
-		"reference,updated,status,`created`,published_status,atom_uncertainty,product_amount\n" +
+		"reference,updated,status,`created`,published_status,atom_uncertainty,product_amount,keywords.keywords\n" +
 		"from protocol join user using(iduser)\n" +
 		"left join keywords using(idprotocol,version) %s %s";
 
-
-	protected static String sql_nokeywords = 
-		"select idprotocol,protocol.version,protocol.title,qmrf_number,abstract as anabstract,iduser,summarySearchable," +
-		"idproject," +
-		"idorganisation,user.username,user.firstname,user.lastname," +
-		"reference,updated,status,`created`,published_status,atom_uncertainty,product_amount\n" +
-		"from protocol join user using(iduser)\n" +
-		" %s %s order by idprotocol desc,version desc";		
-	
 	
 	public ReadProtocolAbstract(String identifier) {
 		this(identifier==null?null:new DBProtocol(identifier));
@@ -100,6 +91,10 @@ public abstract class ReadProtocolAbstract<T> extends AbstractQuery<T, DBProtoco
 			} catch (Exception x) {
 				throw new AmbitException("Error when reading XMETDB number",x);
 				
+			}		
+			try {
+				p.addKeyword(rs.getString("keywords"));
+			} catch (Exception x) {
 			}				
 			return p;
 		} catch (AmbitException x) {

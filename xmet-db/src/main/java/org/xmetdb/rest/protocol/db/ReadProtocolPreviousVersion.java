@@ -23,7 +23,7 @@ public class ReadProtocolPreviousVersion extends ReadProtocol {
 	}
 	*/
 	public String getSQL() throws AmbitException {
-		return String.format(sql_nokeywords," where "," idprotocol=? and version<? ");
+		return String.format(sql_withkeywords," where "," idprotocol=? and version<? ");
 	}
 	
 	public List<QueryParam> getParameters() throws AmbitException {

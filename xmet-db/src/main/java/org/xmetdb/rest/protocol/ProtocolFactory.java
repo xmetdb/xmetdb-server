@@ -36,9 +36,9 @@ public class ProtocolFactory {
 		xmet_substrate_upload, xmet_product_upload, 
 		xmet_substrate_uri, xmet_product_uri,
 		xmet_substrate_mol, xmet_product_mol,
-		xmet_allele, xmet_reference,
+		xmet_allele, xmet_reference, xmet_comments,
 		project_uri, organisation_uri, user_uri, iduser, author_uri, 
-		summarySearchable, status, xmlkeywords, 
+		summarySearchable, status,  
 		xmet_enzyme, xmet_atom_uncertainty, xmet_product_amount, allowReadByUser, allowReadByGroup;
 
 		@Override
@@ -325,7 +325,15 @@ public class ProtocolFactory {
 					} catch (Exception x) {
 					}
 					break;					
-				}				
+				}
+				case xmet_comments: {
+					try {
+						protocol.getKeywords().clear();
+						protocol.addKeyword(fi.getString(utf8));
+					} catch (Exception x) {
+					}
+					break;					
+				}							
 				case xmet_allele: {
 					try {
 						if (protocol.getEndpoint() == null)

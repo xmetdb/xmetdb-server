@@ -16,7 +16,7 @@ public class ReadProtocolByEndpointString extends ReadProtocolAbstract<String> {
 	 * 
 	 */
 
-	protected static String sql = String.format(ReadProtocol.sql_nokeywords,
+	protected static String sql = String.format(ReadProtocol.sql_withkeywords,
 		"where ","published_status='published' and trim(extractvalue(abstract,'/QMRF/Catalogs/endpoints_catalog/endpoint/@name')) %s ?");
 
 	public List<QueryParam> getParameters() throws AmbitException {

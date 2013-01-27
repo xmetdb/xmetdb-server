@@ -193,11 +193,12 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
 		Assert.assertEquals(3, table.getRowCount());
 		table = c.createQueryTable("EXPECTED",
-						"SELECT p.idprotocol,p.version,published_status,qmrf_number from protocol p where p.idprotocol=3 and version=1");
+						"SELECT p.idprotocol,p.version,published_status,qmrf_number,keywords from protocol p left join keywords using(idprotocol,version) where p.idprotocol=3 and version=1");
 		Assert.assertEquals(1, table.getRowCount());
 		Assert.assertEquals(PublishedStatus.published.name(), 
 				table.getValue(0, ReadProtocol.fields.published_status.name())
 				);
+		Assert.assertEquals("XMET Comments", table.getValue(0, "keywords"));
 		
 		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s",port,newXMETID),newURI);
 
@@ -254,13 +255,14 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		table = c
 				.createQueryTable(
 						"EXPECTED",
-						"SELECT abstract,p.idprotocol,p.version,filename,p.iduser,status,title,abstract,qmrf_number from protocol p where p.idprotocol>3 order by p.iduser");
+						"SELECT abstract,p.idprotocol,p.version,filename,p.iduser,status,title,abstract,qmrf_number,keywords from protocol p left join keywords using(idprotocol,version) where p.idprotocol>3 order by p.iduser");
 		Assert.assertEquals(1, table.getRowCount());
 		//Assert.assertEquals(new BigInteger("1"), table.getValue(0, "version"));
 		//Assert.assertEquals(new BigInteger("3"), table.getValue(0, "iduser"));
 		Assert.assertEquals(new BigInteger("1"), table.getValue(0, "iduser"));
 		Assert.assertEquals(STATUS.RESEARCH.toString(), table.getValue(0, "status"));
 		Assert.assertEquals("HEP",table.getValue(0, "title"));
+		Assert.assertEquals("XMET Comments",table.getValue(0, "keywords"));
 		Assert.assertNotNull(table.getValue(0, "abstract"));
 		//Assert.assertNotSame("Q-1234-5678", table.getValue(0, "qmrf_number"));
 		
@@ -387,7 +389,11 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 			case xmet_reference: {
 				values[i] = "XMET Reference";
 				break;
-			}			
+			}
+			case xmet_comments: {
+				values[i] = "XMET Comments";
+				break;
+			}						
 			case xmet_enzyme: {
 				values[i] = "CYP3A4";
 				break;

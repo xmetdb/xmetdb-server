@@ -36,7 +36,6 @@ import org.xmetdb.rest.protocol.db.DeleteProtocol;
 import org.xmetdb.rest.protocol.db.PublishProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.ReadProtocolByID;
-import org.xmetdb.rest.protocol.db.UpdateFreeTextIndex;
 import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.resource.db.ProtocolQueryURIReporter;
 import org.xmetdb.xmet.client.Resources;
@@ -310,14 +309,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					protocol.setVersion(q.getObject().getVersion());
 					protocol.setIdentifier(String.format("XMETDB%d", protocol.getID()));
 				}
-				
-				try {
-					UpdateFreeTextIndex q = new UpdateFreeTextIndex(protocol);
-					exec.process(q);
-				} catch (Exception x) {
-					x.printStackTrace();
-					//free text index failed, but ignore so far
-				}
+
 				String uri = reporter.getURI(protocol);
 				
 				/*
@@ -469,12 +461,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					retrieveProtocolIdentifier(protocol,connection);
 				}
 				uri = reporter.getURI(protocol);
-				try {
-					UpdateFreeTextIndex x = new UpdateFreeTextIndex(protocol);
-					exec.process(x);
-				} catch (Exception x) {
-					x.printStackTrace(); //free text index failed, but ignore so far
-				}
+
 				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0) 
 					for (DBAttachment attachment: protocol.getAttachments()) {
 						AddAttachment k = new AddAttachment(protocol,attachment);

@@ -43,6 +43,7 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	public static final String[] create_sql = {
 		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created,published_status,atom_uncertainty,product_amount,reference) " +
 		"values (?,?,?,?,?,?,?,?,?,now(),?,?,?,?)",
+		"insert into keywords values (?,?,?) on duplicate key update keywords=values(keywords)",
 		"insert into protocol_endpoints select idprotocol,version,idtemplate,? from protocol join template where code = ? and idprotocol=? and version=?",
 		"update protocol set qmrf_number=? where idprotocol=? and version=?"
 	};
@@ -79,7 +80,14 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			}
 			break;
 		}
-		case 1: {
+		case 1: {  //comments
+			List<String> comments = getObject().getKeywords();
+			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));
+			params1.add(ReadProtocol.fields.version.getParam(getObject()));
+			params1.add(new QueryParam<String>(String.class,comments.size()==0?"":comments.get(0)));
+			break;
+		}
+		case 2: {
 			String allele = "";
 			if (getObject().getEndpoint()!= null && getObject().getEndpoint().getAlleles()!=null && getObject().getEndpoint().getAlleles().length>0)
 				allele = getObject().getEndpoint().getAlleles()[0];
@@ -89,7 +97,7 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			params1.add(ReadProtocol.fields.version.getParam(getObject()));
 			break;
 		}
-		case 2: {
+		case 3: {
 			
 			params1.add(new QueryParam<String>(String.class,String.format("XMETDB%d",getObject().getID())));
 			params1.add(ReadProtocol.fields.idprotocol.getParam(getObject()));

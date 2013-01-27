@@ -28,7 +28,7 @@ public class ReadProtocolByUserTest extends QueryTest<ReadProtocol> {
 			DBProtocol protocol = query.getObject(rs);
 			Assert.assertEquals(3,protocol.getID());
 			Assert.assertNotNull(protocol.getKeywords());
-			Assert.assertEquals(0,protocol.getKeywords().size());
+			Assert.assertEquals(1,protocol.getKeywords().size());
 			Assert.assertNotNull(protocol.getOwner());
 			Assert.assertEquals(AtomUncertainty.Certain,protocol.getAtomUncertainty());
 			Assert.assertEquals(ProductAmount.Major,protocol.getProductAmount());

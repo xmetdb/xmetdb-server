@@ -16,7 +16,7 @@ public class ReadProtocolByAuthor extends ReadProtocolByEndpointString {
 	 * 
 	 */
 
-	protected static String sql = String.format(ReadProtocol.sql_nokeywords,
+	protected static String sql = String.format(ReadProtocol.sql_withkeywords,
 		"where ","published_status='published' and extractvalue(abstract,'/QMRF/Catalogs/authors_catalog/author/@name') regexp ?");
 
 	public List<QueryParam> getParameters() throws AmbitException {
