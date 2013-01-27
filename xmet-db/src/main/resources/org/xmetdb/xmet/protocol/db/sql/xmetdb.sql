@@ -240,7 +240,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,11,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,12,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
@@ -274,10 +274,10 @@ begin
     -- update published status of the old version to archived
 
   	-- create new version
-    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,created,published_status)
-    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,summarySearchable,idproject,idorganisation,null,status,now(),published_status 
+    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
+    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,summarySearchable,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
     from protocol where qmrf_number=protocol_qmrf_number;
-	
+      	
    	-- copy authors
     insert into protocol_authors (idprotocol,version,iduser)
     select idprotocol,version_new,protocol_authors.iduser from protocol_authors join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;
@@ -293,8 +293,56 @@ begin
 	-- Set the previous protocol status to archived
     update protocol set published_status='archived' where qmrf_number=protocol_qmrf_number;
 
+	-- copy attachments
+	insert into attachments (idprotocol,version,name,description,type,updated,format,original_name,imported)
+	select p.idprotocol,version_new,name,description,type,now(),format,original_name,imported from attachments a, protocol p
+	where p.idprotocol=a.idprotocol and p.version = a.version and p.qmrf_number = protocol_qmrf_number;
+	
     END LOOP the_loop;
 
+end $$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- Create an observation copy
+-- -----------------------------------------------------
+DROP PROCEDURE IF EXISTS `createProtocolCopy`;
+DELIMITER $$
+CREATE PROCEDURE createProtocolCopy(
+                IN protocol_qmrf_number VARCHAR(36),
+                OUT new_qmrf_number VARCHAR(36))
+begin
+	DECLARE new_id INT;
+	
+  	-- create new version
+    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
+    select null,1,title,concat("XMETDB",idprotocol,"v",now()),abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    from protocol where qmrf_number=protocol_qmrf_number;
+    
+    
+    SELECT LAST_INSERT_ID() INTO new_id;
+	UPDATE protocol set qmrf_number=concat("XMETDB",new_id) where idprotocol=new_id and version=1;
+	SET new_qmrf_number = concat("XMETDB",new_id);
+	
+   	-- copy authors
+    insert into protocol_authors (idprotocol,version,iduser)
+    select new_id,1,protocol_authors.iduser from protocol_authors join protocol using(idprotocol,version) where qmrf_number=protocol_qmrf_number;
+
+   	-- copy endpoints
+    insert into protocol_endpoints (idprotocol,version,idtemplate,allele)
+    select new_id,1,idtemplate,allele from protocol_endpoints join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;
+    
+   	-- copy keywords
+    insert into keywords (idprotocol,version,keywords)
+    select new_id,1,keywords from keywords join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;    
+
+	-- copy attachments
+	insert into attachments (idprotocol,version,name,description,type,updated,format,original_name,imported)
+	select new_id,1,name,description,type,now(),format,original_name,imported from attachments a, protocol p
+	where p.idprotocol=a.idprotocol and p.version = a.version and p.qmrf_number = protocol_qmrf_number;
+	
+  
 end $$
 
 DELIMITER ;
