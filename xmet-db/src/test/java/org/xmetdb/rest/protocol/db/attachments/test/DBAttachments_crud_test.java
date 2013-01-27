@@ -60,12 +60,13 @@ public class DBAttachments_crud_test  extends CRUDTest<DBProtocol,DBAttachment> 
 	protected void createVerifyNew(IQueryUpdate<DBProtocol, DBAttachment> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version,name,description,type,format,original_name,imported FROM attachments where idprotocol=1 and version=1 order by idattachment" );
-		Assert.assertEquals(3,table.getRowCount());
-		Assert.assertEquals("Training",table.getValue(2,"name"));
-		Assert.assertEquals("Description",table.getValue(2,"description"));
-		Assert.assertEquals("sdf",table.getValue(2,"format"));
-		Assert.assertEquals(attachment_type.data_training.name(),table.getValue(2,"type"));
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version,name,description,type,format,original_name,imported FROM attachments where idprotocol=1 and version=1 order by type" );
+		int ord = attachment_type.data_training.ordinal();
+		Assert.assertEquals(2,table.getRowCount());
+		Assert.assertEquals("Training",table.getValue(ord,"name"));
+		Assert.assertEquals("Description",table.getValue(ord,"description"));
+		Assert.assertEquals("sdf",table.getValue(ord,"format"));
+		Assert.assertEquals(attachment_type.data_training.name(),table.getValue(ord,"type"));
 		c.close();
 	}
 

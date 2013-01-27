@@ -482,6 +482,18 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					}
 				
 				connection.commit();
+				
+				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
+					try {
+						for (DBAttachment attachment: protocol.getAttachments()) {
+							String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",
+									protocol.getID(),attachment.getID());
+							if (!attachment.isImported())
+								postImportJob(attachmentURL,getToken());
+						}
+					} finally {
+					}
+				}				
 				TaskResult result = new TaskResult(uri,false);
 
 			

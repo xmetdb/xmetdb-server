@@ -13,9 +13,9 @@ import net.idea.modbcum.q.update.AbstractUpdate;
 
 public class AddAttachment extends AbstractUpdate<DBProtocol,DBAttachment>{
 	public static final String[] create_sql = {
-		"insert into attachments " +
-		//"(idattachment,idprotocol,version,name,description,type,updated,format,original_name,imported)\n"+
-		"SELECT null,idprotocol,version,?,?,?,now(),?,?,? from protocol where qmrf_number=?"
+		"INSERT INTO attachments " +
+		"SELECT null,idprotocol,version,?,?,?,now(),?,?,? from protocol where qmrf_number=?\n"+
+		"ON DUPLICATE KEY UPDATE name=values(name),description=values(description),format=values(format),original_name=values(original_name)"
 	};
 
 	public AddAttachment(DBProtocol protocol,DBAttachment attachment) {

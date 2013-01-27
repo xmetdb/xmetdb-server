@@ -172,3 +172,10 @@ ALTER TABLE `protocol` MODIFY COLUMN `title` VARCHAR(32) CHARACTER SET utf8 COLL
  CHANGE COLUMN `template` `reference` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Reference',
  ADD INDEX `Index_11`(`reference`);
 insert into version (idmajor,idminor,comment) values (2,10,"References");
+
+-- ----------------------------------------------------------
+-- 2.10 to 2.11 
+-- ----------------------------------------------------------
+ALTER TABLE `attachments` DROP INDEX `Index_4`,
+ ADD UNIQUE INDEX `Index_4` USING BTREE(`idprotocol`, `version`, `type`);
+insert into version (idmajor,idminor,comment) values (2,11,"One attachment of a type");
