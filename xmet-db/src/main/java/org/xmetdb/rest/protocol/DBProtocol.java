@@ -88,10 +88,9 @@ public class DBProtocol extends Protocol {
 	
 
 	public String getVisibleIdentifier() {
-		return ((publishedStatus!=null)&&PublishedStatus.published==publishedStatus)?
-					(getIdentifier()==null?"QMRF NOT ASSIGNED!":getIdentifier()):
-					getPublishedStatus().name().toUpperCase();
+		return getIdentifier();
 	}
+	
 	public int getID() {
 		return ID;
 	}

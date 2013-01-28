@@ -49,18 +49,25 @@
 		</div>
 		<textarea name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="eight columns omega remove-bottom" readonly></textarea>
 	</div>		
-	<div class='row remove-bottom'>
+	<div class='row remove-bottom' >
 		<hr class='half-bottom'/>
-		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Edit</a>
-		&nbsp;|&nbsp;
+		<div class='eight columns alpha' style='margin-top:1em'>
 		Export observation:&nbsp;
-		<a class='button' id="xmet_export_json" href="${xmet_request}"  title='Export the observation as JSON'>as JSON</a>
-		&nbsp;|&nbsp;
-		Export substrate:&nbsp;
-		<a class='button' id="xmet_export_substrate" href="#"  title='Export substrate structure as SDF'>as SDF</a>
-		&nbsp;|&nbsp;
-		Export product(s):&nbsp;
-		<a class='button' id="xmet_export_product" href="#" title='Export product structure(s) as SDF'>as SDF</a>
-		&nbsp;|&nbsp;
-		<a class='button' id="xmet_copy_observation" href="#"  title='Create new observation with the same content as this one.Launches the new observation editor.'  onclick="alert('TODO')">Copy and create new observation</a>
+		<a id="xmet_export_json" href="${xmet_request}"  title='Export the observation as JSON'><img src='${xmet_root}/images/json.png'></a>
+		&nbsp;|&nbsp;Export substrate:&nbsp;
+		<a id="xmet_export_substrate" href="#"  title='Export substrate structure as SDF'><img src='${xmet_root}/images/sdf.jpg'></a>
+		&nbsp;|&nbsp;Export product(s):&nbsp;
+		<a id="xmet_export_product" href="#" title='Export product structure(s) as SDF'><img src='${xmet_root}/images/sdf.jpg'></a>
+		</div>
+		<div class='three column omega' style='margin-top:0.5em'>
+		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a>
+		</div>
+		<div class='five columns omega' style='margin-top:0.5em'>
+		<form method='POST' action='${xmet_root}/protocol' enctype='application/x-www-form-urlencoded' autocomplete name='xmet_copy'>
+		<input type='hidden' name='source_uri' value='${xmet_request}'>
+		<input type='submit' class='button' title='Create new observation with the same content as this one.'  value='Copy and create new observation'>
+		</form>
+		</div>
+
+
 	</div>	

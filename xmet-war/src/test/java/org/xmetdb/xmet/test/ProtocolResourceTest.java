@@ -6,17 +6,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
 import net.idea.restnet.c.ChemicalMediaType;
+import net.idea.restnet.groups.DBGroup;
 import net.idea.restnet.i.tools.DownloadTool;
 import net.toxbank.client.io.rdf.ProtocolIO;
 import net.toxbank.client.resource.Protocol;
 import net.toxbank.client.resource.Protocol.STATUS;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.message.BasicNameValuePair;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.junit.Test;
@@ -283,6 +288,39 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		c.close();
 	}
 
+	@Test
+	public void testCopyEntryFromWebForm() throws Exception {
+		String url = String.format("http://localhost:%d%s", port, Resources.protocol);
+		String original = String.format("http://localhost:%d%s/%s", port, Resources.protocol,idxmet1);
+		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+		formparams.add(new BasicNameValuePair("source_uri",  original));
+		
+        IDatabaseConnection c = getConnection();	
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
+		Assert.assertEquals(3,table.getRowCount());
+		c.close();
+
+		RemoteTask task = testAsyncPoll(new Reference(url),
+				MediaType.TEXT_URI_LIST,new UrlEncodedFormEntity(formparams, "UTF-8"),
+				Method.POST);
+		//wait to complete
+	
+		while (!task.isDone()) {
+			task.poll();
+			Thread.sleep(100);
+			Thread.yield();
+		}
+		System.out.println(task.getResult());
+		
+		Assert.assertTrue(task.getResult().toString().startsWith(String.format("http://localhost:%d/protocol/",port)));
+
+        c = getConnection();	
+		table = 	c.createQueryTable("EXPECTED","SELECT * FROM protocol");
+		Assert.assertEquals(4,table.getRowCount());
+		c.close();
+
+	}
+	
 	public String createEntryFromMultipartWeb(Reference uri) throws Exception {
 		return createEntryFromMultipartWeb(uri, Method.POST);
 	}

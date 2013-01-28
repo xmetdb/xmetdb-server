@@ -335,7 +335,7 @@ begin
     
    	-- copy keywords
     insert into keywords (idprotocol,version,keywords)
-    select new_id,1,keywords from keywords join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;    
+    select new_id,1,concat(keywords,'\nCopy of ',protocol_qmrf_number) from keywords join protocol using(idprotocol,version) where  qmrf_number=protocol_qmrf_number;    
 
 	-- copy attachments
 	insert into attachments (idprotocol,version,name,description,type,updated,format,original_name,imported)

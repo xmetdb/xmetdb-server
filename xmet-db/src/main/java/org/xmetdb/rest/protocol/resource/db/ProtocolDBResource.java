@@ -45,6 +45,7 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.db.exceptions.MethodNotAllowedException;
+import org.xmetdb.rest.protocol.CallableProtocolCopy;
 import org.xmetdb.rest.protocol.CallableProtocolUpload;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
@@ -302,7 +303,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	@Override
 	protected boolean isAllowedMediaType(MediaType mediaType)
 			throws ResourceException {
-		return MediaType.MULTIPART_FORM_DATA.equals(mediaType);
+		return MediaType.MULTIPART_FORM_DATA.equals(mediaType) || MediaType.APPLICATION_WWW_FORM.equals(mediaType);
 	}
 
 	@Override
@@ -310,9 +311,21 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			Form form, DBProtocol item) throws ResourceException {
 		if (Method.DELETE.equals(method))
 			return createCallable(method,(List<FileItem>) null, item);
-		else throw new MethodNotAllowedException(getRequest().getResourceRef(),method);
+		if (Method.POST.equals(method)) {
+			Connection conn = null;
+			try {
+				DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
+				conn = dbc.getConnection();
+				return new CallableProtocolCopy(method,form,getRootRef().toString(),conn,getToken());
+			} catch (Exception x) {
+				try { conn.close(); } catch (Exception xx) {}
+				throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
+			}			
+		} else throw new MethodNotAllowedException(getRequest().getResourceRef(),method);
 
 	}
+	
+
 	@Override
 	protected CallableProtectedTask<String> createCallable(Method method,
 			List<FileItem> input, DBProtocol item) throws ResourceException {
@@ -392,7 +405,8 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	
 	
 	protected TaskCreator getTaskCreator(Form form, final Method method, boolean async, final Reference reference) throws Exception {
-		if (Method.DELETE.equals(method)) {
+		if (Method.DELETE.equals(method) || Method.POST.equals(method)) {
+			//POST with web form copies the observation into a new one
 			TaskCreator taskCreator = super.getTaskCreator(form, method, async, reference);
 			taskCreator.getProcessors().setAbortOnError(true);
 			return taskCreator;
