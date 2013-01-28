@@ -118,7 +118,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					item.getAtomUncertainty().name(),
 					item.getProductAmount().name(),
 					reference==null?"":reference,
-					comments==null?"":comments.size()==0?"":comments.get(0),
+					comments==null?"":comments.size()==0?"":jsonEscape(comments.get(0)),
 					dateFormat.format(new Date(item.getTimeModified())),
 					item.getOwner().getResourceURL(),
 					item.getOwner().getUserName()
@@ -151,4 +151,16 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 			output.write("\n]\n}");
 		} catch (Exception x) {}
 	}
+	
+	public static String jsonEscape(String value) {
+        return value.replace("\\", "\\\\")
+        .replace("/", "\\/")
+        .replace("\b", "\\b")
+        .replace("\f", "\\f")
+        .replace("\n", "\\n")
+        .replace("\r", "\\r")
+        .replace("\t", "\\t")
+        .replace("\"", "\\\"");
+	}
+
 }
