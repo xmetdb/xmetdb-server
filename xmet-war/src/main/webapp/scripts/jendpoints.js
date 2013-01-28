@@ -1,7 +1,7 @@
-function defineEndpointsTable(url) {
+function defineEndpointsTable(url,root) {
 
 	var facet = getEndpointsFacet(); 
-	var oTable = $('#endpoints').dataTable( {
+	var eTable = $('#endpoints').dataTable( {
 		"bProcessing": true,
 		"bServerSide": false,
 		"bStateSave": false,
@@ -12,6 +12,7 @@ function defineEndpointsTable(url) {
 					"bSortable" : false,
 					"bSearchable" : false,
 					"mDataProp" : null,
+					"sClass": "readonly",
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
 						 var count = facet[o.aData["name"]];	
@@ -34,6 +35,7 @@ function defineEndpointsTable(url) {
 				{ "mDataProp": "name" , "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 2 ],
 				  "bSearchable" : true,
+				  "sClass": "readonly",
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
@@ -44,6 +46,7 @@ function defineEndpointsTable(url) {
 				{ "mDataProp": "uri" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 3 ],
 					  "bSearchable" : true,
+					  "sClass": "readonly",
 					  "sWidth" : "10%",
 					  "bSortable" : true,
 					  "bUseRendered" : false,
@@ -57,6 +60,7 @@ function defineEndpointsTable(url) {
 				{ "mDataProp": "alleles" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 4 ],
 					  "bSearchable" : true,
+					  "sClass": "readonly",
 					  "sWidth" : "6em",
 					  "bSortable" : true,
 					  "bUseRendered" : false,
@@ -106,8 +110,24 @@ function defineEndpointsTable(url) {
                 '<option value="-1">all</option>' +
                 '</select> enzymes.'	            
 	    }
-	} );
-	return oTable;
+	} )
+	.makeEditable({
+		"aoColumns": [
+                      null,
+                      null,  //{} to enable edit
+                      null,
+                      null
+        ],		
+        sAddURL: root+"/catalog",
+        sAddNewRowFormId: "formAddNewEnzyme",
+        sAddNewRowButtonId: "btnAddNewEnzyme",
+        sDeleteURL: root + "/catalog?method=delete",
+        oDeleteRowButtonOptions: {
+            label: "Remove",
+            icons: { primary: 'ui-icon-trash' }
+        }
+	});
+	return eTable;
 }
 
 /* XMetDB list per structure */
