@@ -70,10 +70,11 @@ jQuery(document).ready(function()
 		<#include "/s_footer.ftl">
 		
 	<form id="formAddNewEnzyme" action="#" title="Add new enzyme">
-	    <label for="code">Enzyme code</label><input type="text" name="code" size="16" id="code" class="required" rel="0" />
-	    <label for="name">Enzyme name</label><input type="text" size="255" name="name" id="name" class="required" rel="1" />
-	    <label for="uniprot">UNIPROT ID</label><input type="text" name="uniprot" id="uniprot"/>
-	    <label for="alleles">Alleles</label><textarea name="alleles" id="alleles" rel="2" ></textarea>
+		<input type="hidden" value="" rel="0">
+	    <label for="code">Enzyme code</label><input type="text" name="code" size="16" id="code" class="required" rel="1" />
+	    <label for="name">Enzyme name</label><input type="text" size="255" name="name" id="name" class="required" rel="2" />
+	    <label for="uri">UNIPROT ID</label><input type="text" name="uri" id="uniprot" rel="3"/>
+	    <label for="alleles">Alleles</label><textarea name="alleles" id="alleles" rel="4" ></textarea>
 	</form>				
 </div><!-- container -->
 

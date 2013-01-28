@@ -116,6 +116,7 @@ function defineEndpointsTable(url,root) {
                       null,
                       null,  //{} to enable edit
                       null,
+                      null,
                       null
         ],		
         sAddURL: root+"/catalog",
