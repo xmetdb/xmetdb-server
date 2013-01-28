@@ -11,7 +11,7 @@ function defineEndpointsTable(url,root) {
 					"sClass" : "center",
 					"bSortable" : false,
 					"bSearchable" : false,
-					"mDataProp" : null,
+					"mDataProp" : "parentCode",
 					"sClass": "readonly",
 					sWidth : "32px",
 					"fnRender" : function(o,val) {

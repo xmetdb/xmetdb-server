@@ -9,6 +9,13 @@ public class Enzyme extends Dictionary {
 	 * 
 	 */
 	private static final long serialVersionUID = -5987449761837302780L;
+	enum EnzymeFields {
+		code,
+		name,
+		uri,
+		alleles;
+
+	}
 	protected String code;
 	protected String parentCode;
 	protected String[] alleles = null;

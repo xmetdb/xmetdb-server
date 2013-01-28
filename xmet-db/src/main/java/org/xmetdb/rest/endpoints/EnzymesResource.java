@@ -1,10 +1,15 @@
 package  org.xmetdb.rest.endpoints;
 
+import java.net.URI;
+import java.sql.Connection;
+
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.processors.IProcessor;
+import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.modbcum.q.conditions.StringCondition;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.html.HTMLBeauty;
+import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 
@@ -14,11 +19,15 @@ import org.restlet.Response;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
+import org.restlet.data.Status;
 import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
+import org.xmetdb.rest.endpoints.Enzyme.EnzymeFields;
+import org.xmetdb.rest.endpoints.db.CreateEndpoint;
 import org.xmetdb.rest.endpoints.db.DictionaryObjectQuery;
 import org.xmetdb.rest.endpoints.db.DictionaryQuery;
 import org.xmetdb.rest.endpoints.db.QueryOntology;
@@ -164,8 +173,38 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
-		// TODO Auto-generated method stub
-		return super.post(entity, variant);
+		if (!MediaType.APPLICATION_WWW_FORM.equals(entity.getMediaType()))
+			throw new ResourceException(Status.CLIENT_ERROR_UNSUPPORTED_MEDIA_TYPE);
+		Connection conn = null;
+		UpdateExecutor x = null;
+		try {
+			Form form = new Form(entity);
+			Enzyme enzyme = new Enzyme("","");
+			for (EnzymeFields field : EnzymeFields.values()) {
+				String value = form.getFirstValue(field.name());
+				if ((value==null)||("".equals(value))) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+				switch (field) {
+				case code: {enzyme.setCode(value);break;}
+				case name: {enzyme.setName(value);break;}
+				case uri: {enzyme.setUri(new URI(value));break;}
+				case alleles: {
+					enzyme.setAlleles(value.split("\n")); break;
+				}
+				}
+			}
+			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
+			conn = dbc.getConnection();
+			CreateEndpoint q = new CreateEndpoint(enzyme);
+			x = new UpdateExecutor();
+			x.setConnection(conn);
+			x.process(q);
+			return new StringRepresentation(enzyme.getCode());
+		} catch (Exception e) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
+		} finally {
+			try { if (conn != null) conn.close(); } catch (Exception xx) {}
+			try { if (x !=null) x.close(); } catch (Exception xx) {}
+		}
 	}
 	
 	/*
