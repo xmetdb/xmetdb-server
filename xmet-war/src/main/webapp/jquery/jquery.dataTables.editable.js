@@ -1,6 +1,6 @@
 /*
 * File:        jquery.dataTables.editable.js
-* Version:     2.3.3.
+* Version:     2.3.1.
 * Author:      Jovan Popovic 
 * 
 * Copyright 2010-2012 Jovan Popovic, all rights reserved.
@@ -218,7 +218,7 @@ returns true if plugin should continue with sending AJAX request, false will abo
                                 sNewCellDisplayValue = sNewCellValue;
                         }
 
-                        if (!properties.fnOnEditing(input, settings, original.revert, fnGetCellID(original)))
+                        if (!properties.fnOnEditing(input, settings, original, fnGetCellID(original)))
                             return false;
                         var x = settings;
                         
@@ -464,14 +464,13 @@ returns true if plugin should continue with sending AJAX request, false will abo
 
                 var oSettings = oTable.fnSettings();
                 if (!oSettings.oFeatures.bServerSide) {
-                    jQuery.data(oAddNewRowForm, 'DT_RowId', data);
                     var values = fnTakeRowDataFromFormElements(oAddNewRowForm);
                    
 
                     var rtn;
                     //Add values from the form into the table
                     if (oSettings.aoColumns != null && isNaN(parseInt(oSettings.aoColumns[0].mDataProp))) {
-                        rtn = oTable.fnAddData(rowData);
+                        rtn = oTable.fnAddData(values);
                     }
                     else {
                         rtn = oTable.fnAddData(values);
@@ -557,40 +556,11 @@ returns true if plugin should continue with sending AJAX request, false will abo
 
         var nSelectedRow, nSelectedCell;
         var oKeyTablePosition;
-
-
-        function _fnOnRowDeleteInline(e) {
-
-            var sURL = $(this).attr("href");
-            if (sURL == null || sURL == "")
-                sURL = properties.sDeleteURL;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            iDisplayStart = fnGetDisplayStart();
-
-            nSelectedCell = ($(this).parents('td'))[0];
-            jSelectedRow = ($(this).parents('tr'));
-            nSelectedRow = jSelectedRow[0];
-
-            jSelectedRow.addClass(properties.sSelectedRowClass);
-
-            var id = fnGetCellID(nSelectedCell);
-            if (properties.fnOnDeleting(jSelectedRow, id, fnDeleteRow)) {
-                fnDeleteRow(id, sURL);
-            }
-        }
-
-
         function _fnOnRowDelete(event) {
             ///<summary>
             ///Event handler for the delete button
             ///</summary>
             ///<param name="event" type="Event">DOM event</param>
-
-            event.preventDefault();
-            event.stopPropagation();
 
             iDisplayStart = fnGetDisplayStart();
             
@@ -871,8 +841,7 @@ returns true if plugin should continue with sending AJAX request, false will abo
                         } else
                             sCellValue = this.value;
                     }
-                    //Deprecated
-                    sCellValue = sCellValue.replace("DATAROWID", iDT_RowId);
+
                     sCellValue = sCellValue.replace(properties.sIDToken, iDT_RowId);
                     if (oSettings.aoColumns != null
                                 && oSettings.aoColumns[rel] != null
@@ -1027,7 +996,7 @@ returns true if plugin should continue with sending AJAX request, false will abo
             bDisableEditing: false,
             oDeleteParameters: {},
             oUpdateParameters: {},
-            sIDToken: "DT_RowId",
+            sIDToken: "DATAROWID|DT_RowId",
             aoTableActions: null,
             fnOnBeforeAction: _fnOnBeforeAction,
             bUseFormsPlugin: false,
@@ -1257,7 +1226,29 @@ returns true if plugin should continue with sending AJAX request, false will abo
             }
 
             //Add handler to the inline delete buttons
-            $(".table-action-deletelink", oTable).live("click", _fnOnRowDeleteInline);
+            $(".table-action-deletelink", oTable).live("click", function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+                var sURL = $(this).attr("href");
+
+                if (sURL == null || sURL == "")
+                    sURL = properties.sDeleteURL;
+
+                iDisplayStart = fnGetDisplayStart();
+                var oTD = ($(this).parents('td'))[0];
+                var oTR = ($(this).parents('tr'))[0];
+
+                $(oTR).addClass(properties.sSelectedRowClass);
+
+                var id = fnGetCellID(oTD);
+                if (properties.fnOnDeleting(oTD, id, fnDeleteRow)) {
+                    fnDeleteRow(id, sURL);
+                }
+
+
+            }
+            );
 
             if (!properties.bUseKeyTable) {
             //Set selected class on row that is clicked
@@ -1379,4 +1370,3 @@ returns true if plugin should continue with sending AJAX request, false will abo
         });
     };
 })(jQuery);
-
