@@ -51,21 +51,20 @@
 	</div>		
 	<div class='row remove-bottom' >
 		<hr class='half-bottom'/>
-		<div class='eight columns alpha' style='margin-top:1em'>
+		<div class='eleven columns alpha'>
 		Export observation:&nbsp;
 		<a id="xmet_export_json" href="${xmet_request}"  title='Export the observation as JSON'><img src='${xmet_root}/images/json.png'></a>
-		&nbsp;|&nbsp;Export substrate:&nbsp;
+		<br/>Export substrate:&nbsp;&nbsp;&nbsp;&nbsp;
 		<a id="xmet_export_substrate" href="#"  title='Export substrate structure as SDF'><img src='${xmet_root}/images/sdf.jpg'></a>
-		&nbsp;|&nbsp;Export product(s):&nbsp;
+		<br/>Export product(s):&nbsp;&nbsp;&nbsp;
 		<a id="xmet_export_product" href="#" title='Export product structure(s) as SDF'><img src='${xmet_root}/images/sdf.jpg'></a>
 		</div>
-		<div class='three column omega' style='margin-top:0.5em'>
-		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a>
-		</div>
 		<div class='five columns omega' style='margin-top:0.5em'>
+		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a>
+		<br/>
 		<form method='POST' action='${xmet_root}/protocol' enctype='application/x-www-form-urlencoded' autocomplete name='xmet_copy'>
 		<input type='hidden' name='source_uri' value='${xmet_request}'>
-		<input type='submit' class='button' title='Create new observation with the same content as this one.'  value='Copy and create new observation'>
+		<input type='submit' class='button remove-bottom' title='Create new observation with the same content as this one.'  value='Copy and create new observation'>
 		</form>
 		</div>
 
