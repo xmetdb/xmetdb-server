@@ -5,10 +5,8 @@ import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.modbcum.q.conditions.StringCondition;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.html.HTMLBeauty;
-import net.idea.restnet.c.reporters.DisplayMode;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
-import net.idea.restnet.db.convertors.QueryHTMLReporter;
 
 import org.restlet.Context;
 import org.restlet.Request;
@@ -163,6 +161,12 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 
 	}
 	
+	@Override
+	protected Representation post(Representation entity, Variant variant)
+			throws ResourceException {
+		// TODO Auto-generated method stub
+		return super.post(entity, variant);
+	}
 	
 	/*
 
