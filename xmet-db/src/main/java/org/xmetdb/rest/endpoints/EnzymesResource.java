@@ -171,6 +171,12 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 	}
 	
 	@Override
+	protected Representation put(Representation entity, Variant variant)
+			throws ResourceException {
+		System.out.println(new Form(entity));
+		return super.put(entity, variant);
+	}
+	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
 		if (!MediaType.APPLICATION_WWW_FORM.equals(entity.getMediaType()))

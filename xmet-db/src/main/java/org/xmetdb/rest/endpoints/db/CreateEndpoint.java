@@ -34,7 +34,7 @@ public class CreateEndpoint extends AbstractObjectUpdate<Enzyme>{
 			params1.add(new QueryParam<String>(String.class,  getObject().getUri().toString()));
 			StringBuilder b = new StringBuilder();
 			String d = "";
-			for (String a : getObject().getAlleles()) {b.append(d);b.append(a); d = ",";}
+			for (String a : getObject().getAlleles()) {b.append(d);b.append(a.trim()); d = ",";}
 			params1.add(new QueryParam<String>(String.class,  b.toString()));
 			return params1;
 		}

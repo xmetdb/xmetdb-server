@@ -74,7 +74,7 @@ jQuery(document).ready(function()
 	    <label for="code">Enzyme code</label><input type="text" name="code" size="16" id="code" class="required" rel="1" />
 	    <label for="name">Enzyme name</label><input type="text" size="255" name="name" id="name" class="required" rel="2" />
 	    <label for="uri">UNIPROT ID</label><input type="text" name="uri" id="uri" rel="3"/>
-	    <label for="alleles">Alleles</label><textarea name="alleles" id="alleles" rel="4" ></textarea>
+	    <label for="alleles">Alleles</label><textarea title='Please enter one allele per line' name="alleles" id="alleles" rel="4" ></textarea>
 	</form>				
 </div><!-- container -->
 

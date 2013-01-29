@@ -35,7 +35,6 @@ function defineEndpointsTable(url,root) {
 				{ "mDataProp": "name" , "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 2 ],
 				  "bSearchable" : true,
-				  "sClass": "readonly",
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
@@ -46,7 +45,6 @@ function defineEndpointsTable(url,root) {
 				{ "mDataProp": "uri" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 3 ],
 					  "bSearchable" : true,
-					  "sClass": "readonly",
 					  "sWidth" : "10%",
 					  "bSortable" : true,
 					  "bUseRendered" : false,
@@ -54,13 +52,13 @@ function defineEndpointsTable(url,root) {
 						  var n = val.lastIndexOf("/");
 						  var id = val;
 						  if (n>=0) id = val.substring(n+1);
+						  else {id = val; val = "http://www.uniprot.org/uniprot/"+id; }
 						  return "<a href='"+ val + "' target='uniprot'>" + id + "</a>";
 					  }
 				},
 				{ "mDataProp": "alleles" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 4 ],
 					  "bSearchable" : true,
-					  "sClass": "readonly",
 					  "sWidth" : "6em",
 					  "bSortable" : true,
 					  "bUseRendered" : false,
@@ -113,13 +111,26 @@ function defineEndpointsTable(url,root) {
 	} )
 	.makeEditable({
 		"aoColumns": [
-                      null,
-                      null,  //{} to enable edit
-                      null,
-                      null,
-                      null
+                null,
+                null,  //{} to enable edit
+                null,
+                null,
+                null
+                /*
+                {
+                      type:'textarea'	,
+                      indicator: 'Saving Alleles...',
+                      tooltip: 'Click to edit alleles',
+                      loadtext: 'loading...',
+                      onblur: 'cancel',
+                      submit: 'OK',
+                      loadurl: root + "/catalog?max=1", //?
+                      loadtype: 'GET'                    	  
+                 }
+                 */
         ],		
         sAddURL: root+"/catalog",
+        sUpdateURL: root+"/catalog?method=PUT",
         sAddNewRowFormId: "formAddNewEnzyme",
         sAddNewRowButtonId: "btnAddNewEnzyme",
         sDeleteURL: root + "/catalog?method=delete",
