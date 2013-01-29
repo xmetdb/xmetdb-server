@@ -97,14 +97,14 @@ $(document).ready(function() {
     </#switch>
 
 	<div class='row' style="margin:5px;padding:5px;"> 	
-	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em></label></div>
+	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em></label><a href='#' class='chelp substrate'></a></div>
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
 	    </div>
-		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em></label></div>
+		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em></label><a href='#' class='chelp product'></a></div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
@@ -115,27 +115,27 @@ $(document).ready(function() {
 	<div class='row  remove-bottom' style="margin:5px;padding:5px;"> 	
 	    <div class='eight columns omega '>
 	    	<label for='xmet_substrate_upload'><em></em></label>
-			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor and search options</a>
+			<a href="#" id='buttonSubstrateDraw' title='Launches structure diagram editor'>Show structure diagram editor and search options</a><a href='#' class='chelp search'></a>
 			<br/>
 			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_substrate_upload' title='Substrate upload' size='20' class='remove-bottom' onClick='clearStructure("substrate")'>
 	    </div>
 	    <div class='eight columns omega'>
 	    	<label for='xmet_product_upload'><em></em></label>
-			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor and search options</a>
+			<a href="#" id='buttonProductDraw'  title='Launches structure diagram editor'>Show structure diagram editor and search options</a><a href='#' class='chelp search'></a>
 			<br/>
 			Upload <input type='file' maxlength='1' accept='sdf|mol|csv|xls' name='xmet_product_upload' title='Product upload' size='20' class='remove-bottom' onClick='clearStructure("product")'>
 		</div>
 	</div>    	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>
 	<div class='row' style="margin:5px;padding:5px;"> 	
- 	   <div class='three columns alpha'><label>Atom uncertainty:</label></div>
+ 	   <div class='three columns alpha'><label>Atom uncertainty:<a href='#' class='chelp atomuncertainty'></a></label></div>
 	   <div class='six columns omega'>
 			<select id="xmet_atom_uncertainty" name="xmet_atom_uncertainty" class="remove-bottom" >
 			<option value="Certain" selected="selected">Certain</option>
 			<option value="Uncertain">Uncertain</option>
 			</select>
 		</div>
-		<div class='three columns alpha'><label>Product amount:</label></div>
+		<div class='three columns alpha'><label>Product amount:<a href='#' class='chelp productamount'></a></label></div>
 		 <div class='three columns omega'>
 			<select id="xmet_product_amount" name="xmet_product_amount" class="remove-bottom">
 			<option value="Major" selected="selected">Major</option>
@@ -145,7 +145,7 @@ $(document).ready(function() {
 		 </div>
 	</div> 	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
-		<div class='three columns alpha'><label>Experiment:</label></div>
+		<div class='three columns alpha'><label>Experiment:<a href='#' class='chelp experiment'></a></label></div>
 		<div class='six columns omega'>
 			<select id="xmet_experiment" name="xmet_experiment" class="remove-bottom">
 			<option value="MS" selected="selected">MS (Microsomes)</option>
@@ -157,18 +157,18 @@ $(document).ready(function() {
 	</div>
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
 
-		<div class='three columns alpha'><label>Enzyme</label></div>
+		<div class='three columns alpha'><label>Enzyme:<a href='#' class='chelp enzyme'></a></label></div>
 		<div class='nine columns omega'>
 			<select id="xmet_enzyme" name="xmet_enzyme" class="remove-bottom" style="width:400px;"></select>
 		</div>
-		<div class='two columns omega'><label>Allele</label></div>
+		<div class='two columns omega'><label>Allele:<a href='#' class='chelp allele'></a></label></div>
 		<div class='two columns omega'>
 			<select id="xmet_allele" name="xmet_allele" class="remove-bottom" ></select>
 		</div>
 	</div>
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'>
-			<label>Reference:</label>
+			<label>Reference:<a href='#' class='chelp reference'></a></label>
 			<input type="hidden" name="published_status"  value="on">
 		</div>
 		<input type="text" name="xmet_reference" id="xmet_reference" title="Enter reference DOI or free text" value="" class="eight columns omega remove-bottom">

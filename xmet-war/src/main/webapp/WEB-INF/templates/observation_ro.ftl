@@ -1,5 +1,5 @@
 	<div class="row remove-bottom ">	
-     	<div class="two columns alpha"><label for="xmet_substrate">Substrate:</label></div>
+     	<div class="two columns alpha"><label for="xmet_substrate">Substrate:</label><a href='#' class='chelp substrate'></a></div>
       		<div class="six columns omega">
       				<ul class='structresults' id="xmet_substrate"></ul>
       		</div>
@@ -60,11 +60,12 @@
 		<a id="xmet_export_product" href="#" title='Export product structure(s) as SDF'><img src='${xmet_root}/images/sdf.jpg'></a>
 		</div>
 		<div class='five columns omega' style='margin-top:0.5em'>
-		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a>
+		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a><a href='#' class='chelp modifyobs'></a>
 		<br/>
 		<form method='POST' action='${xmet_root}/protocol' enctype='application/x-www-form-urlencoded' autocomplete name='xmet_copy'>
 		<input type='hidden' name='source_uri' value='${xmet_request}'>
 		<input type='submit' class='button remove-bottom' title='Create new observation with the same content as this one.'  value='Copy and create new observation'>
+		<a href='#' class='chelp copyobs'></a>
 		</form>
 		</div>
 

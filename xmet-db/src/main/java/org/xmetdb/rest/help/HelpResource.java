@@ -74,7 +74,6 @@ public class HelpResource extends CatalogFTLResource<String>  {
 	protected void doInit() throws ResourceException {
 		super.doInit();
 		getVariants().clear();
-		getVariants().add(new Variant(MediaType.APPLICATION_JSON));
 		getVariants().add(new Variant(MediaType.TEXT_HTML));
 	}
 	@Override

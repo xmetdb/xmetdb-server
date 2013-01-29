@@ -720,8 +720,32 @@ function escape (key, val) {
         .replace(/[\"]/g, '\\"')
         .replace(/\\'/g, "\\'"); 
 }
-
+/**
+ * Parses HTML help file. Context help entries should be arranged as for http://jqueryui.com/tabs/
+ * @param root
+ * @param topic
+ */
 function loadHelp(root,topic) {
+	var helpURI =  root + "/help/" + (topic===undefined?"":topic) + "?media=text/html";
+	$.get(helpURI,function(data) {
+		$('#pagehelp').append(data);	
+		
+		$('#keys ul li').map(function(el, value) {
+			var key = $(value.innerHTML).attr('href');
+		    var content = $(key).text();
+		    var title = $(value).text();
+		    key = key.replace('#','');
+		    $('a.chelp.'+key)
+			 .attr('title','Help: '+key)
+			 .html('<span id="info-link" class="ui-icon ui-icon-info" style="display: inline-block;"></span>')
+			 .click(function() {
+				 $('#keytitle').text(title);
+				 $('#keycontent').html(content);
+		     });		    
+		});
+	});
+}
+function loadHelpJSON(root,topic) {
 	var helpURI =  root + "/help/" + (topic===undefined?"":topic) + "?media=application/json";
 	$.getJSON(helpURI,function(data) {
 		_xmet.help = data;
@@ -737,18 +761,10 @@ function loadHelp(root,topic) {
 				 .html('<span id="info-link" class="ui-icon ui-icon-info" style="display: inline-block;"></span>')
 				 .click(function() {
 					 showContextHelp(key,value);
+
 			     });
 			});
 	
 	});
 }
 
-function showContextHelp(key,value) {
-	try {
-		$('#keytitle').text(value["title"]);
-		$('#keycontent').html(value["content"]);
-	} catch (err) {
-		$('#keytitle').text("Error loading help for id="+key);
-		$('#keycontent').html(err);
-	}
-}

@@ -42,15 +42,15 @@ jQuery(document).ready(function()
 		<div class='row' style="margin:5px;padding:5px;"> 	
 		
 			<label class='three columns alpha' for="username">User name</label>
-			<span class="seven columns alpha remove-bottom" id='username'></span>
-			<div class="six columns omega remove-bottom">
+			<span class="six columns alpha remove-bottom" id='username'></span>
+			<div class="seven columns omega remove-bottom">
 			<#if myprofile>
-					<a href="${xmet_root}/myaccount/reset">Change password</a>&nbsp;
-					<a id="protocoluri" href="#">My Observations</a>&nbsp;
-					<a id="alerturi" href="#">My Alerts</a>
+					<a href="${xmet_root}/myaccount/reset">Change password</a><a href='#' class='chelp pwd'></a>&nbsp;
+					<a id="protocoluri" href="#">My Observations</a><a href='#' class='chelp observations'></a>&nbsp;
+					<a id="alerturi" href="#">My Alerts</a><a href='#' class='chelp alerts'></a>
 			<#else>	
-					<a id="protocoluri" href="#">Observations</a>&nbsp;
-					<a id="alerturi" href="#">Alerts</a>
+					<a id="protocoluri" href="#">Observations</a><a href='#' class='chelp observations'></a>&nbsp;
+					<a id="alerturi" href="#">Alerts</a><a href='#' class='chelp alerts'></a>
 			</#if>
 			</div>
 		</div>
@@ -91,7 +91,7 @@ jQuery(document).ready(function()
 			<div class="five columns omega">&nbsp;</div>
 		</div>		
 		<div class='row' style="margin:5px;padding:5px;"> 	
-			<label class='three columns alpha' for="reviewer">Available as a curator</label>
+			<label class='three columns alpha' for="reviewer">Available as a curator<a href='#' class='chelp curator'></a></label>
 			<input class="one columns alpha remove-bottom" type="checkbox" ${ro} name='reviewer' id='reviewer' value=''/>
 			<div class="seven columns alpha">&nbsp;
 			</div>
@@ -101,6 +101,7 @@ jQuery(document).ready(function()
 			<label class='three columns alpha' for="update">&nbsp;</label>
 			<#if myprofile>
 				<input class="submit three columns alpha" id='update' name='update' type='submit' value='Update'>
+				<a href='#' class='chelp myprofile'></a>
 			</#if>
 		</div>	
 

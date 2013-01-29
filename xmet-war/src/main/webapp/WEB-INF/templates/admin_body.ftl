@@ -26,32 +26,32 @@ jQuery(document).ready(function()
     			
 		<div class='row' style="margin:5px;padding:5px;"> 	
 		<div class="three columns">Database admin</div>
-		<div class="thirteen columns"><a href='${xmet_root}/admin/database'>Create or inspect the database</a></div>
+		<div class="thirteen columns"><a href='${xmet_root}/admin/database'>Create or inspect the database</a><a href='#' class='chelp database'></a></div>
 		</div>
 		
 		<div class='row' style="margin:5px;padding:5px;">
 		<div class="three columns">Users</div>
-		<div class="thirteen columns"><a href='${xmet_root}/user'>Browse registered users</a></div>
+		<div class="thirteen columns"><a href='${xmet_root}/user'>Browse registered users</a><a href='#' class='chelp user'></a></div>
 		</div>
 		
 		<div class='row' style="margin:5px;padding:5px;">
 		<div class="three columns">Organisations</div>
-		<div class="thirteen columns"><a href='${xmet_root}/organisation'>Browse users affiliations</a></div>
+		<div class="thirteen columns"><a href='${xmet_root}/organisation'>Browse users affiliations</a><a href='#' class='chelp affiliation'></a></div>
 		</div>
 		
 		<div class='row' style="margin:5px;padding:5px;">
 		<div class="three columns">System jobs</div>
-		<div class="thirteen columns"><a href='${xmet_root}/task'>Browse jobs status</a></div>
+		<div class="thirteen columns"><a href='${xmet_root}/task'>Browse jobs status</a><a href='#' class='chelp task'></a></div>
 		</div>		
 		
 		<div class='row' style="margin:5px;padding:5px;">
 		<div class="three columns">Saved searches</div>
 		<div class="thirteen columns">
-		<a href='${xmet_root}/admin/notification'>Active notifications</a><br>
+		<a href='${xmet_root}/admin/notification'>Active notifications</a><a href='#' class='chelp notification'></a><br>
 		Browse users:&nbsp;
-		<a href='${xmet_root}/admin/notification?search=daily'>with defined daily alerts</a>|
-		<a href='${xmet_root}/admin/notification?search=weekly'>with defined weekly alerts</a>|
-		<a href='${xmet_root}/admin/notification?search=monthly'>with defined monthly alerts</a>
+		<a href='${xmet_root}/admin/notification?search=daily'>with defined daily alerts</a><a href='#' class='chelp daily'></a> |
+		<a href='${xmet_root}/admin/notification?search=weekly'>with defined weekly alerts</a><a href='#' class='chelp weekly'></a> |
+		<a href='${xmet_root}/admin/notification?search=monthly'>with defined monthly alerts</a><a href='#' class='chelp monthly'></a> 
 		</div>
 		</div>		
 				

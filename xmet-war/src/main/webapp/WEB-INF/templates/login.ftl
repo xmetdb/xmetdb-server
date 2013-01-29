@@ -39,7 +39,7 @@ jQuery(document).ready(function()
 
 		<div class="row remove-bottom">		
 		<label class='five columns alpha'>&nbsp;</label>		
-		<input class='three columns omega'  type="submit" value="Log in">
+		<input class='three columns omega'  type="submit" value="Log in"><a href='#' class='chelp loginhelp'></a>
 		<input type='hidden' size='40' name='targetURI' value='${xmet_root}/login'>
 		</div>
 		</form>

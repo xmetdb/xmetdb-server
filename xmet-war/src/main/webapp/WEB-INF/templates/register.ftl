@@ -142,24 +142,24 @@ jQuery(document).ready(function()
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
-				<label class='three columns alpha'  for="reviewer">Available as a curator</label>
+				<label class='three columns alpha'  for="reviewer">Available as a curator<a href='#' class='chelp curator'></a></label>
 				<input class='eight columns alpha half-bottom' type="checkbox" name='reviewer' id='reviewer' value='' style='width:3em;'/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd1'>Password <em>*</em></label>
-				<input class='six columns alpha half-bottom'  type='password' size='40' id='pwd1' name='pwd1' value=' '/>
+				<input class='six columns alpha half-bottom'  type='password' size='40' id='pwd1' name='pwd1' value=''/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd2'>Confirm password <em>*</em></label>
-				<input class='six columns alpha half-bottom' type='password' size='40' id='pwd2' name='pwd2' value=' '/>
+				<input class='six columns alpha half-bottom' type='password' size='40' id='pwd2' name='pwd2' value=''/>
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'>&nbsp;</label>
 				<input class='three columns alpha' id='register' name='register' type='submit' class='submit' value='Register'>
-				<div class='ten columns omega'></div>
+				<div class='ten columns omega'><a href='#' class='chelp registration'></a></div>
 			</div>
 			</form>	
 		</div>			
