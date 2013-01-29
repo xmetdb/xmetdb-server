@@ -22,7 +22,7 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 		Enzyme enzyme = new Enzyme("","");
 		enzyme.setCode("CYPXYZ");
 		enzyme.setName("Cytochrome XYZ");
-		enzyme.setUri(new URI("http://a.b.c.d/1234"));
+		enzyme.setUri(new URI("Q1234"));
 		enzyme.setAlleles(new String[] {"A","B","C"});
 		return new CreateEndpoint(enzyme);
 	}
@@ -36,8 +36,12 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals("Cytochrome XYZ",table.getValue(0,"name"));
-		Assert.assertEquals("http://a.b.c.d/1234",table.getValue(0,"uri"));
+		Assert.assertEquals("http://www.uniprot.org/uniprot/Q1234",table.getValue(0,"uri"));
 		Assert.assertEquals("A,B,C",table.getValue(0,"allele"));
+		
+		table = 	c.createQueryTable("EXPECTED",
+				String.format("SELECT code from dictionary d join template t where d.idsubject=t.idtemplate and code='CYPXYZ'"));
+		Assert.assertEquals(1,table.getRowCount());
 		c.close();
 	}
 
