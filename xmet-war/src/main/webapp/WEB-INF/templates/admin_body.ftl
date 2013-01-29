@@ -6,6 +6,7 @@ jQuery(document).ready(function()
 {
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/admin" title="Admin tasks">Admin</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+     loadHelp("${xmet_root}","admin");
 })
 </script>
 

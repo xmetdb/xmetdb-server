@@ -1,5 +1,11 @@
 <div class="two columns" style='padding:0;margin:0;'>
-	<div class='row remove-bottom'><span id="info-link" class="ui-icon ui-icon-info" style="display: inline-block;"></span><a href='#' >Help</a></div>
+	<div class='row remove-bottom' id='helptitle' style='font-weight:bold;'>Help</div>
+	<div class='row half-bottom' style='padding:0;margin:0;' id='helpcontent'>		
+	</div>
+	<div class='row remove-bottom help' style='padding:0;margin:0;font-weight:bold;' id='keytitle'>		
+	</div>
+	<div class='row half-bottom help' style='padding:0;margin:0;' id='keycontent'>		
+	</div>
 	<div class='row remove-bottom' style='padding:0;margin:0;'>		
 	<!-- save search widget only in case of query -->			
 	<#if xmet_query??><#if username??>

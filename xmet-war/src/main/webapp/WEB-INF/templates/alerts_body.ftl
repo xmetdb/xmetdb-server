@@ -16,6 +16,7 @@ $(document).ready(function() {
        {
            jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount/alert" title="XMetDB Home">Alerts</a></li>');
            jQuery("#breadCrumb").jBreadCrumb();
+           loadHelp("${xmet_root}","alert");
        })
 </script>
   

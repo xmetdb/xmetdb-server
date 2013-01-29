@@ -3,17 +3,15 @@ package org.xmetdb.rest;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.restlet.data.CookieSetting;
+import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.resource.CatalogResource;
+
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
-import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.xmet.client.Resources;
-
-import net.idea.restnet.c.TaskApplication;
-import net.idea.restnet.c.resource.CatalogResource;
 
 public abstract class CatalogFTLResource<T> extends CatalogResource<T> {
 	

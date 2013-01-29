@@ -9,6 +9,7 @@ jQuery(document).ready(function()
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="XMetDB search results">${xmet_breadcrumb}</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","observation_list");
 })
 </script>
 </head>

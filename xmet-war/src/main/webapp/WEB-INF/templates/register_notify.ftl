@@ -7,6 +7,7 @@ jQuery(document).ready(function()
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMetDB registration">Register</a></li>');
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register/notify" title="XMetDB registration">Notify</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+     loadHelp("${xmet_root}","register");
 })
 </script>
 </head>

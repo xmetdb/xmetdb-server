@@ -1,6 +1,12 @@
 <#include "/s_html.ftl">
 <head>
   <#include "/s_head.ftl">
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+    loadHelp("${xmet_root}","status");
+})
+</script>  
 </head>
 <body>
 

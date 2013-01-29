@@ -26,6 +26,7 @@ jQuery(document).ready(function()
 		<#break>
     </#switch>
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","structure");
 })
 </script>
 </head>

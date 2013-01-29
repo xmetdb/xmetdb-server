@@ -37,6 +37,7 @@ jQuery(document).ready(function()
 {
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMetDB enzymes">Enzymes</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","enzyme");
 })
 </script>
 </head>

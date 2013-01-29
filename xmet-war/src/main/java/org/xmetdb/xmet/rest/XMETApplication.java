@@ -34,6 +34,7 @@ import org.restlet.service.TunnelService;
 import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.groups.OrganisationRouter;
 import org.xmetdb.rest.groups.ProjectRouter;
+import org.xmetdb.rest.help.HelpResource;
 import org.xmetdb.rest.protocol.ProtocolRouter;
 import org.xmetdb.rest.protocol.facet.ProtocolsByEndpointResource;
 import org.xmetdb.rest.protocol.resource.db.UnpublishedProtocolsResource;
@@ -187,7 +188,9 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		 * Images, styles, favicons, applets
 		 */
 		attachStaticResources(router);
-
+		router.attach(Resources.help, HelpResource.class);
+		router.attach(String.format("%s/{key}", Resources.help), HelpResource.class);
+		
 		Router protectedRouter = new MyRouter(getContext());
 		protectedRouter.attach("/roles", XMETLoginFormResource.class);
 		protectedRouter.attach(

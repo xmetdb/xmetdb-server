@@ -1,3 +1,9 @@
+var _xmet = {
+help : {
+	title:"Help",
+	content:"XMETDB Help"
+}		
+}
 function cmp2image(val) {
 		var cmpURI = val;
 		if (val.indexOf("/conformer")>=0) {
@@ -715,3 +721,34 @@ function escape (key, val) {
         .replace(/\\'/g, "\\'"); 
 }
 
+function loadHelp(root,topic) {
+	var helpURI =  root + "/help/" + (topic===undefined?"":topic) + "?media=application/json";
+	$.getJSON(helpURI,function(data) {
+		_xmet.help = data;
+		$('#helptitle').text(data['title']);
+		$('#helpcontent').html(data['content']);
+		$('#keytitle').text("");
+		$('#keycontent').text("");
+		
+		if (data.keys != undefined)
+			$.each(data.keys,function(key,value) {
+				 $('a.chelp.'+key)
+				 .attr('title','Help: '+key)
+				 .html('<span id="info-link" class="ui-icon ui-icon-info" style="display: inline-block;"></span>')
+				 .click(function() {
+					 showContextHelp(key,value);
+			     });
+			});
+	
+	});
+}
+
+function showContextHelp(key,value) {
+	try {
+		$('#keytitle').text(value["title"]);
+		$('#keycontent').html(value["content"]);
+	} catch (err) {
+		$('#keytitle').text("Error loading help for id="+key);
+		$('#keycontent').html(err);
+	}
+}

@@ -10,6 +10,7 @@
            jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
            jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="This observation"><span id="xmet_id"></span></a></li>');
            jQuery("#breadCrumb").jBreadCrumb();
+           loadHelp("${xmet_root}","observation");
        })
 </script>
        

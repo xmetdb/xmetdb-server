@@ -54,6 +54,7 @@ jQuery(document).ready(function()
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount" title="My XMetDB profile">My profile</a></li>');
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/myaccount/reset" title="Change password">Change password</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+     loadHelp("${xmet_root}","myprofile");
 })
 </script>
 </head>

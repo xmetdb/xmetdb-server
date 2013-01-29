@@ -6,6 +6,7 @@ jQuery(document).ready(function()
 {
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/login" title="XMetDB log in">Log in</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","login");
 })
 </script>  
 </head>

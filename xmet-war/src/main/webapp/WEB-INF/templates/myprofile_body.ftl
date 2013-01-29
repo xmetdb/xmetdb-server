@@ -14,6 +14,7 @@ jQuery(document).ready(function()
 	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" id="breadCrumbUser" title="User">User</a></li>');
 	</#if>   
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","myprofile");
 })
 </script>
 
