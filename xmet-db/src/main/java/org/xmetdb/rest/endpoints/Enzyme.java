@@ -1,6 +1,7 @@
 package org.xmetdb.rest.endpoints;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import ambit2.base.data.Dictionary;
 
@@ -25,7 +26,13 @@ public class Enzyme extends Dictionary {
 	}
 
 	public void setUri(URI uri) {
-		this.uri = uri;
+		if (uri.toString().startsWith("http"))
+			this.uri = uri;
+		else try {
+			this.uri = new URI(String.format("http://www.uniprot.org/uniprot/%s", uri.toString()));
+		} catch (URISyntaxException x) {
+			this.uri = uri;
+		}
 	}
 
 	public String[] getAlleles() {
