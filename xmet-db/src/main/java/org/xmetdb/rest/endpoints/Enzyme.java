@@ -26,7 +26,8 @@ public class Enzyme extends Dictionary {
 	}
 
 	public void setUri(URI uri) {
-		if (uri.toString().startsWith("http"))
+		if (uri==null) this.uri = null;
+		else if (uri.toString().startsWith("http"))
 			this.uri = uri;
 		else try {
 			this.uri = new URI(String.format("http://www.uniprot.org/uniprot/%s", uri.toString()));

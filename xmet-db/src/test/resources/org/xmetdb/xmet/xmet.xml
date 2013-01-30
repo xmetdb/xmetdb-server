@@ -41,22 +41,7 @@
   <template idtemplate="14" name="cytochrome P450, family 2, subfamily W, polypeptide 1" code="CYP2W1" uri="http://www.uniprot.org/uniprot/Q8TAV3" allele="1A,1B,2,3,4,5,6"/>
   <template idtemplate="15" name="cytochrome P450, family 2, subfamily C, polypeptide 8" code="CYP2C8" uri="http://www.uniprot.org/uniprot/P10632" allele="1A,1B,1C,2,3,4,5,6,7,8,9,10,11,12,13,14"/>
   <template idtemplate="16" name="cytochrome P450, family 3, subfamily A, polypeptide 5" code="CYP3A5" uri="http://www.uniprot.org/uniprot/P20815" allele="1A,1B,1C,1D,1E,2,3A,3B,3C,3D,3E,3F,3G,3H,3I,3J,3K,3L,4,5,6,7,8,9,10,11"/>
-  <template idtemplate="1"/>
-  <dictionary idsubject="2" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="3" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="4" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="5" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="6" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="7" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="8" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="9" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="10" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="11" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="12" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="13" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="14" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="15" relationship="is_part_of" idobject="1"/>
-  <dictionary idsubject="16" relationship="is_part_of" idobject="1"/>
+
   <alert idquery="1" name="cell" query="cell" qformat="FREETEXT" rfrequency="daily" rinterval="1" iduser="2" sent="2012-01-16 09:30:51.000000000"/>
   <alert idquery="2" name="toxicity" query="toxicity" qformat="FREETEXT" rfrequency="weekly" rinterval="1" iduser="2" sent="2012-01-16 09:30:51.000000000"/>
    <protocol_authors idprotocol="1" version="1" iduser="2"/>

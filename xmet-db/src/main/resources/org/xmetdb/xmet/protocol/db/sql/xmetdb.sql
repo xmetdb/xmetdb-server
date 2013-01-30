@@ -179,20 +179,6 @@ CREATE TABLE  `template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
--- Endpoints hierarchy
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dictionary`;
-CREATE TABLE  `dictionary` (
-  `idsubject` int(10) unsigned NOT NULL,
-  `relationship` enum('is_a','is_part_of') COLLATE utf8_bin NOT NULL DEFAULT 'is_a',
-  `idobject` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`idsubject`,`relationship`,`idobject`),
-  KEY `FK_dictionary_2` (`idobject`),
-  CONSTRAINT `FK_dictionary_1` FOREIGN KEY (`idsubject`) REFERENCES `template` (`idtemplate`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_dictionary_2` FOREIGN KEY (`idobject`) REFERENCES `template` (`idtemplate`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- -----------------------------------------------------
 -- Endpoints related to the QMRF document
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `protocol_endpoints`;
@@ -240,7 +226,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,12,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,13,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
@@ -389,7 +375,6 @@ insert into template (idtemplate,name,code,uri) values
 (null,"cytochrome P450, family 2, subfamily W, polypeptide 1","CYP2W1","http://www.uniprot.org/uniprot/Q8TAV3"),
 (null,"cytochrome P450, family 2, subfamily C, polypeptide 8","CYP2C8","http://www.uniprot.org/uniprot/P10632"),
 (null,"cytochrome P450, family 3, subfamily A, polypeptide 5","CYP3A5","http://www.uniprot.org/uniprot/P20815");
-insert into dictionary select idtemplate,"is_part_of",1 from template where idtemplate!=1 order by idtemplate;
 
 -- Alleles as per allele nomenclature at http://www.cypalleles.ki.se/
   

@@ -282,3 +282,8 @@ end $$
 
 DELIMITER ;
 insert into version (idmajor,idminor,comment) values (2,12,"copy observation procedure");
+
+-- ----------------------------------------------------------
+-- 2.12 to 2.13 
+-- ----------------------------------------------------------
+insert into version (idmajor,idminor,comment) values (2,13,"drop dictionary table");

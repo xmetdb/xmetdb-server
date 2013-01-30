@@ -6,7 +6,6 @@ import java.sql.Connection;
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.modbcum.p.UpdateExecutor;
-import net.idea.modbcum.q.conditions.StringCondition;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.db.DBConnection;
@@ -28,14 +27,11 @@ import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.endpoints.Enzyme.EnzymeFields;
 import org.xmetdb.rest.endpoints.db.CreateEndpoint;
-import org.xmetdb.rest.endpoints.db.DictionaryObjectQuery;
-import org.xmetdb.rest.endpoints.db.DictionaryQuery;
-import org.xmetdb.rest.endpoints.db.QueryOntology;
-import org.xmetdb.rest.endpoints.db.QueryOntology.RetrieveMode;
+import org.xmetdb.rest.endpoints.db.ReadEnzyme;
+import org.xmetdb.rest.endpoints.db.ReadEnzymeByObservation;
+import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
-
-import ambit2.base.data.Dictionary;
 
 /**
  * 
@@ -43,7 +39,7 @@ import ambit2.base.data.Dictionary;
  * @author nina
  *
  */
-public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<IQueryRetrieval<D>, D> {
+public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>, Enzyme> {
 	
 	public static String resource = "/catalog";
 	public static String resourceParent = "subject";
@@ -84,7 +80,7 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 	}
 
 	@Override
-	public IProcessor<IQueryRetrieval<D>, Representation> createConvertor(
+	public IProcessor<IQueryRetrieval<Enzyme>, Representation> createConvertor(
 			Variant variant)
 			throws net.idea.modbcum.i.exceptions.AmbitException,
 			ResourceException {
@@ -125,8 +121,9 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 		return htmlBeauty;
 	}
 	@Override
-	protected IQueryRetrieval<D> createQuery(Context context, Request request,
+	protected IQueryRetrieval<Enzyme> createQuery(Context context, Request request,
 			Response response) throws ResourceException {
+		/*
 		String term = null;
 		try {
 			Form form = getResourceRef(getRequest()).getQueryAsForm();
@@ -140,32 +137,22 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 		} catch (Exception x) {
 			
 		}			
+		*/
 		Object protocol = request.getAttributes().get(FileResource.resourceKey);
 		if (protocol != null) {
-			QueryOntology q = new QueryOntology();
-			q.setIncludeParent(RetrieveMode.protocol);
-			q.setQmrf_number(protocol.toString());
-			return q;
+			DBProtocol obs = new DBProtocol();
+			obs.setIdentifier(protocol.toString());
+			return new ReadEnzymeByObservation(obs);
 		}
-		try {
-			Object view = request.getAttributes().get("tree");
-			setRecursive(view==null?false:"tree".equals(view));	
-		} catch (Exception x) {
-			setRecursive(false);
-		}		
+	
 		Object key = request.getAttributes().get(resourceKey);
 		if (key != null) {
-			QueryOntology q = new QueryOntology();
-			q.setIncludeParent(RetrieveMode.child);
-			q.setValue(key==null?null:new Enzyme(Reference.decode(key.toString().replace("_", "/")),null));
-			return q;
+			Enzyme enzyme = new Enzyme(null,null);
+			enzyme.setCode(Reference.decode(key.toString()));
+			return new ReadEnzyme(enzyme);
 		} else {
 			key =  request.getAttributes().get(resourceParent);
-			DictionaryQuery qd = new DictionaryObjectQuery();
-			qd.setCondition(StringCondition.getInstance(StringCondition.C_EQ));
-			qd.setValue(key==null?null:Reference.decode(key.toString().replace("_", "/"),null));
-			
-			return qd;
+			return new ReadEnzyme();
 		}
 
 	}
@@ -188,13 +175,27 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 			Enzyme enzyme = new Enzyme("","");
 			for (EnzymeFields field : EnzymeFields.values()) {
 				String value = form.getFirstValue(field.name());
-				if ((value==null)||("".equals(value))) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 				switch (field) {
-				case code: {enzyme.setCode(value);break;}
-				case name: {enzyme.setName(value);break;}
-				case uri: {enzyme.setUri(new URI(value));break;}
+				case code: {
+					if ((value==null)||("".equals(value))) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+					enzyme.setCode(value);break;
+					}
+				case name: {
+					if ((value==null)||("".equals(value))) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+					enzyme.setName(value);
+					break;
+					}
+				case uri: {
+					if (value==null) enzyme.setUri(null);
+					else enzyme.setUri(new URI(value));
+					break;
+					}
 				case alleles: {
-					enzyme.setAlleles(value.split("\n")); break;
+					if (value==null) 
+						enzyme.setAlleles(null);
+					else
+						enzyme.setAlleles(value.split("\n")); 
+					break;
 				}
 				}
 			}
@@ -235,7 +236,7 @@ public class EnzymesResource<D extends Dictionary> extends XmetdbQueryResource<I
 	};
 	*/
 	@Override
-	protected QueryURIReporter<D, IQueryRetrieval<D>> getURUReporter(
+	protected QueryURIReporter<Enzyme, IQueryRetrieval<Enzyme>> getURUReporter(
 			Request baseReference) throws ResourceException {
 		return new EnzymeURIReporter(getRequest(),getDocumentation());
 	}

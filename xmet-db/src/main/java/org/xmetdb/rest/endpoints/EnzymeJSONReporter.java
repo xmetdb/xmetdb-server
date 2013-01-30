@@ -52,7 +52,7 @@ public class EnzymeJSONReporter extends QueryReporter<Enzyme, IQueryRetrieval<En
 					));
 			comma = ",";
 		} catch (Exception x) {
-			
+			x.printStackTrace();
 		}
 		return item;
 	}

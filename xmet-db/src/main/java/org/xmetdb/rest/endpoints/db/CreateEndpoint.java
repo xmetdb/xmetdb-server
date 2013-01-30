@@ -11,10 +11,7 @@ import org.xmetdb.rest.endpoints.Enzyme;
 
 public class CreateEndpoint extends AbstractObjectUpdate<Enzyme>{
 	private static final String[] sql = {
-		"insert into template (name,code,uri,allele) values (?,?,?,?)",
-		"insert ignore into dictionary\n"+
-		"SELECT t2.idtemplate,'is_part_of',t1.idtemplate FROM template t1\n"+
-		"join template t2 where t1.code is null and t2.code=?"
+		"insert into template (name,code,uri,allele) values (?,?,?,?)"
 	};
 	public CreateEndpoint(Enzyme enzyme) {
 		setObject(enzyme);
@@ -31,15 +28,15 @@ public class CreateEndpoint extends AbstractObjectUpdate<Enzyme>{
 		case 0:{
 			params1.add(new QueryParam<String>(String.class, getObject().getName()));
 			params1.add(new QueryParam<String>(String.class,  getObject().getCode()));
-			params1.add(new QueryParam<String>(String.class,  getObject().getUri().toString()));
+			params1.add(new QueryParam<String>(String.class,  getObject().getUri()==null?null:getObject().getUri().toString()));
 			StringBuilder b = new StringBuilder();
 			String d = "";
-			for (String a : getObject().getAlleles()) {b.append(d);b.append(a.trim()); d = ",";}
-			params1.add(new QueryParam<String>(String.class,  b.toString()));
-			return params1;
-		}
-		case 1:{
-			params1.add(new QueryParam<String>(String.class,  getObject().getCode()));
+			if (getObject().getAlleles()==null)
+				params1.add(new QueryParam<String>(String.class,  null));
+			else {
+				for (String a : getObject().getAlleles()) {b.append(d);b.append(a.trim()); d = ",";}
+				params1.add(new QueryParam<String>(String.class,  b.toString()));
+			}
 			return params1;
 		}
 		}
@@ -48,8 +45,7 @@ public class CreateEndpoint extends AbstractObjectUpdate<Enzyme>{
 
 	@Override
 	public void setID(int index, int id) {
-		if (index==0)
-			getObject().setId(id);
+		getObject().setId(id);
 	}
 
 	@Override

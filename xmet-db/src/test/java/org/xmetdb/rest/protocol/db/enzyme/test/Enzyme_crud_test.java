@@ -1,12 +1,10 @@
 package org.xmetdb.rest.protocol.db.enzyme.test;
 
 
-import java.math.BigInteger;
 import java.net.URI;
 
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
-import net.idea.restnet.user.DBUser;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
@@ -39,9 +37,6 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 		Assert.assertEquals("http://www.uniprot.org/uniprot/Q1234",table.getValue(0,"uri"));
 		Assert.assertEquals("A,B,C",table.getValue(0,"allele"));
 		
-		table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT code from dictionary d join template t where d.idsubject=t.idtemplate and code='CYPXYZ'"));
-		Assert.assertEquals(1,table.getRowCount());
 		c.close();
 	}
 
