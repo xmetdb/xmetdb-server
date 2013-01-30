@@ -48,6 +48,5 @@ jQuery(document).ready(function()
 		
 </div><!-- container -->
 
-		<#include "/scripts-welcome.ftl">
 </body>
 </html>
