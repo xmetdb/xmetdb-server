@@ -9,7 +9,8 @@ public class Enzyme implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5987449761837302780L;
-	enum EnzymeFields {
+	public enum EnzymeFields {
+		id,
 		code,
 		name,
 		uri,

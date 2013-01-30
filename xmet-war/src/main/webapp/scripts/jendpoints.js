@@ -11,6 +11,7 @@ function defineEndpointsTable(url,root) {
 					"sClass" : "center",
 					"bSortable" : false,
 					"bSearchable" : false,
+					"bUseRendered" : false,
 					"mDataProp" : "id",
 					"sClass": "readonly",
 					sWidth : "32px",
@@ -95,8 +96,7 @@ function defineEndpointsTable(url,root) {
 		      } );
 		},
 		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-	          var id = aData[0];
-	          $(nRow).attr("id",id);
+	          $(nRow).attr("id",aData["id"]);
 	          return nRow;
 	    },		
 		"oLanguage": {
@@ -114,7 +114,6 @@ function defineEndpointsTable(url,root) {
 	.makeEditable({
 		"aoColumns": [
                 null,
-                {},  //{} to enable edit null to disable
                 {
                     type:'text'	,
                     indicator: 'Saving enzyme code ...',
@@ -123,7 +122,22 @@ function defineEndpointsTable(url,root) {
                     onblur: 'cancel',
                     submit: 'OK'                  	  
                 },
-                {},
+                {
+                    type:'text'	,
+                    indicator: 'Saving enzyme name ...',
+                    tooltip: 'Click to edit enzyme name',
+                    loadtext: 'loading...',
+                    onblur: 'cancel',
+                    submit: 'OK'                  	  
+                },
+                {
+                    type:'text'	,
+                    indicator: 'Saving UNIPROT code ...',
+                    tooltip: 'Click to edit UNIPROT code',
+                    loadtext: 'loading...',
+                    onblur: 'cancel',
+                    submit: 'OK'                  	  
+                },
                 {
                       type:'textarea'	,
                       indicator: 'Saving Alleles...',

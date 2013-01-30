@@ -5,6 +5,7 @@ import java.sql.Connection;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.processors.IProcessor;
+import net.idea.modbcum.i.query.IQueryUpdate;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.html.HTMLBeauty;
@@ -29,6 +30,7 @@ import org.xmetdb.rest.endpoints.Enzyme.EnzymeFields;
 import org.xmetdb.rest.endpoints.db.CreateEndpoint;
 import org.xmetdb.rest.endpoints.db.ReadEnzyme;
 import org.xmetdb.rest.endpoints.db.ReadEnzymeByObservation;
+import org.xmetdb.rest.endpoints.db.UpdateEnzyme;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
@@ -156,20 +158,49 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		}
 
 	}
-	
+	/**
+	 * Designed to work with jEditable datatables plugin
+	 * http://code.google.com/p/jquery-datatables-editable
+	 */
 	@Override
 	protected Representation put(Representation entity, Variant variant)
 			throws ResourceException {
-		System.out.println(new Form(entity));
-		return null;
+		//[(value,CYP3A4), (id,2), (rowId,0), (columnPosition,1), (columnId,1), (columnName,Code)]
+		Form form = new Form(entity);
+		String value = form.getFirstValue("value");
+		String id = form.getFirstValue("id");
+		String columnName = form.getFirstValue("columnName");
+		EnzymeFields field = Enzyme.EnzymeFields.valueOf(columnName.toLowerCase());
+		Enzyme enzyme = new Enzyme();
+		enzyme.setId(Integer.parseInt(id));
+		switch (field) {
+		case name: {
+			enzyme.setName(value);
+			break;
+		}
+		case code: {
+			enzyme.setCode(value);
+			break;
+		}
+		case uri: {
+			try {enzyme.setUri(new URI(value));} catch (Exception x) {}
+			break;
+		}
+		case alleles: {
+			break;
+		}
+		}
+		UpdateEnzyme q = new UpdateEnzyme();
+		q.setObject(enzyme);
+		execUpdate(enzyme, q);
+		q.setObject(enzyme);
+		return new StringRepresentation(value);
 	}
 	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
 		if (!MediaType.APPLICATION_WWW_FORM.equals(entity.getMediaType()))
 			throw new ResourceException(Status.CLIENT_ERROR_UNSUPPORTED_MEDIA_TYPE);
-		Connection conn = null;
-		UpdateExecutor x = null;
 		try {
 			Form form = new Form(entity);
 			Enzyme enzyme = new Enzyme();
@@ -199,19 +230,30 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 				}
 				}
 			}
+			CreateEndpoint q = new CreateEndpoint(enzyme);
+			execUpdate(enzyme, q);
+			return new StringRepresentation(enzyme.getCode());
+		} catch (Exception e) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
+		} finally {
+		}
+	}
+	
+	protected void execUpdate(Enzyme enzyme, IQueryUpdate query) throws ResourceException { 
+		Connection conn = null;
+		UpdateExecutor x = null;
+		try {
 			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 			conn = dbc.getConnection();
-			CreateEndpoint q = new CreateEndpoint(enzyme);
 			x = new UpdateExecutor();
 			x.setConnection(conn);
-			x.process(q);
-			return new StringRepresentation(enzyme.getCode());
+			x.process(query);
 		} catch (Exception e) {
 			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
 		} finally {
 			try { if (conn != null) conn.close(); } catch (Exception xx) {}
 			try { if (x !=null) x.close(); } catch (Exception xx) {}
-		}
+		}			
 	}
 	
 	/*
