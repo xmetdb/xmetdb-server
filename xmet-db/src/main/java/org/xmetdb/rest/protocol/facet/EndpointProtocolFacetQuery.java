@@ -23,11 +23,9 @@ public class EndpointProtocolFacetQuery extends AbstractFacetQuery<String,String
 	private static final long serialVersionUID = -8340773122431657623L;
 	protected EndpointProtocolFacet record;
 	protected static String sql_protocol = 
-		"select concat(tp.code,tp.name),t.code,t.name,count(distinct(idprotocol)) from protocol\n"+
+		"select t.code,t.name,t.uri,t.allele,count(distinct(idprotocol)) as c from protocol\n"+
 		"left join protocol_endpoints using(idprotocol,version)\n"+
 		"left join template t using(idtemplate)\n"+
-		"left join dictionary d on d.idsubject=t.idtemplate\n"+
-		"left join template tp on d.idobject=tp.idtemplate\n"+
 		"where published_status = 'published'\n"+
 		"group by t.idtemplate\n"+
 		"order by t.code\n";
@@ -71,10 +69,10 @@ public class EndpointProtocolFacetQuery extends AbstractFacetQuery<String,String
 			record = new EndpointProtocolFacet(null);
 		}
 		try {
-			record.setProperty1(rs.getString(1));
-			record.setProperty2(rs.getString(2));
-			record.setValue(rs.getString(3));
-			record.setCount(rs.getInt(4));
+			record.setProperty1(rs.getString("uri"));
+			record.setProperty2(rs.getString("code"));
+			record.setValue(rs.getString("name"));
+			record.setCount(rs.getInt("c"));
 			return record;
 		} catch (Exception x) {
 			record.setProperty1(null);
