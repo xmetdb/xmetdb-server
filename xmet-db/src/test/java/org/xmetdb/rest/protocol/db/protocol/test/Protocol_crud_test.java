@@ -67,7 +67,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		observation.addKeyword("hepatocyte");
 		observation.setPublished(true);
 		observation.setReference("Test Reference");
-		Enzyme enzyme = new Enzyme("","");
+		Enzyme enzyme = new Enzyme();
 		enzyme.setCode("CYP3A4");
 		enzyme.setAlleles(new String[] {"1A"});
 		observation.setEndpoint(enzyme);
@@ -173,7 +173,7 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 		observation.setStatus(STATUS.SOP);
 		observation.setPublished(false);
 		observation.setIdentifier("");
-		observation.setEndpoint(new Enzyme(null,null));
+		observation.setEndpoint(new Enzyme());
 		observation.getEndpoint().setCode("CYP3A4");
 		observation.setAbstract("Hepatocytes");
 		observation.setTitle("HEP");

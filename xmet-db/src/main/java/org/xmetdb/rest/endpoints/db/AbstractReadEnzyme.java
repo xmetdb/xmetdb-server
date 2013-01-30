@@ -30,11 +30,10 @@ public abstract class AbstractReadEnzyme<T> extends AbstractQuery<T, Enzyme, Str
 
 	public Enzyme getObject(ResultSet rs) throws AmbitException {
 		try {
-			Enzyme result = new Enzyme(null,null);
+			Enzyme result = new Enzyme();
+			result.setId(rs.getInt("idtemplate"));
 			result.setName(rs.getString("name"));
 			result.setCode(rs.getString("code"));
-			result.setParentCode(null);
-			result.setParentTemplate(null);
 			String uri = rs.getString("uri");
 			if (uri==null) result.setUri(null);
 			else

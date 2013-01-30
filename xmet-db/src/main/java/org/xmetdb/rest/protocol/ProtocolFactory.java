@@ -313,7 +313,7 @@ public class ProtocolFactory {
 				case xmet_enzyme: {
 					try {
 						if (protocol.getEndpoint() == null)
-							protocol.setEndpoint(new Enzyme(null, null));
+							protocol.setEndpoint(new Enzyme());
 						protocol.getEndpoint().setCode(fi.getString(utf8));
 					} catch (Exception x) {
 					}
@@ -337,7 +337,7 @@ public class ProtocolFactory {
 				case xmet_allele: {
 					try {
 						if (protocol.getEndpoint() == null)
-							protocol.setEndpoint(new Enzyme(null, null));
+							protocol.setEndpoint(new Enzyme());
 						protocol.getEndpoint().setAlleles(new String[] {fi.getString(utf8)});
 					} catch (Exception x) {
 					}

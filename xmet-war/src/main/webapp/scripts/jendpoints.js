@@ -11,15 +11,13 @@ function defineEndpointsTable(url,root) {
 					"sClass" : "center",
 					"bSortable" : false,
 					"bSearchable" : false,
-					"mDataProp" : "parentCode",
+					"mDataProp" : "id",
 					"sClass": "readonly",
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
 						 var count = facet[o.aData["name"]];	
 						 if (count == null) return "";
 						 else {
-							 if ((o.aData["parentName"] == "") && (o.aData["name"]=="Other")) return ""; //workaround
-							 
 							 return  "<span class='ui-icon ui-icon-folder-collapsed zoomxmet' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span>"+
 							 		"<label>("+count + ")</label>";
 						 }
@@ -38,7 +36,6 @@ function defineEndpointsTable(url,root) {
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
-					  var parent = o.aData["parentName"] == ""?"All":encodeURIComponent(o.aData["parentName"]);	
 					  return "<a title='Click to display the available observations for this enzyme' href='/xmetdb/protocol?xmet_enzyme=" + encodeURIComponent(o.aData["code"]) + "'>"+o.aData["name"]+"</a>";
 				  }
 				},
@@ -97,6 +94,11 @@ function defineEndpointsTable(url,root) {
 		        }
 		      } );
 		},
+		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+	          var id = aData[0];
+	          $(nRow).attr("id",id);
+	          return nRow;
+	    },		
 		"oLanguage": {
 	            "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No enzymes found.",
@@ -112,11 +114,16 @@ function defineEndpointsTable(url,root) {
 	.makeEditable({
 		"aoColumns": [
                 null,
-                null,  //{} to enable edit
-                null,
-                null,
-                null
-                /*
+                {},  //{} to enable edit null to disable
+                {
+                    type:'text'	,
+                    indicator: 'Saving enzyme code ...',
+                    tooltip: 'Click to edit enzyme code',
+                    loadtext: 'loading...',
+                    onblur: 'cancel',
+                    submit: 'OK'                  	  
+                },
+                {},
                 {
                       type:'textarea'	,
                       indicator: 'Saving Alleles...',
@@ -127,7 +134,6 @@ function defineEndpointsTable(url,root) {
                       loadurl: root + "/catalog?max=1", //?
                       loadtype: 'GET'                    	  
                  }
-                 */
         ],		
         sAddURL: root+"/catalog",
         sUpdateURL: root+"/catalog?method=PUT",

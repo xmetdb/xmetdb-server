@@ -41,9 +41,8 @@ public class EnzymeJSONReporter extends QueryReporter<Enzyme, IQueryRetrieval<En
 			String code = ((Enzyme)item).getCode()==null?"":((Enzyme)item).getCode();
 			String name = item.getName()==null?"":item.getName();
 			if (comma!=null) getOutput().write(comma);
-			getOutput().write(String.format("\n{\"parentCode\":\"%s\",\"parentName\":\"%s\",\"code\":\"%s\",\"name\":\"%s\",\"label\":\"%s %s\",\"uri\":\"%s\",\"alleles\":%s}",
-					((Enzyme)item).getParentCode()==null?"":((Enzyme)item).getParentCode(),		
-					item.getParentTemplate()==null?"":item.getParentTemplate(),			
+			getOutput().write(String.format("\n{\"id\":%d,\"code\":\"%s\",\"name\":\"%s\",\"label\":\"%s %s\",\"uri\":\"%s\",\"alleles\":%s}",
+					item.getId(),
 					code,
 					name,
 					code,name,

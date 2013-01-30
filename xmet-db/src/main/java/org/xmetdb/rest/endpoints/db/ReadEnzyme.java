@@ -21,7 +21,7 @@ public class ReadEnzyme extends AbstractReadEnzyme<String> {
 		super(enzyme);
 	}
 
-	private static final String sql_all = "SELECT code,name,uri,allele FROM template";
+	private static final String sql_all = "SELECT idtemplate,code,name,uri,allele FROM template";
 	@Override
 	public boolean isPrescreen() {
 		return false;

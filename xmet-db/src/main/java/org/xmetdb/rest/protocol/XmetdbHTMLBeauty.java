@@ -23,6 +23,7 @@ import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource.SearchMode;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.XMETDBRoles;
 
+@Deprecated
 public class XmetdbHTMLBeauty extends HTMLBeauty {
 	
 	private final static String qmrfEditorDownloadLink = "http://ambit.uni-plovdiv.bg/downloads/qmrf/QMRFEditor-v2.0.0-setup.exe";
@@ -799,7 +800,6 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					content.append("<th width='15%%'>Endpoint</th>");
 					content.append(_tdStart);
 					content.append(String.format("<input type='text' readonly size='15' id='%s' name='%s'>",ReadProtocol.fields.endpointParentCode.name(),ReadProtocol.fields.endpointParentCode.name()));
-					content.append(String.format("<input type='text' readonly size='75' id='%s' name='%s'><br>",ReadProtocol.fields.endpointParentName.name(),ReadProtocol.fields.endpointParentName.name()));
 					content.append(String.format("<input type='text' size='75' title = 'Start writing here to get list of enzymes. The rest of the fields will be automatically filled in.' id='%s' name='%s'>","endpoint","endpoint"));
 
 					

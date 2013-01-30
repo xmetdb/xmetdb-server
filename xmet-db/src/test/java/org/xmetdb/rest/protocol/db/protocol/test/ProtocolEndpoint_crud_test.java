@@ -77,7 +77,8 @@ public final class ProtocolEndpoint_crud_test<T extends Object>  extends CRUDTes
 	@Override
 	protected IQueryUpdate<T,DBProtocol> updateQuery() throws Exception {
 		DBProtocol protocol = new DBProtocol(idxmet1);
-		Enzyme endpoint = new Enzyme("cytochrome P450, family 3, subfamily A, polypeptide 4",null);
+		Enzyme endpoint = new Enzyme();
+		endpoint.setName("cytochrome P450, family 3, subfamily A, polypeptide 4");
 		endpoint.setCode("CYP3A4");
 		endpoint.setAlleles(new String[] {"1T"});
 		IQueryUpdate<T,DBProtocol> q = (IQueryUpdate<T,DBProtocol>)new AddProtocolEndpoint(endpoint,protocol);

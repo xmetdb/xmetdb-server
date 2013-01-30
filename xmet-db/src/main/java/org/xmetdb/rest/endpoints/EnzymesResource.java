@@ -147,7 +147,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 	
 		Object key = request.getAttributes().get(resourceKey);
 		if (key != null) {
-			Enzyme enzyme = new Enzyme(null,null);
+			Enzyme enzyme = new Enzyme();
 			enzyme.setCode(Reference.decode(key.toString()));
 			return new ReadEnzyme(enzyme);
 		} else {
@@ -161,7 +161,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 	protected Representation put(Representation entity, Variant variant)
 			throws ResourceException {
 		System.out.println(new Form(entity));
-		return super.put(entity, variant);
+		return null;
 	}
 	@Override
 	protected Representation post(Representation entity, Variant variant)
@@ -172,7 +172,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		UpdateExecutor x = null;
 		try {
 			Form form = new Form(entity);
-			Enzyme enzyme = new Enzyme("","");
+			Enzyme enzyme = new Enzyme();
 			for (EnzymeFields field : EnzymeFields.values()) {
 				String value = form.getFirstValue(field.name());
 				switch (field) {

@@ -17,7 +17,7 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 
 	@Override
 	protected IQueryUpdate<Object,Enzyme> createQuery() throws Exception {
-		Enzyme enzyme = new Enzyme("","");
+		Enzyme enzyme = new Enzyme();
 		enzyme.setCode("CYPXYZ");
 		enzyme.setName("Cytochrome XYZ");
 		enzyme.setUri(new URI("Q1234"));

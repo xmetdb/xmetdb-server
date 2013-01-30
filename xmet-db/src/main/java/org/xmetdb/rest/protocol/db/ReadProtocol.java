@@ -618,7 +618,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme());
 				protocol.getEndpoint().setCode(rs.getString("code"));
 			}
 			@Override
@@ -647,7 +647,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme());
 				protocol.getEndpoint().setCode(rs.getString("name"));
 			}			
 		},		
@@ -668,7 +668,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			@Override
 			public void setParam(DBProtocol protocol, ResultSet rs)
 					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
+				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme());
 				protocol.getEndpoint().setCode(rs.getString("parentcode"));
 			}
 			@Override
@@ -676,31 +676,6 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 				return " category = ? ";
 			}
 		},				
-		endpointParentName {
-			@Override
-			public Object getValue(DBProtocol protocol) {
-				return protocol.getEndpoint()==null?null:protocol.getEndpoint().getParentTemplate();
-			}
-			@Override
-			public String toString() {
-				return "Endpoint name";
-			}
-			@Override
-			public QueryParam getParam(DBProtocol protocol) {
-				return protocol.getEndpoint()==null?null:
-					   new QueryParam<String>(String.class,protocol.getEndpoint().getParentTemplate());
-			}
-			@Override
-			public void setParam(DBProtocol protocol, ResultSet rs)
-					throws SQLException {
-				if (protocol.getEndpoint()==null) protocol.setEndpoint(new Enzyme(null,null));
-				protocol.getEndpoint().setCode(rs.getString("parentname"));
-			}
-			@Override
-			public String getCondition() {
-				return " name = ? ";
-			}
-		},			
 		published_status {
 			@Override
 			public Object getValue(DBProtocol protocol) {

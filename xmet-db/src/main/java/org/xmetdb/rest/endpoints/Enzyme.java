@@ -1,11 +1,10 @@
 package org.xmetdb.rest.endpoints;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import ambit2.base.data.Dictionary;
-
-public class Enzyme extends Dictionary {
+public class Enzyme implements Serializable {
 	/**
 	 * 
 	 */
@@ -16,6 +15,15 @@ public class Enzyme extends Dictionary {
 		uri,
 		alleles;
 
+	}
+
+	protected String name;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	protected String code;
 	protected String parentCode;
@@ -61,20 +69,17 @@ public class Enzyme extends Dictionary {
 		this.id = id;
 	}
 
-	public Enzyme(String arg1,String arg2) {
-		super(arg1,arg2);
+	public Enzyme() {
+		super();
 	}
 	
-	public Enzyme(String arg1,String arg2,String arg3) {
-		super(arg1,arg2,arg3);
-	}
 	public String getCode() {
 		return code;
 	}
 	public void setCode(String code) {
 		this.code = code;
 	}
-	@Override
+
 	public String toString() {
 		return String.format("%s.%s",getCode(),getAlleles()==null?"":getAlleles().length==0?"":getAlleles()[0]);
 	}

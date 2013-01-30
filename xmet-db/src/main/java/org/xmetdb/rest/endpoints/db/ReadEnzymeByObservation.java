@@ -23,7 +23,7 @@ public class ReadEnzymeByObservation  extends AbstractReadEnzyme<DBProtocol> {
 	 */
 	private static final long serialVersionUID = -7623646134570258193L;
 	private static final String sqlProtocol = 	
-		"SELECT idprotocol,version,t.name,t.code,t.uri,t.allele FROM protocol\n"+
+		"SELECT idtemplate,idprotocol,version,t.name,t.code,t.uri,t.allele FROM protocol\n"+
 		"left join protocol_endpoints pe using(idprotocol,version)\n"+
 		"left join template t using(idtemplate)\n"+
 		"where qmrf_number=?";
