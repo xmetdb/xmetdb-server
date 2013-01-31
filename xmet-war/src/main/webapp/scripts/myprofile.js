@@ -1,4 +1,4 @@
-function getMyAccount(root,url,readonly) {
+function getMyAccount(root,url,readonly,username) {
 	var facet = {};	
 
     $.ajax({
@@ -7,6 +7,7 @@ function getMyAccount(root,url,readonly) {
         success: function(data, status, xhr) {
         	$.each(data["user"],function(index, entry) {
         		$("#username").text(entry["username"]);
+        		if (username == entry["username"]) $("#edit").show(); else $("#edit").hide();
         		$("#useruri").prop("href",entry["uri"]);
         		$("#useruri").text(entry["title"] + " " + entry["firstname"] + " " + entry["lastname"]);
         		$("#email").prop("value",entry["email"]);

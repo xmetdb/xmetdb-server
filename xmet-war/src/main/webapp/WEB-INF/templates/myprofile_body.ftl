@@ -31,8 +31,10 @@ jQuery(document).ready(function()
 		
 		<#if myprofile>
 			<#assign ro=''>
+			<#assign disabled=''>
 		<#else>
 			<#assign ro='readonly'>
+			<#assign disabled='disabled="disabled"'>
 		</#if>
 		<form action="${xmet_root}/myaccount/?method=put" id="form_myaccount" method="POST" >		
 
@@ -92,7 +94,7 @@ jQuery(document).ready(function()
 		</div>		
 		<div class='row' style="margin:5px;padding:5px;"> 	
 			<label class='three columns alpha' for="reviewer">Available as a curator<a href='#' class='chelp curator'></a></label>
-			<input class="one columns alpha remove-bottom" type="checkbox" ${ro} name='reviewer' id='reviewer' value=''/>
+			<input class="one columns alpha remove-bottom" type="checkbox" ${disabled} name='reviewer' id='reviewer' value=''/>
 			<div class="seven columns alpha">&nbsp;
 			</div>
 			<div class="five columns omega">&nbsp;</div>
@@ -102,6 +104,8 @@ jQuery(document).ready(function()
 			<#if myprofile>
 				<input class="submit three columns alpha" id='update' name='update' type='submit' value='Update'>
 				<a href='#' class='chelp myprofile'></a>
+			<#else>
+				<a href='${xmet_root}/myaccount' class="button three columns alpha" id='edit' style='display:none;' name='edit'>Edit profile</a>
 			</#if>
 		</div>	
 
