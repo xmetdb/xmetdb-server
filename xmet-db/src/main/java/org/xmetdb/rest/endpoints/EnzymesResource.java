@@ -157,6 +157,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		}
 
 	}
+	
 	/**
 	 * Designed to work with jEditable datatables plugin
 	 * http://code.google.com/p/jquery-datatables-editable
@@ -247,7 +248,10 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		} finally {
 		}
 	}
-	
+	@Override
+	protected Representation delete(Variant variant) throws ResourceException {
+		throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED,"Removing enzymes not allowed!");
+	}
 	protected void execUpdate(Enzyme enzyme, IQueryUpdate query) throws ResourceException { 
 		Connection conn = null;
 		UpdateExecutor x = null;
