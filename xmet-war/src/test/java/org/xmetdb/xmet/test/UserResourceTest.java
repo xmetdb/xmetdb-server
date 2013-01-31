@@ -240,6 +240,7 @@ public class UserResourceTest extends ResourceTest {
 		formparams.add(new BasicNameValuePair(ReadUser.fields.firstname.name(),  "Alice"));
 		formparams.add(new BasicNameValuePair(ReadUser.fields.lastname.name(),  "B."));
 		formparams.add(new BasicNameValuePair(ReadUser.fields.email.name(),  "email@example.org"));
+		formparams.add(new BasicNameValuePair(ReadUser.fields.reviewer.name(),  ""));
 		
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM user where iduser=3");
@@ -261,8 +262,9 @@ public class UserResourceTest extends ResourceTest {
         c = getConnection();	
 		table = 	c.createQueryTable("EXPECTED","SELECT * FROM user");
 		Assert.assertEquals(4,table.getRowCount());
-		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title from user where iduser=3 and firstName='Alice' and lastName='B.'" );
+		table = 	c.createQueryTable("EXPECTED","SELECT iduser,title,reviewer from user where iduser=3 and firstName='Alice' and lastName='B.'" );
 		Assert.assertEquals(1,table.getRowCount());
+		Assert.assertEquals(Boolean.FALSE,table.getValue(0, "reviewer"));
 		c.close();
 
 	}		
