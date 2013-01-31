@@ -19,22 +19,38 @@ public class Enzyme implements Serializable {
 			public String getStringValue(Enzyme enzyme) {
 				return Integer.toString(enzyme.getId());
 			}
+			@Override
+			public Object getValue(Enzyme enzyme) {
+				return enzyme.getId();
+			}	
 		},
 		code {
 			@Override
 			public String getStringValue(Enzyme enzyme) {
 				return enzyme.getCode();
 			}			
+			@Override
+			public Object getValue(Enzyme enzyme) {
+				return enzyme.getCode();
+			}	
 		},
 		name {
 			@Override
 			public String getStringValue(Enzyme enzyme) {
 				return enzyme.getName();
-			}			
+			}		
+			@Override
+			public Object getValue(Enzyme enzyme) {
+				return enzyme.getName();
+			}	
 		},
 		uniprot {
 			@Override
 			public String getStringValue(Enzyme enzyme) {
+				return enzyme.getUniprot_id();
+			}		
+			@Override
+			public Object getValue(Enzyme enzyme) {
 				return enzyme.getUniprot_id();
 			}			
 		},
@@ -56,11 +72,16 @@ public class Enzyme implements Serializable {
 					delimiter = ",";
 				}
 				return alleles.toString();
-			}			
+			}		
+			@Override
+			public Object getValue(Enzyme enzyme) {
+				return enzyme.getAlleles();
+			}
 		};
 		public String leftDelimiter() { return "\"";}
 		public String rightDelimiter() { return "\"";}
 		public abstract String getStringValue(Enzyme enzyme);
+		public abstract Object getValue(Enzyme enzyme);
 	}
 
 	protected String name;

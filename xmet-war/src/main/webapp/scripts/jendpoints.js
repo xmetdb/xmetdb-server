@@ -57,7 +57,7 @@ function defineEndpointsTable(url,root) {
 					  "bSortable" : true,
 					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
-						  var sOut = "<select style='width:5em;'>";
+						  var sOut = "<select style='width:5em;' id='alleles_"+o.aData["id"]+"'>";
 						  sOut += '<option value="" selected></option>';
 						  $.each(val, function(i) {
 							    sOut += '<option value="' + val[i] + '">' + val[i] + '</option>';
@@ -153,10 +153,18 @@ function defineEndpointsTable(url,root) {
                       indicator: 'Saving Alleles...',
                       tooltip: 'Click to edit alleles',
                       loadtext: 'loading...',
+                      data: function (a,b) {
+                    	var sOut = "";
+                    	$(a).children().each(function(index,option){
+                    		if (sOut!="") sOut +="\n"; 
+                    		sOut += $(option).text();
+                    	});
+                    	return sOut;
+                      },
                       onblur: 'cancel',
                       submit: 'Save changes',
-                      loadurl: root + "/catalog?max=1", //?
-                      loadtype: 'GET'                    	  
+                      //loadurl: root + "/catalog?max=1", //?
+                     // loadtype: 'GET'                    	  
                  }
         ],		
         sAddURL: root+"/catalog",

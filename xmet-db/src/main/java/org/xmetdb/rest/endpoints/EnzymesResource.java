@@ -188,7 +188,8 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 				break;
 			}
 			case alleles: {
-				break;
+				if (value==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
+				enzyme.setAlleles(value.split("\n")); 
 			}
 			}
 			UpdateEnzyme q = new UpdateEnzyme();
