@@ -193,8 +193,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		UpdateEnzyme q = new UpdateEnzyme();
 		q.setObject(enzyme);
 		execUpdate(enzyme, q);
-		q.setObject(enzyme);
-		return new StringRepresentation(value);
+		return new StringRepresentation(value,MediaType.TEXT_PLAIN);
 	}
 	@Override
 	protected Representation post(Representation entity, Variant variant)
@@ -232,7 +231,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 			}
 			CreateEndpoint q = new CreateEndpoint(enzyme);
 			execUpdate(enzyme, q);
-			return new StringRepresentation(enzyme.getCode());
+			return new StringRepresentation(Integer.toString(enzyme.getId()),MediaType.TEXT_PLAIN);
 		} catch (Exception e) {
 			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
 		} finally {
