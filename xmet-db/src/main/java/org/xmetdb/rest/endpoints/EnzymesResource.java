@@ -166,34 +166,44 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 	protected Representation put(Representation entity, Variant variant)
 			throws ResourceException {
 		//[(value,CYP3A4), (id,2), (rowId,0), (columnPosition,1), (columnId,1), (columnName,Code)]
-		Form form = new Form(entity);
-		String value = form.getFirstValue("value");
-		String id = form.getFirstValue("id");
-		String columnName = form.getFirstValue("columnName");
-		EnzymeFields field = Enzyme.EnzymeFields.valueOf(columnName.toLowerCase());
-		Enzyme enzyme = new Enzyme();
-		enzyme.setId(Integer.parseInt(id));
-		switch (field) {
-		case name: {
-			enzyme.setName(value);
-			break;
+		try {
+			Form form = new Form(entity);
+			String value = form.getFirstValue("value");
+			String id = form.getFirstValue("id");
+			String columnName = form.getFirstValue("columnName");
+			EnzymeFields field = Enzyme.EnzymeFields.valueOf(columnName.toLowerCase());
+			Enzyme enzyme = new Enzyme();
+			enzyme.setId(Integer.parseInt(id));
+			switch (field) {
+			case name: {
+				enzyme.setName(value);
+				break;
+			}
+			case code: {
+				enzyme.setCode(value);
+				break;
+			}
+			case uniprot: {
+				try {enzyme.setUniprot_id(value);} catch (Exception x) {}
+				break;
+			}
+			case alleles: {
+				break;
+			}
+			}
+			UpdateEnzyme q = new UpdateEnzyme();
+			q.setObject(enzyme);
+			execUpdate(enzyme, q);
+			return new StringRepresentation(value,MediaType.TEXT_PLAIN);
+		} catch (ResourceException x) {
+			throw x;
+		} catch (IllegalArgumentException x) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,x);
+		} catch (NullPointerException x) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,x);
+		} catch (Exception x) {
+			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
 		}
-		case code: {
-			enzyme.setCode(value);
-			break;
-		}
-		case uniprot: {
-			try {enzyme.setUniprot_id(value);} catch (Exception x) {}
-			break;
-		}
-		case alleles: {
-			break;
-		}
-		}
-		UpdateEnzyme q = new UpdateEnzyme();
-		q.setObject(enzyme);
-		execUpdate(enzyme, q);
-		return new StringRepresentation(value,MediaType.TEXT_PLAIN);
 	}
 	@Override
 	protected Representation post(Representation entity, Variant variant)

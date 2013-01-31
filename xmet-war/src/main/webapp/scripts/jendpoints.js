@@ -120,7 +120,7 @@ function defineEndpointsTable(url,root) {
                     onblur: 'cancel',
                     submit: 'Save changes',
                     fnOnCellUpdated: function(sStatus, sValue, settings){
-						alert("(Cell Callback): Cell is updated with value " + sValue);
+						//alert("Enzyme code is updated with value " + sValue);
 					}
                 },
                 {
@@ -142,7 +142,6 @@ function defineEndpointsTable(url,root) {
                     tooltip: 'Click to edit UNIPROT code',
                     loadtext: 'loading...',
                     data: function (a,b) {
-                    	console.log(a);
                     	return $(a).text();
                     },
                     onblur: 'cancel',
