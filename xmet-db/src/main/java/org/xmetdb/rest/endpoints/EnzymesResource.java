@@ -1,6 +1,5 @@
 package  org.xmetdb.rest.endpoints;
 
-import java.net.URI;
 import java.sql.Connection;
 
 import net.idea.modbcum.i.IQueryRetrieval;
@@ -190,6 +189,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 			case alleles: {
 				if (value==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 				enzyme.setAlleles(value.split("\n")); 
+				break;
 			}
 			}
 			UpdateEnzyme q = new UpdateEnzyme();

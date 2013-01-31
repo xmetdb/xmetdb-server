@@ -57,10 +57,14 @@ function defineEndpointsTable(url,root) {
 					  "bSortable" : true,
 					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
+						  if (!(val instanceof Array)) {
+						  	val = val.split("\n");
+						  }
 						  var sOut = "<select style='width:5em;' id='alleles_"+o.aData["id"]+"'>";
 						  sOut += '<option value="" selected></option>';
 						  $.each(val, function(i) {
-							    sOut += '<option value="' + val[i] + '">' + val[i] + '</option>';
+							    if (""!=val[i].trim())
+							    	sOut += '<option value="' + val[i] + '">' + val[i] + '</option>';
 							});
 						  sOut += "</select>";
 						  return sOut;
