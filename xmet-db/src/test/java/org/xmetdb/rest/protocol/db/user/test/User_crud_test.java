@@ -115,6 +115,7 @@ public final class User_crud_test<T extends Object>  extends CRUDTest<T,DBUser> 
 	protected IQueryUpdate<T,DBUser> updateQuery() throws Exception {
 		DBUser ref = new DBUser();
 		ref.setLastname("NEW");
+		ref.setReviewer(false);
 		ref.setID(3);
 
 		return (IQueryUpdate<T,DBUser>) new UpdateUser(ref);
@@ -124,10 +125,11 @@ public final class User_crud_test<T extends Object>  extends CRUDTest<T,DBUser> 
 	protected void updateVerify(IQueryUpdate<T,DBUser> query)
 			throws Exception {
         IDatabaseConnection c = getConnection();	
-		ITable table = 	c.createQueryTable("EXPECTED","SELECT lastname FROM user where iduser=3");
+		ITable table = 	c.createQueryTable("EXPECTED","SELECT lastname,reviewer FROM user where iduser=3");
 		Assert.assertEquals(1,table.getRowCount());
 
 		Assert.assertEquals("NEW",table.getValue(0,"lastname"));
+		Assert.assertEquals(Boolean.FALSE,table.getValue(0,"reviewer"));
 		
 		c.close();
 		
