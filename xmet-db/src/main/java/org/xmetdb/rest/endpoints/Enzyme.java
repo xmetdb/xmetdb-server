@@ -16,7 +16,7 @@ public class Enzyme implements Serializable {
 			@Override
 			public String rightDelimiter() { return "";}
 			@Override
-			public String getStringValue(Enzyme enzyme) {
+			public String getStringValue(Enzyme enzyme,String quotes) {
 				return Integer.toString(enzyme.getId());
 			}
 			@Override
@@ -26,7 +26,7 @@ public class Enzyme implements Serializable {
 		},
 		code {
 			@Override
-			public String getStringValue(Enzyme enzyme) {
+			public String getStringValue(Enzyme enzyme,String quotes) {
 				return enzyme.getCode();
 			}			
 			@Override
@@ -36,7 +36,7 @@ public class Enzyme implements Serializable {
 		},
 		name {
 			@Override
-			public String getStringValue(Enzyme enzyme) {
+			public String getStringValue(Enzyme enzyme,String quotes) {
 				return enzyme.getName();
 			}		
 			@Override
@@ -46,7 +46,7 @@ public class Enzyme implements Serializable {
 		},
 		uniprot {
 			@Override
-			public String getStringValue(Enzyme enzyme) {
+			public String getStringValue(Enzyme enzyme,String quotes) {
 				return enzyme.getUniprot_id();
 			}		
 			@Override
@@ -60,15 +60,15 @@ public class Enzyme implements Serializable {
 			@Override
 			public String rightDelimiter() { return "]";}
 			@Override
-			public String getStringValue(Enzyme enzyme) {
+			public String getStringValue(Enzyme enzyme,String quotes) {
 				if (enzyme.getAlleles()==null) return null; 
 				StringBuilder alleles = new StringBuilder();
 				String delimiter = "";
 				for (String allele: enzyme.alleles) {
 					alleles.append(delimiter);
-					alleles.append("\"");
+					alleles.append(quotes);
 					alleles.append(allele);
-					alleles.append("\"");
+					alleles.append(quotes);
 					delimiter = ",";
 				}
 				return alleles.toString();
@@ -80,7 +80,7 @@ public class Enzyme implements Serializable {
 		};
 		public String leftDelimiter() { return "\"";}
 		public String rightDelimiter() { return "\"";}
-		public abstract String getStringValue(Enzyme enzyme);
+		public abstract String getStringValue(Enzyme enzyme,String quotes);
 		public abstract Object getValue(Enzyme enzyme);
 	}
 
@@ -154,7 +154,7 @@ public class Enzyme implements Serializable {
 			writer.write("\"");
 			writer.write(field.name());
 			writer.write("\":");
-			String value = field.getStringValue(this);
+			String value = field.getStringValue(this,"\"");
 			if (value==null) writer.write(value);
 			else {
 				writer.write(field.leftDelimiter());
