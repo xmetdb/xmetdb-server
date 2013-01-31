@@ -240,7 +240,7 @@ public class UserResourceTest extends ResourceTest {
 		formparams.add(new BasicNameValuePair(ReadUser.fields.firstname.name(),  "Alice"));
 		formparams.add(new BasicNameValuePair(ReadUser.fields.lastname.name(),  "B."));
 		formparams.add(new BasicNameValuePair(ReadUser.fields.email.name(),  "email@example.org"));
-		formparams.add(new BasicNameValuePair(ReadUser.fields.reviewer.name(),  ""));
+		formparams.add(new BasicNameValuePair(ReadUser.fields.reviewer.name(),  ReadUser.fields.reviewer.name()));
 		
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT * FROM user where iduser=3");
