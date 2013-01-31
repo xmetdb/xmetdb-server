@@ -18,5 +18,4 @@
 	<li><a class='selectable ui-widget-header' title='Click here to read the XMEXMetDBTDB guide' href='${xmet_guide}'>Guide</a></li>
 </ul>
 <br>
-<button class='remove-bottom' id="btnAddNewEnzyme">Add new enzyme</button><a href='#' class='chelp add'></a>
-</div>
+	</div>

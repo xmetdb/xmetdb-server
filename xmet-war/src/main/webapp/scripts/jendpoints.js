@@ -110,6 +110,7 @@ function defineEndpointsTable(url,root) {
                 '<option value="-1">all</option>' +
                 '</select> enzymes.'	            
 	    }
+    
 	} )
 	.makeEditable({
 		"aoColumns": [
@@ -157,7 +158,11 @@ function defineEndpointsTable(url,root) {
         oDeleteRowButtonOptions: {
             label: "Remove",
             icons: { primary: 'ui-icon-trash' }
-        }
+        },
+		oAddNewRowButtonOptions: {	label: "Add...",
+			icons: {primary:'ui-icon-plus'} 
+		},
+		sAddDeleteToolbarSelector: ".dataTables_length"		
 	});
 	return eTable;
 }
