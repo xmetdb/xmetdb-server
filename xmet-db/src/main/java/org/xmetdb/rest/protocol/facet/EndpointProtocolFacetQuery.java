@@ -3,6 +3,8 @@ package org.xmetdb.rest.protocol.facet;
 import java.sql.ResultSet;
 import java.util.List;
 
+import org.xmetdb.rest.endpoints.Enzyme.EnzymeFields;
+
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.facet.IFacet;
 import net.idea.modbcum.i.query.QueryParam;
@@ -23,7 +25,7 @@ public class EndpointProtocolFacetQuery extends AbstractFacetQuery<String,String
 	private static final long serialVersionUID = -8340773122431657623L;
 	protected EndpointProtocolFacet record;
 	protected static String sql_protocol = 
-		"select t.code,t.name,t.uri,t.allele,count(distinct(idprotocol)) as c from protocol\n"+
+		"select t.code,t.name,t.uniprot,t.alleles,count(distinct(idprotocol)) as c from protocol\n"+
 		"left join protocol_endpoints using(idprotocol,version)\n"+
 		"left join template t using(idtemplate)\n"+
 		"where published_status = 'published'\n"+
@@ -69,7 +71,7 @@ public class EndpointProtocolFacetQuery extends AbstractFacetQuery<String,String
 			record = new EndpointProtocolFacet(null);
 		}
 		try {
-			record.setProperty1(rs.getString("uri"));
+			record.setProperty1(rs.getString(EnzymeFields.uniprot.name()));
 			record.setProperty2(rs.getString("code"));
 			record.setValue(rs.getString("name"));
 			record.setCount(rs.getInt("c"));

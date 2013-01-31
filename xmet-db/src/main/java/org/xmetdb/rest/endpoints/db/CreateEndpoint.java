@@ -11,7 +11,7 @@ import org.xmetdb.rest.endpoints.Enzyme;
 
 public class CreateEndpoint extends AbstractObjectUpdate<Enzyme>{
 	private static final String[] sql = {
-		"insert into template (name,code,uri,allele) values (?,?,?,?)"
+		"insert into template (name,code,uniprot,alleles) values (?,?,?,?)"
 	};
 	public CreateEndpoint(Enzyme enzyme) {
 		setObject(enzyme);
@@ -28,7 +28,7 @@ public class CreateEndpoint extends AbstractObjectUpdate<Enzyme>{
 		case 0:{
 			params1.add(new QueryParam<String>(String.class, getObject().getName()));
 			params1.add(new QueryParam<String>(String.class,  getObject().getCode()));
-			params1.add(new QueryParam<String>(String.class,  getObject().getUri()==null?null:getObject().getUri().toString()));
+			params1.add(new QueryParam<String>(String.class,  getObject().getUniprot_id()==null?null:getObject().getUniprot_id()));
 			StringBuilder b = new StringBuilder();
 			String d = "";
 			if (getObject().getAlleles()==null)

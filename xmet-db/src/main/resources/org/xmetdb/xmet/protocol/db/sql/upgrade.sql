@@ -286,4 +286,21 @@ insert into version (idmajor,idminor,comment) values (2,12,"copy observation pro
 -- ----------------------------------------------------------
 -- 2.12 to 2.13 
 -- ----------------------------------------------------------
+drop table dictionary;
 insert into version (idmajor,idminor,comment) values (2,13,"drop dictionary table");
+
+
+-- ----------------------------------------------------------
+-- 2.13 to 2.14 
+-- ----------------------------------------------------------
+update template set uri = replace(uri,"http://www.uniprot.org/uniprot/","");
+ALTER TABLE `template` MODIFY COLUMN `name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ MODIFY COLUMN `code` VARCHAR(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ CHANGE COLUMN `uri` `uniprot` VARCHAR(16) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'UniProt ID',
+ CHANGE COLUMN `allele` `alleles` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+, DROP INDEX `template_name`,
+ DROP INDEX `template_code`,
+ ADD UNIQUE INDEX `template_code` USING BTREE(`code`, `name`),
+ ADD UNIQUE INDEX `template_uniprot` USING BTREE(`uniprot`),
+ ADD INDEX `template_alleles`(`alleles`(200));
+insert into version (idmajor,idminor,comment) values (2,14,"Enzymes table refactoring");

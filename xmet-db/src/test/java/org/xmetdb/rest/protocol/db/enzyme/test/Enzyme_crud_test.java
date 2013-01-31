@@ -1,8 +1,6 @@
 package org.xmetdb.rest.protocol.db.enzyme.test;
 
 
-import java.net.URI;
-
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
 
@@ -20,7 +18,7 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 		Enzyme enzyme = new Enzyme();
 		enzyme.setCode("CYPXYZ");
 		enzyme.setName("Cytochrome XYZ");
-		enzyme.setUri(new URI("Q1234"));
+		enzyme.setUniprot_id("Q1234");
 		enzyme.setAlleles(new String[] {"A","B","C"});
 		return new CreateEndpoint(enzyme);
 	}
@@ -30,12 +28,12 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT name,code,uri,allele from template where code='CYPXYZ'"));
+				String.format("SELECT name,code,uniprot,alleles from template where code='CYPXYZ'"));
 		
 		Assert.assertEquals(1,table.getRowCount());
 		Assert.assertEquals("Cytochrome XYZ",table.getValue(0,"name"));
-		Assert.assertEquals("http://www.uniprot.org/uniprot/Q1234",table.getValue(0,"uri"));
-		Assert.assertEquals("A,B,C",table.getValue(0,"allele"));
+		Assert.assertEquals("Q1234",table.getValue(0,"uniprot"));
+		Assert.assertEquals("A,B,C",table.getValue(0,"alleles"));
 		
 		c.close();
 	}

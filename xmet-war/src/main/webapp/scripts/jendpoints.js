@@ -40,18 +40,14 @@ function defineEndpointsTable(url,root) {
 					  return "<a title='Click to display the available observations for this enzyme' href='/xmetdb/protocol?xmet_enzyme=" + encodeURIComponent(o.aData["code"]) + "'>"+o.aData["name"]+"</a>";
 				  }
 				},
-				{ "mDataProp": "uri" , "asSorting": [ "asc", "desc" ],
+				{ "mDataProp": "uniprot" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 3 ],
 					  "bSearchable" : true,
 					  "sWidth" : "10%",
 					  "bSortable" : true,
 					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
-						  var n = val.lastIndexOf("/");
-						  var id = val;
-						  if (n>=0) id = val.substring(n+1);
-						  else {id = val; val = "http://www.uniprot.org/uniprot/"+id; }
-						  return "<a href='"+ val + "' target='uniprot'>" + id + "</a>";
+						  return "<a href='http://www.uniprot.org/uniprot/"+ val + "' target='uniprot'>" + val + "</a>";
 					  }
 				},
 				{ "mDataProp": "alleles" , "asSorting": [ "asc", "desc" ],
@@ -117,35 +113,49 @@ function defineEndpointsTable(url,root) {
                 null,
                 {
                     type:'text'	,
+                    loadtext: 'loading...',
                     indicator: 'Saving enzyme code ...',
                     tooltip: 'Click to edit enzyme code',
                     loadtext: 'loading...',
                     onblur: 'cancel',
-                    submit: 'OK'                  	  
+                    submit: 'Save changes',
+                    fnOnCellUpdated: function(sStatus, sValue, settings){
+						alert("(Cell Callback): Cell is updated with value " + sValue);
+					}
                 },
                 {
                     type:'text'	,
+                    loadtext: 'loading...',
                     indicator: 'Saving enzyme name ...',
                     tooltip: 'Click to edit enzyme name',
                     loadtext: 'loading...',
                     onblur: 'cancel',
-                    submit: 'OK'                  	  
+                    data: function (a,b) {
+                    	return $(a).text();
+                    },
+                    submit: 'Save changes'                  	  
                 },
                 {
                     type:'text'	,
+                    loadtext: 'loading...',
                     indicator: 'Saving UNIPROT code ...',
                     tooltip: 'Click to edit UNIPROT code',
                     loadtext: 'loading...',
+                    data: function (a,b) {
+                    	console.log(a);
+                    	return $(a).text();
+                    },
                     onblur: 'cancel',
-                    submit: 'OK'                  	  
+                    submit: 'Save changes'                  	  
                 },
                 {
                       type:'textarea'	,
+                      loadtext: 'loading...',
                       indicator: 'Saving Alleles...',
                       tooltip: 'Click to edit alleles',
                       loadtext: 'loading...',
                       onblur: 'cancel',
-                      submit: 'OK',
+                      submit: 'Save changes',
                       loadurl: root + "/catalog?max=1", //?
                       loadtype: 'GET'                    	  
                  }
@@ -154,7 +164,7 @@ function defineEndpointsTable(url,root) {
         sUpdateURL: root+"/catalog?method=PUT",
         sAddNewRowFormId: "formAddNewEnzyme",
         sAddNewRowButtonId: "btnAddNewEnzyme",
-        sDeleteURL: root + "/catalog?method=delete",
+        sDeleteURL: root + "/catalog?method=DELETE",
         oDeleteRowButtonOptions: {
             label: "Remove",
             icons: { primary: 'ui-icon-trash' }

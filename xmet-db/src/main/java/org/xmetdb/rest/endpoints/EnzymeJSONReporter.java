@@ -26,29 +26,9 @@ public class EnzymeJSONReporter extends QueryReporter<Enzyme, IQueryRetrieval<En
 	@Override
 	public Object processItem(Enzyme item) throws Exception {
 		try {
-			StringBuilder alleles = new StringBuilder();
-			alleles.append("[");
-			String delimiter = "";
-			if (item.getAlleles()!=null) 
-				for (String allele: item.alleles) {
-					alleles.append(delimiter);
-					alleles.append("\"");
-					alleles.append(allele);
-					alleles.append("\"");
-					delimiter = ",";
-				}
-			alleles.append("]");
-			String code = ((Enzyme)item).getCode()==null?"":((Enzyme)item).getCode();
-			String name = item.getName()==null?"":item.getName();
 			if (comma!=null) getOutput().write(comma);
-			getOutput().write(String.format("\n{\"id\":%d,\"code\":\"%s\",\"name\":\"%s\",\"label\":\"%s %s\",\"uri\":\"%s\",\"alleles\":%s}",
-					item.getId(),
-					code,
-					name,
-					code,name,
-					item.getUri()==null?"":item.getUri(),
-					alleles
-					));
+			item.toJSON(getOutput());
+			getOutput().write(String.format(""));
 			comma = ",";
 		} catch (Exception x) {
 			x.printStackTrace();

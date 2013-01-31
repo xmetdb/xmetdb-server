@@ -182,8 +182,8 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 			enzyme.setCode(value);
 			break;
 		}
-		case uri: {
-			try {enzyme.setUri(new URI(value));} catch (Exception x) {}
+		case uniprot: {
+			try {enzyme.setUniprot_id(value);} catch (Exception x) {}
 			break;
 		}
 		case alleles: {
@@ -215,9 +215,8 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 					enzyme.setName(value);
 					break;
 					}
-				case uri: {
-					if (value==null) enzyme.setUri(null);
-					else enzyme.setUri(new URI(value));
+				case uniprot: {
+					enzyme.setUniprot_id(value);
 					break;
 					}
 				case alleles: {
