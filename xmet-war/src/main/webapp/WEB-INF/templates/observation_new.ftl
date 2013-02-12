@@ -214,7 +214,7 @@ $(document).ready(function() {
 	    		 	<select title ='Tanimoto similarity threshold' name='threshold' style='width:6em;' tabindex='4'><option value='0.9'>0.9</option><option value='0.8'>0.8</option><option value='0.7'>0.7</option><option value='0.6'>0.6</option><option value='0.5' selected >0.5</option><option value='0.4' >0.4</option><option value='0.3' >0.3</option><option value='0.2' >0.2</option></select>
 	    		 	<label>Chemical identifier</label>
 	    		 	<br/>
-	    		 	<input type='text' name='search' size='60' value='c1ccccc1Cl' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
+	    		 	<input type='text' name='search' size='60' value='' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
 	    		 	<input type="submit" class="search" value="Structure search" tabindex='13'>
 
 				</div>
