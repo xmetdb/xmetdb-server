@@ -3,7 +3,7 @@ xmetdb-server
 
 The xmetdb web service/application
 
-This is an ongoing implementation of XMETDB.  Almost fully functional, with some issues still to be resolved!
+This is an ongoing implementation of XMETDB.  Almost fully functional, with some [issues](https://github.com/xmetdb/xmetdb-server/issues) still to be resolved!
 
 --------
 Build: 
