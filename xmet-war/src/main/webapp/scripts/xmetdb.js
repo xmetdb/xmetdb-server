@@ -557,7 +557,11 @@ function searchFormValidation(formName) {
 	$(formName).validate({
 		rules : {
 			'search': {
-				required : true
+				required : function() {
+					var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
+					console.log(molFile);
+					return (molFile == null); //if no structures drawn, the search field should not be empty
+				}
 			},		
 			'option': {
 				required : true
