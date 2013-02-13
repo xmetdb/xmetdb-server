@@ -1,6 +1,5 @@
-<div class='helptitle' style='font-weight:bold;'>Observation</div>
+<div class='helptitle' style='font-weight:bold;'>XMetDB Observation</div>
 <div class='helpcontent'>
-Observation
 </div>
 
 <div id="keys" style="display:none;">
@@ -17,33 +16,39 @@ Observation
     <li><a href="#copyobs">Copy</a></li>
   </ul>
   <div id="substrate">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+    <p>The substrate</p>
   </div>
   <div id="product">
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+    <p>The product.</p>
   </div>
   <div id="atomuncertainty">
     <p>Certain/Uncertain</p>
   </div>
   <div id="productamount">
-    <p>Major/Minor/Unknown</p>
+    <p>The product amount. One of Major, Minor or Unknown</p>
   </div>
   <div id="experiment">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+  <!-- Change the links to the proper documentation. Could be on xmetdb wiki pages -->
+    <p>The experiment. One of 
+    <a href='http://en.wikipedia.org/wiki/Hepatocyte' target=_blank>Hepatocytes</a>, 
+    <a href='http://en.wikipedia.org/wiki/Microsomes' target=_blanl>Microsomes</a>, 
+    Enzymes.
+    </p>
   </div>
   <div id="enzyme">
-    <p>Enzyme</p>
+    <p>XMetDB supports list of <a href='${xmet_root}/catalog'>enzymes</a>, editable by XMetDB administrators.</p>
   </div>
   <div id="allele">
     <p>Allele</p>
   </div>  
   <div id="reference">
-    <p>DOI or plain text</p>
+    <p>Please enter <a href='http://en.wikipedia.org/wiki/Digital_object_identifier' target=_blank>DOI</a> or plain text reference of the related publication.</p>
   </div>  
   <div id="modifyobs">
-    <p>what it does</p>
+    <p>Launches the observation editor. Only allowed for XMetDB curators.</p>
   </div>  
-      <div id="copyobs">
-    <p>what it does</p>
+  <div id="copyobs">
+    <p>Copies this observation into new one and launches the observation editor. 
+    This is a convenient way to enter a new observation which only slightly differ from an existing one.</p>
   </div>  
 </div>
