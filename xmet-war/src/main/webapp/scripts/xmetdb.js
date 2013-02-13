@@ -34,7 +34,7 @@ function cmpatoms2image(uri, model_uri) {
 }
 
 function renderEnzyme(code,name) {
-	return "<span title='"+ name +"'>" + code + "</span>";
+	return "<span title='"+ name +"'>" + (code==null?"":code) + "</span>";
 }
 
 function loadEnzymesList(root,selectTag,allelesTag) {
@@ -412,7 +412,7 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				},
 				{ "mDataProp": "enzyme.code" , 
 				  "asSorting": [ "asc", "desc" ], 
-				  "bSearchable" : true
+				  "bSearchable" : true		  
 				},
 				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] }
 			],
@@ -535,7 +535,9 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				        	  aData.enzyme.name = data[0].name;
 				        	  $('td:eq(5)', nRow).html(renderEnzyme(data[0].code,data[0].name));	
 				          },
-				          error: function(xhr, status, err) { },
+				          error: function(xhr, status, err) { 
+				        	  $('td:eq(5)', nRow).html("");	
+				          },
 				          complete: function(xhr, status) { }
 				       });
 				 } else {
