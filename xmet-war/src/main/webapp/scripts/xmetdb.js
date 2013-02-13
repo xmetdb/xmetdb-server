@@ -743,7 +743,7 @@ function loadHelp(root,topic) {
 		    key = key.replace('#','');
 		    $('a.chelp.'+key)
 			 .attr('title','Help: '+key)
-			 .html('<span id="info-link" class="ui-icon ui-icon-info" style="display: inline-block;"></span>')
+			 .html('<span id="info-link" class="ui-icon ui-icon-help" style="display: inline-block;"></span>')
 			 .click(function() {
 				 $('#keytitle').text(title);
 				 $('#keycontent').html(content);
