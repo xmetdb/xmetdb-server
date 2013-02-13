@@ -736,7 +736,7 @@ function loadHelp(root,topic) {
 		
 		$('#keys ul li').map(function(el, value) {
 			var key = $(value.innerHTML).attr('href');
-		    var content = $(key).text();
+		    var content = $(key).html();
 		    var title = $(value).text();
 		    key = key.replace('#','');
 		    $('a.chelp.'+key)

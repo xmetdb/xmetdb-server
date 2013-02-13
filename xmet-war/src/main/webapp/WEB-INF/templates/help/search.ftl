@@ -1,11 +1,11 @@
-<div class='helptitle' style='font-weight:bold;'>XMETDB search help</div>
+<div class='helptitle' style='font-weight:bold;'>XMetDB search help</div>
 <div class='helpcontent'>
 Search for chemical structures and observations!
 </div>
 
 <div id="keys" style="display:none;">
   <ul>
-    <li><a href="#scope">Search for</a></li>
+    <li><a href="#scope">Search scope</a></li>
     <li><a href="#options">Search options</a></li>
     <li><a href="#identifier">Chemical identifier</a></li>
     <li><a href="#experiment">Experiment</a></li>
@@ -16,19 +16,33 @@ Search for chemical structures and observations!
     <li><a href="#nhits">Number of hits</a></li>
   </ul>
   <div id="scope">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+    <p>Search only within structures, defined as substrates or products in XMetDB observations. If both checkboxes are unchecked, the search scope is the entire database.</p>
   </div>
   <div id="options">
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+    <p>
+    <ul>
+    <li><b>Auto:</b> search by identifier or exact search if <a href='http://en.wikipedia.org/wiki/SMILES' target=_blank>SMILES</a> or 
+    <a href='http://en.wikipedia.org/wiki/Inchi' target=_blank>InChI</a> is specified</li>
+    <li><b>Similarity:</b> Tanimoto similarity over 1024 bit hashed fingerprints</li>
+    <li><b>Substructure search:</b> please provide <a href='http://en.wikipedia.org/wiki/Smiles_arbitrary_target_specification' target=_blank>SMARTS</a> or draw a substructure</li> 
+    </ul>
+    </p>
   </div>
   <div id="identifier">
-    <p>Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.</p>
+    <p>Please enter a search query (
+    		<a href='http://en.wikipedia.org/wiki/CAS_registry_number' target=_blank>CAS</a>, 
+    		<a href='http://en.wikipedia.org/wiki/Chemical_name' target=_blank>Chemical Name</a>, 
+    		<a href='http://en.wikipedia.org/wiki/SMILES' target=_blank>SMILES</a>,
+    		<a href='http://en.wikipedia.org/wiki/Inchi' target=_blank>InChI</a> or 
+    		<a href='http://en.wikipedia.org/wiki/Smiles_arbitrary_target_specification' target=_blank>SMARTS</a> in case of <i>Substructure</i> search), or use the structure diagram editor on the left. 
+    		<br>The input type is guessed automatically.</p>
   </div>
   <div id="experiment">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+    <p>The type of experiment.
+    </p>
   </div>
   <div id="enzyme">
-    <p>Enzyme</p>
+    <p>Please select an enzyme from the list.</p>
   </div>
   <div id="allele">
     <p>Allele</p>
@@ -37,9 +51,9 @@ Search for chemical structures and observations!
     <p>DOI or plain text</p>
   </div>  
   <div id="xmetid">
-  <p>Number of hits</p>
+  <p>XMetDB identifier (e.g. XMETDB1)</p>
   </div>    
-      <div id="nhits">
+  <div id="nhits">
     Number of hits
   </div>  
 </div>
