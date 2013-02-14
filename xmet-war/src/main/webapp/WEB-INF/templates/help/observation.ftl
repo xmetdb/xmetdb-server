@@ -22,7 +22,7 @@
     <p>The product.</p>
   </div>
   <div id="atomuncertainty">
-    <p>Certain/Uncertain</p>
+    <p>Certain/Uncertain. An uncertain atom mapping means that the reaction mechanism occuring is not known with atomic detail.</p>
   </div>
   <div id="productamount">
     <p>The product amount. One of Major, Minor or Unknown</p>
@@ -31,7 +31,7 @@
   <!-- Change the links to the proper documentation. Could be on xmetdb wiki pages -->
     <p>The experiment. One of 
     <a href='http://en.wikipedia.org/wiki/Hepatocyte' target=_blank>Hepatocytes</a>, 
-    <a href='http://en.wikipedia.org/wiki/Microsomes' target=_blanl>Microsomes</a>, 
+    <a href='http://en.wikipedia.org/wiki/Microsomes' target=_blank>Microsomes</a>, 
     Enzymes.
     </p>
   </div>
