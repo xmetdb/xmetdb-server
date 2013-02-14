@@ -42,7 +42,7 @@
     <p>Allele</p>
   </div>  
   <div id="reference">
-    <p>Please enter <a href='http://en.wikipedia.org/wiki/Digital_object_identifier' target=_blank>DOI</a> or plain text reference of the related publication.</p>
+    <p>The publication from which the data is taken, either as a <a href='http://en.wikipedia.org/wiki/Digital_object_identifier' target=_blank>DOI</a> or as a plain text reference.</p>
   </div>  
   <div id="modifyobs">
     <p>Launches the observation editor. Only allowed for XMetDB curators.</p>
