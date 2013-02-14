@@ -16,28 +16,28 @@ Observation
     <li><a href="#search">Search/Draw options</a></li>
   </ul>
   <div id="substrate">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+    <p>The substrate molecule</p>
   </div>
   <div id="product">
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+    <p>The product molecule formed in this biotransformation. <br />If it is a multi-step reaction (i.e. has several semi-stable intermediate (Where semi-stable means can be identified experimentally, at least with the best possible experiment.), please add each step as a separate reaction if the intermediates are known with certainty.</p>
   </div>
   <div id="atomuncertainty">
-    <p>Certain/Uncertain</p>
+    <p>Certain/Uncertain<br />The atom certainty reflects how well the reaction mechanism is understood. An atom mapping is certain if the highlighted atom(s) in the substrate are certain to lead to this product. A certain mapping should in most cases only contain a single atom (see the documentation for details on how to do correct atom mapping for different types of enzymatic reactions).</p>
   </div>
   <div id="productamount">
-    <p>Major/Minor/Unknown</p>
+    <p>Major/Minor/Unknown<br />The amount is major if we know that this is the major product or that the amount formed is >50% of the most formed product, minor if we know that its formed to <50% of the major product. It is unknown when we do not know to what extent other products are formed in relation to this product. The amount is of course under the experimental conditions mentioned and for the enzyme labelled.</p>
   </div>
   <div id="experiment">
-    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+    <p>The type of experiment. MS (microsomes) represents the common case of using human liver microsomes. HEP (hepatocytes)  represents any use of liver cells or liver fractions, please add details in the comment sections. ENZ (enzyme) means a purified enzyme has been used.</p>
   </div>
   <div id="enzyme">
-    <p>Enzyme</p>
+    <p>Enzyme<br />The enzyme responsible for this biotransformation. If multiple enzymes do the same biotransformation please copy the observation and make a new one for each enzyme.</p>
   </div>
   <div id="allele">
-    <p>Allele</p>
+    <p>Allele<br />The enzyme allele studied. If none selected wild type is assumed.</p>
   </div>  
   <div id="reference">
-    <p>DOI or plain text</p>
+    <p>DOI or plain text. Please start doi with "DOI:"</p>
   </div>  
   <div id="search">
     <p>what it does</p>
