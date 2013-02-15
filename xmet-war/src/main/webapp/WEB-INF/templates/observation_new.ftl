@@ -65,7 +65,7 @@ $(document).ready(function() {
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Modify an existing observation">Modify</a></li>');
 			jQuery("#breadCrumb").jBreadCrumb();
-			loadHelp("${xmet_root}","observation_edit");
+			loadHelp("${xmet_root}","observation_new");
 		});    
     	<#break>
     <#default>
