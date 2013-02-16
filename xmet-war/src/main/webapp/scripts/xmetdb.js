@@ -273,6 +273,14 @@ function loadObservation(observation_uri) {
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
 	        	  $('#xmet_reference').replaceWith(observation["reference"]);
+	        	  try {
+	        		  $('#xmet_doi').hide();
+	        		  if (observation["reference"].indexOf("doi:")==0) {
+	        			  $('#xmet_doi').attr("href").("http://dx.doi.org/" + observation["reference"].replace("doi:",""));
+	        			  $('#xmet_doi').show();
+	        		  }	  
+	        	  } catch (err) {}
+	        	  
 	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
 	        	  
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
