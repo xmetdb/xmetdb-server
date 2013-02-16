@@ -276,7 +276,7 @@ function loadObservation(observation_uri) {
 	        	  try {
 	        		  $('#xmet_doi').hide();
 	        		  if (observation["reference"].indexOf("doi:")==0) {
-	        			  $('#xmet_doi').attr("href").("http://dx.doi.org/" + observation["reference"].replace("doi:",""));
+	        			  $('#xmet_doi').attr("href","http://dx.doi.org/" + observation["reference"].replace("doi:",""));
 	        			  $('#xmet_doi').show();
 	        		  }	  
 	        	  } catch (err) {}
