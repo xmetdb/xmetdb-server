@@ -40,7 +40,7 @@
      	<div class="three columns alpha"><label for="xmet_reference">Reference:<a href='#' class='chelp reference'></a></label></div>
       		<div class="six columns omega">
       				<span id="xmet_reference">&nbsp;</span>
-      				<a href='http://dx.doi.org/' id='xmet_doi'><span id="info-link" class="ui-icon ui-icon-link" style="display: inline-block;"></span></a>
+      				<a href='http://dx.doi.org/' target='doi' title='' id='xmet_doi'><span id="info-link" class="ui-icon ui-icon-link" style="display: inline-block;"></span></a>
       		</div>
     </div>	
 	
