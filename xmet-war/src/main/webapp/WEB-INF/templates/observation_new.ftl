@@ -18,7 +18,7 @@
 <script type="text/javascript">
 function atomNumber(num, atoms_id) {
     var index = _xmet.atoms[atoms_id].indexOf(num);
-    if (index>=0) ; // _xmet.atoms[results_id].delete(num);
+    if (index>=0) _xmet.atoms[atoms_id].splice(index,1);
     else _xmet.atoms[atoms_id].push(num);
     $(atoms_id).text(_xmet.atoms[atoms_id]);
 }	    
