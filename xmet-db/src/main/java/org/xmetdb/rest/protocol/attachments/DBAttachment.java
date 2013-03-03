@@ -79,6 +79,14 @@ public class DBAttachment extends Document {
 	protected attachment_type type;
 	protected String description;
 	protected String format;
+	protected String[] atomNumbers;
+	
+	public String[] getAtomNumbers() {
+		return atomNumbers;
+	}
+	public void setAtomNumbers(String[] atomNumbers) {
+		this.atomNumbers = atomNumbers;
+	}
 	public String getFormat() {
 		return format;
 	}

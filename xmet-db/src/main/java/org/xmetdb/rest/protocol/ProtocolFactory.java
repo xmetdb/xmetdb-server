@@ -35,6 +35,7 @@ public class ProtocolFactory {
 		xmet_substrate_type,xmet_product_type,
 		xmet_substrate_upload, xmet_product_upload, 
 		xmet_substrate_uri, xmet_product_uri,
+		xmet_substrate_atoms, xmet_product_atoms,
 		xmet_substrate_mol, xmet_product_mol,
 		xmet_allele, xmet_reference, xmet_comments,
 		project_uri, organisation_uri, user_uri, iduser, author_uri, 
@@ -79,6 +80,9 @@ public class ProtocolFactory {
 		DBAttachment[] p_attachments = new DBAttachment[StructureUploadType.values().length];
 		StructureUploadType s_upload = null;
 		StructureUploadType p_upload = null;
+		
+		String[] substrate_atoms = null;
+		String[] product_atoms = null;
 		
 		for (final Iterator<FileItem> it = items.iterator(); it.hasNext();) {
 			FileItem fi = it.next();
@@ -144,6 +148,14 @@ public class ProtocolFactory {
 					String s = fi.getString(utf8);
 					if ((s != null) && !"".equals(s))
 						protocol.setAbstract(s);
+					break;
+				}
+				case xmet_substrate_atoms: {
+					try { substrate_atoms = fi.getString(utf8).split(",");} catch (Exception x) {}
+					break;
+				}
+				case xmet_product_atoms: {
+					try { product_atoms = fi.getString(utf8).split(",");} catch (Exception x) {}
 					break;
 				}
 				case xmet_substrate_uri : {
@@ -403,10 +415,14 @@ public class ProtocolFactory {
 			}
 
 		}
-		if ((s_upload!=null) && (s_attachments[s_upload.ordinal()]!=null)) 
+		if ((s_upload!=null) && (s_attachments[s_upload.ordinal()]!=null)) {
+				s_attachments[s_upload.ordinal()].setAtomNumbers(substrate_atoms);
 				protocol.getAttachments().add(s_attachments[s_upload.ordinal()]);
-		if ((p_upload!=null) && (p_attachments[p_upload.ordinal()]!=null)) 
-			protocol.getAttachments().add(p_attachments[p_upload.ordinal()]);		
+		}
+		if ((p_upload!=null) && (p_attachments[p_upload.ordinal()]!=null)) {
+			p_attachments[p_upload.ordinal()].setAtomNumbers(product_atoms);
+			protocol.getAttachments().add(p_attachments[p_upload.ordinal()]);
+		}
 		return protocol;
 	}
 
