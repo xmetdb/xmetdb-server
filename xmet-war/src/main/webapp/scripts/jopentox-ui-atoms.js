@@ -1,4 +1,4 @@
-function createImageMap(cmpURI, w,h , imgselector, mapselector) {
+function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atoms_id) {
 	var uri = cmpURI + "/imagejson?w="+w+"&h="+h;
 	$.ajax({
 		type : "GET",
@@ -19,7 +19,7 @@ function createImageMap(cmpURI, w,h , imgselector, mapselector) {
 		        						val['x']+","+val['y']+","+r+
 		        						"' href='#' title='"+
 		        						atomno+"' atomnumber='"+atomno+
-		        						"' onClick='atomNumber("+atomno+")'>\n";
+		        						"' onClick='atomNumber("+atomno+",\""+atoms_id+"\")'>\n";
 		  	  		map.append(sOut);
 		      });
 		     $(imgselector).mapster({
@@ -31,8 +31,11 @@ function createImageMap(cmpURI, w,h , imgselector, mapselector) {
 		            strokeWidth: 2
 		        }
 		     })
-		     .mapster('set',true,'1,2,3,4')
+		     .mapster('set',true,'1,2,3')
 		     ;		
+		     _xmet.atoms[atoms_id].push(1);
+		     _xmet.atoms[atoms_id].push(2);
+		     _xmet.atoms[atoms_id].push(3);
 	    }
 	});
 }

@@ -2,7 +2,11 @@ var _xmet = {
 help : {
 	title:"Help",
 	content:"XMETDB Help"
-}		
+},
+atoms : {
+	"#xmet_substrate_atoms": [],
+	"#xmet_product_atoms":[]
+}
 }
 function cmp2image(val) {
 		var cmpURI = val;
@@ -228,7 +232,7 @@ function toggleDrawUI(prefix, idButton, msg) {
 /**
  * Load structures from remote Ambit dataset uri via JSONP
  */
-function loadStructures(datasetURI, results, modelURI) {
+function loadStructures(datasetURI, results, atomsid) {
 	if ((datasetURI===undefined) || (datasetURI==null)) {
 		  $(results).empty();
 	} else {
@@ -240,9 +244,9 @@ function loadStructures(datasetURI, results, modelURI) {
 	        	  var dataSize = data.dataEntry.length;
 	        	  $(results).empty();
 	        	  for (i = 0; i < dataSize; i++) {
-	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,modelURI)+'</li>');
+	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,null)+'</li>');
 	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
-	        		  createImageMap(data.dataEntry[i].compound.URI, '150','150', '#i'+id, '#m'+id);
+	        		  createImageMap(data.dataEntry[i].compound.URI, '150','150', '#i'+id, '#m'+id,results,atomsid);
 	        	  };
 	          },
 	          error: function(xhr, status, err) { 
@@ -294,14 +298,14 @@ function loadObservation(observation_uri) {
 	        	  if ((observation.Substrate!=undefined)  && (observation.Substrate!=null) && (observation.Substrate.dataset.uri!=null)) {
 	        		  $('#xmet_export_substrate').attr("href",observation.Substrate.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        	  	  $('#xmet_export_substrate').show();
-	        	  	loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate",model_uri);
+	        	  	loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate","#xmet_substrate_atoms");
 	        	  } else {
 	        		  $('#xmet_export_substrate').hide();
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 	        		  $('#xmet_export_product').attr("href",observation.Product.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        		  $('#xmet_export_product').show();
-	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product",model_uri);
+	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product","#xmet_product_atoms");
 	          	  } else {
 	          		 $('#xmet_export_product').hide();
 	          	  }
@@ -319,7 +323,6 @@ function loadObservation(observation_uri) {
 
 
 function editObservation(root,observation_uri) {
-	var model_uri = null;
 	var observation;
     $.ajax({
 	          dataType: "json",
@@ -349,11 +352,11 @@ function editObservation(root,observation_uri) {
 	        	  $('#xmet_product_upload').val('');
 	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
 	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img",model_uri);
+	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img","#xmet_substrate_atoms");
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img",model_uri);
+		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img","#xmet_product_atoms");
 	        	  }
 
 

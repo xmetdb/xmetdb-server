@@ -16,8 +16,11 @@
 </style>
 
 <script type="text/javascript">
-function atomNumber(num) {
-	//console.log(num);
+function atomNumber(num, atoms_id) {
+    var index = _xmet.atoms[atoms_id].indexOf(num);
+    if (index>=0) ; // _xmet.atoms[results_id].delete(num);
+    else _xmet.atoms[atoms_id].push(num);
+    $(atoms_id).text(_xmet.atoms[atoms_id]);
 }	    
 $(document).ready(function() {
 		$( ".useSelected" ).button();
@@ -100,6 +103,7 @@ $(document).ready(function() {
 	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em></label><a href='#' class='chelp substrate'></a></div>
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
+		    <input type="hidden" id="xmet_substrate_atoms" name="xmet_substrate_atoms" value="">
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
@@ -107,6 +111,7 @@ $(document).ready(function() {
 		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em></label><a href='#' class='chelp product'></a></div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
+			<input type="hidden" id="xmet_product_atoms" name="xmet_product_atoms" value="">
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
