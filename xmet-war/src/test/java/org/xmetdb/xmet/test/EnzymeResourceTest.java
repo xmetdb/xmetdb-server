@@ -55,17 +55,17 @@ public class EnzymeResourceTest  extends ResourceTest {
 		@Test
 		public void testDelete() throws Exception {
 			IDatabaseConnection c = getConnection();	
-			ITable table = 	c.createQueryTable("EXPECTED","SELECT code FROM template where idtemplate=11");
-			Assert.assertEquals("CYP26B1",table.getValue(0,"code"));
+			ITable table = 	c.createQueryTable("EXPECTED","SELECT code FROM template where idtemplate=15");
+			Assert.assertEquals("CYP2C8",table.getValue(0,"code"));
 			c.close();		
-			String org = String.format("http://localhost:%d%s/CYP26B1", port,Resources.enzyme);
+			String org = String.format("http://localhost:%d%s/15", port,Resources.enzyme);
 			RemoteTask task = testAsyncPoll(new Reference(org),
 					MediaType.TEXT_URI_LIST, null,
 					Method.DELETE);
 			Assert.assertEquals(Status.SUCCESS_OK.getCode(), task.getStatus());
 			//Assert.assertNull(task.getResult());
 			c = getConnection();	
-			table = 	c.createQueryTable("EXPECTED","SELECT code FROM template where idtemplate=11");
+			table = 	c.createQueryTable("EXPECTED","SELECT code FROM template where idtemplate=15");
 			Assert.assertEquals(0,table.getRowCount());
 			c.close();			
 		}
