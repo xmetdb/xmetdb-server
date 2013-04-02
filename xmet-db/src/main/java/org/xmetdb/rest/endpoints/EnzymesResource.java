@@ -2,8 +2,6 @@ package  org.xmetdb.rest.endpoints;
 
 import java.sql.Connection;
 
-import javax.ws.rs.Path;
-
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.modbcum.i.query.IQueryUpdate;
@@ -46,7 +44,6 @@ import org.xmetdb.xmet.client.Resources;
 
 public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>, Enzyme> {
 	
-	public static String resource = "/catalog";
 	public static String resourceParent = "subject";
 	public static String resourceKey = "object";
 	public static String resourceID = String.format("/{%s}/{%s}",resourceParent,resourceKey);

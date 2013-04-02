@@ -7,6 +7,7 @@ import net.idea.restnet.c.resource.TaskResource;
 public class Resources {
 	public static final String BASE_URL = "BASE_URL";
 	public static final String search = "/search";
+	public static final String enzyme = "/catalog";
 	public static final String protocol = "/protocol";
 	public static final String unpublished = "/unpublished";
 	public static final String chemical = "/chemical";
