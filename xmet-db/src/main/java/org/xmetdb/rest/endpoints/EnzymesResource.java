@@ -2,6 +2,8 @@ package  org.xmetdb.rest.endpoints;
 
 import java.sql.Connection;
 
+import javax.ws.rs.Path;
+
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.processors.IProcessor;
 import net.idea.modbcum.i.query.IQueryUpdate;
@@ -36,10 +38,12 @@ import org.xmetdb.xmet.client.Resources;
 
 /**
  * 
- * A resource wrapper fot {@link QueryOntology}
+ * A resource wrapper for {@link Enzyme} list
  * @author nina
- *
+ * @Path("/catalog")
  */
+
+
 public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>, Enzyme> {
 	
 	public static String resource = "/catalog";
@@ -157,7 +161,16 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		}
 
 	}
-	
+	/*
+	@GET
+	  @ResourceMethodSignature (
+	    queryParams = {@QueryParam("value"), @QueryParam("id"), @QueryParam("columnName")}
+	  )
+	  */	
+	@Override
+	protected Representation get(Variant variant) throws ResourceException {
+		return super.get(variant);
+	}
 	/**
 	 * Designed to work with jEditable datatables plugin
 	 * http://code.google.com/p/jquery-datatables-editable
