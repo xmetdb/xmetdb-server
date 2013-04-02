@@ -1,5 +1,6 @@
 package org.xmetdb.rest.endpoints.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.idea.modbcum.i.exceptions.AmbitException;
@@ -22,6 +23,9 @@ public class ReadEnzyme extends AbstractReadEnzyme<String> {
 	}
 
 	private static final String sql_all = "SELECT idtemplate,code,name,uniprot,alleles FROM template";
+	
+	private static final String sql_byid = "SELECT idtemplate,code,name,uniprot,alleles FROM template where idtemplate=?";
+	
 	@Override
 	public boolean isPrescreen() {
 		return false;
@@ -34,12 +38,21 @@ public class ReadEnzyme extends AbstractReadEnzyme<String> {
 
 	@Override
 	public String getSQL() throws AmbitException {
-		return sql_all;
+		if ((getValue()==null) || (getValue().getID()<=0))
+			return sql_all;
+		else
+			return sql_byid;
 	}
 
 	@Override
 	public List<QueryParam> getParameters() throws AmbitException {
-		return null;
+		if ((getValue()==null) || (getValue().getID()<=0))
+			return null;
+		else {
+			List<QueryParam> params =  new ArrayList<QueryParam>();
+			params.add(new QueryParam<Integer>(Integer.class,getValue().getID()));
+			return params;
+		}
 	}
 
 }

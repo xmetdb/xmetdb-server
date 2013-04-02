@@ -176,7 +176,7 @@ function defineEndpointsTable(url,root) {
                 return true;
         },
         fnOnDeleted: function(status) {       
-                //console.log("Deleted action finished. Status - " + status);
+        		eTable.fnDraw(true);
         },        
         sAddURL: root+"/catalog",
         sUpdateURL: root+"/catalog?method=PUT",

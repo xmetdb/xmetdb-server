@@ -17,11 +17,11 @@ public class Enzyme implements Serializable {
 			public String rightDelimiter() { return "";}
 			@Override
 			public String getStringValue(Enzyme enzyme,String quotes) {
-				return Integer.toString(enzyme.getId());
+				return Integer.toString(enzyme.getID());
 			}
 			@Override
 			public Object getValue(Enzyme enzyme) {
-				return enzyme.getId();
+				return enzyme.getID();
 			}	
 		},
 		code {
@@ -123,7 +123,7 @@ public class Enzyme implements Serializable {
 	}
 	protected int id;
 	
-	public int getId() {
+	public int getID() {
 		return id;
 	}
 
@@ -147,20 +147,25 @@ public class Enzyme implements Serializable {
 	}
 	
 	public void toJSON(Writer writer) throws IOException {
+		
 		writer.write(String.format("\n{"));
-		for (EnzymeFields field : EnzymeFields.values()) {
-			if (!EnzymeFields.id.equals(field))
-				writer.write(",");
-			writer.write("\"");
-			writer.write(field.name());
-			writer.write("\":");
-			String value = field.getStringValue(this,"\"");
-			if (value==null) writer.write(value);
-			else {
-				writer.write(field.leftDelimiter());
-				writer.write(value);
-				writer.write(field.rightDelimiter());
+		try {
+			for (EnzymeFields field : EnzymeFields.values()) {
+				if (!EnzymeFields.id.equals(field))
+					writer.write(",");
+				writer.write("\"");
+				writer.write(field.name());
+				writer.write("\":");
+				String value = field.getStringValue(this,"\"");
+				if (value==null) writer.write(value);
+				else {
+					writer.write(field.leftDelimiter());
+					writer.write(value);
+					writer.write(field.rightDelimiter());
+				}
 			}
+		} catch (Exception x) {
+			x.printStackTrace();
 		}
 		writer.write(String.format("}"));
 	}

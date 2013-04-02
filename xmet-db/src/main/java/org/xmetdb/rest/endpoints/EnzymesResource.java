@@ -17,7 +17,6 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
-import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
@@ -27,6 +26,7 @@ import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.endpoints.Enzyme.EnzymeFields;
 import org.xmetdb.rest.endpoints.db.CreateEndpoint;
+import org.xmetdb.rest.endpoints.db.DeleteEnzyme;
 import org.xmetdb.rest.endpoints.db.ReadEnzyme;
 import org.xmetdb.rest.endpoints.db.ReadEnzymeByObservation;
 import org.xmetdb.rest.endpoints.db.UpdateEnzyme;
@@ -44,10 +44,9 @@ import org.xmetdb.xmet.client.Resources;
 
 public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>, Enzyme> {
 	
-	public static String resourceParent = "subject";
-	public static String resourceKey = "object";
-	public static String resourceID = String.format("/{%s}/{%s}",resourceParent,resourceKey);
-	public static String resourceTree = String.format("/{%s}/{%s}/view/{tree}",resourceParent,resourceKey);
+	public static String resourceKey = "idtemplate";
+	public static String resourceID = String.format("/{%s}",resourceKey);
+
 	protected boolean isRecursive = false;
 	
 	public EnzymesResource() {
@@ -91,8 +90,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_N3) ||
-					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES) ||
-					variant.getMediaType().equals(MediaType.APPLICATION_JSON)
+					variant.getMediaType().equals(MediaType.TEXT_RDF_NTRIPLES)
 					) {
 				return new RDFJenaConvertor<Property, IQueryRetrieval<Property>>(
 						new TemplateRDFReporter<IQueryRetrieval<Property>>(
@@ -150,10 +148,10 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 		Object key = request.getAttributes().get(resourceKey);
 		if (key != null) {
 			Enzyme enzyme = new Enzyme();
-			enzyme.setCode(Reference.decode(key.toString()));
+			enzyme.setId(Integer.parseInt(key.toString()));
+			//enzyme.setCode(Reference.decode(key.toString()));
 			return new ReadEnzyme(enzyme);
 		} else {
-			key =  request.getAttributes().get(resourceParent);
 			return new ReadEnzyme();
 		}
 
@@ -252,7 +250,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 			}
 			CreateEndpoint q = new CreateEndpoint(enzyme);
 			execUpdate(enzyme, q);
-			return new StringRepresentation(Integer.toString(enzyme.getId()),MediaType.TEXT_PLAIN);
+			return new StringRepresentation(Integer.toString(enzyme.getID()),MediaType.TEXT_PLAIN);
 		} catch (Exception e) {
 			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
 		} finally {
@@ -260,7 +258,18 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 	}
 	@Override
 	protected Representation delete(Variant variant) throws ResourceException {
-		throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED,"Removing enzymes not allowed!");
+		Object key = getRequest().getAttributes().get(resourceKey);
+		if (key != null) try {
+			Enzyme enzyme = new Enzyme();
+			enzyme.setId(Integer.parseInt(key.toString()));
+			DeleteEnzyme query = new DeleteEnzyme(enzyme);
+			execUpdate(enzyme, query);
+			return new StringRepresentation("ok",MediaType.TEXT_PLAIN);
+		}  catch (Exception e) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
+		} finally {	}
+
+		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Enzyme not specified!");
 	}
 	protected void execUpdate(Enzyme enzyme, IQueryUpdate query) throws ResourceException { 
 		Connection conn = null;

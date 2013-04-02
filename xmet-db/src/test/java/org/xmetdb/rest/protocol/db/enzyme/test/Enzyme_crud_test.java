@@ -8,6 +8,7 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
 import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.endpoints.db.CreateEndpoint;
+import org.xmetdb.rest.endpoints.db.DeleteEnzyme;
 import org.xmetdb.rest.endpoints.db.UpdateEnzyme;
 import org.xmetdb.rest.protocol.db.test.CRUDTest;
 
@@ -40,18 +41,23 @@ public class Enzyme_crud_test  extends CRUDTest<Object,Enzyme>  {
 	}
 
 	@Override
-	public void testDelete() throws Exception {
-	}
-
-	@Override
 	protected IQueryUpdate<Object,Enzyme> deleteQuery() throws Exception {
-		return null;
+		Enzyme enzyme = new Enzyme();
+		enzyme.setId(15);
+		return new DeleteEnzyme(enzyme);
 	}
 
 	@Override
 	protected void deleteVerify(IQueryUpdate<Object,Enzyme> query)
 			throws Exception {
+        IDatabaseConnection c = getConnection();	
+		ITable table = 	c.createQueryTable("EXPECTED",
+				String.format("SELECT name,code,uniprot,alleles from template where idtemplate=15"));
+		
+		Assert.assertEquals(0,table.getRowCount());
+		c.close();	
 	}
+	
 
 	@Override
 	protected IQueryUpdate<Object,Enzyme> updateQuery() throws Exception {

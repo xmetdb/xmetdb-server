@@ -42,7 +42,7 @@ public class UpdateEnzyme extends AbstractObjectUpdate<Enzyme>{
 				String value = field.getStringValue(getObject(),"");
 				if (value!=null) {
 					params.add(new QueryParam<String>(String.class, value));
-					params.add(new QueryParam<Integer>(Integer.class, getObject().getId()));
+					params.add(new QueryParam<Integer>(Integer.class, getObject().getID()));
 					return params;
 				}
 			}

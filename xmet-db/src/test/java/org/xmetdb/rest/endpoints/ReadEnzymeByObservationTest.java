@@ -24,7 +24,7 @@ public class ReadEnzymeByObservationTest extends QueryTest<ReadEnzymeByObservati
 		while (rs.next()) {
 			count++;
 			Enzyme enzyme = query.getObject(rs);
-			Assert.assertTrue(enzyme.getId()>0);
+			Assert.assertTrue(enzyme.getID()>0);
 			Assert.assertNotNull(enzyme.getCode());
 			Assert.assertNotNull(enzyme.getName());			
 		}

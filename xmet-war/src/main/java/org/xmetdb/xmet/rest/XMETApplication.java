@@ -179,8 +179,6 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		Router endpointsRouter = new MyRouter(getContext());
 		endpointsRouter.attachDefault(EnzymesResource.class);
 		endpointsRouter.attach(EnzymesResource.resourceID,EnzymesResource.class);
-		endpointsRouter.attach(EnzymesResource.resourceKey,EnzymesResource.class);
-		endpointsRouter.attach(EnzymesResource.resourceTree, EnzymesResource.class);
 		setCookieUserRouter.attach(Resources.enzyme, endpointsRouter);
 		
 		router.attach(auth);
