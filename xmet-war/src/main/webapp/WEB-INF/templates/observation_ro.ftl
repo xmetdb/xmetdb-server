@@ -1,11 +1,17 @@
 	<div class="row remove-bottom ">	
-     	<div class="two columns alpha"><label for="xmet_substrate">Substrate:<a href='#' class='chelp substrate'></a></label></div>
+     	<div class="two columns alpha"><label for="xmet_substrate">Substrate:<a href='#' class='chelp substrate'></a></label>
+     		<br/>
+     		<div id="sim_substrate"></div>
+     	</div>
       		<div class="six columns omega">
       				<ul class='structresults' id="xmet_substrate"></ul>
       		</div>
     </div>		
 	<div class="row remove-bottom ">	
-     	<div class="two columns alpha"><label for="xmet_product">Product:<a href='#' class='chelp product'></a></label></div>
+     	<div class="two columns alpha"><label for="xmet_product">Product:<a href='#' class='chelp product'></a></label>
+     	<br/>
+     	<div id="sim_product"></div>
+     	</div>
       		<div class="six columns omega">
       			<ul class='structresults' id="xmet_product"></ul>
       		</div>
@@ -40,7 +46,8 @@
      	<div class="three columns alpha"><label for="xmet_reference">Reference:<a href='#' class='chelp reference'></a></label></div>
       		<div class="six columns omega">
       				<span id="xmet_reference">&nbsp;</span>
-      				<a href='http://dx.doi.org/' target='doi' title='' id='xmet_doi'><span id="info-link" class="ui-icon ui-icon-link" style="display: inline-block;"></span></a>
+      				<a href='http://dx.doi.org/' target='doi' title='' id='xmet_doi' ><span id="info-link" class="ui-icon ui-icon-link" style="display: inline-block;"></span></a> 
+      				<a href='#' id='sim_reference' title='Search for observations with the same reference'><span id="info-sim-ref" class="ui-icon ui-icon-search" style="display: inline-block;"></span></a>
       		</div>
     </div>	
 	

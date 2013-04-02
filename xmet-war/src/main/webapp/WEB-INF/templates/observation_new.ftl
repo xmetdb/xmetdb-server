@@ -100,7 +100,10 @@ $(document).ready(function() {
     </#switch>
 
 	<div class='row' style="margin:5px;padding:5px;"> 	
-	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em></label><a href='#' class='chelp substrate'></a></div>
+	 	<div class='three columns alpha'><label for='xmet_substrate_uri'>Substrate<em></em><a href='#' class='chelp substrate'></a></label>
+	 	<br/>
+	 	<div id="sim_substrate"></div>
+	 	</div>
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 		    <input type="hidden" id="xmet_substrate_atoms" name="xmet_substrate_atoms" value="">
@@ -108,7 +111,10 @@ $(document).ready(function() {
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
 	    </div>
-		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em></label><a href='#' class='chelp product'></a></div>
+		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em><a href='#' class='chelp product'></a></label>
+		<br/>
+		<div id="sim_product"></div>
+		</div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 			<input type="hidden" id="xmet_product_atoms" name="xmet_product_atoms" value="">

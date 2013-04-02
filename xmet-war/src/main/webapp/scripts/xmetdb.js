@@ -232,7 +232,7 @@ function toggleDrawUI(prefix, idButton, msg) {
 /**
  * Load structures from remote Ambit dataset uri via JSONP
  */
-function loadStructures(datasetURI, results, atomsid) {
+function loadStructures(datasetURI, results, atomsid, similarityLink) {
 	if ((datasetURI===undefined) || (datasetURI==null)) {
 		  $(results).empty();
 	} else {
@@ -247,6 +247,7 @@ function loadStructures(datasetURI, results, atomsid) {
 	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,null)+'</li>');
 	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
 	        		  createImageMap(data.dataEntry[i].compound.URI, '150','150', '#i'+id, '#m'+id,results,atomsid);
+	        		  $(similarityLink).html(searchSimilar(data.dataEntry[i].compound.URI));
 	        	  };
 	          },
 	          error: function(xhr, status, err) { 
@@ -259,7 +260,7 @@ function loadStructures(datasetURI, results, atomsid) {
 /*
  * Loads single observation via JSON and fills in the relevant HTML tags
 */
-function loadObservation(observation_uri) {
+function loadObservation(root,observation_uri) {
 	//fixed uri just for tetsing, otherwise will be read from the observation
 	var model_uri = null;//"http://ambit.uni-plovdiv.bg:8080/xmetdata/model/1";
 	
@@ -277,6 +278,15 @@ function loadObservation(observation_uri) {
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
 	        	  $('#xmet_reference').replaceWith(observation["reference"]);
+	        	  //Search for the same reference
+	        	  try {
+	        		  var uri = root+"/protocol?xmet_reference="+encodeURIComponent(observation["reference"]);
+	        		  $("#sim_reference").attr("href",uri);
+	        		  $("#sim_reference").show();
+	        	  } catch (err) {
+	        		  $("#sim_reference").hide();
+	        	  }
+	        	  //DOI link (if available)
 	        	  try {
 	        		  $('#xmet_doi').hide();
 	        		  var doi = observation["reference"].toLowerCase();
@@ -298,14 +308,14 @@ function loadObservation(observation_uri) {
 	        	  if ((observation.Substrate!=undefined)  && (observation.Substrate!=null) && (observation.Substrate.dataset.uri!=null)) {
 	        		  $('#xmet_export_substrate').attr("href",observation.Substrate.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        	  	  $('#xmet_export_substrate').show();
-	        	  	loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate","#xmet_substrate_atoms");
+	        	  	loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate","#xmet_substrate_atoms","#sim_substrate");
 	        	  } else {
 	        		  $('#xmet_export_substrate').hide();
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 	        		  $('#xmet_export_product').attr("href",observation.Product.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        		  $('#xmet_export_product').show();
-	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product","#xmet_product_atoms");
+	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product","#xmet_product_atoms","#sim_product");
 	          	  } else {
 	          		 $('#xmet_export_product').hide();
 	          	  }
@@ -352,11 +362,11 @@ function editObservation(root,observation_uri) {
 	        	  $('#xmet_product_upload').val('');
 	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
 	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img","#xmet_substrate_atoms");
+	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate");
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img","#xmet_product_atoms");
+		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img","#xmet_product_atoms","#sim_product");
 	        	  }
 
 
