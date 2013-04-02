@@ -6,15 +6,14 @@ import net.idea.restnet.db.QueryURIReporter;
 
 import org.restlet.Request;
 import org.restlet.data.Reference;
-
-import ambit2.base.data.Dictionary;
+import org.xmetdb.xmet.client.Resources;
 
 /**
  * Generates uri of {@link PropertyResource}
  * @author nina
  *
  */
-public class EnzymeURIReporter<D extends Dictionary> extends QueryURIReporter<D, IQueryRetrieval<D>> {
+public class EnzymeURIReporter<D extends Enzyme> extends QueryURIReporter<D, IQueryRetrieval<D>> {
 
 	/**
 	 * 
@@ -31,16 +30,14 @@ public class EnzymeURIReporter<D extends Dictionary> extends QueryURIReporter<D,
 		this((Request)null,null);
 	}
 	@Override
-	public String getURI(String ref, Dictionary record) {
+	public String getURI(String ref, Enzyme record) {
 		
 		if (record==null) return null;
 		
-		return String.format("%s%s/%s/%s%s",
+		return String.format("%s%s/%s",
 			ref,
-			EnzymesResource.resource,
-			record.getReference()==null?"All":
-			Reference.encode(record.getTitle().replace("/", "_")),
-			Reference.encode(record.getName().replace("/", "_")),
+			Resources.enzyme,
+			Reference.encode(record.getCode()),
 			getDelimiter()
 		);
 		
