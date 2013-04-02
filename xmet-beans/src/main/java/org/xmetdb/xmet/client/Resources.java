@@ -9,7 +9,7 @@ public class Resources {
 	public static final String search = "/search";
 	public static final String enzyme = "/catalog";
 	public static final String protocol = "/protocol";
-	public static final String unpublished = "/unpublished";
+	public static final String draft = "/draft";
 	public static final String chemical = "/chemical";
 	public static final String structure = "/structure";
 	public static final String dataset = "/dataset";

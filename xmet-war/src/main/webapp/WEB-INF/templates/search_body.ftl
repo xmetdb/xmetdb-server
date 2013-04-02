@@ -63,7 +63,15 @@ jQuery(document).ready(function()
     	</div>	       	
 	</form>
 	<!-- Search observations -->
-	<form method="GET" action="${xmet_root}/protocol" name="form" id="search_protocol_form" class="remove-bottom">		
+	<form method="GET" action="${xmet_root}/protocol" name="form" id="search_protocol_form" class="remove-bottom">
+      	<div class="row remove-bottom">
+      		<div class="two columns alpha"><label>Observation status:<a href='#' class='chelp published_status'></a></label></div>
+      		<div class="eight columns omega">
+     			<input class="ui-widget" type="checkbox" name="search_draft" id="search_draft" checked >Draft&nbsp;
+    		 	<input class="ui-widget" type="checkbox" name="search_curated" id="search_curated" checked >Curated      		
+      		</div>
+    	</div>	
+      		    		
 	    <div class="row remove-bottom">
       		<div class="two columns alpha"><label>Experiment:<a href='#' class='chelp experiment'></a></label></div>
       		<div class="eight columns omega">
@@ -90,7 +98,6 @@ jQuery(document).ready(function()
       		<div class="six columns omega">
 				<input class="ui-widget" type='text' id="xmet_reference" name="xmet_reference" tabindex='6' style='width:400px;'>
       		</div>
-   		
     	</div>	
     	<div class="row remove-bottom">
       		<div class="two columns alpha"><label>XMETID:<a href='#' class='chelp xmetid'></a></label></div>

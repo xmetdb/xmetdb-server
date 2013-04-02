@@ -489,14 +489,14 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					case xmetdb_manager: {
 						w.write(printMenuItem(Resources.user, "Users", baseReference.toString(),null,"All registered users."));
 						w.write(printMenuItem(Resources.organisation, "Organisations", baseReference.toString(),null,"All registered user affiliations."));
-						unpublishedDoc = printMenuItem(Resources.unpublished, "Unpublished Documents", baseReference.toString(),"10","All unpublished QMRF documents.");
+						unpublishedDoc = printMenuItem(Resources.draft, "Unpublished Documents", baseReference.toString(),"10","All unpublished QMRF documents.");
 						break;
 					}
 					case xmetdb_admin: {
 						break;
 					}
 					case xmetdb_editor: {
-						unpublishedDoc = printMenuItem(Resources.unpublished, "Unpublished Documents", baseReference.toString(),"10","All unpublished QMRF documents.");
+						unpublishedDoc = printMenuItem(Resources.draft, "Unpublished Documents", baseReference.toString(),"10","All unpublished QMRF documents.");
 						break;
 					}
 				}

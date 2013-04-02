@@ -5,6 +5,8 @@ Search for chemical structures and observations!
 
 <div id="keys" style="display:none;">
   <ul>
+  
+    <li><a href="#published_status">Observation status</a></li>
     <li><a href="#scope">Search scope</a></li>
     <li><a href="#options">Search options</a></li>
     <li><a href="#identifier">Chemical identifier</a></li>
@@ -56,4 +58,7 @@ Search for chemical structures and observations!
   <div id="nhits">
     Number of hits
   </div>  
+  <div id="published_status">
+    Draft or Curated
+  </div>    
 </div>

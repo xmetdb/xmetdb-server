@@ -31,6 +31,7 @@ jQuery(document).ready(function()
 		<th>Experiment</th>
 		<th>Enzyme</th>
 		<th>Last updated</th>
+		<th>Status</th>
 		</thead>
 		<tbody></tbody>
 		</table>

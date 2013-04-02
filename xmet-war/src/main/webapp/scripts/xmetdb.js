@@ -442,7 +442,10 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				  "asSorting": [ "asc", "desc" ], 
 				  "bSearchable" : true		  
 				},
-				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] }
+				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] 
+				},
+				{ "mDataProp": "publishedStatus", "asSorting": [ "asc", "desc" ] 
+				}				
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',	
 		"bJQueryUI" : true,

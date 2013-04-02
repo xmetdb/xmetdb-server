@@ -37,7 +37,7 @@ import org.xmetdb.rest.groups.ProjectRouter;
 import org.xmetdb.rest.help.HelpResource;
 import org.xmetdb.rest.protocol.ProtocolRouter;
 import org.xmetdb.rest.protocol.facet.ProtocolsByEndpointResource;
-import org.xmetdb.rest.protocol.resource.db.UnpublishedProtocolsResource;
+import org.xmetdb.rest.protocol.resource.db.DraftObservationsResource;
 import org.xmetdb.rest.structure.resource.DatasetResource;
 import org.xmetdb.rest.structure.resource.StructureRouter;
 import org.xmetdb.rest.user.UserRouter;
@@ -161,14 +161,14 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 				protocols, org_router, projectRouter, alertRouter)));
 	
 
-		setCookieUserRouter.attach(Resources.endpoint,
-				ProtocolsByEndpointResource.class);
+		setCookieUserRouter.attach(Resources.endpoint,ProtocolsByEndpointResource.class);
+		
 		setCookieUserRouter.attach(Resources.chemical, new StructureRouter(getContext()));
 
 		setCookieUserRouter.attach(String.format("%s/{%s}",Resources.dataset,DatasetResource.datasetKey), DatasetResource.class);
 		setCookieUserRouter.attach(Resources.admin, createAdminRouter());
 		setCookieUserRouter.attach(Resources.editor, createEditorRouter());
-		setCookieUserRouter.attach(Resources.unpublished, createUnpublishedRouter());
+		setCookieUserRouter.attach(Resources.draft, createUnpublishedRouter());
 		setCookieUserRouter.attach(Resources.task, new XMETTaskRouter(
 				getContext()));
 
@@ -332,7 +332,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		authz.setNext(new AdminRouter(getContext()) {
 			@Override
 			protected void init() {
-				attachDefault(UnpublishedProtocolsResource.class);
+				attachDefault(DraftObservationsResource.class);
 			}
 		});
 		

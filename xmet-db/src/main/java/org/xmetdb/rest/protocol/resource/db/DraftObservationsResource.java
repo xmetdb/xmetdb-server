@@ -12,14 +12,14 @@ import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.xmet.client.Resources;
 
-public class UnpublishedProtocolsResource<Q extends IQueryRetrieval<DBProtocol>> extends ProtocolDBResource<Q> {
+public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> extends ProtocolDBResource<Q> {
 	
 	@Override
 	protected Q getProtocolQuery(Object key, int userID, Form form)
 			throws ResourceException {
 		
 		if (key==null) {
-			visibleQuery = "Unpublished observations";
+			visibleQuery = "Not yet curated observations";
 			ReadProtocol dbQuery = new ReadProtocol();
 			dbQuery.setOnlyUnpublished(true);
 			dbQuery.setShowUnpublished(true);
@@ -41,7 +41,7 @@ public class UnpublishedProtocolsResource<Q extends IQueryRetrieval<DBProtocol>>
 
 	@Override
 	protected HTMLBeauty getHTMLBeauty() {
-		if (htmlBeauty==null) htmlBeauty = new XmetdbHTMLBeauty(Resources.unpublished,false);
+		if (htmlBeauty==null) htmlBeauty = new XmetdbHTMLBeauty(Resources.draft,false);
 		return htmlBeauty;
 	}
 
