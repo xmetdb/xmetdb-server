@@ -411,7 +411,11 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 		"bStateSave": true,
 		"sAjaxSource": observations_uri,
 		"aoColumns": [
-				{ "mDataProp": "identifier" , "asSorting": [ "asc", "desc" ],
+				{ "mDataProp": function (o,val) {
+					return  o["identifier"].replace("XMETDB","");
+				  }, 
+				  "asSorting": [ "asc", "desc" ],
+				  "bUseRendered" : false,	
  			      "fnRender": function ( o, val ) {
           				return "<a href='"+o.aData["uri"] + "'>" + o.aData["identifier"] + "</a>";
         			}
