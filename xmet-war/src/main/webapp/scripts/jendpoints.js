@@ -69,7 +69,7 @@ function defineEndpointsTable(url,root) {
 						  sOut += "</select>";
 						  return sOut;
 					  }
-				}	
+				}				
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"sSearch": "Filter:",
@@ -171,6 +171,13 @@ function defineEndpointsTable(url,root) {
                      // loadtype: 'GET'                    	  
                  }
         ],		
+        fnOnDeleting: function(tr, id)  {       
+                this["sDeleteURL"] = root + "/catalog/"+id +"?method=DELETE";
+                return true;
+        },
+        fnOnDeleted: function(status) {       
+                //console.log("Deleted action finished. Status - " + status);
+        },        
         sAddURL: root+"/catalog",
         sUpdateURL: root+"/catalog?method=PUT",
         sAddNewRowFormId: "formAddNewEnzyme",
