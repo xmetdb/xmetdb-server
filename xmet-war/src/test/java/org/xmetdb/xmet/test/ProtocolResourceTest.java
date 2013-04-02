@@ -198,14 +198,14 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		ITable table = c.createQueryTable("EXPECTED", "SELECT * FROM protocol");
 		Assert.assertEquals(3, table.getRowCount());
 		table = c.createQueryTable("EXPECTED",
-						"SELECT p.idprotocol,p.version,published_status,qmrf_number,keywords,reference from protocol p left join keywords using(idprotocol,version) where p.idprotocol=3 and version=1");
+						"SELECT p.idprotocol,p.version,published_status,qmrf_number,keywords,reference,product_amount from protocol p left join keywords using(idprotocol,version) where p.idprotocol=3 and version=1");
 		Assert.assertEquals(1, table.getRowCount());
-		Assert.assertEquals(PublishedStatus.published.name(), 
+		Assert.assertEquals(PublishedStatus.published.name(),
 				table.getValue(0, ReadProtocol.fields.published_status.name())
 				);
 		Assert.assertEquals("XMET Comments", table.getValue(0, "keywords"));
 		Assert.assertEquals("XMET Reference", table.getValue(0, "reference"));
-		
+		Assert.assertEquals("Minor", table.getValue(0, "product_amount"));
 		Assert.assertEquals(String.format("http://localhost:%d/protocol/%s",port,newXMETID),newURI);
 
 		
@@ -445,6 +445,10 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 				values[i] = null;
 				break;
 			}			
+			case xmet_product_amount: {
+				values[i] = "Minor";
+				break;
+			}
 			default: {
 				values[i] = field.name();
 			}

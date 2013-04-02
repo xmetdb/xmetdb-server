@@ -54,7 +54,8 @@ public class UpdateProtocol extends AbstractObjectUpdate<DBProtocol>{
 			ReadProtocol.fields.idproject,
 			ReadProtocol.fields.idorganisation,
 			ReadProtocol.fields.iduser,
-			ReadProtocol.fields.status
+			ReadProtocol.fields.status,
+			ReadProtocol.fields.product_amount
 	};
 	//at the moment we always publish the protocol, so this check will prevent any update
 	private static final String update_sql = "update protocol set updated=now(),%s where idprotocol=? and version=? ";

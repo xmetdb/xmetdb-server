@@ -315,8 +315,8 @@ public class ProtocolFactory {
 				}
 				case xmet_product_amount: {
 					try {
-						protocol.setProductAmount(ProductAmount.valueOf(fi
-								.getString(utf8)));
+						String val = fi.getString(utf8);
+						protocol.setProductAmount(ProductAmount.valueOf(val));
 					} catch (Exception x) {
 						protocol.setProductAmount(ProductAmount.Unknown);
 					}
