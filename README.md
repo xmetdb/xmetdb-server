@@ -19,7 +19,7 @@ Run:
 The tests assume
  
     CREATE USER 'guest'@'localhost' IDENTIFIED BY 'guest';
-    GRANT ALL ON xmet_users.* TO 'guest'@'localhost';
+    GRANT UPDATE,SELECT,INSERT, DELETE ON xmet_users.* TO 'guest'@'localhost';
     GRANT ALL ON xmetdb.* TO 'guest'@'localhost';
     GRANT ALL ON `xmetdb-test`.* TO 'guest'@'localhost';
     GRANT EXECUTE on procedure `xmetdb-test`.createProtocolVersion to 'guest'@'localhost';
@@ -30,6 +30,9 @@ To change user name and password, modify the local maven profile or the properti
 
 Test DB
     
+    create database `aalocal_test` character set utf8;
+    -- create the database tables as per https://github.com/vedina/RESTNet/blob/master/restnet-db/src/main/resources/net/idea/restnet/db/aalocal/sql/users.sql
+    GRANT UPDATE,SELECT,INSERT, DELETE ON aalocal_test.* TO 'guest'@'localhost';
     create database `xmetdb-test` character set utf8;
     GRANT ALL ON `xmetdb-test`.* TO 'guest'@'localhost';
     GRANT TRIGGER ON `xmetdb-test`.* TO 'guest'@'localhost';
