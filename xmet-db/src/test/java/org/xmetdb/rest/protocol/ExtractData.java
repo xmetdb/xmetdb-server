@@ -28,7 +28,7 @@ public class ExtractData extends DbUnitTest {
     	try {
 	        Class driverClass = Class.forName("com.mysql.jdbc.Driver");
 	        Connection jdbcConnection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/xmetdb", getUser(), getPWD());
+	                "jdbc:mysql://localhost:3306/xmetdb-test", getUser(), getPWD());
 	        connection = new DatabaseConnection(jdbcConnection);
 	
 	        // partial database export
@@ -47,7 +47,6 @@ public class ExtractData extends DbUnitTest {
 	        partialDataSet.addTable("user_project", "SELECT * FROM user_project where iduser in (1,2)");
 	        
 	        partialDataSet.addTable("template", "SELECT * FROM template");
-	        partialDataSet.addTable("dictionary", "SELECT * FROM dictionary");
 	        
 	        FlatDtdDataSet.write(partialDataSet, new FileOutputStream(
 	        			"src/test/resources/org/xmetdb/xmet/partial-dataset.dtd"));
