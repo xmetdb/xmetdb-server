@@ -41,7 +41,7 @@ import org.xmetdb.rest.protocol.DBProtocol;
 
 public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 	public static final String[] create_sql = {
-		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,status,created,published_status,atom_uncertainty,product_amount,reference) " +
+		"insert into protocol (idprotocol,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,status,created,published_status,atom_uncertainty,product_amount,reference) " +
 		"values (?,?,?,?,?,?,?,?,?,now(),?,?,?,?)",
 		"insert into keywords values (?,?,?) on duplicate key update keywords=values(keywords)",
 		"insert into protocol_endpoints select idprotocol,version,idtemplate,? from protocol join template where code = ? and idprotocol=? and version=?",
@@ -64,7 +64,7 @@ public class CreateProtocol extends AbstractObjectUpdate<DBProtocol>{
 					ReadProtocol.fields.identifier,
 					ReadProtocol.fields.anabstract,
 					ReadProtocol.fields.iduser,
-					ReadProtocol.fields.summarySearchable,
+					ReadProtocol.fields.curated,
 					ReadProtocol.fields.idproject,
 					ReadProtocol.fields.idorganisation,
 					ReadProtocol.fields.status,

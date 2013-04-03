@@ -7,10 +7,6 @@ package org.xmetdb.xmet.client;
  */
 public enum PublishedStatus {
 		draft,
-		submitted,
-		under_review,
-		returned_for_revision,
-		review_completed,
 		published,
 		archived,
 		deleted;

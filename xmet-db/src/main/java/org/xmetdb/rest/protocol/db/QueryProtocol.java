@@ -13,7 +13,7 @@ import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource.SearchMode;
 
 public class QueryProtocol extends ReadProtocolAbstract<Form>  implements IQueryRetrieval<DBProtocol> {
 	protected static String sql_query = 
-		"select idprotocol,protocol.version,protocol.title,qmrf_number,abstract as anabstract,iduser,summarySearchable,\n"+
+		"select idprotocol,protocol.version,protocol.title,qmrf_number,abstract as anabstract,iduser,curated,\n"+
 		"idproject,idorganisation,user.username,user.firstname,user.lastname,\n"+
 		"reference,updated,status,`created`,published_status,atom_uncertainty,product_amount,\n"+
 		"template.code as enzymecode,template.name as enzymename,pe.allele\n"+

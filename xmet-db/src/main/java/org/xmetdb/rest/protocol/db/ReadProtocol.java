@@ -53,7 +53,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			fields.anabstract,
 			fields.author_uri,
 			fields.status,
-			fields.summarySearchable,
+			fields.curated,
 			//ReadProtocol.fields.status
 			fields.idproject,
 			fields.idorganisation,
@@ -213,7 +213,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			}
 		
 		},			
-		summarySearchable {
+		curated {
 			@Override
 			public QueryParam getParam(DBProtocol protocol) {
 				Object value = getValue(protocol);
@@ -833,7 +833,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 		fields.title,
 		fields.anabstract,
 		fields.iduser,
-		fields.summarySearchable,
+		fields.curated,
 		fields.idproject,
 		fields.iduser,
 		fields.idorganisation,

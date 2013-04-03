@@ -67,8 +67,10 @@ jQuery(document).ready(function()
       	<div class="row remove-bottom">
       		<div class="two columns alpha"><label>Observation status:<a href='#' class='chelp published_status'></a></label></div>
       		<div class="eight columns omega">
-     			<input class="ui-widget" type="checkbox" name="search_draft" id="search_draft" checked >Draft&nbsp;
-    		 	<input class="ui-widget" type="checkbox" name="search_curated" id="search_curated" checked >Curated      		
+				<input type='radio' id='curated_yes' value='curated' name='search_curated' checked  title='Curated only' size='20' tabindex='2'/>Curated 
+      		    <input type='radio' name='search_curated' id='curated_no' value='noncurated' title='Not curated only' tabindex='3'/>Not curated 
+      		    <input type='radio' name='search_curated' id="curated_any" value='any' title='Any'/>Any
+    		 	      		
       		</div>
     	</div>	
       		    		

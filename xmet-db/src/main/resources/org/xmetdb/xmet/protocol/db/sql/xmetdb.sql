@@ -82,13 +82,12 @@ CREATE TABLE  `user_project` (
 -- Protocols metadata & placeholder for data templates. 
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `protocol`;
-CREATE TABLE  `protocol` (
+CREATE TABLE `protocol` (
   `idprotocol` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `version` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'Version',
   `title` varchar(32) NOT NULL COMMENT 'Title',
   `qmrf_number` varchar(36) NOT NULL COMMENT 'QMRF Number',
   `abstract` varchar(255) DEFAULT NULL,
-  `summarySearchable` tinyint(1) NOT NULL DEFAULT '1',
   `iduser` int(10) unsigned NOT NULL COMMENT 'Link to user table',
   `idproject` int(10) unsigned NOT NULL COMMENT 'Link to projects table',
   `idorganisation` int(10) unsigned NOT NULL COMMENT 'Link to org table',
@@ -97,9 +96,11 @@ CREATE TABLE  `protocol` (
   `status` enum('RESEARCH','SOP') NOT NULL DEFAULT 'RESEARCH' COMMENT 'Research or Standard Operating Procedure',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated',
   `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `published_status` enum('draft','submitted','under_review','returned_for_revision','review_completed','published','archived','deleted') NOT NULL DEFAULT 'draft',
+  `published_status` enum('draft','published','archived','deleted') NOT NULL DEFAULT 'draft',
   `atom_uncertainty` enum('Certain','Uncertain') NOT NULL DEFAULT 'Uncertain',
   `product_amount` enum('Major','Minor','Unknown') NOT NULL DEFAULT 'Unknown',
+  `curatedby` int(10) unsigned DEFAULT NULL,
+  `curated` tinyint(1) DEFAULT '0' COMMENT 'Curated - yes / no',
   PRIMARY KEY (`idprotocol`,`version`) USING BTREE,
   UNIQUE KEY `qmrf_number` (`qmrf_number`),
   KEY `Index_3` (`title`),
@@ -111,6 +112,8 @@ CREATE TABLE  `protocol` (
   KEY `Index_9` (`atom_uncertainty`),
   KEY `Index_10` (`product_amount`),
   KEY `Index_11` (`reference`),
+  KEY `FK_protocol_4_idx` (`curatedby`),
+  CONSTRAINT `FK_protocol_4` FOREIGN KEY (`curatedby`) REFERENCES `user` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_protocol_1` FOREIGN KEY (`idproject`) REFERENCES `project` (`idproject`),
   CONSTRAINT `FK_protocol_2` FOREIGN KEY (`idorganisation`) REFERENCES `organisation` (`idorganisation`),
   CONSTRAINT `FK_protocol_3` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`)
@@ -227,7 +230,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,14,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,15,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
@@ -261,8 +264,8 @@ begin
     -- update published status of the old version to archived
 
   	-- create new version
-    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
-    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,summarySearchable,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
+    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
     from protocol where qmrf_number=protocol_qmrf_number;
       	
    	-- copy authors
@@ -303,8 +306,8 @@ begin
 	DECLARE new_id INT;
 	
   	-- create new version
-    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
-    select null,1,title,concat("XMETDB",idprotocol,"v",now()),abstract,iduser,summarySearchable,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
+    select null,1,title,concat("XMETDB",idprotocol,"v",now()),abstract,iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
     from protocol where qmrf_number=protocol_qmrf_number;
     
     

@@ -444,7 +444,10 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				},
 				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] 
 				},
-				{ "mDataProp": "publishedStatus", "asSorting": [ "asc", "desc" ] 
+				{ "mDataProp": "curated", "asSorting": [ "asc", "desc" ],
+					"fnRender": function ( o, val ) {
+	          				return val?"Yes":"No";
+	        		}
 				}				
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',	

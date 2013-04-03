@@ -33,7 +33,7 @@ public abstract class ReadProtocolAbstract<T> extends AbstractQuery<T, DBProtoco
 	}
 
 	protected static String sql_withkeywords =  //for text search
-		"select idprotocol,version,protocol.title,qmrf_number,abstract as anabstract,iduser,summarySearchable," +
+		"select idprotocol,version,protocol.title,qmrf_number,abstract as anabstract,iduser,curated," +
 		"idproject," +
 		"idorganisation,user.username,user.firstname,user.lastname," +
 		"reference,updated,status,`created`,published_status,atom_uncertainty,product_amount,keywords.keywords\n" +

@@ -11,11 +11,11 @@
   <organisation idorganisation="2" name="ABC University" ldapgroup="abcuni"/>
   <organisation idorganisation="3" name="University of XYZ" ldapgroup="unixyz"/>
   <organisation idorganisation="4" name="TheCompany" ldapgroup="company"/>
-  <protocol idprotocol="1" version="1" title="HEP" qmrf_number="XMETDB1" abstract="Hepatocytes" summarySearchable="true" iduser="2" idproject="1" idorganisation="1" status="RESEARCH" 
+  <protocol idprotocol="1" version="1" title="HEP" qmrf_number="XMETDB1" abstract="Hepatocytes" curated="true" iduser="2" idproject="1" idorganisation="1" status="RESEARCH" 
 	  updated="2004-09-17 00:00:30.000000000" created="2004-09-17 00:00:30.000000000" published_status="published" reference="Test reference"/>
-  <protocol idprotocol="2" version="1" title="ENZ" qmrf_number="XMETDB2" abstract="Enzyme" summarySearchable="true" iduser="2" idproject="1" idorganisation="1" status="RESEARCH" 
+  <protocol idprotocol="2" version="1" title="ENZ" qmrf_number="XMETDB2" abstract="Enzyme" curated="true" iduser="2" idproject="1" idorganisation="1" status="RESEARCH" 
   updated="1999-01-01 00:00:33.000000000" created="2004-09-17 00:00:30.000000000" published_status="published"/>
-  <protocol idprotocol="3" version="1" title="MS" qmrf_number="XMETDB3" abstract="Microsome" summarySearchable="true" iduser="1" idproject="1" idorganisation="1" status="RESEARCH" 
+  <protocol idprotocol="3" version="1" title="MS" qmrf_number="XMETDB3" abstract="Microsome" curated="true" iduser="1" idproject="1" idorganisation="1" status="RESEARCH" 
   updated="2012-01-16 09:30:51.000000000" created="2004-09-17 00:00:30.000000000" published_status="deleted" reference="Test reference"/>
   <attachments idattachment="1" idprotocol="1" version="1" name="qmrf1_substrate: 1_2_4_trichlorobenzene" description="substrate: 1_2_4_trichlorobenzene" type="data_training" updated="2012-09-23 10:50:17.0" format="SDF" original_name="substrate.sdf" imported="false"/>
   <attachments idattachment="2" idprotocol="1" version="1" name="qmrf1_product: 1_2_4_trichlorobenzene" description="product: 1_2_4_trichlorobenzene" type="data_validation" updated="2012-09-23 10:50:52.0" format="SDF" original_name="product.sdf" imported="true"/>

@@ -191,10 +191,10 @@ public final class Protocol_crud_test<T extends Object>  extends CRUDTest<T,DBPr
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED",
-				String.format("SELECT idprotocol,qmrf_number,summarySearchable,status,atom_uncertainty,product_amount,reference,keywords FROM protocol left join keywords using(idprotocol,version) where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
+				String.format("SELECT idprotocol,qmrf_number,curated,status,atom_uncertainty,product_amount,reference,keywords FROM protocol left join keywords using(idprotocol,version) where title='HEP' and abstract =  'Hepatocytes' and iduser='3' and idproject=1 and idorganisation=1"));
 		
 		Assert.assertEquals(1,table.getRowCount());
-		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"summarySearchable"));
+		Assert.assertEquals(Boolean.TRUE,table.getValue(0,"curated"));
 		Assert.assertEquals(STATUS.SOP.toString(),table.getValue(0,"status"));
 		Assert.assertEquals(AtomUncertainty.Certain.toString(),table.getValue(0,"atom_uncertainty"));
 		Assert.assertEquals(ProductAmount.Major.toString(),table.getValue(0,"product_amount"));

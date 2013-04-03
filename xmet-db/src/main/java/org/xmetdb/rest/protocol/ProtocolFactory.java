@@ -39,7 +39,7 @@ public class ProtocolFactory {
 		xmet_substrate_mol, xmet_product_mol,
 		xmet_allele, xmet_reference, xmet_comments,
 		project_uri, organisation_uri, user_uri, iduser, author_uri, 
-		summarySearchable, status,  
+		curated, status,  
 		xmet_enzyme, xmet_atom_uncertainty, xmet_product_amount, allowReadByUser, allowReadByGroup;
 
 		@Override
@@ -286,7 +286,7 @@ public class ProtocolFactory {
 					 * user.setResourceURL(new URL(s)); else user.setTitle(s);
 					 * protocol.setOwner(user); } break; }
 					 */
-				case summarySearchable: {
+				case curated: {
 					try {
 						protocol.setSearchable(Boolean.parseBoolean(fi
 								.getString(utf8)));
