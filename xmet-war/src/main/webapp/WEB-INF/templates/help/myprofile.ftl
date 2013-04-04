@@ -24,6 +24,9 @@ My profile
     <p>Observations submitted</p>
   </div>  
   <div id="alerts">
-    <p>My saved searches</p>
+    <p>
+Alerts are created by "Save the search" link, which appears after a search for any logged in user.
+The alerts are used by the notification facility to send e-mails, if a new search result appears.
+    </p>
   </div>  
 </div>
