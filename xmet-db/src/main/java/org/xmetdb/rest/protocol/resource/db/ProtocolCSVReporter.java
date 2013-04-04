@@ -3,7 +3,6 @@ package org.xmetdb.rest.protocol.resource.db;
 import java.io.Writer;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.r.QueryReporter;
@@ -59,7 +58,7 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 		} catch (Exception x) {}
 		
 	}
-	private static String header = "URI,Identifier,Title,\"Published Status\",\"Submitted Date\",Updated,Owner,\"Owner URI\"\r\n";
+	private static String header = "URI,Identifier,\"Product amount\",\"Experiment type\",Enzyme,Allele,Reference,Comment\r\n";
 	private static String format = "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\r\n";
 		
 	@Override
@@ -78,16 +77,16 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 			getOutput().write(String.format(format,
 					uri,
 					item.getVisibleIdentifier(),
-					item.getTitle(),
-					item.getPublishedStatus(),
-					dateFormat.format(new Date(item.getSubmissionDate())),
-					dateFormat.format(new Date(item.getTimeModified())),
-					item.getOwner().getUserName()==null?"":item.getOwner().getUserName(),
-					item.getOwner().getResourceURL()==null?"":item.getOwner().getResourceURL()
+					item.getProductAmount(),
+					item.getAbstract(),
+					item.getEndpoint()==null?"":item.getEndpoint().getCode(),
+					item.getEndpoint()==null?"":item.getEndpoint().getAlleles(),
+					item.getReference()==null?"":item.getReference(),
+					item.getKeywords()
 					));
 		
 		} catch (Exception x) {
-			
+			x.printStackTrace();
 		}
 		return item;
 	}
