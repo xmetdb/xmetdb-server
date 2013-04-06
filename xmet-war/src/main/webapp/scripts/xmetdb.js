@@ -808,3 +808,18 @@ function loadHelpJSON(root,topic) {
 	});
 }
 
+function getMediaLink(uri, media) {
+	return uri + "?media=" + encodeURIComponent(media);
+}
+
+function getDownloadLinksObservation(root,uri) {
+	   val = uri;
+	   var sOut = "<a href='"+getMediaLink(val,"text/csv")+"' id='csv'><img src='"+root+"/images/excel.png' alt='CSV' title='Download as CSV (Comma delimited file)'></a> ";
+	   sOut += "<a href='"+getMediaLink(val,"text/plain")+"' id='txt'><img src='"+root+"/images/excel.png' alt='TXT' title='Download as TXT'></a> ";
+
+	 //  sOut += "<a href='"+getMediaLink(val,"application/rdf+xml")+"' id='rdfxml'><img src='"+root+"/images/rdf.gif' alt='RDF/XML' title='Download as RDF/XML (Resource Description Framework XML format)'></a> ";
+	 //  sOut += "<a href='"+getMediaLink(val,"text/n3")+"' id='rdfn3'><img src='"+root+"/images/rdf.gif' alt='RDF/N3' title='Download as RDF N3 (Resource Description Framework N3 format)'></a> ";
+
+	   sOut += "<a href='"+getMediaLink(val,"application/json")+"' id='json' target=_blank><img src='"+root+"/images/json.png' alt='json' title='Download as JSON'></a>";
+	   return sOut;
+}

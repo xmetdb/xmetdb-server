@@ -1,4 +1,4 @@
-<div id='stats' class="w_stats">
+<div id='stats' class="w_stats" style="margin-top:1em;">
 		<table class='w_table_stats'>
 			<tr class='w_tr'>
 				<th class='w_th' colspan='2'>Statistics</th>

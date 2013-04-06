@@ -10,6 +10,7 @@ jQuery(document).ready(function()
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="XMetDB search results">${xmet_breadcrumb}</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
     loadHelp("${xmet_root}","observation_list");
+    $('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}"));
 })
 </script>
 </head>
