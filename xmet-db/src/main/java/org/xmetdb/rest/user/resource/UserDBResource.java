@@ -19,7 +19,7 @@ import net.idea.restnet.c.task.FactoryTaskConvertor;
 import net.idea.restnet.c.task.TaskCreator;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
-import net.idea.restnet.db.aalocal.DBRole;
+import net.idea.restnet.db.aalocal.user.ReadUserRoles;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
@@ -49,7 +49,6 @@ import org.xmetdb.rest.task.UserTaskHTMLReporter;
 import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
-import org.xmetdb.xmet.client.XMETDBRoles;
 
 /**
  * Protocol resource
@@ -105,8 +104,16 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 					new UserCSVReporter<IQueryRetrieval<DBUser>>(getRequest()),
 					MediaType.TEXT_CSV);
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
+			final ReadUserRoles query = new ReadUserRoles();
+			query.setDatabaseName(usersdbname==null?"xmet_users":usersdbname);
 			return new OutputWriterConvertor(
-					new UserJSONReporter<IQueryRetrieval<DBUser>>(getRequest()),
+					new UserJSONReporter<IQueryRetrieval<DBUser>>(getRequest()) {
+						@Override
+						protected ReadUserRoles createUserRolesQuery() {
+							return query;
+						}
+					},
 					MediaType.APPLICATION_JSON);			
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
