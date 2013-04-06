@@ -30,7 +30,7 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 	private final static String qmrfEditorEmail = "admin@xmetdb.org";
 	private final static String XMETDB_title = "Xenobiotics metabolism database";
 	private final static String[] css = new String[] {
-		"<link href=\"%s/style/ambit.css\" rel=\"stylesheet\" type=\"text/css\">\n",
+		"<link href=\"%s/style/xmet.css\" rel=\"stylesheet\" type=\"text/css\">\n",
 		"<!--[if IE 7]><link rel='stylesheet' type='text/css' media='all' href='%s/style/ambit-msie7.css'><![endif]-->",
 		"<link href=\"%s/style/jquery-ui-1.8.24.custom.css\" rel=\"stylesheet\" type=\"text/css\">\n",
 		"<link href=\"%s/style/jquery.dataTables.css\" rel=\"stylesheet\" type=\"text/css\">\n",
@@ -486,16 +486,13 @@ public class XmetdbHTMLBeauty extends HTMLBeauty {
 					if (myProfile.indexOf(myself)<0) myProfile.add(myself);
 				}	
 				switch (qmrfrole) {
-					case xmetdb_manager: {
+					case xmetdb_admin: {
 						w.write(printMenuItem(Resources.user, "Users", baseReference.toString(),null,"All registered users."));
 						w.write(printMenuItem(Resources.organisation, "Organisations", baseReference.toString(),null,"All registered user affiliations."));
 						unpublishedDoc = printMenuItem(Resources.draft, "Unpublished Documents", baseReference.toString(),"10","All unpublished QMRF documents.");
 						break;
 					}
-					case xmetdb_admin: {
-						break;
-					}
-					case xmetdb_editor: {
+					case xmetdb_curator: {
 						unpublishedDoc = printMenuItem(Resources.draft, "Unpublished Documents", baseReference.toString(),"10","All unpublished QMRF documents.");
 						break;
 					}

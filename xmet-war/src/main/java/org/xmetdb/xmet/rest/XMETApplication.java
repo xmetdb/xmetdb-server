@@ -31,6 +31,7 @@ import org.restlet.security.RoleAuthorizer;
 import org.restlet.security.SecretVerifier;
 import org.restlet.security.User;
 import org.restlet.service.TunnelService;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.groups.OrganisationRouter;
 import org.xmetdb.rest.groups.ProjectRouter;
@@ -306,8 +307,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	 * @return
 	 */
 	protected Restlet createAdminRouter() {
-		Authorizer authz = new SimpleRoleAndMethodAuthorizer(new DBRole(
-				XMETDBRoles.xmetdb_manager.name(), XMETDBRoles.xmetdb_manager.toString()));
+		Authorizer authz = new SimpleRoleAndMethodAuthorizer(DBRoles.adminRole);
 		authz.setNext(new XMETAdminRouter(getContext()));
 		return authz;
 	}
@@ -325,10 +325,8 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		return authz;
 	}
 	protected Restlet createUnpublishedRouter() {
-		Authorizer authz = new SimpleRoleAndMethodAuthorizer(
-				new DBRole(XMETDBRoles.xmetdb_editor.name(), XMETDBRoles.xmetdb_editor.toString()),
-				new DBRole(XMETDBRoles.xmetdb_manager.name(), XMETDBRoles.xmetdb_manager.toString())
-				);
+		Authorizer authz = new SimpleRoleAndMethodAuthorizer(DBRoles.adminRole,DBRoles.curatorRole);
+
 		authz.setNext(new AdminRouter(getContext()) {
 			@Override
 			protected void init() {

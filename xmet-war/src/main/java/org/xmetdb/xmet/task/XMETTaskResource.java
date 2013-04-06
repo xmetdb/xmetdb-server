@@ -20,8 +20,10 @@ import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public class XMETTaskResource extends TaskResource<String> {
 
@@ -40,8 +42,22 @@ public class XMETTaskResource extends TaskResource<String> {
 	
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
-        if (getClientInfo().getUser()!=null) 
-        	map.put("username", getClientInfo().getUser().getIdentifier());
+        
+        map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
+		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
+		if (getClientInfo()!=null) {
+			if (getClientInfo().getUser()!=null)
+				map.put("username", getClientInfo().getUser().getIdentifier());
+			if (getClientInfo().getRoles()!=null) {
+				if (DBRoles.isAdmin(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_admin.name(),Boolean.TRUE);
+				if (DBRoles.isCurator(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.TRUE);
+				if (DBRoles.isUser(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_user.name(), Boolean.TRUE);	
+			}
+		}
+		
         map.put("creator","IdeaConsult Ltd.");
         map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
         map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));

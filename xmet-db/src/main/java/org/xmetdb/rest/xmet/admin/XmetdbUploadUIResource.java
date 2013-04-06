@@ -53,6 +53,7 @@ public class XmetdbUploadUIResource extends CatalogFTLResource<DBProtocol> {
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
 		super.configureTemplateMap(map);
+		
 		Object key = getRequest().getAttributes().get(FileResource.resourceKey);
 		map.put("xmet_mode", mode.name());
 		if (key!=null) {

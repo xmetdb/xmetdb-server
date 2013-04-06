@@ -455,6 +455,7 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 		"bPaginate" : true,
 		"sPaginationType": "full_numbers",
 		"sPaginate" : ".dataTables_paginate _paging",
+		
 		"bDeferRender": true,
 		"bSearchable": true,
 		/*

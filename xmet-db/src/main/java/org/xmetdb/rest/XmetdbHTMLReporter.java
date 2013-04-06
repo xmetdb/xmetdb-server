@@ -17,8 +17,6 @@ import org.xmetdb.xmet.client.XMETDBRoles;
 
 @Deprecated
 public abstract class XmetdbHTMLReporter<T,Q extends IQueryRetrieval<T>>  extends QueryHTMLReporter<T,Q>  {
-	public static final DBRole managerRole = new DBRole(XMETDBRoles.xmetdb_manager.name(),XMETDBRoles.xmetdb_manager.toString());
-	public static final DBRole editorRole = new DBRole(XMETDBRoles.xmetdb_editor.name(),XMETDBRoles.xmetdb_editor.toString());
 
 	/**
 	 * 

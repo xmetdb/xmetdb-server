@@ -7,16 +7,15 @@ import java.util.Map;
 
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.restnet.db.DBConnection;
-import net.idea.restnet.db.aalocal.DBRole;
 
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Reference;
 import org.restlet.routing.Template;
 import org.restlet.security.RoleAuthorizer;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.user.author.db.VerifyUser;
 import org.xmetdb.rest.user.resource.UserDBResource;
-import org.xmetdb.xmet.client.XMETDBRoles;
 import org.xmetdb.xmet.client.Resources;
 
 /**
@@ -32,8 +31,8 @@ public class UserAuthorizer extends RoleAuthorizer {
 	
 	public UserAuthorizer() {
 		super();
-		getAuthorizedRoles().add(new DBRole(XMETDBRoles.xmetdb_editor.name(),XMETDBRoles.xmetdb_editor.toString()));
-		getAuthorizedRoles().add(new DBRole(XMETDBRoles.xmetdb_manager.name(),XMETDBRoles.xmetdb_manager.toString()));
+		getAuthorizedRoles().add(DBRoles.adminRole);
+		getAuthorizedRoles().add(DBRoles.curatorRole);
 	}
 
 	@Override

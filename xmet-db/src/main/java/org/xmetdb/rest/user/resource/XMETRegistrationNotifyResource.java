@@ -6,9 +6,10 @@ import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.user.resource.RegistrationNotifyResource;
 
-import org.xmetdb.rest.XmetdbHTMLReporter;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public class XMETRegistrationNotifyResource  extends RegistrationNotifyResource {
 	
@@ -25,16 +26,18 @@ public class XMETRegistrationNotifyResource  extends RegistrationNotifyResource 
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
 		map.put("searchURI",Resources.register);
-		map.put("managerRole", "false");
-		map.put("editorRole", "false");
+		map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
+		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
 		if (getClientInfo()!=null) {
 			if (getClientInfo().getUser()!=null)
 				map.put("username", getClientInfo().getUser().getIdentifier());
 			if (getClientInfo().getRoles()!=null) {
-				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.managerRole)>=0)
-					map.put("managerRole", "true");
-				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.editorRole)>=0)
-					map.put("editorRole", "true");
+				if (DBRoles.isAdmin(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.TRUE);
+				if (DBRoles.isCurator(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.TRUE);
+				if (DBRoles.isUser(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_user.name(), Boolean.TRUE);				
 			}
 		}
 		map.put("creator","Ideaconsult Ltd.");

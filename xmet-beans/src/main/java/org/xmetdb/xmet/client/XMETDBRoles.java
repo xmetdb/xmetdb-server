@@ -14,22 +14,22 @@ public enum XMETDBRoles {
 			return "Registered user and XMetDB documents author";
 		}		
 	},
-	xmetdb_editor {
-		//can publish new documents
+	xmetdb_curator {
+		//curate existing observations
 		@Override
 		public String getURI() {
 			return Resources.editor;
 		}
 		@Override
 		public String toString() {
-			return "New observation";
+			return "Curator";
 		}
 		@Override
 		public String getHint() {
-			return "Publishing new obsevations";
+			return "Curating existing obsevations";
 		}
 	},
-	xmetdb_manager {
+	xmetdb_admin {
 		//can do sysadmin
 		@Override
 		public String getURI() {
@@ -43,19 +43,9 @@ public enum XMETDBRoles {
 		public String getHint() {
 			return "System administration";
 		}
-	},
-	xmetdb_admin {
-		//can review documents - used no more
-		@Override
-		public String toString() {
-			return "Reviewer";
-		}
-		@Override
-		public String getHint() {
-			return "Not used anymore";
-		}
 	};
 	public String getURI() {return null;}
 	public String getHint() { return toString();}
 
 }
+

@@ -12,6 +12,7 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public abstract class CatalogFTLResource<T> extends CatalogResource<T> {
 	
@@ -24,6 +25,21 @@ public abstract class CatalogFTLResource<T> extends CatalogResource<T> {
 	public void configureTemplateMap(Map<String, Object> map) {
 		super.configureTemplateMap(map);
         map.put("creator","IdeaConsult Ltd.");
+        map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
+		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
+		if (getClientInfo()!=null) {
+			if (getClientInfo().getUser()!=null)
+				map.put("username", getClientInfo().getUser().getIdentifier());
+			if (getClientInfo().getRoles()!=null) {
+				if (DBRoles.isAdmin(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_admin.name(),Boolean.TRUE);
+				if (DBRoles.isCurator(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.TRUE);
+				if (DBRoles.isUser(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_user.name(), Boolean.TRUE);	
+			}
+		}
+		
         map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
         map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));
         map.put(Resources.Config.xmet_guide.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_guide.name()));

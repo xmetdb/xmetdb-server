@@ -217,6 +217,20 @@ a.login {
 	padding: 0 0 0 20px;
 }
 
+a.curator {
+	font-weight: normal;
+	text-decoration: none;
+	background: url("/xmetdb/images/star.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 0 20px;
+}
+
+a.admin {
+	font-weight: normal;
+	text-decoration: none;
+	background: url("/xmetdb/images/wrench_orange.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 0 20px;
+}
+
 
 A:link {
 	COLOR: #516373;

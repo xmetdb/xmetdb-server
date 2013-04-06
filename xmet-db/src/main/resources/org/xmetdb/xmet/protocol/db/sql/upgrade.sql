@@ -304,3 +304,13 @@ ALTER TABLE `template` MODIFY COLUMN `name` VARCHAR(255) CHARACTER SET utf8 COLL
  ADD UNIQUE INDEX `template_uniprot` USING BTREE(`uniprot`),
  ADD INDEX `template_alleles`(`alleles`(200));
 insert into version (idmajor,idminor,comment) values (2,14,"Enzymes table refactoring");
+
+
+-- ----------------------------------------------------------
+-- users
+-- ----------------------------------------------------------
+use xmet_users;
+update roles set role_name="xmetdb_admin" where role_name="xmetdb_manager";
+update roles set role_name="xmetdb_curator" where role_name="xmetdb_editor";
+update user_roles set role_name="xmetdb_admin" where role_name="xmetdb_manager" and user_name is not null; 
+update user_roles set role_name="xmetdb_curator" where role_name="xmetdb_editor" and user_name is not null;

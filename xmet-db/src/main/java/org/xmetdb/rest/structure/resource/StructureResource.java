@@ -33,7 +33,7 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.XmetdbHTMLReporter;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.prediction.DBModel;
 import org.xmetdb.rest.prediction.ReadModel;
 import org.xmetdb.rest.prediction.ReadModelQuery;
@@ -41,6 +41,7 @@ import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public class StructureResource extends CatalogResource<Structure> {
 	protected String queryService;
@@ -91,16 +92,18 @@ public class StructureResource extends CatalogResource<Structure> {
 		map.put("xmet_request_jsonp",query.toString());
 
 	
-		map.put("managerRole", "false");
-		map.put("editorRole", "false");
+		map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
+		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
 		if (getClientInfo()!=null) {
 			if (getClientInfo().getUser()!=null)
 				map.put("username", getClientInfo().getUser().getIdentifier());
 			if (getClientInfo().getRoles()!=null) {
-				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.managerRole)>=0)
-					map.put("managerRole", "true");
-				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.editorRole)>=0)
-					map.put("editorRole", "true");
+				if (DBRoles.isAdmin(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_admin.name(),Boolean.TRUE);
+				if (DBRoles.isCurator(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.TRUE);
+				if (DBRoles.isUser(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_user.name(), Boolean.TRUE);		
 			}
 		}
 		map.put("creator","Ideaconsult Ltd.");

@@ -19,6 +19,7 @@ import org.restlet.Request;
 import org.restlet.data.ClientInfo;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.XmetdbHTMLReporter;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
@@ -98,18 +99,9 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 		return null;
 	}
 
-	protected boolean isAdminOrEditor() {
-		ClientInfo clientInfo = uriReporter.getRequest().getClientInfo();
-		if (clientInfo==null) return false;
-		
-		return clientInfo.getRoles().indexOf(managerRole)>=0
-			   || 
-			   clientInfo.getRoles().indexOf(editorRole) >=0;
-
-	}
 	@Override
 	protected void printTableHeader(Writer w) throws Exception {
-		boolean isAdminOrEditor = isAdminOrEditor();
+		boolean isAdminOrEditor = DBRoles.isAdminOrCurator(uriReporter.getRequest().getClientInfo().getRoles());
 		w.write("<table width='100%'>\n");
 		w.write(String.format("<tr>\n" +
 				"<th></th>\n" +
@@ -333,7 +325,7 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 			output.write(String.format("<td class='contentTable qmrfDate'>%s</td>", simpleDateFormat.format(new Date(item.getTimeModified()))));
 			output.write(String.format("<td class='contentTable qmrfDownloadLinks'>%s</td>", printDownloadLinks(uri)));
 			
-			String owner = !item.isPublished() || isAdminOrEditor()?
+			String owner = !item.isPublished() || DBRoles.isAdminOrCurator(uriReporter.getRequest().getClientInfo().getRoles())?
 							String.format("%s %s",item.getOwner().getFirstname()==null?"":item.getOwner().getFirstname(),
 												  item.getOwner().getLastname()==null?"":item.getOwner().getLastname()):"";
 			
@@ -343,7 +335,7 @@ public class ProtocolQueryHTMLReporter extends XmetdbHTMLReporter<DBProtocol, IQ
 			/**
 			 * 
 			 */
-			if (isAdminOrEditor()) {
+			if (DBRoles.isAdminOrCurator(uriReporter.getRequest().getClientInfo().getRoles())) {
 				/**
 				 * If published, don't show "publish" link
 				 */

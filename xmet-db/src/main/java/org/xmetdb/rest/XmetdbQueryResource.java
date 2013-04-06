@@ -23,6 +23,7 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends Serializable> extends QueryResource<Q,T>{
 
@@ -107,16 +108,18 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 	protected Map<String, Object> getMap(Variant variant) throws ResourceException {
 		   Map<String, Object> map = new HashMap<String, Object>();
 
-			map.put("managerRole", "false");
-			map.put("editorRole", "false");
+			map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
+			map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
 			if (getClientInfo()!=null) {
 				if (getClientInfo().getUser()!=null)
 					map.put("username", getClientInfo().getUser().getIdentifier());
 				if (getClientInfo().getRoles()!=null) {
-					if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.managerRole)>=0)
-						map.put("managerRole", "true");
-					if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.editorRole)>=0)
-						map.put("editorRole", "true");
+					if (DBRoles.isAdmin(getClientInfo().getRoles()))
+						map.put(XMETDBRoles.xmetdb_admin.name(),Boolean.TRUE);
+					if (DBRoles.isCurator(getClientInfo().getRoles()))
+						map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.TRUE);
+					if (DBRoles.isUser(getClientInfo().getRoles()))
+						map.put(XMETDBRoles.xmetdb_user.name(), Boolean.TRUE);	
 				}
 			}
 

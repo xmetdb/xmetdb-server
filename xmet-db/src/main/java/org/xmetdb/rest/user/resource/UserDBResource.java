@@ -19,6 +19,7 @@ import net.idea.restnet.c.task.FactoryTaskConvertor;
 import net.idea.restnet.c.task.TaskCreator;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
+import net.idea.restnet.db.aalocal.DBRole;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.db.convertors.RDFJenaConvertor;
@@ -48,6 +49,7 @@ import org.xmetdb.rest.task.UserTaskHTMLReporter;
 import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 /**
  * Protocol resource
@@ -56,7 +58,7 @@ import org.xmetdb.xmet.client.Resources.Config;
  * @param <Q>
  */
 public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
-		
+
 	public static final String resourceKey = "user";
 	
 	protected boolean singleItem = false;

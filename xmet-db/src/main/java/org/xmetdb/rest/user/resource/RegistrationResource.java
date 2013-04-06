@@ -35,12 +35,13 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.XmetdbHTMLReporter;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.task.RegistrationTaskHTMLReporter;
 import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 public class RegistrationResource extends CatalogResource<DBUser> {
 	protected List<DBUser> dummyuser = new ArrayList<DBUser>();
@@ -66,16 +67,19 @@ public class RegistrationResource extends CatalogResource<DBUser> {
 	public void configureTemplateMap(Map<String, Object> map) {
 	
 		map.put("searchURI",Resources.register);
-		map.put("managerRole", "false");
-		map.put("editorRole", "false");
+		map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
+		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
+		
 		if (getClientInfo()!=null) {
 			if (getClientInfo().getUser()!=null)
 				map.put("username", getClientInfo().getUser().getIdentifier());
 			if (getClientInfo().getRoles()!=null) {
-				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.managerRole)>=0)
-					map.put("managerRole", "true");
-				if (getClientInfo().getRoles().indexOf(XmetdbHTMLReporter.editorRole)>=0)
-					map.put("editorRole", "true");
+				if (DBRoles.isAdmin(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.TRUE);
+				if (DBRoles.isCurator(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.TRUE);
+				if (DBRoles.isUser(getClientInfo().getRoles()))
+					map.put(XMETDBRoles.xmetdb_user.name(), Boolean.TRUE);	
 			}
 		}
 		map.put("creator","Ideaconsult Ltd.");
