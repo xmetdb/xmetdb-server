@@ -3,9 +3,17 @@
 <#include "/s_head.ftl" >
 <#include "/users_head.ftl" >
 
+<#if xmetdb_admin?? && xmetdb_admin>
+    <script type='text/javascript' src='${xmet_root}/jquery/jquery.jeditable.js'></script>
+    <script type='text/javascript' src='${xmet_root}/jquery/jquery.dataTables.editable.js'></script>
+</#if>	
+
 <script type='text/javascript'>
 $(document).ready(function() {
-	var oTable = defineUsersTable("${xmet_root}","${xmet_request_json}");
+	var oTable = defineUsersTable("${xmet_root}","${xmet_request_json}","#users");	
+	<#if xmetdb_admin?? && xmetdb_admin>
+		makeEditableUsersTable("${xmet_root}",oTable);
+	</#if>	
 });
 </script>
 

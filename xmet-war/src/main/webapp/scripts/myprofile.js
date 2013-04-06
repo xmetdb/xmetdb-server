@@ -42,15 +42,17 @@ function getMyAccount(root,url,readonly,username) {
 }
 
 
-function defineUsersTable(root,url) {
+function defineUsersTable(root,url,selector) {
 
-	var oTable = $('#users').dataTable( {
+	var oTable = $(selector).dataTable( {
 		"sAjaxDataProp" : "user",
 		"bProcessing": true,
 		"bServerSide": false,
 		"bStateSave": false,
 		"aoColumnDefs": [
- 				{ "mDataProp": "username" , "asSorting": [ "asc", "desc" ],
+ 				{ 
+				  "mDataProp": "id",			
+ 				  "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 0 ],	
 				  "bSearchable" : true,
 				  "bUseRendered" : false,
@@ -120,7 +122,8 @@ function defineUsersTable(root,url) {
 					  "bUseRendered" : false,
 					  "sWidth" : "5%",
 					  "fnRender" : function(o,val) {
-						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>":"";
+						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>":
+							  "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
 					  }
 				},
 				{ 	 "mDataProp": function (o,val) {
@@ -133,7 +136,8 @@ function defineUsersTable(root,url) {
 					  "bUseRendered" : false,
 					  "sWidth" : "5%",
 					  "fnRender" : function(o,val) {
-						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Admin role assigned'></span>":""
+						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Admin role assigned'></span>":
+							  "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
 					  }
 				}					
 			],
@@ -154,9 +158,47 @@ function defineUsersTable(root,url) {
                 '<option value="100">100</option>' +
                 '<option value="-1">all</option>' +
                 '</select> users'	            
-	    }
+	    },
+		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+	          $(nRow).attr("id",aData["username"]);
+	          return nRow;
+	    }	    
 	} );
 	return oTable;
+}
+
+/**
+ * Inline editing of user roles
+ * @param root
+ * @param oTable
+ */
+function makeEditableUsersTable(root,oTable) {
+	oTable.makeEditable({
+		"aoColumns": [
+		      null,null,null,null,null,
+              {
+                  type:'select'	,
+                  loadtext: 'loading...',
+                  indicator: 'Updating curator role ...',
+                  tooltip: 'Click to edit the curator role',
+                  loadtext: 'loading...',
+                  data: "{'':'Please select...', true:'Grant Curator role',false:'Revoke Curator role'}",
+                  onblur: 'cancel',
+                  submit: 'Save changes',
+                  fnOnCellUpdated: function(sStatus, sValue, settings){
+						//alert("Enzyme code is updated with value " + sValue);
+				  }
+              },
+              null            
+		 ],
+	     sUpdateURL: root+"/admin/role?method=PUT",
+	     fnOnCellUpdated: function(sStatus, sValue, settings){
+				//alert("Enzyme code is updated with value " + sValue);
+	     },
+	     fnOnUpdated: function(status) {       
+     		oTable.fnDraw(true);
+	     }   
+	});
 }
 
 
@@ -207,6 +249,7 @@ function defineOrganisationTable(root,url) {
 		    } );
 		}		    
 	} );
+	
 	return oTable;
 }
 
@@ -302,6 +345,7 @@ function defineAlertsTable(root,url) {
 	} );
 	return oTable;
 }
+
 
 function setAutocompleteOrgs(root,id) {
 		$(id).autocomplete({
