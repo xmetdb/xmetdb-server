@@ -95,16 +95,47 @@ function defineUsersTable(root,url) {
 						  return val;
 					  }
 				},
-				{ "mDataProp": "reviewer" , "asSorting": [ "asc", "desc" ],
+				{
+				 	  "mDataProp": function (o,val) {
+							return   o["reviewer"]?1:-1; //sorting doesn't work for boolean
+				  	   },
+					  "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 4 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
 					  "bUseRendered" : false,
 					  "sWidth" : "10%",
 					  "fnRender" : function(o,val) {
-						  return "<input type='checkbox' id='"+o.aData["uri"]+"' disabled='disabled' "+ (val?"checked":"") +">";
+						  //return "<input type='checkbox' id='"+o.aData["id"]+"' disabled='disabled' "+ (val?"checked":"") +">";
+						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Available as a curator'></span>":"";
 					  }
-				}				
+				},
+				{ 	  "mDataProp": function (o,val) {
+							return   $.inArray("xmetdb_curator",o["roles"]);
+				  	   },
+				  	  "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 5 ],
+					  "bSearchable" : true,
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "sWidth" : "5%",
+					  "fnRender" : function(o,val) {
+						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>":"";
+					  }
+				},
+				{ 	 "mDataProp": function (o,val) {
+							return   $.inArray("xmetdb_admin",o["roles"]);
+					  }, 
+					  "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 6 ],
+					  "bSearchable" : true,
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "sWidth" : "5%",
+					  "fnRender" : function(o,val) {
+						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Admin role assigned'></span>":""
+					  }
+				}					
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"bJQueryUI" : true,

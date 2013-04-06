@@ -36,7 +36,9 @@ jQuery(document).ready(function()
 		<th>Affiliation</th>
 		<th>e-mail</th>
 		<th>Keywords</th>
-		<th>Curator</th>
+		<th>Available as a Curator</th>
+		<th>Curator Role</th>
+		<th>Admin Role</th>
 		</thead>
 		<tbody></tbody>
 		</table>
