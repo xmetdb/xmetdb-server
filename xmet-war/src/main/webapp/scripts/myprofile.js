@@ -43,28 +43,38 @@ function getMyAccount(root,url,readonly,username) {
 
 
 function defineUsersTable(root,url,selector) {
-
+	var not = "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
+	var yes = "<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>";
 	var oTable = $(selector).dataTable( {
 		"sAjaxDataProp" : "user",
 		"bProcessing": true,
 		"bServerSide": false,
 		"bStateSave": false,
 		"aoColumnDefs": [
- 				{ 
-				  "mDataProp": "id",			
- 				  "asSorting": [ "asc", "desc" ],
+		        { 
+				  "mDataProp": "username",			
+				  "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 0 ],	
 				  "bSearchable" : true,
 				  "bUseRendered" : false,
 				  "bSortable" : true,
 				  "fnRender" : function(o,val) {
-					  var name = o.aData["firstname"] + " " + o.aData["lastname"];
-					  if (o.aData["uri"]==null) return name;
-					  return "<a href='"+o.aData["uri"]+"' title='"+o.aData["uri"]+"'>"+name+"</a>";
+					  return "<a href='"+o.aData["uri"]+"' title='"+o.aData["uri"]+"'>"+val+"</a>";
+				  }
+				},		                 
+ 				{ 
+				  "mDataProp": "id",			
+ 				  "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 1 ],	
+				  "bSearchable" : true,
+				  "bUseRendered" : false,
+				  "bSortable" : true,
+				  "fnRender" : function(o,val) {
+					  return name = o.aData["firstname"] + " " + o.aData["lastname"];
 				  }
 				},
 				{ "mDataProp": "organisation" , "asSorting": [ "asc", "desc" ],
-				  "aTargets": [ 1 ],	
+				  "aTargets": [ 2 ],	
 				  "bSearchable" : true,
 				  "bUseRendered" : false,
 				  "bSortable" : true,
@@ -79,7 +89,7 @@ function defineUsersTable(root,url,selector) {
 				  }
 				},
 				{ "mDataProp": "email" , "asSorting": [ "asc", "desc" ],
-				  "aTargets": [ 2 ],
+				  "aTargets": [ 3 ],
 				  "bSearchable" : true,
 				  "bSortable" : true,
 				  "bUseRendered" : false,
@@ -89,7 +99,7 @@ function defineUsersTable(root,url,selector) {
 				  }
 				},
 				{ "mDataProp": "keywords" , "asSorting": [ "asc", "desc" ],
-					  "aTargets": [ 3 ],
+					  "aTargets": [ 4 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
 					  "bUseRendered" : false,
@@ -102,7 +112,7 @@ function defineUsersTable(root,url,selector) {
 							return   o["reviewer"]?1:-1; //sorting doesn't work for boolean
 				  	   },
 					  "asSorting": [ "asc", "desc" ],
-					  "aTargets": [ 4 ],
+					  "aTargets": [ 5 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
 					  "bUseRendered" : false,
@@ -114,26 +124,32 @@ function defineUsersTable(root,url,selector) {
 				},
 				{ 	  "mDataProp": "roles.xmetdb_curator",
 				  	  "asSorting": [ "asc", "desc" ],
-					  "aTargets": [ 5 ],
-					  "bSearchable" : true,
-					  "bSortable" : true,
-					  "bUseRendered" : false,
-					  "sWidth" : "5%",
-					  "fnRender" : function(o,val) {
-						  return ((val!=undefined) && val)?"<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>":
-							  "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
-					  }
-				},
-				{ 	  "mDataProp": "roles.xmetdb_admin",
-					  "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 6 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
 					  "bUseRendered" : false,
 					  "sWidth" : "5%",
 					  "fnRender" : function(o,val) {
-						  return ((val!=undefined) && val)?"<span class='ui-icon ui-icon-check' title='Admin role assigned'></span>":
-							  "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
+						  if (val===undefined) return not;
+						  if (val==null) return not;
+						  if (typeof val === 'string') 
+						  try {
+							  if (val.indexOf("Revoke Curator role")>=0) return not;
+							  else if (val.indexOf("Grant Curator role")>=0)  return yes;
+							  else return not;
+						  } catch (err) { }
+						  return (val===true)?yes:not;
+					  }
+				},
+				{ 	  "mDataProp": "roles.xmetdb_admin",
+					  "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 7 ],
+					  "bSearchable" : true,
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "sWidth" : "5%",
+					  "fnRender" : function(o,val) {
+						  return ((val!=undefined) && val)?yes:not;
 					  }
 				}					
 			],
@@ -171,20 +187,16 @@ function defineUsersTable(root,url,selector) {
 function makeEditableUsersTable(root,oTable) {
 	oTable.makeEditable({
 		"aoColumns": [
-		      null,null,null,null,null,
+		      null,null,null,null,null,null,
               {
                   type:'select'	,
                   loadtext: 'loading...',
                   indicator: 'Updating curator role ...',
-                  tooltip: 'Click to edit the curator role',
+                  tooltip: 'Double click to edit the curator role',
                   loadtext: 'loading...',
                   data: "{'':'Please select...', true:'Grant Curator role',false:'Revoke Curator role'}",
                   onblur: 'cancel',
-                  submit: 'Save changes',
-                  fnOnCellUpdated: function(sStatus, sValue, row){
-                	  oTable.fnUpdate( sValue, row, 5);
-                	  oTable.fnDraw()
-				  }
+                  submit: 'Save changes'
               },
               null            
 		 ],

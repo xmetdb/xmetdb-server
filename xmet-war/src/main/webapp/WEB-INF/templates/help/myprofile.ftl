@@ -6,7 +6,7 @@ My profile
 <div id="keys" style="display:none;">
   <ul>
     <li><a href="#myprofile">My profile</a></li>
-    <li><a href="#curator">Curator</a></li>
+    <li><a href="#hcurator">Curator</a></li>
          <li><a href="#observations">Observations</a></li>
      <li><a href="#alerts">Alerts</a></li>
      <li><a href="#pwd">Chamge password</a></li>
@@ -15,10 +15,16 @@ My profile
     <p>TODO</p>
   </div>  
   <div id="myprofile">
-    <p>TODO</p>
+    <p></p>
   </div>
-  <div id="curator">
-    <p>What he does</p>
+  <div id="hcurator">
+    <p>
+    The curators can edit all observations but not essential info as experiment and enzymes.
+    The curators can change atom highlighting and comments and typos in references.
+    The curators can set the flag curated to yes for any observations.
+    The users may indicate he is available as a curator, but this does not automatically grant the curator role.
+    The curator role is assigned by admins only.
+    </p>
   </div>  
     <div id="observations">
     <p>Observations submitted</p>

@@ -39,12 +39,13 @@ jQuery(document).ready(function()
 		<div class="twelve columns ui-widget-content ui-corner-all" style="padding:0;" >
 		
 		<table id='users' cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
-		<thead>	
+		<thead>
+		<th>Username</th>	
 		<th>Name</th>
 		<th>Affiliation</th>
 		<th>e-mail</th>
 		<th>Keywords</th>
-		<th>Available as a Curator</th>
+		<th>Available as a Curator<a href='#' class='chelp hcurator'></a></th>
 		<th>Curator Role</th>
 		<th>Admin Role</th>
 		</thead>

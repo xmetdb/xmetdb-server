@@ -142,7 +142,7 @@ jQuery(document).ready(function()
 				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
-				<label class='three columns alpha'  for="reviewer">Available as a curator<a href='#' class='chelp curator'></a></label>
+				<label class='three columns alpha'  for="reviewer">Available as a curator<a href='#' class='chelp hcurator'></a></label>
 				<input class='eight columns alpha half-bottom' type="checkbox" name='reviewer' id='reviewer' value='' style='width:3em;'/>
 				<div class='five columns omega'></div>
 			</div>				
