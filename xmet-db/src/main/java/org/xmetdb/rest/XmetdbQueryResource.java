@@ -1,13 +1,17 @@
 package org.xmetdb.rest;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.idea.modbcum.i.IQueryRetrieval;
+import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.restnet.c.TaskApplication;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.FactoryTaskConvertor;
+import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryResource;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.i.task.ICallableTask;
@@ -18,9 +22,11 @@ import net.idea.restnet.rdf.FactoryTaskConvertorRDF;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
+import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.XMETDBRoles;
@@ -159,5 +165,22 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 		getHTMLBeauty();
         return toRepresentation(getMap(variant), getTemplateName(), MediaType.TEXT_PLAIN);
 	}	
+	
+	protected void execUpdate(Object object, IQueryUpdate query) throws ResourceException { 
+		Connection conn = null;
+		UpdateExecutor x = null;
+		try {
+			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
+			conn = dbc.getConnection();
+			x = new UpdateExecutor();
+			x.setConnection(conn);
+			x.process(query);
+		} catch (Exception e) {
+			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
+		} finally {
+			try { if (conn != null) conn.close(); } catch (Exception xx) {}
+			try { if (x !=null) x.close(); } catch (Exception xx) {}
+		}			
+	}
 
 }

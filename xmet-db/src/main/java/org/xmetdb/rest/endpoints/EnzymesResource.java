@@ -271,22 +271,7 @@ public class EnzymesResource extends XmetdbQueryResource<IQueryRetrieval<Enzyme>
 
 		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Enzyme not specified!");
 	}
-	protected void execUpdate(Enzyme enzyme, IQueryUpdate query) throws ResourceException { 
-		Connection conn = null;
-		UpdateExecutor x = null;
-		try {
-			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
-			conn = dbc.getConnection();
-			x = new UpdateExecutor();
-			x.setConnection(conn);
-			x.process(query);
-		} catch (Exception e) {
-			throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,e.getMessage(),e);
-		} finally {
-			try { if (conn != null) conn.close(); } catch (Exception xx) {}
-			try { if (x !=null) x.close(); } catch (Exception xx) {}
-		}			
-	}
+
 	
 	/*
 

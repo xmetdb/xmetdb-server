@@ -18,6 +18,7 @@ import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.ProtocolFactory;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
+import org.xmetdb.rest.protocol.db.UpdateObservationEntry;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
 import org.xmetdb.xmet.client.Resources;
 
@@ -87,21 +88,26 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 			if (key!=null) {
 				DBProtocol protocol = new DBProtocol();
 				protocol.setIdentifier(key.toString());
+				UpdateObservationEntry query = new UpdateObservationEntry();
+				query.setGroup(protocol);
 				Form form = new Form(entity);
 				String id = form.getFirstValue("id");
 				String value = form.getFirstValue("value");
 				try {
 					ProtocolFactory.ObservationFields field = ProtocolFactory.ObservationFields.valueOf(id);
+					query.setObject(field);
 					switch (field) {
 					case xmet_reference:
-						System.out.println(value);
+						protocol.setReference(value);
 						break;
 					case xmet_comments:
-						System.out.println(value);
+						protocol.getKeywords().add(value);
 						break;
 					default:
 					    throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 					}
+
+					execUpdate(protocol, query);
 					return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
 				} catch (Exception x) {throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);}
 			}
