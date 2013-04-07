@@ -152,10 +152,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	
 	@Override
 	protected QueryHTMLReporter createHTMLReporter(boolean headless) throws ResourceException {
-		ProtocolQueryHTMLReporter rep = new ProtocolQueryHTMLReporter(getRequest(),!singleItem,false,structure==null,true);
-		rep.setHeadless(headless);
-		rep.setHtmlBeauty(getHTMLBeauty());
-		return rep;
+		return null;
 	}
 	
 	@Override

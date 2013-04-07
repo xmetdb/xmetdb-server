@@ -9,7 +9,6 @@ public class Resources {
 	public static final String search = "/search";
 	public static final String enzyme = "/catalog";
 	public static final String protocol = "/protocol";
-	public static final String draft = "/draft";
 	public static final String chemical = "/chemical";
 	public static final String structure = "/structure";
 	public static final String dataset = "/dataset";
@@ -21,9 +20,9 @@ public class Resources {
 	public static final String versions = "/versions";
 	public static final String previous = "/previous";
 	public static final String authors = "/authors";
-	public static final String document = "/document";
 	public static final String attachment = "/attachment";
 	public static final String editor = "/editor";
+	public static final String curator = "/curator";
 	public static final String login = String.format("/%s",UserLoginFormResource.resource);
 	public static final String myaccount = "/myaccount";
 	public static final String register = "/register";

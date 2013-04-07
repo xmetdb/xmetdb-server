@@ -497,12 +497,13 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		return task.getResult().toString();
 
 	}
-
+	/*
 	public void testDownloadFile() throws Exception {
 		testGet(String.format("http://localhost:%d%s/%s%s", port,
 				Resources.protocol, idxmet2, Resources.document),
 				MediaType.APPLICATION_PDF);
 	}
+	*/
 
 	@Override
 	public boolean verifyResponsePDF(String uri, MediaType media, InputStream in)

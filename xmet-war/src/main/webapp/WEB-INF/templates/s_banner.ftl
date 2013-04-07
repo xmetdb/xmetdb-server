@@ -10,7 +10,7 @@
 			<a class='topLinks login' title='You are currently logged in as "${username}". Click here to log out.' href='#' onClick='document.forms["logoutForm"].submit(); return false;'>Log out</a>
 			&nbsp;<a class='topLinks' title='You are currently logged in as "${username}".Click here to edit your profile' href='${xmet_root}/myaccount'>[<b>${username}</b>]</a>
 			<#if xmetdb_curator?? && xmetdb_curator>
-				&nbsp;|<a class='topLinks curator' href='${xmet_root}/draft' title='Click to view uncurated observations'>Curator</a>
+				&nbsp;|<a class='topLinks curator' href='${xmet_root}/curator' title='Click to view uncurated observations'>Curator</a>
 			</#if>
 			<#if xmetdb_admin?? && xmetdb_admin>
 				&nbsp;|<a class='topLinks admin' href='${xmet_root}/admin' title='Go to admin tasks'>Admin</a>

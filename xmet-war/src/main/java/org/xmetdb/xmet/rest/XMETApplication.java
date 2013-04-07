@@ -38,7 +38,6 @@ import org.xmetdb.rest.groups.ProjectRouter;
 import org.xmetdb.rest.help.HelpResource;
 import org.xmetdb.rest.protocol.ProtocolRouter;
 import org.xmetdb.rest.protocol.facet.ProtocolsByEndpointResource;
-import org.xmetdb.rest.protocol.resource.db.DraftObservationsResource;
 import org.xmetdb.rest.structure.resource.DatasetResource;
 import org.xmetdb.rest.structure.resource.StructureRouter;
 import org.xmetdb.rest.user.UserRouter;
@@ -46,8 +45,9 @@ import org.xmetdb.rest.user.alerts.resource.AlertRouter;
 import org.xmetdb.rest.user.resource.MyAccountResource;
 import org.xmetdb.rest.user.resource.PwdResetResource;
 import org.xmetdb.rest.user.resource.RegistrationConfirmResource;
-import org.xmetdb.rest.user.resource.XMETRegistrationNotifyResource;
 import org.xmetdb.rest.user.resource.RegistrationResource;
+import org.xmetdb.rest.user.resource.XMETRegistrationNotifyResource;
+import org.xmetdb.rest.xmet.curator.DraftObservationsResource;
 import org.xmetdb.xmet.aa.UserAuthorizer;
 import org.xmetdb.xmet.aa.XMETLoginFormResource;
 import org.xmetdb.xmet.aa.XMETLoginPOSTResource;
@@ -56,6 +56,7 @@ import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
 import org.xmetdb.xmet.client.XMETDBRoles;
 import org.xmetdb.xmet.task.XMETAdminRouter;
+import org.xmetdb.xmet.task.XMETCuratorRouter;
 import org.xmetdb.xmet.task.XMETEditorRouter;
 import org.xmetdb.xmet.task.XMETTaskRouter;
 
@@ -169,7 +170,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		setCookieUserRouter.attach(String.format("%s/{%s}",Resources.dataset,DatasetResource.datasetKey), DatasetResource.class);
 		setCookieUserRouter.attach(Resources.admin, createAdminRouter());
 		setCookieUserRouter.attach(Resources.editor, createEditorRouter());
-		setCookieUserRouter.attach(Resources.draft, createUnpublishedRouter());
+		setCookieUserRouter.attach(Resources.curator, createUnpublishedRouter());
 		setCookieUserRouter.attach(Resources.task, new XMETTaskRouter(
 				getContext()));
 
@@ -326,14 +327,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	}
 	protected Restlet createUnpublishedRouter() {
 		Authorizer authz = new SimpleRoleAndMethodAuthorizer(DBRoles.adminRole,DBRoles.curatorRole);
-
-		authz.setNext(new AdminRouter(getContext()) {
-			@Override
-			protected void init() {
-				attachDefault(DraftObservationsResource.class);
-			}
-		});
-		
+		authz.setNext(new XMETCuratorRouter(getContext()));
 		return authz;
 	}
 	/**
