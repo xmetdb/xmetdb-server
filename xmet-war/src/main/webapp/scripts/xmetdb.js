@@ -57,7 +57,7 @@ function loadEnzymesList(root,selectTag,allelesTag) {
 			  });
           $("<option value=''></option>").appendTo(selectTag);
           var alleles = {};
-      	  data.forEach(function enz(element, index, array) {
+      	  $.each(data,function enz(element, index, array) {
       		  $("<option value='" + element.code + "'>" + element.code + "&nbsp;" +element.name + "</option>").appendTo(selectTag);
       		  alleles[element.code] = element.alleles;
       	  });
@@ -66,7 +66,7 @@ function loadEnzymesList(root,selectTag,allelesTag) {
                 $(allelesTag).html("");
                 $("<option value='' selected></option>").appendTo(allelesTag);
                 if (alleles[x]!=undefined)
-	                alleles[x].forEach(function enz(element, index, array) {
+	                $.each(alleles[x], function enz(element, index, array) {
 	              		  $("<option value='" + element + "'>" + element + "</option>").appendTo(allelesTag);
 	              	});
       	  });
@@ -130,7 +130,7 @@ function useDrawn(queryService,prefix) {
 					var found = 0;
 					$(results_mol).val(molFile);
 					$(results).empty();
-       				json.dataEntry.forEach(function img(element, index, array) {
+       				$.each(json.dataEntry,function img(element, index, array) {
        					$(results_uri).val(element.compound.URI);
        					$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
        					found++;
@@ -173,7 +173,7 @@ function runSearch(queryService,form,results) {
 	runSearchURI(queryService + '?media=application/x-javascript&'+ form.serialize(),
 				results,
 				function(json) {
-       				json.dataEntry.forEach(function img(element, index, array) {
+       				$.each(json.dataEntry,function img(element, index, array) {
        				$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
        				});
 	});	 
@@ -424,27 +424,49 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				{ "mDataProp": function (o,val) {
 					return  o["identifier"].replace("XMETDB","");
 				  }, 
+				  "aTargets": [ 0 ],	
 				  "asSorting": [ "asc", "desc" ],
 				  "bUseRendered" : false,	
  			      "fnRender": function ( o, val ) {
-          				return "<a href='"+o.aData["uri"] + "'>" + o.aData["identifier"] + "</a>";
+          				return  "<a href='"+o.aData["uri"] + "'>" + o.aData["identifier"] + "</a>";
         			}
 				},
-				{ "mDataProp": "Substrate.dataset.structure" , "asSorting": [ "asc", "desc" ], "sDefaultContent" : "N/A" },
-				{ "mDataProp": "Product.dataset.structure" , "asSorting": [ "asc", "desc" ],"sDefaultContent" : "N/A"},
-				{ "mDataProp": "product_amount" , "asSorting": [ "asc", "desc" ], "bVisible": true},
+				{ "mDataProp": "Substrate" ,
+					"aTargets": [ 1 ],
+					"bUseRendered" : false,	
+					"sDefaultContent" : null,
+					"asSorting": [ "asc", "desc" ], 
+					"fnRender": function ( o, val ) {
+          				try {return val==null?null:val["dataset"]["structure"];} catch (err) {return null;}
+        			} 
+				},
+				{   "mDataProp": "Product" , 
+					"aTargets": [ 2 ],
+					"bUseRendered" : false,	
+					"sDefaultContent" : null,
+					"asSorting": [ "asc", "desc" ],
+					"fnRender": function ( o, val ) {
+          				try {return val==null?null:val["dataset"]["structure"];} catch (err) {return null;}
+        			}  
+				},
+				{ "mDataProp": "product_amount" , 
+					"aTargets": [ 3 ],	
+					"asSorting": [ "asc", "desc" ], "bVisible": true
+				},
 				{ "mDataProp": "title" , "asSorting": [ "asc", "desc" ],
+					"aTargets": [ 4 ],	
 				   "fnRender": function ( o, val ) {
 	          				return "<span title='"+ o.aData["description"] +"'>" + val + "</span>";
 	        		}
 				},
-				{ "mDataProp": "enzyme.code" , 
+				{ "mDataProp": "enzyme.code" ,
+					"aTargets": [ 5 ],	
 				  "asSorting": [ "asc", "desc" ], 
 				  "bSearchable" : true		  
 				},
-				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ] 
+				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ],"aTargets": [ 6 ]	 
 				},
-				{ "mDataProp": "curated", "asSorting": [ "asc", "desc" ],
+				{ "mDataProp": "curated", "asSorting": [ "asc", "desc" ],"aTargets": [ 7 ],	
 					"fnRender": function ( o, val ) {
 	          				return val?"Yes":"No";
 	        		}
@@ -458,20 +480,6 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 		
 		"bDeferRender": true,
 		"bSearchable": true,
-		/*
-		"sDom": '<"H"fr>tC<"F"ip>', //ColVis 
-		"oColVis": {
-			"buttonText": "&nbsp;",
-			"bRestore": true,
-			"sAlign": "left"
-		},
-		"fnDrawCallback": function (o) {
-			var nColVis = $('div.ColVis', o.nTableWrapper)[0];
-			nColVis.style.width = o.oScroll.iBarWidth+"px";
-			nColVis.style.top = ($('div.dataTables_scroll', o.nTableWrapper).position().top)+"px";
-			nColVis.style.height = ($('div.dataTables_scrollHead table', o.nTableWrapper).height())+"px";
-		},		
-		*/
 		"oLanguage": {
 			"sSearch": "Filter:",
             "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
@@ -497,8 +505,8 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 		        	oSettings.oApi._fnProcessingDisplay( oSettings, false );
 		        }		        
 		    } );
-		},
-		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+		}
+		,"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 				//retrieve the first compound URI from substrates dataset URI
 				 if ((aData.Substrate != undefined) && (aData.Substrate!=null) && (aData.Substrate.dataset!=undefined) && (aData.Substrate.dataset!=null)) {
 					 if ((aData.Substrate.dataset.structure === undefined) || (aData.Substrate.dataset.structure==null)) {
@@ -578,8 +586,10 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				 } else {
 					 $('td:eq(5)', nRow).html(renderEnzyme(aData.enzyme.code,aData.enzyme.name));	
 				 }				 
-        }			
+        }
+		
 	} );
+	
 }
 function xmetdblog(msg) {
 	//try { console.log(msg); } catch (e) { alert(msg); }
@@ -596,7 +606,6 @@ function searchFormValidation(formName) {
 			'search': {
 				required : function() {
 					var molFile = document.getElementById("iframeSketcher").contentWindow.getMolecule();
-					console.log(molFile);
 					return (molFile == null); //if no structures drawn, the search field should not be empty
 				}
 			},		

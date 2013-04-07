@@ -126,24 +126,27 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					item.getOwner().getUserName()
 					
 					));
-			if ((item.getAttachments()!=null) && (item.getAttachments().size()>0))
-				for (DBAttachment attachment : item.getAttachments()) {
-					getOutput().write(String.format(formatAttachments,
-							attachment.getType().toString(),
-							attachment.getIdquerydatabase()>0?String.format("\"%s/dataset/R%d\"", queryService,attachment.getIdquerydatabase()):"null"
-							));
-				}		
-			else {
-				for (attachment_type at : attachment_type.values()) {
-					getOutput().write(String.format(emptyAttachments,
-							at.toString()));
-				}
+			for (attachment_type at : attachment_type.values()) {
+				if (attachment_type.document.equals(at)) continue;
+				int count = 0;
+				if ((item.getAttachments()!=null) && (item.getAttachments().size()>0))
+					for (DBAttachment attachment : item.getAttachments()) 
+						if (at.equals(attachment.getType())) {
+							getOutput().write(String.format(formatAttachments,
+								attachment.getType().toString(),
+								attachment.getIdquerydatabase()>0?String.format("\"%s/dataset/R%d\"", queryService,attachment.getIdquerydatabase()):"null"
+								));
+							count++;
+						}	
+				//there could be missing attachment, but we need JSON filled in
+				if (count==0)
+					getOutput().write(String.format(emptyAttachments,at.toString()));
 			}
 		//	\"substrate\":{\"uri\":\"%s\"},\n\"product\":{\"uri\":%s%s%s}			
 			getOutput().write("\n}");
 			comma = ",";
 		} catch (Exception x) {
-			
+			x.printStackTrace();
 		}
 		return item;
 	}
