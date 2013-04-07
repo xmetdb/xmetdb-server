@@ -6,12 +6,16 @@ import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.user.DBUser;
 
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.protocol.DBProtocol;
+import org.xmetdb.rest.protocol.ProtocolFactory;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
@@ -78,7 +82,31 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 	@Override
 	protected Representation put(Representation entity, Variant variant)
 			throws ResourceException {
-		return super.put(entity, variant);
+		if (MediaType.APPLICATION_WWW_FORM.equals(entity.getMediaType())) {
+			Object key = getRequest().getAttributes().get(FileResource.resourceKey);
+			if (key!=null) {
+				DBProtocol protocol = new DBProtocol();
+				protocol.setIdentifier(key.toString());
+				Form form = new Form(entity);
+				String id = form.getFirstValue("id");
+				String value = form.getFirstValue("value");
+				try {
+					ProtocolFactory.ObservationFields field = ProtocolFactory.ObservationFields.valueOf(id);
+					switch (field) {
+					case xmet_reference:
+						System.out.println(value);
+						break;
+					case xmet_comments:
+						System.out.println(value);
+						break;
+					default:
+					    throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
+					}
+					return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
+				} catch (Exception x) {throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);}
+			}
+		}
+		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 	}
 
 }

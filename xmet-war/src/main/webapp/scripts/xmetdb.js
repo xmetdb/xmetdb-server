@@ -344,17 +344,18 @@ function curateObservation(root,observation_uri) {
 	        	  $('#breadCrumb_xmet_id').html("<a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
 	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ root + "/curator/"+ observation["identifier"] + "' title='Click to curate the observation'>Curate</a>");
 	        	  $('#xmet_id').replaceWith("Curate the observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
-	        	  $('#xmet_atom_uncertainty option[value='+observation["atom_uncertainty"]+']').attr('selected', 'selected');
-	        	  $('#xmet_product_amount option[value='+observation["product_amount"]+']').attr('selected', 'selected');
-	        	  $('#xmet_experiment option[value='+observation["title"]+']').attr('selected', 'selected');
-	        	  loadEnzyme(observation,function(obs) {
-	        		  var allele = obs.enzyme.allele==null?"":obs.enzyme.allele.length>0?obs.enzyme.allele[0]:"";
-	        		  $('#xmet_enzyme option[value='+obs.enzyme.code+']').attr('selected', 'selected');
-	        		  //$('#xmet_enzyme option[value='+obs.enzyme.code+']').change();
-	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
-	        	  });
-	        	  $('#xmet_reference').attr("value",observation["reference"]);
+
+	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
+	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
+	        	  
+	        	  $('#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
+	        	  
+	        	  loadEnzyme(observation);
+	        	  
+	        	  $('#xmet_reference').text(observation["xmet_reference"]);
+	        	  $('#xmet_curated').text(observation["xmet_curated"]);
 	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
+	        	  
 	        	  $('#xmet_substrate_type').val('uri');
 	        	  $('#xmet_product_type').val('uri');
 	        	  $('#xmet_substrate_upload').val('');

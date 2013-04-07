@@ -79,7 +79,7 @@ public class DBProtocol extends Protocol {
 	
 	@Override
 	public void setIdentifier(String identifier) {
-		super.setIdentifier(identifier==null?null:identifier.length()>36?identifier.substring(0,35):identifier.trim());
+		super.setIdentifier(identifier==null?null:identifier.length()>6?identifier.substring(0,5):identifier.trim());
 	}
 	
 	public boolean isValidIdentifier() {

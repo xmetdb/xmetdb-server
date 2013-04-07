@@ -48,7 +48,7 @@ $(document).ready(function() {
             event.preventDefault();
             return false;
         });
-        $('#xmet_comment').autogrow();
+        $('#xmet_comments').autogrow();
 		//submitFormValidation("#submitForm");
 		//searchFormValidation("#substrateSearchForm");
 	    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
