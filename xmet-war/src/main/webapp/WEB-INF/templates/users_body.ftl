@@ -42,8 +42,8 @@ jQuery(document).ready(function()
 		<thead>
 		<th>Username</th>	
 		<th>Name</th>
-		<th>Affiliation</th>
 		<th>e-mail</th>
+		<th>Affiliation</th>
 		<th>Keywords</th>
 		<th>Available as a Curator<a href='#' class='chelp hcurator'></a></th>
 		<th>Curator Role</th>

@@ -73,31 +73,31 @@ function defineUsersTable(root,url,selector) {
 					  return name = o.aData["firstname"] + " " + o.aData["lastname"];
 				  }
 				},
-				{ "mDataProp": "organisation" , "asSorting": [ "asc", "desc" ],
-				  "aTargets": [ 2 ],	
-				  "bSearchable" : true,
-				  "bUseRendered" : false,
-				  "bSortable" : true,
-				  "fnRender" : function(o,val) {
-					    if (val==null) return "";
-					    var sOut = "";
-			           	$.each(val,function(index, entry) {
-			        		sOut += "<a href='"+entry.uri+"' title='"+entry.uri+"'>"+entry.title+"</a>";
-			        		sOut += " ";
-			        	});
-			           	return sOut;
-				  }
-				},
 				{ "mDataProp": "email" , "asSorting": [ "asc", "desc" ],
-				  "aTargets": [ 3 ],
+				  "aTargets": [ 2 ],
 				  "bSearchable" : true,
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
 					  if ((val==null) || (val===undefined)) return "";
-					  return name + "<a href='mailto:"+encodeURIComponent(o.aData["email"])+"'>"+o.aData["email"]+"</a>";
+					  return "<a href='mailto:"+encodeURIComponent(o.aData["email"])+"'>"+o.aData["email"]+"</a>";
 				  }
 				},
+				{ "mDataProp": "organisation" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [ 3 ],	
+					  "bSearchable" : true,
+					  "bUseRendered" : false,
+					  "bSortable" : true,
+					  "fnRender" : function(o,val) {
+						    if (val==null) return "";
+						    var sOut = "";
+				           	$.each(val,function(index, entry) {
+				        		sOut += "<a href='"+entry.uri+"' title='"+entry.uri+"'>"+entry.title+"</a>";
+				        		sOut += " ";
+				        	});
+				           	return sOut;
+					  }
+					},				
 				{ "mDataProp": "keywords" , "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 4 ],
 					  "bSearchable" : true,
