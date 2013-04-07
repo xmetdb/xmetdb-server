@@ -99,16 +99,21 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 					switch (field) {
 					case xmet_reference:
 						protocol.setReference(value);
-						break;
+						execUpdate(protocol, query);
+						return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
 					case xmet_comments:
 						protocol.getKeywords().add(value);
-						break;
+						execUpdate(protocol, query);
+						return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
+					case curated: 
+						try {protocol.setSearchable(Boolean.parseBoolean(value));} catch (Exception x) {x.printStackTrace();}
+						execUpdate(protocol, query);
+						return new StringRepresentation(protocol.isSearchable()?"Curated":"Not curated",MediaType.TEXT_PLAIN);
 					default:
 					    throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 					}
 
-					execUpdate(protocol, query);
-					return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
+
 				} catch (Exception x) {throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);}
 			}
 		}

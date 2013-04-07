@@ -36,7 +36,11 @@ $(document).ready(function() {
         	submit  : 'Update',
         	height  : '1em',
         	indicator : '<img src="${xmet_root}/images/progress.gif">',
-        	tooltip  : 'Click to edit...'
+        	tooltip  : 'Click to edit...',
+        	callback : function(value, settings) {
+        		$('#imgcurated').show();
+        		$('#curated').html("Curated");
+            }
         });        
         $('#xmet_comments').editable(
         	'${xmet_request}?method=put',{
@@ -44,22 +48,31 @@ $(document).ready(function() {
         	cancel  : 'Cancel',
         	submit  : 'Update',
         	indicator : '<img src="${xmet_root}/images/progress.gif">',
-        	tooltip  : 'Click to edit...'
+        	tooltip  : 'Click to edit...',
+        	callback : function(value, settings) {
+        		$('#imgcurated').show();
+        		$('#curated').html("Curated");
+            }
         });
-		$('#xmet_curated').editable(
+		$('#curated').editable(
 			 '${xmet_request}?method=put',{ 
 		     data   : " {true:'Curated',false:'Not curated'}",
 		     type   : 'select',
 		     submit : 'Update',
 		     cancel  : 'Cancel',
 		     indicator : '<img src="${xmet_root}/images/progress.gif">',
-        	 tooltip  : 'Click to edit...'
+        	 tooltip  : 'Click to edit...',
+        	 callback : function(value, settings) {
+        	     if ("Curated"==value) {
+        	    	 $('#imgcurated').show();
+        	     } else $('#imgcurated').hide();
+             }
 		 });        
 			curateObservation("${xmet_root}","${xmet_request_json}");        			
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
 			jQuery("#breadCrumb").jBreadCrumb();
-			loadHelp("${xmet_root}","observation_new");
+			loadHelp("${xmet_root}","observation_curate");
 			$('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}"));
 	});    
 </script>
@@ -148,12 +161,16 @@ $(document).ready(function() {
 		<div class='three columns alpha'>
 			<label>Status</label>
 		</div>
-		<div name="xmet_curated" id="xmet_curated" title="Curation status" value="" row="1" class="ten columns omega remove-bottom ui-state-default"></div>
+		<div name="curated" id="curated" title="Curation status" row="1" class="three columns omega remove-bottom ui-state-default">
+		</div>
+		<div class="one column omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
+		<div class="nine columns omega">&nbsp;</div>
 	</div>		
     </div>
 
 	<!-- middle panel  twelve columns-->
 	</div>
+
 
 <!-- Footer and the like -->
 

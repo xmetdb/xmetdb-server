@@ -29,6 +29,7 @@ public class HelpResource extends CatalogFTLResource<String>  {
 		observation,
 		observation_edit,
 		observation_new,
+		observation_curate,
 		register,
 		search,
 		status,

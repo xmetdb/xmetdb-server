@@ -33,7 +33,7 @@ function cmpatoms2image(uri, model_uri) {
 		cmpURI = model_uri + "?dataset_uri=" + cmpURI + "&media=image/png";
 	}
 	//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
-	var id= uri.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
+	var id= uri.replace(/:/g,"").replace(/\//g,"").replace(/\./g,""); 
 	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
@@ -352,8 +352,9 @@ function curateObservation(root,observation_uri) {
 	        	  
 	        	  loadEnzyme(observation);
 	        	  
-	        	  $('#xmet_reference').text(observation["xmet_reference"]);
-	        	  $('#xmet_curated').text(observation["xmet_curated"]);
+	        	  $('#xmet_reference').text(observation["reference"]);
+	        	  $('#curated').html(observation["curated"]?"Curated":"Not curated");
+	        	  if (observation["curated"]) $('#imgcurated').show(); else $('#imgcurated').hide();
 	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
 	        	  
 	        	  $('#xmet_substrate_type').val('uri');

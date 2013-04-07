@@ -21,6 +21,8 @@ public class UpdateObservationEntry extends AbstractUpdate<DBProtocol,ProtocolFa
 	{"update protocol set updated=now(),reference=?,curated=1 where qmrf_number=?"};
 	private static final String[] update_comments = 
 	{"update keywords k,protocol p set keywords =?,curated=1,updated=now() where p.idprotocol=k.idprotocol and p.version=k.version and qmrf_number=?"};
+	private static final String[] update_curated = 
+	{"update protocol set updated=now(),curated=? where qmrf_number=?"};	
 	@Override
 	public String[] getSQL() throws AmbitException {
 		switch (getObject()) {
@@ -29,6 +31,9 @@ public class UpdateObservationEntry extends AbstractUpdate<DBProtocol,ProtocolFa
 		}
 		case xmet_comments: {
 			return update_comments;
+		}
+		case curated: {
+			return update_curated;
 		}
 		}
 		return null;
@@ -52,6 +57,10 @@ public class UpdateObservationEntry extends AbstractUpdate<DBProtocol,ProtocolFa
 			params1.add(new QueryParam<String>(String.class,comments.size()==0?"":comments.get(0)));
 			break;
 		}
+		case curated: {
+			params1.add(new QueryParam<Boolean>(Boolean.class,getGroup().isSearchable()));
+			break;
+		}		
 		}
 		params1.add(new QueryParam<String>(String.class,getGroup().getIdentifier()));
 		return params1;
