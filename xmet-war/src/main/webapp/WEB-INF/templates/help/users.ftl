@@ -26,6 +26,7 @@ Users
     The users may indicate he is available as a curator, but this does not automatically grant the curator role.
     The curator role is assigned by admins only.
     </p>
+  </div>  
   <div id="substrate">
     <p>The substrate molecule</p>
   </div>
@@ -50,5 +51,4 @@ Users
   <div id="reference">
     <p>DOI or plain text. Please start doi with "DOI:"</p>
   </div>      
-  </div>     
 </div>
