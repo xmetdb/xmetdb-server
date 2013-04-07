@@ -56,8 +56,9 @@ function loadEnzymesList(root,selectTag,allelesTag) {
          		  return (a.code < b.code) ? -1 : 1;
 			  });
           $("<option value=''></option>").appendTo(selectTag);
+          
           var alleles = {};
-      	  $.each(data,function enz(element, index, array) {
+          data.forEach(function enz(element, index, array) {
       		  $("<option value='" + element.code + "'>" + element.code + "&nbsp;" +element.name + "</option>").appendTo(selectTag);
       		  alleles[element.code] = element.alleles;
       	  });
@@ -66,12 +67,14 @@ function loadEnzymesList(root,selectTag,allelesTag) {
                 $(allelesTag).html("");
                 $("<option value='' selected></option>").appendTo(allelesTag);
                 if (alleles[x]!=undefined)
-	                $.each(alleles[x], function enz(element, index, array) {
+                	alleles[x].forEach(function enz(element, index, array) {
 	              		  $("<option value='" + element + "'>" + element + "</option>").appendTo(allelesTag);
 	              	});
       	  });
         },
-        error: function(xhr, status, err) { },
+        error: function(xhr, status, err) { 
+        	console.log(err);
+        },
         complete: function(xhr, status) { }
      });
 }	
@@ -130,7 +133,7 @@ function useDrawn(queryService,prefix) {
 					var found = 0;
 					$(results_mol).val(molFile);
 					$(results).empty();
-       				$.each(json.dataEntry,function img(element, index, array) {
+					json.dataEntry.forEach(function img(element, index, array) {
        					$(results_uri).val(element.compound.URI);
        					$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
        					found++;
@@ -173,7 +176,7 @@ function runSearch(queryService,form,results) {
 	runSearchURI(queryService + '?media=application/x-javascript&'+ form.serialize(),
 				results,
 				function(json) {
-       				$.each(json.dataEntry,function img(element, index, array) {
+					json.dataEntry.forEach(function img(element, index, array) {
        				$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
        				});
 	});	 
