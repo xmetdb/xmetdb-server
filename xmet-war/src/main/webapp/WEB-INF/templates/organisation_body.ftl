@@ -32,7 +32,9 @@ jQuery(document).ready(function()
 		
 		<table id='organisation' cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>	
+		<tr>
 		<th>Name</th>
+		</tr>
 		</thead>
 		<tbody></tbody>
 		</table>

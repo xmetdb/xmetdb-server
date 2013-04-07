@@ -51,10 +51,12 @@ jQuery(document).ready(function()
 		<div class="twelve columns ui-widget-content ui-corner-all" style="padding:0;" >
 			<table id='task'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 			<thead>
+			<tr>
 			<th>Job</th>
 			<th>Status</th>
 			<th>Started at</th>
 			<th>Completed at</th>
+			</tr>
 			</thead>
 			<tbody></tbody>
 			</table>

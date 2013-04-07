@@ -29,8 +29,10 @@ jQuery(document).ready(function()
 		
 		<table id='facet' cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>	
+		<tr>
 		<th width='75%'>Enzyme</th>
 		<th width='25%'>Observations</th>
+		</tr>
 		</thead>
 		<tbody></tbody>
 		</table>

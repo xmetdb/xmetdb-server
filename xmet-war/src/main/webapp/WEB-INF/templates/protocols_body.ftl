@@ -25,6 +25,7 @@ jQuery(document).ready(function()
 		
 		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
+		<tr>
 		<th>XMetDB ID</th>
 		<th>Substrate</th>
 		<th>Product</th>
@@ -33,6 +34,7 @@ jQuery(document).ready(function()
 		<th>Enzyme</th>
 		<th>Last updated</th>
 		<th>Curated</th>
+		</tr>
 		</thead>
 		<tbody></tbody>
 		</table>

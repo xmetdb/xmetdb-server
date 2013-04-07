@@ -5,26 +5,28 @@
 		<a class='topLinks' href='http://xmetdb.org/'>Help</a>
 	</li>
 	<li class='topLinks'>|</li>
-	<li class='topLinks'>
-		<#if username??>
+	<#if username??>
+		<li class='topLinks'>
 			<a class='topLinks login' title='You are currently logged in as "${username}". Click here to log out.' href='#' onClick='document.forms["logoutForm"].submit(); return false;'>Log out</a>
 			&nbsp;<a class='topLinks' title='You are currently logged in as "${username}".Click here to edit your profile' href='${xmet_root}/myaccount'>[<b>${username}</b>]</a>
 			<#if xmetdb_curator?? && xmetdb_curator>
 				&nbsp;|<a class='topLinks curator' href='${xmet_root}/draft' title='Click to view uncurated observations'>Curator</a>
 			</#if>
 			<#if xmetdb_admin?? && xmetdb_admin>
-				&nbsp;|<a class='topLinks admin' href='${xmet_root}/admin' title='Go to admin tasks'>Admin</span></a>
+				&nbsp;|<a class='topLinks admin' href='${xmet_root}/admin' title='Go to admin tasks'>Admin</a>
 			</#if>						   
 			
 			<form id='logoutForm' action='${xmet_root}/protected/signout?targetUri=.' method='POST'></form>
-		<#else>
+		</li>	
+	<#else>
+		<li class='topLinks'>
 			<a class='topLinks login' title='Log in here to submit new observations (not required for searching)' href='${xmet_root}/login'>Log in</a>
-			<li class='topLinks'>|</li>
-			<li class='topLinks'>
-			<a class='topLinks register' title='Register' href='${xmet_root}/register'>Register</a>
-			</li>				
-		</#if>			
-	</li>
+		</li>	
+		<li class='topLinks'>|</li>
+		<li class='topLinks'>
+		<a class='topLinks register' title='Register' href='${xmet_root}/register'>Register</a>
+		</li>				
+	</#if>			
 	</ul>
 		</div>
 		<div class="three columns">

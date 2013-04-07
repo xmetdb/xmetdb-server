@@ -54,11 +54,13 @@ jQuery(document).ready(function()
 		</div>
 		<table id='endpoints' class='row' cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>
+		<tr>
 		<th>XMetDB observations</th>
 		<th>Code</th>
 		<th>Name</th>
 		<th>UniProt</th>
 		<th>Alleles</th>
+		</tr>
 		</thead>
 		<tbody></tbody>
 		</table>

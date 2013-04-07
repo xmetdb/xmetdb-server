@@ -33,11 +33,13 @@ $(document).ready(function() {
 		
 		<table id='alerts'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>
+		<tr>
 		<th>Created</th>
 		<th>Alert</th>
 		<th>Recurrence</th>
 		<th>Sent at</th>
 		<th>Delete</th>
+		</tr>
 		</thead>
 		<tbody></tbody>
 		</table>

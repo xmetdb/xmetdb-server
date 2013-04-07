@@ -41,6 +41,7 @@ jQuery(document).ready(function()
 		
 		<table class='compoundtable' id='structures'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>
+		<tr>
 		<th></th>
 		<th>Structure</th>
 		<th>Name</th>
@@ -49,7 +50,8 @@ jQuery(document).ready(function()
 		<th>Similarity</th>
 		<th>SMILES</th>
 		<th>InChI</th>
-		<th>InChI Key</th>		
+		<th>InChI Key</th>
+		</tr>		
 		</thead>
 		<tbody></tbody>
 		</table>
