@@ -331,6 +331,53 @@ function loadObservation(root,observation_uri) {
 	       });
 }
 
+function curateObservation(root,observation_uri) {
+	var observation;
+    $.ajax({
+	          dataType: "json",
+	          contentType: 'application/json; charset=utf-8',
+	          url: observation_uri,
+	        	  //"/xmetdb/protocol/XMETDB2?media=application%2Fjson",
+	          success: function(data, status, xhr) {
+	        	  
+	        	  observation = data.observations[0];
+	        	  $('#breadCrumb_xmet_id').html("<a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
+	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ root + "/curator/"+ observation["identifier"] + "' title='Click to curate the observation'>Curate</a>");
+	        	  $('#xmet_id').replaceWith("Curate the observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
+	        	  $('#xmet_atom_uncertainty option[value='+observation["atom_uncertainty"]+']').attr('selected', 'selected');
+	        	  $('#xmet_product_amount option[value='+observation["product_amount"]+']').attr('selected', 'selected');
+	        	  $('#xmet_experiment option[value='+observation["title"]+']').attr('selected', 'selected');
+	        	  loadEnzyme(observation,function(obs) {
+	        		  var allele = obs.enzyme.allele==null?"":obs.enzyme.allele.length>0?obs.enzyme.allele[0]:"";
+	        		  $('#xmet_enzyme option[value='+obs.enzyme.code+']').attr('selected', 'selected');
+	        		  //$('#xmet_enzyme option[value='+obs.enzyme.code+']').change();
+	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
+	        	  });
+	        	  $('#xmet_reference').attr("value",observation["reference"]);
+	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
+	        	  $('#xmet_substrate_type').val('uri');
+	        	  $('#xmet_product_type').val('uri');
+	        	  $('#xmet_substrate_upload').val('');
+	        	  $('#xmet_product_upload').val('');
+	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
+	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
+	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate");
+	        	  }
+	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
+		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
+		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img","#xmet_product_atoms","#sim_product");
+	        	  }
+
+
+	          },
+	          error: function(xhr, status, err) { 
+	        	  xmetdblog(status + " " + xhr.responseText);
+	          },
+	          complete: function(xhr, status) { 
+	        	  xmetdblog(status);
+	          }
+	       });
+}
 
 function editObservation(root,observation_uri) {
 	var observation;
@@ -413,7 +460,7 @@ function displayEnzyme(observation) {
 /**
 * Defines dataTable for a list of observations, retrieved via JSON
 */
-function defineObservationsTable(tableSelector,observations_uri,root) {
+function defineObservationsTable(tableSelector,observations_uri,root,curatorLink) {
 	$(tableSelector).dataTable( {
 		"sAjaxDataProp" : "observations",
 		"bProcessing": true,
@@ -468,7 +515,9 @@ function defineObservationsTable(tableSelector,observations_uri,root) {
 				},
 				{ "mDataProp": "curated", "asSorting": [ "asc", "desc" ],"aTargets": [ 7 ],	
 					"fnRender": function ( o, val ) {
-	          				return val?"Yes":"No";
+	          				return (val?"<img src='"+root+"/images/star.png' title='Curated'><br/>":"") +
+	          						(curatorLink?" <a href='"+root+"/curator/"+o.aData["identifier"]+"' title='Click to go the curation page'>Curate</a>":"")
+	          						;
 	        		}
 				}				
 			],

@@ -27,13 +27,13 @@ jQuery(document).ready(function()
 		<thead>
 		<tr>
 		<th>XMetDB ID</th>
-		<th>Substrate</th>
-		<th>Product</th>
-		<th>Product amount</th>
-		<th>Experiment</th>
-		<th>Enzyme</th>
+		<th>Substrate<a href='#' class='chelp substrate'></a></th>
+		<th>Product<a href='#' class='chelp product'></a></th>
+		<th>Product amount<a href='#' class='chelp productamount'></a></th>
+		<th>Experiment<a href='#' class='chelp experiment'></a></th>
+		<th>Enzyme<a href='#' class='chelp enzyme'></a></th>
 		<th>Last updated</th>
-		<th>Curated</th>
+		<th>Curated<a href='#' class='chelp hcurator'></a></th>
 		</tr>
 		</thead>
 		<tbody></tbody>
