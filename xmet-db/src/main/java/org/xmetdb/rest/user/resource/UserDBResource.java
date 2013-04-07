@@ -19,6 +19,7 @@ import net.idea.restnet.c.task.FactoryTaskConvertor;
 import net.idea.restnet.c.task.TaskCreator;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
+import net.idea.restnet.db.aalocal.DBRole;
 import net.idea.restnet.db.aalocal.user.ReadUserRoles;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
@@ -43,12 +44,14 @@ import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
+import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.XmetdbQueryResource;
 import org.xmetdb.rest.protocol.UserHTMLBeauty;
 import org.xmetdb.rest.task.UserTaskHTMLReporter;
 import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.Resources.Config;
+import org.xmetdb.xmet.client.XMETDBRoles;
 
 /**
  * Protocol resource
@@ -112,6 +115,17 @@ public class UserDBResource<T>	extends XmetdbQueryResource<ReadUser<T>,DBUser> {
 						@Override
 						protected ReadUserRoles createUserRolesQuery() {
 							return query;
+						}
+						@Override
+						protected String writeRoles(DBUser user) {
+							StringBuilder roles  =null;
+							for (XMETDBRoles role : XMETDBRoles.values()) {
+								if (roles==null) roles = new StringBuilder();
+								else roles.append(",");
+								roles.append(String.format("\"%s\":%s",role.name(),
+									user.getRoles()!=null && user.getRoles().indexOf(role.name())>=0));
+							}
+							return roles==null?"":roles.toString();
 						}
 					},
 					MediaType.APPLICATION_JSON);			

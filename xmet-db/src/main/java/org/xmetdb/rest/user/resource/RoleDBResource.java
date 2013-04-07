@@ -85,7 +85,7 @@ public class RoleDBResource extends XmetdbQueryResource<ReadUserRoles,String> {
 					query = q;
 				}
 				execUpdate(query);
-				return new StringRepresentation("ok",MediaType.TEXT_PLAIN);
+				return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
 			} catch (Exception x) {
 				 throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			}

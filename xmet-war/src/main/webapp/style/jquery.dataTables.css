@@ -57,9 +57,6 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
  */
 .dataTables_length {
 	float: left;
-	padding: 5px 10px !important;
-	font-size: 10pt !important;
-	font-weight: normal !important;
 }
 
 
@@ -69,8 +66,6 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 .dataTables_filter {
 	float: right;
 	text-align: right;
-	padding: 5px 10px !important;
-	font-size: 10pt !important;
 }
 
 
@@ -80,9 +75,6 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 .dataTables_info {
 	clear: both;
 	float: left;
-	padding: 5px 10px !important;
-	font-size: 10pt !important;
-	font-weight: normal !important;
 }
 
 
@@ -92,8 +84,6 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 .dataTables_paginate {
 	float: right;
 	text-align: right;
-	padding: 5px 10px !important;
-	font-size: 10pt !important;
 }
 
 /* Two button pagination - previous / next */
@@ -211,7 +201,8 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 .sorting_asc_disabled { background: url('../images/sort_asc_disabled.png') no-repeat center right; }
 .sorting_desc_disabled { background: url('../images/sort_desc_disabled.png') no-repeat center right; }
  
-table.dataTable th:active {
+table.dataTable thead th:active,
+table.dataTable thead td:active {
 	outline: none;
 }
 
@@ -225,11 +216,6 @@ table.dataTable th:active {
 
 .dataTables_scrollBody {
 	*margin-top: -1px;
+	-webkit-overflow-scrolling: touch;
 }
 
-/*
- * jQueryUI
- */
-#DataTables_Table_0_previous {
-	padding: 0 5px 0 0;
-}

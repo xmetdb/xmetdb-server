@@ -40,7 +40,7 @@
 	================================================== -->
 	<script type='text/javascript' src='${xmet_root}/jquery/jquery-1.8.3.min.js'></script>
 	<script type='text/javascript' src='${xmet_root}/jquery/jquery-ui-1.8.24.custom.min.js'></script>
-	<script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.dataTables-1.9.0.min.js'></script>
+	<script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.dataTables-1.9.4.min.js'></script>
 	<script type='text/javascript' src='${xmet_root}/jquery/jquery.cookies.2.2.0.min.js'></script>
 	
 	<!-- XMET JS

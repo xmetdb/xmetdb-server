@@ -63,15 +63,15 @@ function defineUsersTable(root,url,selector) {
 					  return "<a href='"+o.aData["uri"]+"' title='"+o.aData["uri"]+"'>"+name+"</a>";
 				  }
 				},
-				{ "mDataProp": null , "asSorting": [ "asc", "desc" ],
+				{ "mDataProp": "organisation" , "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 1 ],	
 				  "bSearchable" : true,
 				  "bUseRendered" : false,
 				  "bSortable" : true,
 				  "fnRender" : function(o,val) {
-					    if (o.aData["organisation"]==null) return "";
+					    if (val==null) return "";
 					    var sOut = "";
-			           	$.each(o.aData["organisation"],function(index, entry) {
+			           	$.each(val,function(index, entry) {
 			        		sOut += "<a href='"+entry.uri+"' title='"+entry.uri+"'>"+entry.title+"</a>";
 			        		sOut += " ";
 			        	});
@@ -112,9 +112,7 @@ function defineUsersTable(root,url,selector) {
 						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Available as a curator'></span>":"";
 					  }
 				},
-				{ 	  "mDataProp": function (o,val) {
-							return   $.inArray("xmetdb_curator",o["roles"]);
-				  	   },
+				{ 	  "mDataProp": "roles.xmetdb_curator",
 				  	  "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 5 ],
 					  "bSearchable" : true,
@@ -122,13 +120,11 @@ function defineUsersTable(root,url,selector) {
 					  "bUseRendered" : false,
 					  "sWidth" : "5%",
 					  "fnRender" : function(o,val) {
-						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>":
+						  return ((val!=undefined) && val)?"<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>":
 							  "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
 					  }
 				},
-				{ 	 "mDataProp": function (o,val) {
-							return   $.inArray("xmetdb_admin",o["roles"]);
-					  }, 
+				{ 	  "mDataProp": "roles.xmetdb_admin",
 					  "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 6 ],
 					  "bSearchable" : true,
@@ -136,7 +132,7 @@ function defineUsersTable(root,url,selector) {
 					  "bUseRendered" : false,
 					  "sWidth" : "5%",
 					  "fnRender" : function(o,val) {
-						  return (val>=0)?"<span class='ui-icon ui-icon-check' title='Admin role assigned'></span>":
+						  return ((val!=undefined) && val)?"<span class='ui-icon ui-icon-check' title='Admin role assigned'></span>":
 							  "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
 					  }
 				}					
@@ -185,19 +181,14 @@ function makeEditableUsersTable(root,oTable) {
                   data: "{'':'Please select...', true:'Grant Curator role',false:'Revoke Curator role'}",
                   onblur: 'cancel',
                   submit: 'Save changes',
-                  fnOnCellUpdated: function(sStatus, sValue, settings){
-						//alert("Enzyme code is updated with value " + sValue);
+                  fnOnCellUpdated: function(sStatus, sValue, row){
+                	  oTable.fnUpdate( sValue, row, 5);
+                	  oTable.fnDraw()
 				  }
               },
               null            
 		 ],
-	     sUpdateURL: root+"/admin/role?method=PUT",
-	     fnOnCellUpdated: function(sStatus, sValue, settings){
-				//alert("Enzyme code is updated with value " + sValue);
-	     },
-	     fnOnUpdated: function(status) {       
-     		oTable.fnDraw(true);
-	     }   
+	     sUpdateURL: root+"/admin/role?method=PUT"
 	});
 }
 
