@@ -1,4 +1,4 @@
-function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atoms_id) {
+function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atoms_id, som) {
 	var uri = cmpURI + "/imagejson?w="+w+"&h="+h;
 	$.ajax({
 		type : "GET",
@@ -31,11 +31,16 @@ function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atom
 		            strokeWidth: 2
 		        }
 		     })
-		     .mapster('set',true,'1,2,3')
-		     ;		
-		     _xmet.atoms[atoms_id].push(1);
-		     _xmet.atoms[atoms_id].push(2);
-		     _xmet.atoms[atoms_id].push(3);
+		     .mapster('set',true,som.toString());
+		     try {
+			     var somarray = som.toString().split(",");
+			     _xmet.atoms[atoms_id] = [];
+			     $.each(somarray,function (index){
+			    	 _xmet.atoms[atoms_id].push(parseInt(somarray[index]));	 
+			     });
+		     } catch (err ) {
+		    	 _xmet.atoms[atoms_id] = [];
+		     }
 	    }
 	});
 }

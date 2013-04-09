@@ -72,7 +72,7 @@ $(document).ready(function() {
                  return value;
               }             
 		 });  
-		 curateObservation("${xmet_root}","${xmet_request_json}");
+		 curateObservation("${xmet_root}","${xmet_request_json}","${queryService}");
 		
 		 $('#xmet_substrate_atoms').editable(
 	        	'${xmet_request}?method=put',{
