@@ -18,7 +18,7 @@
     <junit.version>4.8.1</junit.version>
     <restlet.version>2.0-M6</restlet.version>
     <restnet.version>1.0.0-SNAPSHOT</restnet.version>
-    <opentoxcli.version>1.0.1</opentoxcli.version>
+    <opentoxcli.version>1.0.2-SNAPSHOT</opentoxcli.version>
     <ambit.version>2.4.10-SNAPSHOT</ambit.version>
   </properties>
   <issueManagement>

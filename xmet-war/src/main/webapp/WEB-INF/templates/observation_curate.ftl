@@ -66,15 +66,66 @@ $(document).ready(function() {
         	     if ("Curated"==value) {
         	    	 $('#imgcurated').show();
         	     } else $('#imgcurated').hide();
-             }
-		 });        
-			curateObservation("${xmet_root}","${xmet_request_json}");        			
+             },
+             data: function(value, settings) {
+                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+                 return value;
+              }             
+		 });  
+		 curateObservation("${xmet_root}","${xmet_request_json}");
+		
+		 $('#xmet_substrate_atoms').editable(
+	        	'${xmet_request}?method=put',{
+	        	type	: 'text',
+	        	cancel  : 'Cancel',
+	        	submit  : 'Update',
+	        	indicator : '<img src="${xmet_root}/images/progress.gif">',
+	        	tooltip  : 'Click to edit...',
+	        	submitdata :  function(value,settings) { 
+	        		var data = {};
+	        		data['compound_uri'] = $('#xmet_substrate_uri').val(); 
+	        		return data;
+	        	},
+	        	callback : function(value, settings) {
+	        		$('#imgcurated').show();
+	        		$('#curated').html("Curated");
+	            },
+	            data: function(value, settings) {
+	                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+	                 return value;
+	            } 	            
+	        });
+		 $('#xmet_product_atoms').editable(
+		        	'${xmet_request}?method=put',{
+		        	type	: 'text',
+		        	cancel  : 'Cancel',
+		        	submit  : 'Update',
+		        	indicator : '<img src="${xmet_root}/images/progress.gif">',
+		        	tooltip  : 'Click to edit...',
+		        	submitdata : function(value,settings) { 
+		        		var data = {};
+		        		data['compound_uri'] = $('#xmet_product_uri').val(); 
+		        		return data;
+		        	},
+		        	callback : function(value, settings) {
+		        		$('#imgcurated').show();
+		        		$('#curated').html("Curated");
+		            }
+		        });
+        			
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
 			jQuery("#breadCrumb").jBreadCrumb();
 			loadHelp("${xmet_root}","observation_curate");
 			$('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}"));
-	});    
+	});   
+	
+	function getCompoundURI(selector) {
+		var data = {};
+		data['compound_uri'] = $(selector).val(); 
+		return data;
+	}
+
 </script>
 
 
@@ -96,7 +147,8 @@ $(document).ready(function() {
 	 	</div>
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
-		    <input type="hidden" id="xmet_substrate_atoms" name="xmet_substrate_atoms" value="">
+		    <br/>
+		    <div id="xmet_substrate_atoms" class='ui-state-default'></div>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
@@ -107,7 +159,8 @@ $(document).ready(function() {
 		</div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
-			<input type="hidden" id="xmet_product_atoms" name="xmet_product_atoms" value="">
+			<br/>
+			<div id="xmet_product_atoms" class='ui-state-default'></div>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
