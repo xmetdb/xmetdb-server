@@ -1,6 +1,8 @@
 package org.xmetdb.rest.xmet.curator;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.opentox.cli.OTClient;
@@ -12,6 +14,12 @@ import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.db.convertors.QueryHTMLReporter;
 import net.idea.restnet.user.DBUser;
 
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.auth.params.AuthPNames;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.params.AuthPolicy;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
@@ -23,7 +31,6 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.ProtocolFactory;
-import org.xmetdb.rest.protocol.ProtocolFactory.ObservationFields;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.UpdateObservationEntry;
@@ -31,7 +38,7 @@ import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
 import org.xmetdb.xmet.client.Resources;
 
 public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> extends ProtocolDBResource<Q> {
-	
+	UsernamePasswordCredentials creds = null;
 	public DraftObservationsResource() {
 		super();
 		setHtmlbyTemplate(true);
@@ -154,10 +161,25 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 	}
 	
 	protected String updateSOM(String compoundURI, String xmetdbid,String som,String queryService)throws Exception {
+		String ambituser = ((TaskApplication)getApplication()).getProperty(Resources.AMBIT_LOCAL_USER);
+		String ambitpass = ((TaskApplication)getApplication()).getProperty(Resources.AMBIT_LOCAL_PWD);
+		final UsernamePasswordCredentials creds = new UsernamePasswordCredentials(ambituser,ambitpass);
+		final Reference uri = new Reference(queryService);
 		OTClient cli=null;
 		//PUT
 		try {
-			cli = new OTClient();
+			cli = new OTClient() {
+				protected HttpClient createHTTPClient() {
+					DefaultHttpClient  cli = new DefaultHttpClient();
+					List<String> authpref = new ArrayList<String>();
+					authpref.add(AuthPolicy.BASIC);
+					cli.getParams().setParameter(AuthPNames.PROXY_AUTH_PREF, authpref);
+					cli.getCredentialsProvider().setCredentials(
+					        new AuthScope(uri.getHostDomain(),uri.getHostPort()), 
+					        creds);		
+					return cli;
+				};
+			};
 			SubstanceClient scli = cli.getSubstanceClient();
 			Substance substance = new Substance();
 			substance.setResourceIdentifier(new URL(compoundURI));
@@ -172,6 +194,5 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 		}
 		
 	}
-
 	
 }
