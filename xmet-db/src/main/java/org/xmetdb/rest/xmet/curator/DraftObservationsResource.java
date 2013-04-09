@@ -131,24 +131,23 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 							if (compoundURI==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 							String url = updateSOM(compoundURI, key.toString(), value, queryService);
 							System.out.println(url);
+							return new StringRepresentation(value,MediaType.TEXT_PLAIN);
 						} catch (ResourceException x) {
 							throw x;
 						} catch (Exception x) {
 							throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 						}
-						break;						
 					case xmet_product_atoms:
 						try {
 							String compoundURI = form.getFirstValue("compound_uri");
 							if (compoundURI==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 							String url = updateSOM(compoundURI, key.toString(), value, queryService);
-							System.out.println(url);
+							return new StringRepresentation(value,MediaType.TEXT_PLAIN);
 						} catch (ResourceException x) {
 							throw x;
 						} catch (Exception x) {
 							throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 						}
-						break;	
 					default:
 					    throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 					}
@@ -185,6 +184,7 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 			substance.setResourceIdentifier(new URL(compoundURI));
 			RemoteTask task = scli.setSubstancePropertyAsync(new URL(queryService), substance,xmetdbid,som);
 			task.waitUntilCompleted(500);
+			if (task.getError()!=null) throw task.getError();
 			return task.getResult().toExternalForm();
 		} catch (Exception x) {
 			//do smth
