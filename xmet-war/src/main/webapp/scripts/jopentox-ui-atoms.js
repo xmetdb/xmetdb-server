@@ -31,10 +31,12 @@ function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atom
 		            strokeWidth: 2
 		        }
 		     })
-		     .mapster('set',true,som.toString());
+		     .mapster('set',true,som==null?"":som.toString());
+		     _xmet.atoms[atoms_id] = [];
+		     if (som!=null)
 		     try {
 			     var somarray = som.toString().split(",");
-			     _xmet.atoms[atoms_id] = [];
+
 			     $.each(somarray,function (index){
 			    	 _xmet.atoms[atoms_id].push(parseInt(somarray[index]));	 
 			     });

@@ -4,7 +4,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-			loadObservation("${xmet_root}","${xmet_request_json}");
+			loadObservation("${xmet_root}","${xmet_request_json}","${queryService}");
 } );
 
 </script>				       
