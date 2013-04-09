@@ -73,7 +73,7 @@ function loadEnzymesList(root,selectTag,allelesTag) {
       	  });
         },
         error: function(xhr, status, err) { 
-        	console.log(err);
+        	//console.log(err);
         },
         complete: function(xhr, status) { }
      });
@@ -250,7 +250,7 @@ function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISele
 	        		  $(cmpURISelector).attr('value',data.dataEntry[i].compound.URI);
 	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,null)+'</li>');
 	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
-	        		  var som = "";
+	        		  var som = null;
 	        		  $.each(data.dataEntry[i].values,function(index) {
 	        			som = data.dataEntry[i].values[index];
 	        		  });
@@ -268,7 +268,7 @@ function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISele
 /*
  * Loads single observation via JSON and fills in the relevant HTML tags
 */
-function loadObservation(root,observation_uri) {
+function loadObservation(root,observation_uri,query_service) {
 	//fixed uri just for tetsing, otherwise will be read from the observation
 	var model_uri = null;//"http://ambit.uni-plovdiv.bg:8080/xmetdata/model/1";
 	
@@ -316,16 +316,18 @@ function loadObservation(root,observation_uri) {
 	        	  if ((observation.Substrate!=undefined)  && (observation.Substrate!=null) && (observation.Substrate.dataset.uri!=null)) {
 	        		  $('#xmet_export_substrate').attr("href",observation.Substrate.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        	  	  $('#xmet_export_substrate').show();
-	        	  	//var uri = 
-	        	  		//observation.Substrate.dataset.uri+"?feature_uris[]="+observation["identifier"]  
-	        	  	loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri");
+        			  var uri = query_service + "/feature?search="+observation["identifier"];
+        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;  
+	        	  	  loadStructures(uri,"#xmet_substrate","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri");
 	        	  } else {
 	        		  $('#xmet_export_substrate').hide();
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 	        		  $('#xmet_export_product').attr("href",observation.Product.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
 	        		  $('#xmet_export_product').show();
-	        		  loadStructures(observation.Product.dataset.uri,"#xmet_product","#xmet_product_atoms","#sim_product","#xmet_product_uri");
+	        		  var uri = query_service + "/feature?search="+observation["identifier"];
+        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;  
+	        		  loadStructures(uri,"#xmet_product","#xmet_product_atoms","#sim_product","#xmet_product_uri");
 	          	  } else {
 	          		 $('#xmet_export_product').hide();
 	          	  }
@@ -380,7 +382,6 @@ function curateObservation(root,observation_uri,query_service) {
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
 		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) {
-		        		  console.log(query_service);
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri");
@@ -398,7 +399,7 @@ function curateObservation(root,observation_uri,query_service) {
 	       });
 }
 
-function editObservation(root,observation_uri) {
+function editObservation(root,observation_uri,query_service) {
 	var observation;
     $.ajax({
 	          dataType: "json",
@@ -427,12 +428,19 @@ function editObservation(root,observation_uri) {
 	        	  $('#xmet_substrate_upload').val('');
 	        	  $('#xmet_product_upload').val('');
 	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
-	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) 
-	        			  loadStructures(observation.Substrate.dataset.uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri");
+	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) {
+	        			  var uri = query_service + "/feature?search="+observation["identifier"];
+	        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
+	        			  
+	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri");
+	        		  }	  
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
-		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) 
-		        		  loadStructures(observation.Product.dataset.uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri");
+		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) {
+	        			  var uri = query_service + "/feature?search="+observation["identifier"];
+	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
+		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri");
+		        	  }	  
 	        	  }
 
 
