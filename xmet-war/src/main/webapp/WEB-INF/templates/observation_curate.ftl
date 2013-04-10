@@ -73,45 +73,6 @@ $(document).ready(function() {
               }             
 		 });  
 		 curateObservation("${xmet_root}","${xmet_request_json}","${queryService}");
-		
-		 $('#xmet_substrate_atoms').editable(
-	        	'${xmet_request}?method=put',{
-	        	type	: 'text',
-	        	cancel  : 'Cancel',
-	        	submit  : 'Update',
-	        	indicator : '<img src="${xmet_root}/images/progress.gif">',
-	        	tooltip  : 'Click to edit...',
-	        	submitdata :  function(value,settings) { 
-	        		var data = {};
-	        		data['compound_uri'] = $('#xmet_substrate_uri').val(); 
-	        		return data;
-	        	},
-	        	callback : function(value, settings) {
-	        		$('#imgcurated').show();
-	        		$('#curated').html("Curated");
-	            },
-	            data: function(value, settings) {
-	                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-	                 return value;
-	            } 	            
-	        });
-		 $('#xmet_product_atoms').editable(
-		        	'${xmet_request}?method=put',{
-		        	type	: 'text',
-		        	cancel  : 'Cancel',
-		        	submit  : 'Update',
-		        	indicator : '<img src="${xmet_root}/images/progress.gif">',
-		        	tooltip  : 'Click to edit...',
-		        	submitdata : function(value,settings) { 
-		        		var data = {};
-		        		data['compound_uri'] = $('#xmet_product_uri').val(); 
-		        		return data;
-		        	},
-		        	callback : function(value, settings) {
-		        		$('#imgcurated').show();
-		        		$('#curated').html("Curated");
-		            }
-		        });
         			
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');

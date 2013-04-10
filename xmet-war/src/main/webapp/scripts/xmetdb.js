@@ -378,6 +378,27 @@ function curateObservation(root,observation_uri,query_service) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri");
+	        				 $('#xmet_substrate_atoms').editable(
+	        				        	root + '/curator/'+observation["identifier"]+'?method=put',{
+	        				        	type	: 'text',
+	        				        	cancel  : 'Cancel',
+	        				        	submit  : 'Update',
+	        				        	indicator : '<img src="'+root+'/images/progress.gif">',
+	        				        	tooltip  : 'Click to edit...',
+	        				        	submitdata :  function(value,settings) { 
+	        				        		var data = {};
+	        				        		data['compound_uri'] = $('#xmet_substrate_uri').val(); 
+	        				        		return data;
+	        				        	},
+	        				        	callback : function(value, settings) {
+	        				        		$('#imgcurated').show();
+	        				        		$('#curated').html("Curated");
+	        				            },
+	        				            data: function(value, settings) {
+	        				                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+	        				                 return value;
+	        				            } 	            
+	        				        });
 	        		  }	  
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
@@ -385,6 +406,23 @@ function curateObservation(root,observation_uri,query_service) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri");
+		        			 $('#xmet_product_atoms').editable(
+		        			        	root + '/curator/'+observation["identifier"]+'?method=put',{
+		        			        	type	: 'text',
+		        			        	cancel  : 'Cancel',
+		        			        	submit  : 'Update',
+		        			        	indicator : '<img src="'+root+'/images/progress.gif">',
+		        			        	tooltip  : 'Click to edit...',
+		        			        	submitdata : function(value,settings) { 
+		        			        		var data = {};
+		        			        		data['compound_uri'] = $('#xmet_product_uri').val(); 
+		        			        		return data;
+		        			        	},
+		        			        	callback : function(value, settings) {
+		        			        		$('#imgcurated').show();
+		        			        		$('#curated').html("Curated");
+		        			            }
+		        			        });		        		  
 		        	  }	  
 	        	  }
 

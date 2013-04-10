@@ -1,5 +1,6 @@
 function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atoms_id, som) {
 	var uri = cmpURI + "/imagejson?w="+w+"&h="+h;
+	$(atoms_id).text(som);
 	$.ajax({
 		type : "GET",
 	    dataType : "jsonp",
