@@ -25,11 +25,10 @@ public class EndpointProtocolFacet extends PropertyDatasetFacet<String,String> {
 	@Override
 	public String getResultsURL(String... params) {
 		return 
-			   String.format("%s%s?option=%s&%s=%s",
+			   String.format("%s%s?%s=%s",
 				(params.length>=1)?params[0]:"",
 				Resources.protocol,
 				SearchMode.xmet_enzyme,
-				"search",
 				getProperty2()==null?"undefined":URLEncoder.encode(getProperty2())
 				);
 	}
