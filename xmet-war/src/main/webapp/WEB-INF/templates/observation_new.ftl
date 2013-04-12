@@ -17,20 +17,7 @@
 
 <script type="text/javascript">
 
-function iframeOnLoad() {
-	if (_xmet.currentMolecule!=null) {
-		var molFile = $(_xmet.currentMolecule).val();
-		if ((molFile===undefined) || (molFile==null) || (molFile.trim()=="")) {
-			//do nothing , we'll break ChemDoodles sketcher if assigning empty molecule...
-		} else {
-			var frame = document.getElementById('iframeSketcher');
-			var oDoc = (frame.contentWindow || frame.contentDocument);
-			if (oDoc.document) oDoc = oDoc.document;
-			frame.contentWindow.loadMoleculeFromFile(molFile);
-		}
-	}
 
-}
 
 function atomNumber(num, atoms_id) {
     var index = _xmet.atoms[atoms_id].indexOf(num);
@@ -218,7 +205,7 @@ $(document).ready(function() {
 	<br/>
 	<!-- Structure diagram editor -->
 	<div id="drawUI" class="remove-bottom" style='display:none;'>
-		<div class='row ui-widget-header ui-corner-top remove-bottom'>Draw the structure or search by structure</div>
+		<div class='row ui-widget-header ui-corner-top remove-bottom'>Draw the structure or search by structure<span style='float:right;' class='ui-icon ui-icon-closethick' title='Click to close this window' onClick='$("#drawUI").hide();'></span></div>
 		<div class='ui-widget-content ui-corner-bottom half-bottom'>
 			<div class='row'  style="margin:5px;padding:5px;"> 	
 				<form method='GET' action='#' name='substrateSearchForm'>

@@ -7,7 +7,7 @@ atoms : {
 	"#xmet_substrate_atoms": [],
 	"#xmet_product_atoms":[]
 },
-currentMolecule : null
+currentPrefix : null
 }
 function cmp2image(val) {
 		var cmpURI = val;
@@ -211,14 +211,18 @@ function runSearchURI(sSource,results,callback, errorcallback) {
 }
 
 function toggleDrawUI(prefix, idButton, msg) {
- 	$( '#drawUI').toggle( 'blind', {}, function(x) {
- 		if ($('#drawUI').css('display') == 'none') {
- 			$( idButton).text('Show '+msg);
- 		} else {
- 			$( idButton).text('Hide '+msg);
- 			_xmet.currentMolecule = 'input[name=xmet_'+prefix+'_mol]';
- 		} 
- 	});
+	var drawUI = $( '#drawUI');
+	if (drawUI.is(':hidden')) {
+	 	drawUI.show(function(x) {
+	 		_xmet.currentPrefix = prefix;
+	 		console.log(prefix);
+	 		try {iframeOnLoad();} catch (err) { }
+	 	});
+	} else {
+		_xmet.currentPrefix = prefix;
+		try {iframeOnLoad();} catch (err) { }
+	} 	
+ 	
 }      
 
 /**
@@ -251,6 +255,21 @@ function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISele
 	          },
 	          complete: function(xhr, status) { }
 	       });
+	}
+}
+
+function iframeOnLoad() {
+	if (_xmet.currentPrefix!=null) {
+		var molTag = 'input[name=xmet_'+_xmet.currentPrefix+'_mol]';
+		var molFile = $(molTag).val();
+		if ((molFile===undefined) || (molFile==null) || (molFile.trim()=="")) {
+			//do nothing , we'll break ChemDoodles sketcher if assigning empty molecule...
+		} else {
+			var frame = document.getElementById('iframeSketcher');
+			var oDoc = (frame.contentWindow || frame.contentDocument);
+			if (oDoc.document) oDoc = oDoc.document;
+			frame.contentWindow.loadMoleculeFromFile(molFile);
+		}
 	}
 }
 
