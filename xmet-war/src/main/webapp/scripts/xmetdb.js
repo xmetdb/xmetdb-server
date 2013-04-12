@@ -6,7 +6,8 @@ help : {
 atoms : {
 	"#xmet_substrate_atoms": [],
 	"#xmet_product_atoms":[]
-}
+},
+currentMolecule : null
 }
 function cmp2image(val) {
 		var cmpURI = val;
@@ -215,19 +216,7 @@ function toggleDrawUI(prefix, idButton, msg) {
  			$( idButton).text('Show '+msg);
  		} else {
  			$( idButton).text('Hide '+msg);
- 			
- 			var results_mol = 'input[name=xmet_'+prefix+'_mol]';
- 			try {
- 				var molFile = $(results_mol).val();
- 				if ((molFile===undefined) || (molFile== null) || ("" == molFile)) {
- 					//document.JME.readMolFile("");
- 				} else {
- 					//doesn't work. how to set molecule to the sketcher? 
- 					//document.getElementById("iframeSketcher").contentWindow.???
- 				}
- 			} catch (err) {
- 				//document.JME.readMolFile("");
- 			}
+ 			_xmet.currentMolecule = 'input[name=xmet_'+prefix+'_mol]';
  		} 
  	});
 }      

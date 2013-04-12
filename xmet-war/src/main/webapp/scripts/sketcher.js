@@ -23,4 +23,9 @@ function getMolecule() {
 	 else return null;
 }
 
+function loadMoleculeFromFile(molFile) {
+	var molecule = ChemDoodle.readMOL(molFile);	
+	_sketcher.sketcher.loadMolecule(molecule);
+}
+
 
