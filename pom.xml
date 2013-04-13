@@ -443,6 +443,19 @@
         <!-- attachment uploads related. More in WEB-INF/config/xmet.properties -->
         <aa.local.admin.name>admin</aa.local.admin.name>
         <aa.local.admin.pass>changeit</aa.local.admin.pass>
+        <!-- mail notification & registration Please change according to your server setup! -->
+        <notification.mail.smtp.starttls.enable>true</notification.mail.smtp.starttls.enable>
+        <notification.mail.smtp.port>587</notification.mail.smtp.port>
+        <notification.mail.smtp.socketFactory.fallback>false</notification.mail.smtp.socketFactory.fallback>
+        <notification.mail.transport.protocol>smtp</notification.mail.transport.protocol>
+        <!-- SMTP Auth Please change according to your server setup! -->
+        <notification.mail.smtp.auth>true</notification.mail.smtp.auth>
+        <notification.mail.password></notification.mail.password>
+        <notification.mail.host>localhost</notification.mail.host>
+        <notification.mail.user>admin</notification.mail.user>
+        <notification.mail.debug>root@localhost</notification.mail.debug>
+        <notification.admin.email>root@localhost</notification.admin.email>
+        
       </properties>
     </profile>
   </profiles>
