@@ -58,15 +58,54 @@ a.topLinks {
 	text-align: center;
 }
 
-span.copyrightSpan {
-	color: #516373 !important;
+#footer {
+	position: fixed;
+	height: 40px;
+	width: 18%;
+	left: 82%;
+	bottom: -17px;
+	padding: 10px 0 0 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: -30px;
+	-webkit-border-radius: 20px;
+	-khtml-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	color: white;
+	background-color: #516373;
+	text-align: center;
 }
 
-a.copyrightLink, a.copyrightLink:active, a.copyrightLink:visited {
+#footer p {
+	margin: 0;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+#footer-in {
+	position: fixed;
+	height: 45px;
+	width: 60%;
+	left: 20%;
+	bottom: -5px;
+}
+
+#footer-out {
+	position: fixed;
+	height: 60px;
+	width: 54%;
+	left: 23%;
+	bottom: -5px;
+}
+
+a.footerLink, a.footerLink:active, a.footerLink:visited {
+	color: white !important;
 	font-weight: bold !important;
 }
 
-a.copyrightLink:hover {
+a.footerLink:hover {
+	color: white !important;
 	font-weight: bold !important;
 	cursor: pointer !important;
 	text-decoration: overline !important;

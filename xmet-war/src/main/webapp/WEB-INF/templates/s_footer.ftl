@@ -1,9 +1,11 @@
-<div class="sixteen columns add-bottom"></div>
-		<div id='copyright'>
-			<span class="copyrightSpan">
-				<a class='copyrightLink' href='http://www.ideaconsult.net/'>IdeaConsult Ltd.</a> 
-				(2012-2013) on behalf of <a class='copyrightLink' href='http://xmetdb.org'>XMetDB</a>
-			</span>
+<div class="sixteen  columns add-bottom">&nbsp;</div>
+		<div id='footer-out' class="sixteen columns">
+		<div id='footer-in'>
+		<div id='footer'>
+			<a class='footerLink' href='http://www.ideaconsult.net/'>IdeaConsult Ltd.</a> 
+			(2012) on behalf of <a class='footerLink' href='http://xmetdb.org'>XMetDB</a>
+		</div>
+		</div>
 		</div>
 		
 				

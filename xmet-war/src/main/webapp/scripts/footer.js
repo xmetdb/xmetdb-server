@@ -1,8 +1,8 @@
 	$(document).ready( function () {
-    	$('div#header,div#copyright').mouseenter( function () {
-    		$('div#copyright').stop().animate({top: '3px', opacity: '1'}, {duration: 1000, easing: 'easeOutBounce'});
+    	$('div#footer-in').mouseenter( function () {
+    		$('div#footer').stop().animate({bottom: '15px'}, 'fast');
     	});
-    	$('div#header,div#copyright').mouseleave( function () {
-    		$('div#copyright').stop().animate({top: '-20px', opacity: '0'}, {duration: 1000});
+    	$('div#footer-out').mouseleave( function () {
+    		$('div#footer').stop().animate({bottom: '-17px'}, 'slow');
     	});
     });
