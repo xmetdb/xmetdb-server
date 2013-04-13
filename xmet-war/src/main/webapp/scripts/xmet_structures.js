@@ -11,7 +11,8 @@ function defineStructuresTable(url, query_service, similarity) {
 					"sClass" : "center",
 					"bSortable" : false,
 					"bSearchable" : false,
-					"mDataProp" : null,
+					"mDataProp" : "compound.URI",
+					"bUseRendered" : false,
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
 						 return  "<span class='ui-icon ui-icon-folder-collapsed zoomstruc' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span>";			
@@ -88,11 +89,12 @@ function defineStructuresTable(url, query_service, similarity) {
 						  "sWidth" : "5%",
 						  "bVisible"  : similarity
 				},
-				{ "mDataProp": null , "asSorting": [ "asc", "desc" ],
+				{     "mDataProp": "compound.URI" , 
+					  "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 6 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
-					  "bUseRendered" : true,
+					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
 						  	if ((val === undefined) || (val == ""))
 						  		return formatValues(o.aData,"smiles");
@@ -100,11 +102,12 @@ function defineStructuresTable(url, query_service, similarity) {
 					  },
 					  "bVisible" : false
 				},		
-				{ "mDataProp": null , "asSorting": [ "asc", "desc" ],
+				{	  "mDataProp": "compound.URI" , 
+					  "asSorting": [ "asc", "desc" ],
 					  "aTargets": [ 7 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
-					  "bUseRendered" : true,
+					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
 						  	if ((val === undefined) || (val == ""))
 						  		return formatValues(o.aData,"inchi");
@@ -112,12 +115,13 @@ function defineStructuresTable(url, query_service, similarity) {
 					  },
 					  "bVisible" : false
 				},	
-				{ "mDataProp": null , "asSorting": [ "asc", "desc" ],
+				{ 	  "mDataProp": "compound.URI", 
+					  "asSorting": [ "asc", "desc" ],
 					  "sClass" : "inchikey",	
 					  "aTargets": [ 8 ],
 					  "bSearchable" : true,
 					  "bSortable" : true,
-					  "bUseRendered" : true,
+					  "bUseRendered" : false,
 					  "fnRender" : function(o,val) {
 						  	if ((val === undefined) || (val == ""))
 						  		return formatValues(o.aData,"inchikey");
