@@ -6,7 +6,6 @@ import net.idea.modbcum.i.config.Preferences;
 import net.idea.restnet.aa.cookie.CookieAuthenticator;
 import net.idea.restnet.aa.local.UserLoginPOSTResource;
 import net.idea.restnet.aa.local.UserLogoutPOSTResource;
-import net.idea.restnet.aa.resource.AdminRouter;
 import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.routers.MyRouter;
@@ -43,11 +42,14 @@ import org.xmetdb.rest.structure.resource.StructureRouter;
 import org.xmetdb.rest.user.UserRouter;
 import org.xmetdb.rest.user.alerts.resource.AlertRouter;
 import org.xmetdb.rest.user.resource.MyAccountResource;
+import org.xmetdb.rest.user.resource.PwdForgottenConfirmResource;
+import org.xmetdb.rest.user.resource.PwdForgottenFailedResource;
+import org.xmetdb.rest.user.resource.PwdForgottenNotifyResource;
+import org.xmetdb.rest.user.resource.PwdForgottenResource;
 import org.xmetdb.rest.user.resource.PwdResetResource;
 import org.xmetdb.rest.user.resource.RegistrationConfirmResource;
 import org.xmetdb.rest.user.resource.RegistrationResource;
 import org.xmetdb.rest.user.resource.XMETRegistrationNotifyResource;
-import org.xmetdb.rest.xmet.curator.DraftObservationsResource;
 import org.xmetdb.xmet.aa.UserAuthorizer;
 import org.xmetdb.xmet.aa.XMETLoginFormResource;
 import org.xmetdb.xmet.aa.XMETLoginPOSTResource;
@@ -208,6 +210,11 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		router.attach(String.format("%s%s", Resources.register, Resources.confirm), RegistrationConfirmResource.class);
 		router.attach(String.format("%s%s", Resources.register, Resources.notify), XMETRegistrationNotifyResource.class);
 
+		router.attach(Resources.forgotten, PwdForgottenResource.class);
+		router.attach(String.format("%s%s", Resources.forgotten, Resources.confirm), PwdForgottenConfirmResource.class);
+		router.attach(String.format("%s%s", Resources.forgotten, Resources.notify), PwdForgottenNotifyResource.class);
+		router.attach(String.format("%s%s", Resources.forgotten, Resources.failed), PwdForgottenFailedResource.class);
+		
 		router.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
 		router.setRoutingMode(Router.MODE_BEST_MATCH);
 		/*

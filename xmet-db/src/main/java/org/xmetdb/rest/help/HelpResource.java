@@ -35,7 +35,8 @@ public class HelpResource extends CatalogFTLResource<String>  {
 		status,
 		structure,
 		task,
-		users
+		users,
+		pwd_forgotten
 	}
 	public HelpResource() {
 		super();

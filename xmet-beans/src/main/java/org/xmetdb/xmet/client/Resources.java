@@ -32,6 +32,8 @@ public class Resources {
 	public static final String task = TaskResource.resource;
 	public static final String alert = "/alert";
 	public static final String reset = "/reset";
+	public static final String forgotten = "/forgotten";
+	public static final String failed = "/failed";
 	public static final String help = "/help";
 	/*
 	public static final String data_training = "/data_training";
