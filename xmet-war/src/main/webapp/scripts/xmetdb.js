@@ -309,8 +309,7 @@ function iframeOnLoad() {
  * Loads single observation via JSON and fills in the relevant HTML tags
 */
 function loadObservation(root,observation_uri,query_service) {
-	//fixed uri just for tetsing, otherwise will be read from the observation
-	var model_uri = null;//"http://ambit.uni-plovdiv.bg:8080/xmetdata/model/1";
+	var model_uri = null;
 	
 	var observation;
     $.ajax({
@@ -351,7 +350,10 @@ function loadObservation(root,observation_uri,query_service) {
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
 	        	  $('#xmet_editor').attr("href","/xmetdb/editor/"+observation["identifier"]);
+	        	  $('#xmet_curator').attr("href","/xmetdb/curator/"+observation["identifier"]);
 	        	  $('#xmet_export_json').attr("href",observation["uri"] + "?media=application%2Fjson");
+	        	  $('#xmet_curated').text(observation["curated"]?"Curated":"Not curated");
+	        	  if (observation["curated"]) $('#imgcurated').show(); else  $('#imgcurated').hide();
 	        	  
 	        	  if ((observation.Substrate!=undefined)  && (observation.Substrate!=null) && (observation.Substrate.dataset.uri!=null)) {
 	        		  $('#xmet_export_substrate').attr("href",observation.Substrate.dataset.uri + "?media=chemical%2Fx-mdl-sdfile");
