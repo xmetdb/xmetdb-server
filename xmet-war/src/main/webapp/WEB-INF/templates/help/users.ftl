@@ -1,6 +1,8 @@
 <div class='helptitle' style='font-weight:bold;'>XMetDB users</div>
 <div class='helpcontent'>
-This is the list of registered users. Double click in the cells of the last two columns to change roles<a href='#' class='chelp roles'></a>.
+This is the list of registered users. 
+<br/>Double click in the last two columns to change 
+admin<a href='#' class='chelp hadmin'></a> and curator<a href='#' class='chelp hcurator'></a> roles<a href='#' class='chelp roles'></a>.
 </div>
 
 <div id="keys" style="display:none;">

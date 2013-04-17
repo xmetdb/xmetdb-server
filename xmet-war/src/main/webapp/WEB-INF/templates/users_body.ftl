@@ -50,8 +50,8 @@ jQuery(document).ready(function()
 		<th>Affiliation</th>
 		<th>Keywords</th>
 		<th>Available as a Curator<a href='#' class='chelp hcurator'></a></th>
-		<th>Curator Role<a href='#' class='chelp hcurator'></a></th>
-		<th>Admin Role<a href='#' class='chelp hadmin'></a></th>
+		<th>Curator Role</th>
+		<th>Admin Role</th>
 		</tr>
 		</thead>
 		<tbody></tbody>
