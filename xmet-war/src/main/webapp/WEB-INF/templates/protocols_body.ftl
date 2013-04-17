@@ -10,7 +10,7 @@ jQuery(document).ready(function()
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="XMetDB search results">${xmet_breadcrumb}</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
     loadHelp("${xmet_root}","observation_list");
-    $('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}"));
+    $('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}",false));
 })
 </script>
 </head>
@@ -21,7 +21,7 @@ jQuery(document).ready(function()
 
 	<!-- Page Content
 		================================================== -->
-		<div class="twelve columns ui-widget-content ui-corner-all" >
+		<div class="twelve columns ui-widget-content ui-corner-all add-bottom" >
 		
 		<table id='protocols'  cellpadding='0' border='0' width='100%' cellspacing='0'>
 		<thead>

@@ -86,7 +86,7 @@ $(document).ready(function() {
 	<#include "/s_banner.ftl">
 	<#include "/s_menu.ftl">
 
-    <div class="twelve columns remove-bottom" >
+    <div class="twelve columns add-bottom" >
     
     <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">New XMetDB observation</span></div>
     <div class="half-bottom ui-widget-content ui-corner-bottom" >

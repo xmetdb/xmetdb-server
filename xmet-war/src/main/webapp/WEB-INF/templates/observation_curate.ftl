@@ -78,7 +78,7 @@ $(document).ready(function() {
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
 			jQuery("#breadCrumb").jBreadCrumb();
 			loadHelp("${xmet_root}","observation_curate");
-			$('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}"));
+			$('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}",true));
 	});   
 	
 	function getCompoundURI(selector) {
@@ -96,7 +96,7 @@ $(document).ready(function() {
 	<#include "/s_banner.ftl">
 	<#include "/s_menu.ftl">
 
-    <div class="twelve columns remove-bottom" >
+    <div class="twelve columns add-bottom" >
     
     <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">New XMetDB observation</span></div>
     <div class="half-bottom ui-widget-content ui-corner-bottom" >
@@ -171,7 +171,7 @@ $(document).ready(function() {
 		</div>
 		<div name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="ten columns omega remove-bottom ui-state-default"> </div>
 	</div>			
-	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+	<div class='row add-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'>
 			<label>Status</label>
 		</div>

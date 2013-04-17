@@ -27,7 +27,7 @@ jQuery(document).ready(function()
 		
 		<!-- Page Content
 		================================================== -->
-		<div class="twelve columns remove-bottom" >
+		<div class="twelve columns add-bottom" >
 		
 		<#if myprofile>
 			<#assign ro=''>

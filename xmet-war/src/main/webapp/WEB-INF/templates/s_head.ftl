@@ -26,6 +26,7 @@
 	<link href="${xmet_root}/style/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css">
 	<link href="${xmet_root}/style/jquery.dataTables.css"       rel="stylesheet" type="text/css">
 	<link href="${xmet_root}/skeleton/stylesheets/xmet.css"     rel="stylesheet"  type="text/css">
+	<link href="${xmet_root}/skeleton/stylesheets/table.css"     rel="stylesheet"  type="text/css">
 		
 	
 	<!-- Favicons

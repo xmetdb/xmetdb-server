@@ -48,7 +48,7 @@ jQuery(document).ready(function()
 			</p>
 			</div>
 		<#else>
-		<div class="twelve columns ui-widget-content ui-corner-all" style="padding:0;" >
+		<div class="twelve columns ui-widget-content ui-corner-all add-bottom" style="padding:0;" >
 			<table id='task'  cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 			<thead>
 			<tr>

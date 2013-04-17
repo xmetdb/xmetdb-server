@@ -11,6 +11,7 @@
            jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="This observation"><span id="xmet_id"></span></a></li>');
            jQuery("#breadCrumb").jBreadCrumb();
            loadHelp("${xmet_root}","observation");
+           $('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}",true));
        })
 </script>
        
@@ -25,7 +26,7 @@
 		================================================== -->
     <div class="twelve columns ui-widget-header ui-corner-top">&nbsp;Observation ID: <span id="xmet_id"></span></div>
 
-	<div class="twelve columns ui-widget-content ui-corner-bottom" >
+	<div class="twelve columns ui-widget-content ui-corner-bottom add-bottom" >
 	<div   style="margin:5px;padding:5px;" class="remove-bottom"> 	
 		
 	<#include "/observation_ro.ftl" >

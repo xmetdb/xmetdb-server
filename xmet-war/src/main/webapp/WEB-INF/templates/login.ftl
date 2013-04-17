@@ -18,7 +18,7 @@ jQuery(document).ready(function()
 		
 		<!-- Page Content
 		================================================== -->
-		<div class="twelve columns" style="padding:0;" >
+		<div class="twelve columns add-bottom" style="padding:0;" >
 		
 	    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;Sign In</div>
     	<div class="half-bottom ui-widget-content ui-corner-bottom">

@@ -26,7 +26,7 @@ jQuery(document).ready(function()
 
 	    	
     <div class="twelve columns ui-widget-header ui-corner-top">&nbsp;Search XMetDB</div>
-	<div class="twelve columns remove-bottom ui-widget-content ui-corner-bottom">
+	<div class="twelve columns remove-bottom ui-widget-content ui-corner-bottom add-bottom">
 	<div  style="margin:5px;padding:5px;" class="remove-bottom"> 	
 		
 	<form method="GET" action="${xmet_root}/chemical" name="search_form" id="search_form" class="remove-bottom">

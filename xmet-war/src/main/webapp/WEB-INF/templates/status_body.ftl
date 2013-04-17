@@ -16,7 +16,7 @@ jQuery(document).ready(function()
 		
 		<!-- Page Content
 		================================================== -->
-		<div class="twelve columns" style="padding:0;" >
+		<div class="twelve columns add-bottom" style="padding:0;" >
 		
 		<div class="ui-widget-header ui-corner-top">
 		<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;' title='' id='status_name'>${status_name}</span>
