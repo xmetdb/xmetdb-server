@@ -8,6 +8,7 @@
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.autogrow.js'></script>
 <script  type="text/javascript" src="${xmet_root}/jquery/jquery.imagemapster.min.js"></script>
 <script  type="text/javascript" src="${xmet_root}/scripts/jopentox-ui-atoms.js"></script>
+<script type='text/javascript' src='${xmet_root}/jquery/jquery.jeditable.js'></script>
 <style>
     .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
     .structresults .ui-selected { background: #F39814; border-color: #F39814; }
@@ -17,14 +18,12 @@
 
 <script type="text/javascript">
 
-
-
 function atomNumber(num, atoms_id) {
     var index = _xmet.atoms[atoms_id].indexOf(num);
     if (index>=0) _xmet.atoms[atoms_id].splice(index,1);
     else _xmet.atoms[atoms_id].push(num);
     $(atoms_id).text(_xmet.atoms[atoms_id]);
-}	    
+}	
 $(document).ready(function() {
 		$( ".useSelected" ).button();
 		$( "#structureSearchResults" ).selectable();
@@ -109,7 +108,8 @@ $(document).ready(function() {
 	 	</div>
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
-		    <input type="hidden" id="xmet_substrate_atoms" name="xmet_substrate_atoms" value="">
+		    <br/>
+		    <div id="xmet_substrate_atoms" class='ui-state-default'></div>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
@@ -120,7 +120,8 @@ $(document).ready(function() {
 		</div>
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
-			<input type="hidden" id="xmet_product_atoms" name="xmet_product_atoms" value="">
+			<br/>
+			<div id="xmet_product_atoms" class='ui-state-default'></div>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
