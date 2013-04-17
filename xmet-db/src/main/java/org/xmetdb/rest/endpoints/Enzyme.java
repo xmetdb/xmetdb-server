@@ -169,4 +169,27 @@ public class Enzyme implements Serializable {
 		}
 		writer.write(String.format("}"));
 	}
+	
+	public String toCSV() throws IOException {
+		StringBuilder writer = new StringBuilder();
+		writer.append(String.format(""));
+		try {
+			for (EnzymeFields field : EnzymeFields.values()) {
+				if (EnzymeFields.id.equals(field)) continue;
+				if (EnzymeFields.alleles.equals(field)) continue;
+				if (!EnzymeFields.code.equals(field)) 
+					writer.append(",");
+				String value = field.getStringValue(this,"\"");
+				if (value==null) writer.append("");
+				else {
+					writer.append(field.leftDelimiter());
+					writer.append(value);
+					writer.append(field.rightDelimiter());
+				}
+			}
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+		return writer.toString();
+	}
 }

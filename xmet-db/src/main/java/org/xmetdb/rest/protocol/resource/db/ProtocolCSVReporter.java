@@ -4,7 +4,11 @@ import java.io.Writer;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 
+import net.idea.modbcum.i.IQueryCondition;
 import net.idea.modbcum.i.IQueryRetrieval;
+import net.idea.modbcum.i.exceptions.AmbitException;
+import net.idea.modbcum.p.DefaultAmbitProcessor;
+import net.idea.modbcum.p.MasterDetailsProcessor;
 import net.idea.modbcum.r.QueryReporter;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.groups.DBOrganisation;
@@ -16,9 +20,12 @@ import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Request;
 import org.restlet.data.MediaType;
+import org.xmetdb.rest.endpoints.Enzyme;
+import org.xmetdb.rest.endpoints.db.ReadEnzymeByObservation;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.AttachmentURIReporter;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
+import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
 
 public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetrieval<DBProtocol>,Writer>  {
 
@@ -48,6 +55,42 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 		groupReporter = new GroupQueryURIReporter<IQueryRetrieval<IDBGroup>>(request);
 		userReporter = new UserURIReporter<IQueryRetrieval<DBUser>>(request);
 		attachmentReporter = new AttachmentURIReporter<IQueryRetrieval<DBAttachment>>(request);
+		getProcessors().clear();
+		IQueryRetrieval<Enzyme> queryE = new ReadEnzymeByObservation(null); 
+		MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition> enzymeReader = new MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition>(queryE) {
+			@Override
+			protected DBProtocol processDetail(DBProtocol target, Enzyme detail)
+					throws Exception {
+				target.setEndpoint(detail);
+				return target;
+			}
+		};
+		getProcessors().add(enzymeReader);
+		IQueryRetrieval<DBAttachment> queryP = new ReadAttachment(null,null); 
+		MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition> attachmentReader = new MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition>(queryP) {
+			@Override
+			protected DBProtocol processDetail(DBProtocol target, DBAttachment detail)
+					throws Exception {
+				
+				detail.setResourceURL(new URL(attachmentReporter.getURI(detail)));
+				target.getAttachments().add(detail);
+				return target;
+			}
+		};
+		getProcessors().add(attachmentReader);		
+		processors.add(new DefaultAmbitProcessor<DBProtocol,DBProtocol>() {
+			@Override
+			public DBProtocol process(DBProtocol target) throws AmbitException {
+				try {
+				processItem(target);
+				} catch (AmbitException x) {
+					throw x;
+				} catch (Exception x) {
+					throw new AmbitException(x);
+				}
+				return target;
+			};
+		});				
 	
 	}
 	
@@ -58,8 +101,8 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 		} catch (Exception x) {}
 		
 	}
-	private static String header = "URI,Identifier,\"Product amount\",\"Experiment type\",Enzyme,Allele,Reference,Comment\r\n";
-	private static String format = "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\r\n";
+	private static String header = "URI,Identifier,\"Product amount\",\"Experiment type\",Enzyme code,Enzyme name,UniProt,Reference,Comment\r\n";
+	private static String format = "\"%s\",\"%s\",\"%s\",\"%s\",%s,\"%s\",\"%s\"\r\n";
 		
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
@@ -79,8 +122,7 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 					item.getVisibleIdentifier(),
 					item.getProductAmount(),
 					item.getAbstract(),
-					item.getEndpoint()==null?"":item.getEndpoint().getCode(),
-					item.getEndpoint()==null?"":item.getEndpoint().getAlleles(),
+					item.getEndpoint()==null?"":item.getEndpoint().toCSV(),
 					item.getReference()==null?"":item.getReference(),
 					item.getKeywords()
 					));

@@ -57,11 +57,6 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 		userReporter = new UserURIReporter<IQueryRetrieval<DBUser>>(request);
 		attachmentReporter = new AttachmentURIReporter<IQueryRetrieval<DBAttachment>>(request);
 		getProcessors().clear();
-		/*
-		DBProtocol obs = new DBProtocol();
-		obs.setIdentifier(protocol.toString());
-		return new ReadEnzymeByObservation(obs);
-		*/
 		IQueryRetrieval<Enzyme> queryE = new ReadEnzymeByObservation(null); 
 		MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition> enzymeReader = new MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition>(queryE) {
 			@Override
