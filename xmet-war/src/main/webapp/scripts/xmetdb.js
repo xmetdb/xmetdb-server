@@ -982,11 +982,23 @@ function loadHelpJSON(root,topic) {
 }
 
 function getMediaLink(uri, media) {
-	return uri + "?media=" + encodeURIComponent(media);
+	return uri + (uri.indexOf("?")>0?"&":"?") + "media=" + encodeURIComponent(media);
 }
 
+
+function getDownloadLinksStructure(root,uri) {
+	var val = uri;
+	var sOut = "<a href='"+getMediaLink(val,"text/csv")+"' id='csv'><img src='"+root+"/images/excel.png' alt='CSV' title='Download as CSV (Comma delimited file) with SMILES'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"chemical/x-mdl-sdfile")+"' id='txt'><img src='"+root+"/images/sdf.jpg' alt='SDF' title='Download as SDF'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"chemical/x-cml")+"' id='cml'><img src='"+root+"/images/cml.jpg' alt='CML' title='Download as Chemical Markup Language (CML)'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"chemical/x-inchi")+"' id='inchi'><img src='"+root+"/images/inchi.png' alt='InChI' title='Download as InChI'></a> ";
+	sOut += "<br/><a href='"+getMediaLink(val,"application/rdf+xml")+"' id='rdfxml'><img src='"+root+"/images/rdf.gif' alt='RDF/XML' title='Download as RDF/XML (Resource Description Framework XML format)'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"text/n3")+"' id='rdfn4'><img src='"+root+"/images/rdf.gif' alt='RDF N3' title='Download as RDF N3 (Resource Description Framework N3 format)'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"application/json")+"' id='json'><img src='"+root+"/images/json.png' alt='JSON' title='JSON'></a> ";
+	return sOut;
+}
 function getDownloadLinksObservation(root,uri,molecules) {
-	   val = uri;
+	   var val = uri;
 	   var sOut = "<a href='"+getMediaLink(val,"text/csv")+"' id='csv'><img src='"+root+"/images/excel.png' alt='CSV' title='Download as CSV (Comma delimited file)'></a> ";
 	   sOut += "<a href='"+getMediaLink(val,"text/plain")+"' id='txt'><img src='"+root+"/images/excel.png' alt='TXT' title='Download as TXT'></a> ";
 
