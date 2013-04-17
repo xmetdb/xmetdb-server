@@ -38,8 +38,14 @@ function cmpatoms2image(uri, model_uri) {
 	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
-function renderEnzyme(code,name) {
-	return "<span title='"+ name +"'>" + (code==null?"":code) + "</span>";
+function renderEnzyme(root,enzyme) {
+	if (enzyme===undefined || enzyme==null) return "";
+	try {
+		var sOut = "<a href='"+root+"/catalog/"+enzyme["id"]+"' title='Click to view enzyme: "+ enzyme["name"] +"' target='enzyme'>" + (enzyme["code"]==null?"":enzyme["code"]) + "</a>";
+		if ((enzyme["uniprot"]!=undefined) &&  (enzyme["uniprot"]!=null))
+			sOut += "<br/><br/><a href='http://www.uniprot.org/uniprot/"+enzyme["uniprot"]+"' title='Click to view UniProt enzyme' target='enzyme'>UniProt: " + enzyme["uniprot"] + "</a>";
+		return sOut;
+	} catch (err) { return enzyme["code"]}
 }
 
 function loadEnzymesList(root,selectTag,allelesTag) {
@@ -605,15 +611,22 @@ function defineObservationsTable(tableSelector,observations_uri,root,curatorLink
 	          				return "<span title='"+ o.aData["description"] +"'>" + val + "</span>";
 	        		}
 				},
-				{ "mDataProp": "enzyme.code" ,
+				{ "mDataProp": "enzyme" ,
 					"aTargets": [ 5 ],	
 				  "asSorting": [ "asc", "desc" ], 
-				  "bSearchable" : true		  
+				  "bSearchable" : true,
+				   "fnRender": function ( o, val ) {
+         				return renderEnzyme(root,val);
+				   }				  
 				},
 				{ "mDataProp": "updated", "asSorting": [ "asc", "desc" ],"aTargets": [ 6 ]	 
 				},
-				{ "mDataProp": "curated", "asSorting": [ "asc", "desc" ],"aTargets": [ 7 ],	
-					"fnRender": function ( o, val ) {
+				{ 
+				  "mDataProp": "curated", 				
+				  "bUseRendered" : false,	
+				  "asSorting": [ "asc", "desc" ],
+				  "aTargets": [ 7 ],	
+				  "fnRender": function ( o, val ) {
 	          				return (val?"<img src='"+root+"/images/star.png' title='Curated'><br/>":"") +
 	          						(curatorLink?" <a href='"+root+"/curator/"+o.aData["identifier"]+"' title='Click to go the curation page'>Curate</a>":"")
 	          						;
@@ -717,6 +730,7 @@ function defineObservationsTable(tableSelector,observations_uri,root,curatorLink
 					 }
 				 }
 				 //retrieve the enzyme from /protocol/id/endpoint URI
+				 /*
 				 if ((aData.enzyme.code === undefined) || (aData.enzyme.code ==null)) {
 				      $.ajax({
 				          dataType: "json",
@@ -733,7 +747,8 @@ function defineObservationsTable(tableSelector,observations_uri,root,curatorLink
 				       });
 				 } else {
 					 $('td:eq(5)', nRow).html(renderEnzyme(aData.enzyme.code,aData.enzyme.name));	
-				 }				 
+				 }	
+				 */			 
         }
 		
 	} );

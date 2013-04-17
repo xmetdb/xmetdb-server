@@ -21,6 +21,8 @@ import net.idea.restnet.user.DBUser;
 import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.Request;
+import org.xmetdb.rest.endpoints.Enzyme;
+import org.xmetdb.rest.endpoints.db.ReadEnzymeByObservation;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.AttachmentURIReporter;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
@@ -55,6 +57,21 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 		userReporter = new UserURIReporter<IQueryRetrieval<DBUser>>(request);
 		attachmentReporter = new AttachmentURIReporter<IQueryRetrieval<DBAttachment>>(request);
 		getProcessors().clear();
+		/*
+		DBProtocol obs = new DBProtocol();
+		obs.setIdentifier(protocol.toString());
+		return new ReadEnzymeByObservation(obs);
+		*/
+		IQueryRetrieval<Enzyme> queryE = new ReadEnzymeByObservation(null); 
+		MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition> enzymeReader = new MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition>(queryE) {
+			@Override
+			protected DBProtocol processDetail(DBProtocol target, Enzyme detail)
+					throws Exception {
+				target.setEndpoint(detail);
+				return target;
+			}
+		};
+		getProcessors().add(enzymeReader);
 		IQueryRetrieval<DBAttachment> queryP = new ReadAttachment(null,null); 
 		MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition> attachmentReader = new MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition>(queryP) {
 			@Override
@@ -90,7 +107,7 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 		
 	}
 	
-	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"description\": \"%s\",\n\t\"atom_uncertainty\": \"%s\",\n\t\"product_amount\": \"%s\",\n\t\"enzyme\": {\n\t\t\"code\" :null, \"name\" :null\n\t},\n\t\"reference\": \"%s\",\n\t\"comments\": \"%s\",\n\t\"updated\": \"%s\",\n\t\"curated\": %s,\n\t\"publishedStatus\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\" :\"%s\",\n\t\t\"username\": \"%s\"\n\t}";
+	private static String format = "\n{\n\t\"uri\":\"%s\",\n\t\"identifier\": \"%s\",\n\t\"title\": \"%s\",\n\t\"description\": \"%s\",\n\t\"atom_uncertainty\": \"%s\",\n\t\"product_amount\": \"%s\",\n\t\"enzyme\": {\n\t\t\"id\" :%d,\"code\" :%s, \"name\" :%s, \"uniprot\" :%s\n\t},\n\t\"reference\": \"%s\",\n\t\"comments\": \"%s\",\n\t\"updated\": \"%s\",\n\t\"curated\": %s,\n\t\"publishedStatus\": \"%s\",\n\t\"owner\": {\n\t\t\"uri\" :\"%s\",\n\t\t\"username\": \"%s\"\n\t}";
 	private static String formatAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": %s, \"structure\": null}\n\t}";
 	private static String emptyAttachments =  ",\n\t\"%s\": {\n\t\t\"dataset\": {\"uri\": null, \"structure\": null}\n\t}";
 		
@@ -117,6 +134,10 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					item.getAbstract(),
 					item.getAtomUncertainty().name(),
 					item.getProductAmount().name(),
+					(item.getEndpoint()==null || item.getEndpoint().getID()>0)?item.getEndpoint().getID():-1,
+					(item.getEndpoint()==null || item.getEndpoint().getCode()==null)?"null":String.format("\"%s\"",item.getEndpoint().getCode()),
+					(item.getEndpoint()==null || item.getEndpoint().getName()==null)?"null":String.format("\"%s\"",jsonEscape(item.getEndpoint().getName())),
+					(item.getEndpoint()==null || item.getEndpoint().getUniprot_id()==null)?"null":String.format("\"%s\"",item.getEndpoint().getUniprot_id()),
 					reference==null?"":reference,
 					comments==null?"":comments.size()==0?"":jsonEscape(comments.get(0)),
 					dateFormat.format(new Date(item.getTimeModified())),
