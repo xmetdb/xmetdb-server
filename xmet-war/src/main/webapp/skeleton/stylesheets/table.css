@@ -1,4 +1,16 @@
 /*
+ * Colour dictionary:
+ *
+ * Table control elements:   #719ba7
+ * Header cells:             #66A9BD
+ * Body header cells:        #91c5d4
+ * Body content cells:       #d5eaf0
+ * Body content cells (alt): #bcd9e1
+ * Footer header:            #b0cc7f
+ * Footer content:           #d7e1c5
+ */
+
+/*
  * DataTables framework
  */
 
@@ -39,12 +51,14 @@ div.dataTables_paginate {
 	float: right;
 }
 
+
 div.dataTables_length,
 div.dataTables_filter,
 div.dataTables_paginate {
 	padding: 6px;
 }
 
+/* Self clearing - http://www.webtoolkit.info/css-clearfix.html */
 .dataTables_wrapper:after {
 	content: ".";
 	display: block;
@@ -53,7 +67,13 @@ div.dataTables_paginate {
 	line-height: 0;
 	height: 0;
 }
- 
+
+.dataTables_paginate .fg-button {
+	 background :#fff;
+	 min-width:3.5em;
+	 border:0;
+}
+
 html[xmlns] .dataTables_wrapper {
 	display: block;
 }
@@ -95,6 +115,16 @@ table tbody td {
 table tbody tr.odd td { 
 }
 
+/* Footer cells */	
+table.structable tfoot th {
+	text-align: left;
+}
+	
+table.structable tfoot td {
+	text-align: center;
+	font-weight: bold;
+}
+
 
 /*
  * Pagination
@@ -126,12 +156,15 @@ div.dataTables_paginate span>a {
 	text-align: center;
 }
 
-/* Footer cells */	
-table tfoot th {
-	text-align: left;
+
+/*
+ * Sorting
+ */
+table thead th.sorting_asc {
 }
-	
-table tfoot td {
-	text-align: center;
-	font-weight: bold;
+
+table thead th.sorting_desc {
+}
+
+table thead th.sorting {
 }

@@ -75,6 +75,8 @@ function defineEndpointsTable(url,root) {
 		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,

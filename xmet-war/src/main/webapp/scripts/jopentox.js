@@ -192,11 +192,13 @@ function defineTaskTable(root,url) {
 		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"oLanguage": {
-				"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No tasks found.",
 	            "sLengthMenu": 'Display <select>' +
@@ -237,6 +239,8 @@ function defineFacetsTable(root,url) {
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',	
 		"bJQueryUI" : true,
 		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
