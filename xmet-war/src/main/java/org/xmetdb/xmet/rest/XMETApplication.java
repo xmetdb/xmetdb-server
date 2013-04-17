@@ -37,6 +37,7 @@ import org.xmetdb.rest.groups.ProjectRouter;
 import org.xmetdb.rest.help.HelpResource;
 import org.xmetdb.rest.protocol.ProtocolRouter;
 import org.xmetdb.rest.protocol.facet.ProtocolsByEndpointResource;
+import org.xmetdb.rest.protocol.resource.db.MyObservationsResource;
 import org.xmetdb.rest.structure.resource.DatasetResource;
 import org.xmetdb.rest.structure.resource.StructureRouter;
 import org.xmetdb.rest.user.UserRouter;
@@ -143,9 +144,10 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		myAccountRouter.attachDefault(MyAccountResource.class);
 		myAccountRouter.attach(Resources.alert,alertRouter);
 		myAccountRouter.attach(Resources.reset,PwdResetResource.class);
+		myAccountRouter.attach(Resources.protocol,MyObservationsResource.class);
 		
-		setCookieUserRouter
-				.attach(Resources.myaccount, myAccountRouter);
+		
+		setCookieUserRouter.attach(Resources.myaccount, myAccountRouter);
 		
 
 		/** XMETDB observations & SOMs **/

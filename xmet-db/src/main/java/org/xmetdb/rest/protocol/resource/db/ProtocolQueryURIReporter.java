@@ -5,7 +5,7 @@ import net.idea.restnet.db.QueryURIReporter;
 
 import org.restlet.Request;
 import org.xmetdb.rest.protocol.DBProtocol;
-import org.xmetdb.rest.protocol.db.ReadProtocolByAuthor;
+import org.xmetdb.rest.protocol.db.ReadProtocolAbstract;
 import org.xmetdb.xmet.client.Resources;
 
 
@@ -47,7 +47,7 @@ public class ProtocolQueryURIReporter <Q extends IQueryRetrieval<DBProtocol>> ex
 		return String.format("%s%s/%s%s",
 				ref,
 				Resources.protocol,
-				ReadProtocolByAuthor.generateIdentifier(item),
+				ReadProtocolAbstract.generateIdentifier(item),
 				suffix==null?"":suffix);
 	}
 
