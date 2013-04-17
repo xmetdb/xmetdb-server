@@ -1,6 +1,6 @@
-<div class='helptitle' style='font-weight:bold;'>New Observation Help</div>
+<div class='helptitle' style='font-weight:bold;'>XMetDB Observation </div>
 <div class='helpcontent'>
-Observation
+Observation editor
 </div>
 
 <div id="keys" style="display:none;">
@@ -14,6 +14,7 @@ Observation
     <li><a href="#allele">Allele</a></li>
     <li><a href="#reference">Reference</a></li>
     <li><a href="#search">Search/Draw options</a></li>
+    <li><a href="#hcurator">XMetDB curation</a></li>
   </ul>
   <div id="substrate">
     <p>The substrate molecule</p>
@@ -41,6 +42,16 @@ Observation
   </div>  
   <div id="search">
     <p>what it does</p>
+  </div>  
+  
+  <div id="hcurator">
+    <p>
+    The curators can edit all observations but not essential info as experiment and enzymes.
+    The curators can change atom highlighting and comments and typos in references.
+    The curators can set the flag curated to yes for any observations.
+    The users may indicate he is available as a curator, but this does not automatically grant the curator role.
+    The curator role is assigned by admins only.
+    </p>
   </div>  
 
 </div>

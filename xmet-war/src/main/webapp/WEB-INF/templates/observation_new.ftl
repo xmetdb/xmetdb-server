@@ -194,8 +194,18 @@ $(document).ready(function() {
 			<label>Comment:</label>
 		</div>
 		<textarea name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="eight columns omega remove-bottom"></textarea>
-		<input type="submit" class="submit five columns omega" value="Submit observation">
-	</div>			
+		<div class='five columns omega'>&nbsp;</div>
+	</div>
+	<div class='row half-bottom' style="margin:5px;padding:5px;"> 	
+		<div class='three columns alpha'>
+			<label>Status:<a href='#' class='chelp hcurator'></a></label></label>
+		</div>
+		<div class='two columns omega' id="xmet_curated">Not curated</div>
+		<div class="two columns omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'>&nbsp;</div>
+		<div class='five columns omega'>&nbsp;</div>
+		<input type="submit" class="submit four columns omega" value="Submit observation">
+	</div>		
+	
 	</form>	
     </div>
 

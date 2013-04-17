@@ -502,6 +502,9 @@ function editObservation(root,observation_uri,query_service) {
 	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
 	        	  });
 	        	  $('#xmet_reference').attr("value",observation["reference"]);
+	        	  $('#xmet_curated').text(observation["curated"]?"Curated":"Not curated");
+	        	  if (observation["curated"]) $('#imgcurated').show(); else  $('#imgcurated').hide();
+	        	  
 	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
 	        	  $('#xmet_substrate_type').val('uri');
 	        	  $('#xmet_product_type').val('uri');

@@ -63,7 +63,7 @@
 			<label>Status:</label>
 		</div>
 		<div class='two columns omega' id="xmet_curated"></div>
-		<div class="two column omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
+		<div class="two columns omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
 		<div class='six columns omega'>&nbsp;</div>
 	</div>	
 	<hr class='row half-bottom'/>		
