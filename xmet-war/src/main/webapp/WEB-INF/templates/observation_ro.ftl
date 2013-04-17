@@ -1,4 +1,4 @@
-	<div class="row remove-bottom ">	
+	<div class="row half-bottom ">	
      	<div class="two columns alpha"><label for="xmet_substrate">Substrate:<a href='#' class='chelp substrate'></a></label>
      		<br/>
      		<div id="sim_substrate"></div>
@@ -7,7 +7,7 @@
       				<ul class='structresults' id="xmet_substrate"></ul>
       		</div>
     </div>		
-	<div class="row remove-bottom ">	
+	<div class="row half-bottom ">	
      	<div class="two columns alpha"><label for="xmet_product">Product:<a href='#' class='chelp product'></a></label>
      	<br/>
      	<div id="sim_product"></div>
@@ -16,7 +16,7 @@
       			<ul class='structresults' id="xmet_product"></ul>
       		</div>
     </div>		
-	<div class="row remove-bottom ">	
+	<div class="row half-bottom ">	
      	<div class="three columns alpha"><label for="xmet_atom_uncertainty">Atom uncertainty:<a href='#' class='chelp atomuncertainty'></a></label></div>
       	<div class="three columns omega">
       		<span id="xmet_atom_uncertainty">&nbsp;</span>
@@ -26,13 +26,13 @@
       		<span id="xmet_product_amount">&nbsp;</span>
       	</div>
     </div>	    
-	<div class="row remove-bottom ">	
+	<div class="row half-bottom ">	
      	<div class="three columns alpha"><label for="xmet_experiment">Experiment:<a href='#' class='chelp experiment'></a></label></div>
       		<div class="six columns omega">
 				<span id="xmet_experiment">&nbsp;</span>
       		</div>
     </div>		    
-	<div class="row remove-bottom ">	
+	<div class="row half-bottom ">	
      	<div class="three columns alpha"><label for="xmet_enzyme">Enzyme:<a href='#' class='chelp enzyme'></a></label></div>
       		<div class="eight columns omega">
       			<span id="xmet_enzyme">&nbsp;</span>
@@ -42,7 +42,7 @@
       			<span id="xmet_allele">&nbsp;</span>
       		</div>      		
     </div>	   
-    <div class="row remove-bottom">	
+    <div class="row half-bottom">	
      	<div class="three columns alpha"><label for="xmet_reference">Reference:<a href='#' class='chelp reference'></a></label></div>
       		<div class="six columns omega">
       				<span id="xmet_reference">&nbsp;</span>
@@ -51,23 +51,35 @@
       		</div>
     </div>	
 	
-	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+	<div class='row half-bottom' > 	
 		<div class='three columns alpha'>
 			<label>Comment:</label>
 		</div>
 		<textarea name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="eight columns omega remove-bottom" readonly></textarea>
-	</div>		
-	<div class='row remove-bottom' >
-		<hr class='half-bottom'/>
-		<div class='five columns omega' style='margin-top:0.5em'>
-		<a class='button' id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a><a href='#' class='chelp modifyobs'></a>
-		<br/>
-		<form method='POST' action='${xmet_root}/protocol' enctype='application/x-www-form-urlencoded' autocomplete name='xmet_copy'>
-		<input type='hidden' name='source_uri' value='${xmet_request}'>
-		<input type='submit' class='button remove-bottom' title='Create new observation with the same content as this one.'  value='Copy and create new observation'>
-		<a href='#' class='chelp copyobs'></a>
-		</form>
+		<div class='five columns omega'>&nbsp;</div>
+	</div>
+	<div class='row half-bottom' > 	
+		<div class='three columns alpha'>
+			<label>Status:</label>
 		</div>
+		<div class='two columns omega' id="xmet_curated"></div>
+		<div class="two column omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
+		<div class='six columns omega'>&nbsp;</div>
+	</div>	
+	<hr class='row half-bottom'/>		
+	<div class='row remove-bottom' >
+		<div class='six columns alpha'>&nbsp;</div>
+		<div class='ten columns omega'>
+			<a id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a><a href='#' class='chelp modifyobs'></a>
+			|
+			<a title='Create new observation with the same content as this one.' href='#' onClick='document.forms["copyForm"].submit(); return false;'>Copy and create new observation</a><a href='#' class='chelp copyobs'></a>
+			<#if xmetdb_curator?? && xmetdb_curator>
+			|
+			<a title='Curate this observation.'  href="${xmet_root}/curator/" >Curate</a><a href='#' class='chelp hcurator'></a>
+			</#if>						
+			<form method='POST' name='copyForm' action='${xmet_root}/protocol' enctype='application/x-www-form-urlencoded' autocomplete name='xmet_copy'>
+			<input type='hidden' name='source_uri' value='${xmet_request}'>
+			</form>
 
-
+		</div>
 	</div>	

@@ -56,5 +56,5 @@ This is a list of XMetDB observations. For observation details please click on t
 	Double click on the curator role cell to edit.
 </#if>    
     </p>
-
+	</div>
 </div>

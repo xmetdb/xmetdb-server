@@ -14,6 +14,7 @@
     <li><a href="#reference">Reference</a></li>
     <li><a href="#modifyobs">Modify</a></li>
     <li><a href="#copyobs">Copy</a></li>
+    <li><a href="#hcurator">XMETDB curation</a></li>
   </ul>
   <div id="substrate">
     <p>The substrate</p>
@@ -51,4 +52,20 @@
     <p>Copies this observation into new one and launches the observation editor. 
     This is a convenient way to enter a new observation which only slightly differ from an existing one.</p>
   </div>  
+    <div id="hcurator">
+   <p>
+    The curated observations are marked with a star, otherwise the cell is empty.
+    A link "Curate" appears in this column, if the logged in user is assigned a curator role.
+    <p>
+    The curators can edit all observations but not essential info as experiment and enzymes.
+    The curators can change atom highlighting and comments and typos in references.
+    The curators can set the flag curated to yes for any observations.
+    The users may indicate he is available as a curator, but this does not automatically grant the curator role.
+    The curator role is assigned by admins only.
+<#if xmetdb_admin?? && xmetdb_admin>
+	<br/>
+	Double click on the curator role cell to edit.
+</#if>    
+    </p>
+	</div>
 </div>
