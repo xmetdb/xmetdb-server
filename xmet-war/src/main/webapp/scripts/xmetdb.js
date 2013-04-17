@@ -985,6 +985,13 @@ function getMediaLink(uri, media) {
 	return uri + (uri.indexOf("?")>0?"&":"?") + "media=" + encodeURIComponent(media);
 }
 
+function getDownloadLinksUsers(root,uri) {
+	var val = uri;
+	var sOut = "<a href='"+getMediaLink(val,"text/csv")+"' id='csv'><img src='"+root+"/images/excel.png' alt='CSV' title='Download as CSV (Comma delimited file) with SMILES'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"application/json")+"' id='json'><img src='"+root+"/images/json.png' alt='JSON' title='JSON'></a> ";
+	return sOut;
+}
+
 
 function getDownloadLinksStructure(root,uri) {
 	var val = uri;
@@ -1008,8 +1015,8 @@ function getDownloadLinksObservation(root,uri,molecules) {
 	   sOut += "<a href='"+getMediaLink(val,"application/json")+"' id='json' target=_blank><img src='"+root+"/images/json.png' alt='json' title='Download as JSON'></a>";
 	 
 	   if (molecules) {
-		sOut += '<br/>Export substrate :<a id="xmet_export_substrate" href="#" title="Export substrate structure as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
-		sOut += '<br/>Export product(s):<a id="xmet_export_product"   href="#" title="Export product structure(s) as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
+		sOut += '<br/>Export substrate  <a id="xmet_export_substrate" href="#" title="Export substrate structure as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
+		sOut += '<br/>Export product(s) <a id="xmet_export_product"   href="#" title="Export product structure(s) as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
 	   }
 	   return sOut;
 }

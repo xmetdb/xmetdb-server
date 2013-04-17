@@ -44,7 +44,7 @@ function getMyAccount(root,url,readonly,username) {
 
 function defineUsersTable(root,url,selector) {
 	var not = "<span class='ui-icon ui-icon-closethick' title='NOT assigned'></span>";
-	var yes = "<span class='ui-icon ui-icon-check' title='Curator role assigned'></span>";
+	var yes = "<span class='ui-icon ui-icon-check' title='Role assigned'></span>";
 	var oTable = $(selector).dataTable( {
 		"sAjaxDataProp" : "user",
 		"bProcessing": true,
@@ -149,13 +149,23 @@ function defineUsersTable(root,url,selector) {
 					  "bUseRendered" : false,
 					  "sWidth" : "5%",
 					  "fnRender" : function(o,val) {
-						  return ((val!=undefined) && val)?yes:not;
+						  if (val===undefined) return not;
+						  if (val==null) return not;
+						  if (typeof val === 'string') 
+						  try {
+							  if (val.indexOf("Revoke Admin role")>=0) return not;
+							  else if (val.indexOf("Grant Admin role")>=0)  return yes;
+							  else return not;
+						  } catch (err) { }
+						  return (val===true)?yes:not;
 					  }
 				}					
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"bJQueryUI" : true,
 		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
@@ -198,7 +208,16 @@ function makeEditableUsersTable(root,oTable) {
                   onblur: 'cancel',
                   submit: 'Save changes'
               },
-              null            
+              {
+                  type:'select'	,
+                  loadtext: 'loading...',
+                  indicator: 'Updating admin role ...',
+                  tooltip: 'Double click to edit the admin role',
+                  loadtext: 'loading...',
+                  data: "{'':'Please select...', true:'Grant Admin role',false:'Revoke Admin role'}",
+                  onblur: 'cancel',
+                  submit: 'Save changes'
+              }     
 		 ],
 	     sUpdateURL: root+"/admin/role?method=PUT"
 	});
@@ -229,6 +248,8 @@ function defineOrganisationTable(root,url) {
 		"sSearch": "Filter:",
 		"bJQueryUI" : true,
 		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,

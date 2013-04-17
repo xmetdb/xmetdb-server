@@ -24,6 +24,9 @@ jQuery(document).ready(function()
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/user" title="XMetDB users">Users</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
     loadHelp("${xmet_root}","users");
+    <#if xmetdb_admin?? && xmetdb_admin>
+    $('#download').html(getDownloadLinksUsers("${xmet_root}","${xmet_request}"));
+    </#if>
 })
 </script>
 
@@ -47,8 +50,8 @@ jQuery(document).ready(function()
 		<th>Affiliation</th>
 		<th>Keywords</th>
 		<th>Available as a Curator<a href='#' class='chelp hcurator'></a></th>
-		<th>Curator Role</th>
-		<th>Admin Role</th>
+		<th>Curator Role<a href='#' class='chelp hcurator'></a></th>
+		<th>Admin Role<a href='#' class='chelp hadmin'></a></th>
 		</tr>
 		</thead>
 		<tbody></tbody>

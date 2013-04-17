@@ -1,6 +1,6 @@
-<div class='helptitle' style='font-weight:bold;'>Users</div>
+<div class='helptitle' style='font-weight:bold;'>XMetDB users</div>
 <div class='helpcontent'>
-Users
+This is the list of registered users. Double click in the cells of the last two columns to change roles<a href='#' class='chelp roles'></a>.
 </div>
 
 <div id="keys" style="display:none;">
@@ -14,6 +14,8 @@ Users
     <li><a href="#allele">Allele</a></li>
     <li><a href="#reference">Reference</a></li>
   	<li><a href="#hcurator">Curator</a></li>
+    <li><a href="#hadmin">Admin</a></li>
+    <li><a href="#roles">Roles</a></li>
   </ul>
   <div id="whatever">
     <p>What is it</p>
@@ -51,4 +53,12 @@ Users
   <div id="reference">
     <p>DOI or plain text. Please start doi with "DOI:"</p>
   </div>      
+  <div id="hadmin">
+    <p>
+    The admin could assign and revoke curator and admin roles as well.
+    </p>
+  </div>    
+    <div id="roles">
+    <p>XMetDB user access is role-based. There are three roles: normal user, curator and admin.</p>
+  </div>
 </div>

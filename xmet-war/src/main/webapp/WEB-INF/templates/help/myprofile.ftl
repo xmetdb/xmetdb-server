@@ -7,7 +7,7 @@ My profile
   <ul>
     <li><a href="#myprofile">My profile</a></li>
     <li><a href="#hcurator">Curator</a></li>
-         <li><a href="#observations">Observations</a></li>
+     <li><a href="#observations">Observations</a></li>
      <li><a href="#alerts">Alerts</a></li>
      <li><a href="#pwd">Chamge password</a></li>
   </ul>
@@ -17,6 +17,7 @@ My profile
   <div id="myprofile">
     <p></p>
   </div>
+
   <div id="hcurator">
     <p>
     The curators can edit all observations but not essential info as experiment and enzymes.
@@ -26,6 +27,7 @@ My profile
     The curator role is assigned by admins only.
     </p>
   </div>  
+
     <div id="observations">
     <p>Observations submitted</p>
   </div>  

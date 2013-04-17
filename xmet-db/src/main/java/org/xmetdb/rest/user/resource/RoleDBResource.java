@@ -69,23 +69,30 @@ public class RoleDBResource extends XmetdbQueryResource<ReadUserRoles,String> {
 				 throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 			}
 			String columnName = form.getFirstValue("columnName");
-			if ((columnName!=null) && "curator role".equals(columnName.toLowerCase())) try {
+			
+			if (columnName!=null)  try {
+				DBRole role = null;
+				if ("curator role".equals(columnName.toLowerCase())) role = DBRoles.curatorRole;
+				else if ("admin role".equals(columnName.toLowerCase())) role = DBRoles.adminRole;
+				else throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Unknown role "+columnName);
 				AbstractUpdate<DBRole,IUser> query = null;
 				Boolean value = Boolean.parseBoolean(form.getFirstValue("value"));
 				String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
 				if (value) {
-					CreateUserRole q = new CreateUserRole(DBRoles.curatorRole, user);
+					CreateUserRole q = new CreateUserRole(role, user);
 					q.setDatabaseName(usersdbname==null?"xmet_users":usersdbname);
 					query = q;
 				} else {
 					DeleteUserRole q = new DeleteUserRole();
-					q.setGroup(DBRoles.curatorRole);
+					q.setGroup(role);
 					q.setObject(user);
 					q.setDatabaseName(usersdbname==null?"xmet_users":usersdbname);
 					query = q;
 				}
 				execUpdate(query);
 				return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
+			} catch (ResourceException x) {
+				throw x;
 			} catch (Exception x) {
 				 throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
 			}
