@@ -1,6 +1,8 @@
-<div class='helptitle' style='font-weight:bold;'>Forgotten password</div>
+<div class='helptitle' style='font-weight:bold;'>XMetDB password reset</div>
 <div class='helpcontent'>
-Login
+You could reset your password by providing username and valid email address.
+If the username and email match XMetDB records, you will receive an email with 
+a link to reset the password. The link will be valid for 24h.
 </div>
 
 <div id="keys" style="display:none;">

@@ -28,7 +28,9 @@ jQuery(document).ready(function()
 			<span class="ui-icon ui-icon-info" style="display:inline-block"></span>
 			The user name or email you provided do not match the XMETDB Database records.
 			</div>	
-			<div class='row'></div>
+			<div class='row' style="text-align:center;">
+			<a href ='${xmet_root}/forgotten'>Try resetting the password again</a>
+			</div>
 		</div>
 	
 

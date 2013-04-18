@@ -34,7 +34,7 @@ jQuery(document).ready(function()
 		<div class="row remove-bottom">		
 		<label class='three columns alpha'>Password</label> 
 		<input class='five columns omega' type='password' size='40' name='password' value=''>
-		<div class='eight columns omega'><a href="${xmet_root}/forgotten">Forgotten password?</a></div>
+		<div class='eight columns omega'><a href="${xmet_root}/forgotten" title='Click to request one time password reset'>Forgotten password?</a></div>
 		</div>
 
 		<div class="row remove-bottom">		

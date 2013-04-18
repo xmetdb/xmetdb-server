@@ -1,6 +1,6 @@
-<div class='helptitle' style='font-weight:bold;'>My profile help</div>
+<div class='helptitle' style='font-weight:bold;'>My profile</div>
 <div class='helpcontent'>
-My profile
+My profile pages lets you to modify account details, manage saved searches and browse your list of observations.  
 </div>
 
 <div id="keys" style="display:none;">
@@ -9,7 +9,7 @@ My profile
     <li><a href="#hcurator">Curator</a></li>
      <li><a href="#observations">Observations</a></li>
      <li><a href="#alerts">Alerts</a></li>
-     <li><a href="#pwd">Chamge password</a></li>
+     <li><a href="#pwd">Change password</a></li>
   </ul>
   <div id="pwd">
     <p>TODO</p>

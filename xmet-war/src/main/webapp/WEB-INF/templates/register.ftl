@@ -104,7 +104,7 @@ jQuery(document).ready(function()
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="username">User name <em>*</em></label>
 				<input class='three columns alpha half-bottom' type="text" size='40' name='username' id='username' value=''/>
-				<div class='ten columns omega'></div>
+				<div class='ten columns omega'><a href='#' class='chelp husername'></a></div>
 			</div>
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="title">Title</label>
@@ -114,22 +114,22 @@ jQuery(document).ready(function()
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="firstname">First name <em>*</em></label>
 				<input class='eight columns alpha half-bottom' type="text" size='40' name='firstname' id='firstname' value=''/>
-				<div class='ten columns omega'></div>
+				<div class='five columns omega'></div>
 			</div>
 			<div class='row remove-bottom'>
 				<label class='three columns alpha' for="lastname">Last name <em>*</em></label>
 				<input class='eight columns alpha half-bottom' type="text"  size='40' name='lastname' id='lastname' value=''/>
-				<div class='ten columns omega'></div>
+				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="affiliation">Affiliation<em>*</em></label>
 				<input class='eight columns alpha half-bottom' type="text"  size='40' name='affiliation' id='affiliation' value=''/>
-				<div class='ten columns omega'></div>
+				<div class='five columns omega'><a href='#' class='chelp horganisation'></a></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="email">e-mail <em>*</em></label>
 				<input class='eight columns alpha half-bottom' type="text"size='40' name='email' id='email' value=''/>
-				<div class='ten columns omega'></div>
+				<div class='five columns omega'></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="homepage">WWW</label>
@@ -139,12 +139,12 @@ jQuery(document).ready(function()
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="keywords">Keywords</label>
 				<input class='eight columns alpha half-bottom'  type="text"  size='40' name='keywords' id='keywords' value=' '/>
-				<div class='five columns omega'></div>
+				<div class='five columns omega'><a href='#' class='chelp hkeywords'></a></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for="reviewer">Available as a curator<a href='#' class='chelp hcurator'></a></label>
 				<input class='eight columns alpha half-bottom' type="checkbox" name='reviewer' id='reviewer' value='' style='width:3em;'/>
-				<div class='five columns omega'></div>
+				<div class='five columns omega'><a href='#' class='chelp hcurator'></a></div>
 			</div>				
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'  for='pwd1'>Password <em>*</em></label>
@@ -159,7 +159,7 @@ jQuery(document).ready(function()
 			<div class='row remove-bottom'>
 				<label class='three columns alpha'>&nbsp;</label>
 				<input class='three columns alpha' id='register' name='register' type='submit' class='submit' value='Register'>
-				<div class='ten columns omega'><a href='#' class='chelp registration'></a></div>
+				<div class='ten columns omega'></div>
 			</div>
 			</form>	
 		</div>			

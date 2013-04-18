@@ -38,7 +38,7 @@ jQuery(document).ready(function()
 {
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/register" title="XMetDB password reset">Request password reset</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
-    loadHelp("${xmet_root}","pwdforgotten");
+    loadHelp("${xmet_root}","pwd_forgotten");
 })
 </script>
 </head>
