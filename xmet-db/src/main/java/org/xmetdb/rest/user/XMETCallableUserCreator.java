@@ -3,12 +3,14 @@ package org.xmetdb.rest.user;
 import java.sql.Connection;
 
 import net.idea.modbcum.i.IQueryRetrieval;
+import net.idea.restnet.db.aalocal.DBRole;
 import net.idea.restnet.user.CallableUserCreator;
 import net.idea.restnet.user.DBUser;
 import net.idea.restnet.user.resource.UserURIReporter;
 
 import org.restlet.data.Form;
 import org.restlet.data.Method;
+import org.xmetdb.rest.DBRoles;
 
 public class XMETCallableUserCreator extends CallableUserCreator {
 	
@@ -24,6 +26,10 @@ public class XMETCallableUserCreator extends CallableUserCreator {
 		subject = "XMetDB User Confirmation";
 	}
 
+	@Override
+	protected DBRole getDefaultRole() {
+		return DBRoles.userRole;
+	}
 	
 	@Override
 	protected String getConfig() {
