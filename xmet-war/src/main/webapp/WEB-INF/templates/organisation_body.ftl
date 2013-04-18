@@ -16,6 +16,7 @@ jQuery(document).ready(function()
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/admin" title="XMetDB admin">Admin</a></li>');
     jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/organisation" title="XMetDB organisations">Organisations</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","organisation");
 })
 </script>
 

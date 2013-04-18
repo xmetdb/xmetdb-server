@@ -57,6 +57,11 @@ public class DatabaseResource  extends XmetdbQueryResource<DBVersionQuery,DBVers
 	public DatabaseResource() {
 		super();
 		maxRetry = 1;
+		setHtmlbyTemplate(true);
+	}
+	@Override
+	public String getTemplateName() {
+		return "admin_db.ftl";
 	}
 	
 	@Override

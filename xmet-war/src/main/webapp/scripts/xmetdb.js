@@ -1059,3 +1059,23 @@ function getDownloadLinksObservation(root,uri,molecules) {
 	   }
 	   return sOut;
 }
+
+function loadDBInfo(root) {
+	
+    $.ajax({
+	          dataType: "text",
+	          contentType: 'text/plain; charset=utf-8',
+	          url: root + "/admin/database?media=text/plain",
+	          success: function(data, status, xhr) {
+	        	  $("#dbinfo").text(data);
+	        	  $("#dbcreate").hide();
+	          },
+	          error: function(xhr, status, err) { 
+	        	  $("#dbcreate").show();
+	        	  $("#dbinfo").text(status + " " + xhr.responseText);
+	          },
+	          complete: function(xhr, status) { 
+	        	  //$("#dbinfo").text(status);
+	          }
+	       });
+}

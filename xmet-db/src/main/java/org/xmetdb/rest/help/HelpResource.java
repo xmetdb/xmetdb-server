@@ -21,6 +21,7 @@ public class HelpResource extends CatalogFTLResource<String>  {
 	protected enum categories {
 		about,
 		admin,
+		admin_db,
 		alert,
 		enzyme,
 		login,
@@ -36,7 +37,8 @@ public class HelpResource extends CatalogFTLResource<String>  {
 		structure,
 		task,
 		users,
-		pwd_forgotten
+		pwd_forgotten,
+		organisation
 	}
 	public HelpResource() {
 		super();
