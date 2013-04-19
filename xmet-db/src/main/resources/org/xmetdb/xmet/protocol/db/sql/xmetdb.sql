@@ -305,7 +305,7 @@ begin
 	
   	-- create new version
     insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
-    select null,1,protocol.title,concat("XMETDB",idprotocol,"v",now()),abstract,user.iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    select null,1,protocol.title,concat("XMETDB",idprotocol,"v",now()),abstract,user.iduser,0,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
     from protocol join user where qmrf_number=protocol_qmrf_number and username=user_name;
     
     SELECT LAST_INSERT_ID() INTO new_id;
