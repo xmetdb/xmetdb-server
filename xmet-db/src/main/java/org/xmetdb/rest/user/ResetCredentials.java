@@ -32,7 +32,7 @@ public class ResetCredentials extends AbstractUpdate<UserRegistration,DBUser>  i
 		this.hoursValid = hoursValid;
 	}
 	private String sql = 
-		"update %s.users u, %s.user_registration r, user x set code='PWDRESET',confirmed=now(),user_pass=%s(?) " +
+		"update %s.users u, %s.user_registration r, user x set code=concat('PWDRST',rand(),CURRENT_TIMESTAMP()),confirmed=now(),user_pass=%s(?) " +
 		"where x.username=u.user_name and u.user_name=r.user_name and r.status='confirmed' and date_add(created,interval ? hour)>=now() " +
 		"and code=?";
 
@@ -44,7 +44,7 @@ public class ResetCredentials extends AbstractUpdate<UserRegistration,DBUser>  i
 	
 	public List<QueryParam> getParameters(int index) throws AmbitException {
 		List<QueryParam> params = new ArrayList<QueryParam>();
-		if ((getGroup().getConfirmationCode()==null)||"PWDRESET".equals(getGroup().getConfirmationCode())) throw new AmbitException("Invalid code");
+		if ((getGroup().getConfirmationCode()==null)|| getGroup().getConfirmationCode().startsWith("PWDRST")) throw new AmbitException("Invalid code");
 		if (getObject()==null) throw new AmbitException("Invalid input");
 		if (getObject().getCredentials()==null || getObject().getCredentials().getNewpwd()==null) throw new AmbitException("Invalid input");
 		params.add(new QueryParam<String>(String.class, getObject().getCredentials().getNewpwd()));
