@@ -47,7 +47,7 @@ public class XmetdbUploadUIResource extends CatalogFTLResource<DBProtocol> {
 	
 	@Override
 	public String getTemplateName() {
-		return mode.equals(update_mode.newdocument)?"observation_new.ftl":"observation_new.ftl";
+		return "observation_new.ftl";
 	}
 
 	@Override
