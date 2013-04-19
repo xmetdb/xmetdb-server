@@ -4,7 +4,20 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-			loadObservation("${xmet_root}","${xmet_request_json}","${queryService}");
+	<#assign isAdmin=0>
+	<#if xmetdb_admin?? && xmetdb_admin>
+		<#assign isAdmin=1>
+	<#else>
+		<#assign isAdmin=0>
+	</#if>
+	<#if username??>
+		<#assign currentuser=username>
+	<#else>
+		<#assign currentuser="">
+	</#if>
+	
+	loadObservation("${xmet_root}","${xmet_request_json}","${queryService}","${currentuser}",${isAdmin});
+			
 } );
 
 </script>				       

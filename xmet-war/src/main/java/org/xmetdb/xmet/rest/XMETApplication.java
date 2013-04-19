@@ -131,7 +131,8 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		boolean testAuthZ = "true".equalsIgnoreCase(getContext().getParameters().getFirstValue("TESTAUTHZ"));
 		
 		Filter auth = createCookieAuthenticator(true);
-		Filter authz = new ProtocolAuthorizer(testAuthZ); 
+		//owners & admin are allowed to modify everything
+		Filter authz = new ProtocolAuthorizer(testAuthZ,DBRoles.adminRole); 
 		Router setCookieUserRouter = new MyRouter(getContext());
 		auth.setNext(authz);
 		authz.setNext(setCookieUserRouter);
