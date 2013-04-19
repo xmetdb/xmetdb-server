@@ -22,6 +22,7 @@ jQuery(document).ready(function()
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/task" title="XMetDB tasks">Jobs</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
     loadHelp("${xmet_root}","task");
+    $('#download').html(getDownloadLinksTask("${xmet_root}","${xmet_request}",false));
 })
 </script>
 </head>

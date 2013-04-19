@@ -1035,6 +1035,13 @@ function getDownloadLinksUsers(root,uri) {
 	return sOut;
 }
 
+function getDownloadLinksTask(root,uri) {
+	var val = uri;
+	var sOut = "<a href='"+getMediaLink(val,"application/json")+"' id='json'><img src='"+root+"/images/json.png' alt='JSON' title='JSON'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"application/rdf+xml")+"' id='rdfxml'><img src='"+root+"/images/rdf.gif' alt='RDF/XML' title='Download as RDF/XML (Resource Description Framework XML format)'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"text/n3")+"' id='rdfn4'><img src='"+root+"/images/rdf.gif' alt='RDF N3' title='Download as RDF N3 (Resource Description Framework N3 format)'></a> ";
+	return sOut;
+}
 
 function getDownloadLinksStructure(root,uri) {
 	var val = uri;
