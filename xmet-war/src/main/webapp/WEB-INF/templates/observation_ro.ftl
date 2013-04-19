@@ -82,7 +82,7 @@
 			<a title='Create new observation with the same content as this one.' href='#' onClick='document.forms["copyForm"].submit(); return false;'>Copy and create new observation</a><a href='#' class='chelp copyobs'></a>
 			<#if xmetdb_curator?? && xmetdb_curator>
 			|
-			<a title='Curate this observation.'  href="${xmet_root}/curator/" >Curate</a><a href='#' class='chelp hcurator'></a>
+			<a title='Curate this observation.'  href="${xmet_root}/curator/" id='xmet_curator'>Curate</a><a href='#' class='chelp hcurator'></a>
 			</#if>						
 			<form method='POST' name='copyForm' action='${xmet_root}/protocol' enctype='application/x-www-form-urlencoded' autocomplete name='xmet_copy'>
 			<input type='hidden' name='source_uri' value='${xmet_request}'>
