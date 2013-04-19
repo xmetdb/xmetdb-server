@@ -21,7 +21,7 @@ public class ReadProtocolAccessLocalTest extends QueryTest<ReadProtocolAccessLoc
 	@Override
 	protected ReadProtocolAccessLocal createQuery() throws Exception {
 		ReadProtocolAccessLocal q = new ReadProtocolAccessLocal();
-		q.setFieldname(new DBProtocol(CRUDTest.idxmet1));
+		q.setFieldname(new DBProtocol(CRUDTest.idxmet3));
 		q.setValue("guest");
 		return q;
 	}

@@ -230,7 +230,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,15,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,16,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
@@ -294,22 +294,19 @@ end $$
 
 DELIMITER ;
 
--- -----------------------------------------------------
--- Create an observation copy
--- -----------------------------------------------------
 DROP PROCEDURE IF EXISTS `createProtocolCopy`;
 DELIMITER $$
 CREATE PROCEDURE createProtocolCopy(
                 IN protocol_qmrf_number VARCHAR(36),
+                IN user_name VARCHAR(45),
                 OUT new_qmrf_number VARCHAR(36))
 begin
 	DECLARE new_id INT;
 	
   	-- create new version
     insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
-    select null,1,title,concat("XMETDB",idprotocol,"v",now()),abstract,iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
-    from protocol where qmrf_number=protocol_qmrf_number;
-    
+    select null,1,protocol.title,concat("XMETDB",idprotocol,"v",now()),abstract,user.iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    from protocol join user where qmrf_number=protocol_qmrf_number and username=user_name;
     
     SELECT LAST_INSERT_ID() INTO new_id;
 	UPDATE protocol set qmrf_number=concat("XMETDB",new_id) where idprotocol=new_id and version=1;

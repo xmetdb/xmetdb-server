@@ -12,7 +12,6 @@ import java.util.List;
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
 import net.idea.restnet.c.ChemicalMediaType;
-import net.idea.restnet.groups.DBGroup;
 import net.idea.restnet.i.tools.DownloadTool;
 import net.toxbank.client.io.rdf.ProtocolIO;
 import net.toxbank.client.resource.Protocol;

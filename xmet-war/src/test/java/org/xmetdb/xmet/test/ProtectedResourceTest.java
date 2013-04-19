@@ -13,9 +13,7 @@ import org.opentox.aa.opensso.OpenSSOToken;
 public abstract class ProtectedResourceTest extends ResourceTest implements IAuthToken  {
 	Properties properties = new Properties();
 	protected String getCreator() {
-		if ((ssoToken!=null) && (ssoToken.getToken()!=null)) 
-			try { return OpenSSOServicesConfig.getInstance().getTestUser();} catch (Exception x) {return null;}
-		else return "test";
+			return "test";
 	}
 
 	protected boolean isAAEnabled() {
@@ -38,16 +36,7 @@ public abstract class ProtectedResourceTest extends ResourceTest implements IAut
 	
 	public void setUpAA() throws Exception {
 		if (isAAEnabled()) {
-			ssoToken = new OpenSSOToken(OpenSSOServicesConfig.getInstance().getOpenSSOService());
-			String username=properties.getProperty("toxbank.aa.user");
-			String pass=properties.getProperty("toxbank.aa.pass");
-			if (ssoToken.login(
-					username,
-					pass
-					)) {
-				ClientResourceWrapper.setTokenFactory(this);
-			} else
-				throw new Exception(String.format("Error logging to SSO (%s)",OpenSSOServicesConfig.getInstance().getTestUser()));
+			//todo send a cookie
 		}
 	}
 	

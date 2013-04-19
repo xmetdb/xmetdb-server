@@ -2,6 +2,7 @@ package org.xmetdb.rest.protocol.db.protocol.test;
 
 import junit.framework.Assert;
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.restnet.user.DBUser;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.ITable;
@@ -76,7 +77,9 @@ public class ProtocolVersion_crud_test<T extends Object>  extends CRUDTest<T,DBP
 		copy = new DBProtocol(idxmet2);
 		copy.setAbstract("abstrakt");
 		copy.setTitle("title");
-		return (IQueryUpdate<T,DBProtocol>)new CreateProtocolCopy(copy);	
+		DBUser user = new DBUser();
+		user.setUserName("admin");
+		return (IQueryUpdate<T,DBProtocol>)new CreateProtocolCopy(user,copy);	
 	}
 
 	@Override

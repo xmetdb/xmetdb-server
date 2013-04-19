@@ -312,6 +312,19 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 	@Override
 	protected CallableProtectedTask<String> createCallable(Method method,
 			Form form, DBProtocol item) throws ResourceException {
+		DBUser user = null;
+		if ((getRequest().getClientInfo().getUser()==null) || (getRequest().getClientInfo().getUser().getIdentifier()==null)) {
+			user = null;
+			//this is protected by a filter, should not come here
+			throw new ResourceException(Status.CLIENT_ERROR_UNAUTHORIZED.getCode(),
+						"Not allowed",
+						"Only logged in users may update observations",
+						Status.CLIENT_ERROR_UNAUTHORIZED.getUri());
+		} else {
+			user = new DBUser();
+			user.setUserName(getRequest().getClientInfo().getUser().getIdentifier());
+		}	
+		
 		if (Method.DELETE.equals(method))
 			return createCallable(method,(List<FileItem>) null, item);
 		if (Method.POST.equals(method)) {
@@ -319,7 +332,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			try {
 				DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 				conn = dbc.getConnection();
-				return new CallableProtocolCopy(method,form,getRootRef().toString(),conn,getToken());
+				return new CallableProtocolCopy(method,form,getRootRef().toString(),user,conn,getToken());
 			} catch (Exception x) {
 				try { conn.close(); } catch (Exception xx) {}
 				throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
@@ -345,13 +358,11 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		
 		if ((getRequest().getClientInfo().getUser()==null) || (getRequest().getClientInfo().getUser().getIdentifier()==null)) {
 			user = null;
-			//we have default user and POST is protected by a filter
-			/*
+			//POST is protected by a filter, should not come here
 			throw new ResourceException(Status.CLIENT_ERROR_UNAUTHORIZED.getCode(),
 						"Upload not allowed",
-						"Only logged in users with editor rights may upload new documents",
+						"Only logged in users may upload new observations",
 						Status.CLIENT_ERROR_UNAUTHORIZED.getUri());
-						*/
 		} else {
 			user = new DBUser();
 			user.setUserName(getRequest().getClientInfo().getUser().getIdentifier());

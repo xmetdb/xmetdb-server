@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import net.idea.modbcum.i.query.IQueryUpdate;
 import net.idea.restnet.db.update.CallableDBUpdateTask;
+import net.idea.restnet.user.DBUser;
 
 import org.restlet.data.Form;
 import org.restlet.data.Method;
@@ -13,10 +14,11 @@ import org.xmetdb.rest.protocol.db.CreateProtocolCopy;
 import org.xmetdb.xmet.client.Resources;
 
 public class CallableProtocolCopy extends CallableDBUpdateTask<DBProtocol,Form,String> {
-
-	public CallableProtocolCopy(Method method, Form input,String baseReference,
+	protected DBUser owner;
+	public CallableProtocolCopy(Method method, Form input,String baseReference,DBUser user,
 			Connection connection, String token) {
 		super(method, input, baseReference, connection, token);
+		this.owner = user;
 	}
 
 
@@ -34,7 +36,7 @@ public class CallableProtocolCopy extends CallableDBUpdateTask<DBProtocol,Form,S
 
 	@Override
 	protected IQueryUpdate<? extends Object, DBProtocol> createUpdate(DBProtocol target) throws Exception {
-		CreateProtocolCopy q = new CreateProtocolCopy(target);
+		CreateProtocolCopy q = new CreateProtocolCopy(owner,target);
 		return q;
 	}
 

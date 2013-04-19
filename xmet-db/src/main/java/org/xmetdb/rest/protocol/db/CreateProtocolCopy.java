@@ -10,10 +10,11 @@ import net.idea.modbcum.i.IStoredProcStatement;
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.query.QueryParam;
 import net.idea.modbcum.q.update.AbstractUpdate;
+import net.idea.restnet.user.DBUser;
 
 import org.xmetdb.rest.protocol.DBProtocol;
 
-public class CreateProtocolCopy extends AbstractUpdate<String,DBProtocol> implements IStoredProcStatement {
+public class CreateProtocolCopy extends AbstractUpdate<DBUser,DBProtocol> implements IStoredProcStatement {
 	protected static final ReadProtocol.fields[] f = new ReadProtocol.fields[] {
 			ReadProtocol.fields.idprotocol,
 			ReadProtocol.fields.version,
@@ -21,16 +22,19 @@ public class CreateProtocolCopy extends AbstractUpdate<String,DBProtocol> implem
 			ReadProtocol.fields.anabstract,
 		//	ReadProtocol.fields.filename
 	};
-	protected String[] create_sql = {"{CALL createProtocolCopy(?,?)}"};
+	protected String[] create_sql = {"{CALL createProtocolCopy(?,?,?)}"};
 
-	public CreateProtocolCopy(DBProtocol ref) {
+	public CreateProtocolCopy(DBUser user,DBProtocol ref) {
 		super(ref);
+		setGroup(user);
 	}
 
 	public List<QueryParam> getParameters(int index) throws AmbitException {
-		if (!getObject().isValidIdentifier()) throw new AmbitException("No protocol ID");
+		if (!getObject().isValidIdentifier()) throw new AmbitException("No observation ID");
+		if ((getGroup()==null) || (getGroup().getUserName()==null)) throw new AmbitException("No Owner!");
 		List<QueryParam> params1 = new ArrayList<QueryParam>();
 		params1.add(ReadProtocol.fields.identifier.getParam(getObject()));
+		params1.add(new QueryParam<String>(String.class, getGroup().getUserName()));
 		params1.add(new QueryParam<Integer>(Integer.class, -1));
 		return params1;
 	}
@@ -57,13 +61,13 @@ public class CreateProtocolCopy extends AbstractUpdate<String,DBProtocol> implem
 	 */
 	@Override
 	public void getStoredProcedureOutVars(CallableStatement statement) throws SQLException {
-		String id = statement.getString(2);
+		String id = statement.getString(3);
 		getObject().setIdentifier(id);
 	}
 	@Override
 	public void registerOutParameters(CallableStatement statement)
 			throws SQLException {
-		statement.registerOutParameter(2,Types.VARCHAR);
+		statement.registerOutParameter(3,Types.VARCHAR);
 		
 	}
 }
