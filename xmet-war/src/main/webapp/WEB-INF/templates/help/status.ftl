@@ -1,6 +1,6 @@
-<div class='helptitle' style='font-weight:bold;'>Status help</div>
+<div class='helptitle' style='font-weight:bold;'>XMetDB error</div>
 <div class='helpcontent'>
-Error messages
+This is an error message.
 </div>
 
 <div id="keys" style="display:none;">

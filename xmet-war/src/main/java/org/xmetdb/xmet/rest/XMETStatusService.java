@@ -85,7 +85,7 @@ public class XMETStatusService extends StatusService implements IFreeMarkerSuppo
 					details.append(errDescription);
 					errName = "You are not allowed to access this page";
 					errDescription = String.format(
-							"Only logged in users are allowed to submit new documents and edit existing ones.<br><br>Please try to <a href='%s%s' title='Login to submit new observations'>login</a> again, or <a href='%s%s' title='Register'>register</a> if you are a new user.<br><br>Log in is only required for submitting new observations!",
+							"Submiting new observations requires log in. Modifying existing observations is only allowed for owners.<br><br>Please try to <a href='%s%s' title='Login to submit new observations'>login</a> again, or <a href='%s%s' title='Register'>register</a> if you are a new user.",
 							request.getRootRef(),Resources.login,
 							request.getRootRef(),Resources.register
 							);					
