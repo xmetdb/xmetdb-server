@@ -15,7 +15,6 @@ import net.toxbank.client.policy.PolicyRule;
 import net.toxbank.client.resource.User;
 
 import org.xmetdb.rest.protocol.DBProtocol;
-import org.xmetdb.xmet.client.PublishedStatus;
 
 
 /**
@@ -47,7 +46,7 @@ public class ReadProtocolAccessLocal extends AbstractQuery<DBProtocol, String, E
 	}
 
 	public String getSQL() throws AmbitException {
-		return "select idprotocol,version,published_status,iduser,username from protocol join user using(iduser) where qmrf_number=?";
+		return "select username from protocol join user using(iduser) where qmrf_number=?";
 	}
 	/**
 	 * If found, will return true always. 
@@ -55,19 +54,14 @@ public class ReadProtocolAccessLocal extends AbstractQuery<DBProtocol, String, E
 	public AccessRights getObject(ResultSet rs) throws AmbitException {
 		try {
 			boolean sameUsername = getValue().equals(rs.getString("username"));
-			PublishedStatus publishedStatus = PublishedStatus.draft;
-			try {
-				publishedStatus = PublishedStatus.valueOf(rs.getString(ReadProtocol.fields.published_status.name()));
-			} catch (Exception x) {}
-			boolean published = PublishedStatus.published == publishedStatus;
 			User user = new User();
 			user.setUserName(getValue());
 			return new AccessRights(null,
 					new PolicyRule(user,
+					true,
 					sameUsername,
-					sameUsername & !published,
-					sameUsername & !published,
-					sameUsername & !published
+					sameUsername,
+					sameUsername
 					)
 					);
 		} catch (SQLException x) {

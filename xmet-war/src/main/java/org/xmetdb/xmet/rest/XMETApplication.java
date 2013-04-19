@@ -19,7 +19,6 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
 import org.restlet.Server;
-import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Filter;
@@ -31,6 +30,7 @@ import org.restlet.security.SecretVerifier;
 import org.restlet.security.User;
 import org.restlet.service.TunnelService;
 import org.xmetdb.rest.DBRoles;
+import org.xmetdb.rest.aa.ProtocolAuthorizer;
 import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.groups.OrganisationRouter;
 import org.xmetdb.rest.groups.ProjectRouter;
@@ -439,7 +439,7 @@ class SimpleRoleAndMethodAuthorizer extends RoleAuthorizer {
 	}
 
 }
-
+/*
 
 class ProtocolAuthorizer extends RoleAuthorizer {
 	protected boolean skip = true;
@@ -466,3 +466,4 @@ class ProtocolAuthorizer extends RoleAuthorizer {
 	}
 
 }
+*/
