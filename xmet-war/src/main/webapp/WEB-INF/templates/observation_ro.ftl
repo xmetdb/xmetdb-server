@@ -68,7 +68,12 @@
 	</div>	
 	<hr class='row half-bottom'/>		
 	<div class='row remove-bottom' >
-		<div class='six columns alpha'>&nbsp;</div>
+		<#if username??>
+			<div class='three columns alpha'>Submitted by</div>
+			<div class='three columns omega'><a href='${xmet_root}/user' id='submittedby'></a></div>
+		<#else>
+			<div class='six columns alpha'>&nbsp;</div>
+		</#if>
 		<div class='ten columns omega'>
 			<span id='modifyURI'>
 			<a id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a><a href='#' class='chelp modifyobs'></a>

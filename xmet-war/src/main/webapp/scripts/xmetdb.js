@@ -321,6 +321,9 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        	  
 	        	  observation = data.observations[0];
 	        	  if ((isAdmin==1) || (username == observation.owner.username))  $('#modifyURI').show(); else  $('#modifyURI').hide();
+	        	  $('#submittedby').attr('href',observation.owner.uri);
+	        	  $('#submittedby').text(observation.owner.username);
+	        	  
 	        	  $('#xmet_id').replaceWith("<a href='"+ observation["uri"] + "'>" + observation["identifier"] + "</a>");
 	        	  $('#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
