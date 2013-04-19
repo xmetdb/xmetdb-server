@@ -105,11 +105,7 @@ public class MoleculeResource extends StructureResource {
 	
 	@Override
 	protected Reporter createHTMLReporter(boolean headles) {
-		MoleculeHTMLReporter reporter = new MoleculeHTMLReporter(getRequest(), null, getHTMLBeauty());
-		reporter.setSingleItem(singleItem);
-		reporter.setHeadless(headless);
-		reporter.tabID = tabID;
-		return reporter;
+		return null;
 	}
 	
 

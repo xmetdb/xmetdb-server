@@ -31,7 +31,6 @@ import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.ProtocolFactory;
-import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.UpdateObservationEntry;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
@@ -70,8 +69,7 @@ public class DraftObservationsResource<Q extends IQueryRetrieval<DBProtocol>> ex
 
 	@Override
 	protected HTMLBeauty getHTMLBeauty() {
-		if (htmlBeauty==null) htmlBeauty = new XmetdbHTMLBeauty(Resources.curator,false);
-		return htmlBeauty;
+		return null;
 	}
 	
 	@Override
