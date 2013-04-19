@@ -1,9 +1,7 @@
 <#include "/s_html.ftl" >
 <head>
 <#include "/s_head.ftl" >
-<script type='text/javascript' src='${xmet_root}/jme/jme.js'></script>
 <#include "/structures_head.ftl" >
-
 
 <script type="text/javascript">
 jQuery(document).ready(function()
