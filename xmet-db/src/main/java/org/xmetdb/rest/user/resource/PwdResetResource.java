@@ -25,7 +25,6 @@ import org.restlet.data.Form;
 import org.restlet.data.Method;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.task.UserTaskHTMLReporter;
 import org.xmetdb.rest.user.XMETCallableUserCreator;
 import org.xmetdb.xmet.client.Resources.Config;
 
@@ -91,9 +90,7 @@ public class PwdResetResource<T> extends MyAccountResource<T> {
 			@Override
 			public synchronized Reporter<Iterator<UUID>, Writer> createTaskReporterHTML(
 					Request request,ResourceDoc doc,HTMLBeauty htmlbeauty) throws AmbitException, ResourceException {
-				UserTaskHTMLReporter reporter =	new UserTaskHTMLReporter(storage,request,doc,htmlbeauty);
-				reporter.setTitle("Pasword reset");
-				return reporter;
+				return null;
 			}			
 		};
 	}

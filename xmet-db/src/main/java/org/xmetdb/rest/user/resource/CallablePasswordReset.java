@@ -73,6 +73,7 @@ public class CallablePasswordReset extends XMETCallableUserCreator implements ID
 			throws Exception {
 		if (Method.POST.equals(method)) {
 			registration = new UserRegistration();
+			registration.setTitle("Forgotten password");
 			registration.setTimestamp_created(System.currentTimeMillis());
 			user.setRegisteredAt(registration.getTimestamp_created());
 			return  new ForgottenPasswordReset(user,registration,getDatabaseName());

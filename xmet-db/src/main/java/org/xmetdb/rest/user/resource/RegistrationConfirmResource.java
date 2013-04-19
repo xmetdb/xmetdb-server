@@ -92,6 +92,7 @@ public class RegistrationConfirmResource extends  XmetdbQueryResource<ReadRegist
 				DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
 				conn = dbc.getConnection();
 				UserRegistration reg = new  UserRegistration(code.toString());
+				reg.setTitle("Confirm reset");
 				ConfirmRegistration q = new ConfirmRegistration(reg);
 				q.setDatabaseName(usersdbname);
 				exec = new UpdateExecutor();
