@@ -447,8 +447,10 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        				        		return data;
 	        				        	},
 	        				        	callback : function(value, settings) {
-	        				        		$('#imgcurated').show();
-	        				        		$('#curated').html("Curated");
+	        				        		if (mode=="curate") {
+		        				        		$('#imgcurated').show();
+		        				        		$('#curated').html("Curated");
+	        				        		}
 	        				            },
 	        				            data: function(value, settings) {
 	        				                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
@@ -475,8 +477,10 @@ function updateObservation(root,observation_uri,query_service,mode) {
 		        			        		return data;
 		        			        	},
 		        			        	callback : function(value, settings) {
-		        			        		$('#imgcurated').show();
-		        			        		$('#curated').html("Curated");
+		    				        		if (mode=="curate") {
+		        				        		$('#imgcurated').show();
+		        				        		$('#curated').html("Curated");
+	        				        		}
 		        			            }
 		        			        });		        		  
 		        	  }	  

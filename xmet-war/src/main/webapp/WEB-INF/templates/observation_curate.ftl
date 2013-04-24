@@ -28,6 +28,10 @@ $(document).ready(function() {
 } );
 
 	$(document).ready(function() {    
+		var setCurated = false;
+		 <#if xmet_updatemode?? && (xmet_updatemode=='curate')>
+		 	setCurated = true;
+		 </#if>
         $('#xmet_reference').editable(
         	'${xmet_request}?method=put',{
         	cssclass : '',
@@ -38,8 +42,10 @@ $(document).ready(function() {
         	indicator : '<img src="${xmet_root}/images/progress.gif">',
         	tooltip  : 'Click to edit...',
         	callback : function(value, settings) {
-        		$('#imgcurated').show();
-        		$('#curated').html("Curated");
+        		if (setCurated) {
+        			$('#imgcurated').show();
+        			$('#curated').html("Curated");
+        		}
             }
         });        
         $('#xmet_comments').editable(
@@ -51,8 +57,10 @@ $(document).ready(function() {
         	indicator : '<img src="${xmet_root}/images/progress.gif">',
         	tooltip  : 'Click to edit...',
         	callback : function(value, settings) {
-        		$('#imgcurated').show();
-        		$('#curated').html("Curated");
+        		if (setCurated) {
+        			$('#imgcurated').show();
+        			$('#curated').html("Curated");
+        		}
             }
         });
 		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
