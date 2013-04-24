@@ -69,11 +69,7 @@ $(document).ready(function() {
         	     if ("Curated"==value) {
         	    	 $('#imgcurated').show();
         	     } else $('#imgcurated').hide();
-             },
-             data: function(value, settings) {
-                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-                 return value;
-              }             
+             }          
 		 });  
 		 curateObservation("${xmet_root}","${xmet_request_json}","${queryService}");
         			
