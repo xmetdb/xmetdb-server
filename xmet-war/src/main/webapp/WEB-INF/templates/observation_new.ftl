@@ -106,7 +106,6 @@ $(document).ready(function() {
 	    <div class='five columns omega'>
 		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
 		    <br/>
-		    <div id="xmet_substrate_atoms" class='ui-state-default'></div>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
@@ -118,7 +117,6 @@ $(document).ready(function() {
 	    <div class='five columns omega'>
 			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
 			<br/>
-			<div id="xmet_product_atoms" class='ui-state-default'></div>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
