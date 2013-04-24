@@ -389,7 +389,7 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	       });
 }
 
-function curateObservation(root,observation_uri,query_service) {
+function updateObservation(root,observation_uri,query_service,mode) {
 	var observation;
     $.ajax({
 	          dataType: "json",
@@ -419,13 +419,15 @@ function curateObservation(root,observation_uri,query_service) {
 	        	  $('#xmet_product_type').val('uri');
 	        	  $('#xmet_substrate_upload').val('');
 	        	  $('#xmet_product_upload').val('');
+	        	  var puri = root + (mode=="curate"?"/curator":"/som/");
 	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
 	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri",null);
+	        			  
 	        				 $('#xmet_substrate_atoms').editable(
-	        				        	root + '/curator/'+observation["identifier"]+'?method=put',{
+	        				        	puri + observation["identifier"]+'?method=put',{
 	        				        	type	: 'text',
 	        				        	cancel  : 'Cancel',
 	        				        	submit  : 'Update',
@@ -453,7 +455,7 @@ function curateObservation(root,observation_uri,query_service) {
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri",null);
 		        			 $('#xmet_product_atoms').editable(
-		        			        	root + '/curator/'+observation["identifier"]+'?method=put',{
+		        			        	puri + observation["identifier"]+'?method=put',{
 		        			        	type	: 'text',
 		        			        	cancel  : 'Cancel',
 		        			        	submit  : 'Update',

@@ -55,6 +55,7 @@ $(document).ready(function() {
         		$('#curated').html("Curated");
             }
         });
+         <#if xmet_updatemode?? && (xmet_updatemode=='curate')>
 		$('#curated').editable(
 			 '${xmet_request}?method=put',{ 
 		     data   : " {true:'Curated',false:'Not curated'}",
@@ -65,13 +66,13 @@ $(document).ready(function() {
 		     indicator : '<img src="${xmet_root}/images/progress.gif">',
         	 tooltip  : 'Click to edit...',
         	 callback : function(value, settings) {
-        	     console.log(value);
         	     if ("Curated"==value) {
         	    	 $('#imgcurated').show();
         	     } else $('#imgcurated').hide();
              }          
 		 });  
-		 curateObservation("${xmet_root}","${xmet_request_json}","${queryService}");
+		 </#if>
+		 updateObservation("${xmet_root}","${xmet_request_json}","${queryService}","${xmet_updatemode}");
         			
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');

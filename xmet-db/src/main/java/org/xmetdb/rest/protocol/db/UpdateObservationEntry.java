@@ -16,11 +16,19 @@ import org.xmetdb.rest.protocol.ProtocolFactory;
  *
  */
 public class UpdateObservationEntry extends AbstractUpdate<DBProtocol,ProtocolFactory.ObservationFields> {
-	
+	protected boolean setCuratedFlag = true; 
+	public boolean isSetCuratedFlag() {
+		return setCuratedFlag;
+	}
+
+	public void setSetCuratedFlag(boolean setCuratedFlag) {
+		this.setCuratedFlag = setCuratedFlag;
+	}
+
 	private static final String[] update_reference = 
-	{"update protocol set updated=now(),reference=?,curated=1 where qmrf_number=?"};
+	{"update protocol set updated=now(),reference=?,curated=? where qmrf_number=?"};
 	private static final String[] update_comments = 
-	{"update keywords k,protocol p set keywords =?,curated=1,updated=now() where p.idprotocol=k.idprotocol and p.version=k.version and qmrf_number=?"};
+	{"update keywords k,protocol p set keywords =?,curated=?,updated=now() where p.idprotocol=k.idprotocol and p.version=k.version and qmrf_number=?"};
 	private static final String[] update_curated = 
 	{"update protocol set updated=now(),curated=? where qmrf_number=?"};	
 	@Override
@@ -50,11 +58,13 @@ public class UpdateObservationEntry extends AbstractUpdate<DBProtocol,ProtocolFa
 		switch (getObject()) {
 		case xmet_reference: {
 			params1.add(new QueryParam<String>(String.class,getGroup().getReference()));
+			params1.add(new QueryParam<Boolean>(Boolean.class,setCuratedFlag));
 			break;
 		}
 		case xmet_comments: {
 			List<String> comments = getGroup().getKeywords();
 			params1.add(new QueryParam<String>(String.class,comments.size()==0?"":comments.get(0)));
+			params1.add(new QueryParam<Boolean>(Boolean.class,setCuratedFlag));
 			break;
 		}
 		case curated: {
