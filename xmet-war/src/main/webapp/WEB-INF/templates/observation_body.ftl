@@ -37,7 +37,6 @@
 		<!-- Right column and footer
 		================================================== -->
 		<#include "/s_help.ftl">
-		<#include "/s_footer.ftl">
 		
 </div><!-- container -->
 

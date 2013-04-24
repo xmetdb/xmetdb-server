@@ -47,6 +47,7 @@ $(document).ready(function() {
         	type	: 'textarea',
         	cancel  : 'Cancel',
         	submit  : 'Update',
+        	height  : '1em',
         	indicator : '<img src="${xmet_root}/images/progress.gif">',
         	tooltip  : 'Click to edit...',
         	callback : function(value, settings) {
@@ -57,12 +58,14 @@ $(document).ready(function() {
 		$('#curated').editable(
 			 '${xmet_request}?method=put',{ 
 		     data   : " {true:'Curated',false:'Not curated'}",
+		     height  : '1em',
 		     type   : 'select',
 		     submit : 'Update',
 		     cancel  : 'Cancel',
 		     indicator : '<img src="${xmet_root}/images/progress.gif">',
         	 tooltip  : 'Click to edit...',
         	 callback : function(value, settings) {
+        	     console.log(value);
         	     if ("Curated"==value) {
         	    	 $('#imgcurated').show();
         	     } else $('#imgcurated').hide();
@@ -92,7 +95,7 @@ $(document).ready(function() {
 
 </head>
 <body>
-<div class="container columns" style="margin:0;padding:0;">
+<div class="container columns" style="margin:0;padding:0 0 75px 0;">
 	<#include "/s_banner.ftl">
 	<#include "/s_menu.ftl">
 
@@ -191,10 +194,9 @@ $(document).ready(function() {
 	<!-- Right column and footer
 	================================================== -->
 	<#include "/s_help.ftl">
-	<#include "/s_footer.ftl">
 	
 </div><!-- container -->
 
-	<#include "/scripts-welcome.ftl">
+	<#include "/ga.ftl">
 </body>
 </html>

@@ -273,10 +273,9 @@ $(document).ready(function() {
 	<!-- Right column and footer
 	================================================== -->
 	<#include "/s_help.ftl">
-	<#include "/s_footer.ftl">
 	
 </div><!-- container -->
 
-	<#include "/scripts-welcome.ftl">
+		<#include "/ga.ftl">
 </body>
 </html>
