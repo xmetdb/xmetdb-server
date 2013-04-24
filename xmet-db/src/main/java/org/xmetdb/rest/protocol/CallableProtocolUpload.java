@@ -340,8 +340,8 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					} finally {
 					}
 				}
-				
-				TaskResult result = new TaskResult(uri,true);
+				//will redirect to the SOM editing page
+				TaskResult result = new TaskResult(uri + "/som",true);
 				/*
 				try {
 					//adding the owner and the authors
