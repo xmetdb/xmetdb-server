@@ -18,8 +18,12 @@
 	<li><a class='selectable ui-widget-header' title='About XMetDB' href='${xmet_about}'>About</a></li>	
 	<li><a class='selectable ui-widget-header' title='Click here to read the XMEXMetDBTDB guide' href='${xmet_guide}'>Guide</a></li>
 </ul>
-
-<#include "/s_stats.ftl">
+	<#if s["/protocol"]??>
+		<#include "/s_stats.ftl">
+	<#else><#if s["/chemical"]??>
+		<#include "/s_stats.ftl">
+		</#if>
+	</#if>	
 	<div class='row remove-bottom' style='background: silver;margin-top:1em;color:white;'>
 		<span class="ui-icon ui-icon-disk" style="float: left; margin-right: .1em;" ></span>
 		Download
