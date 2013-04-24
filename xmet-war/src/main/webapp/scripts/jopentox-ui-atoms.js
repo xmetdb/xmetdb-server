@@ -1,4 +1,4 @@
-function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atoms_id, som) {
+function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atoms_id, som, selectable) {
 	var uri = cmpURI + "/imagejson?w="+w+"&h="+h;
 	$(atoms_id).text(som);
 	$.ajax({
@@ -30,6 +30,9 @@ function createImageMap(cmpURI, w,h , imgselector, mapselector, results_id, atom
 		        stroke: false,
 		        render_highlight: {
 		            strokeWidth: 2
+		        },
+		        onClick : function(x) {
+		        	return selectable;
 		        }
 		     })
 		     .mapster('set',true,som==null?"":som.toString());
