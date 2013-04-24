@@ -55,30 +55,34 @@ $(document).ready(function() {
         		$('#curated').html("Curated");
             }
         });
+		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
+        
          <#if xmet_updatemode?? && (xmet_updatemode=='curate')>
-		$('#curated').editable(
-			 '${xmet_request}?method=put',{ 
-		     data   : " {true:'Curated',false:'Not curated'}",
-		     height  : '1em',
-		     type   : 'select',
-		     submit : 'Update',
-		     cancel  : 'Cancel',
-		     indicator : '<img src="${xmet_root}/images/progress.gif">',
-        	 tooltip  : 'Click to edit...',
-        	 callback : function(value, settings) {
-        	     if ("Curated"==value) {
-        	    	 $('#imgcurated').show();
-        	     } else $('#imgcurated').hide();
-             }          
-		 });  
+			$('#curated').editable(
+				 '${xmet_request}?method=put',{ 
+			     data   : " {true:'Curated',false:'Not curated'}",
+			     height  : '1em',
+			     type   : 'select',
+			     submit : 'Update',
+			     cancel  : 'Cancel',
+			     indicator : '<img src="${xmet_root}/images/progress.gif">',
+	        	 tooltip  : 'Click to edit...',
+	        	 callback : function(value, settings) {
+	        	     if ("Curated"==value) {
+	        	    	 $('#imgcurated').show();
+	        	     } else $('#imgcurated').hide();
+	             }          
+			 });
+			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
+			loadHelp("${xmet_root}","observation_curate");
+
+		<#else>
+	 		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Modify Sites of Metabolism">Modify SOM</a></li>');
+	 		loadHelp("${xmet_root}","observation_edit");
 		 </#if>
 		 updateObservation("${xmet_root}","${xmet_request_json}","${queryService}","${xmet_updatemode}");
-        			
-			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
-			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
-			jQuery("#breadCrumb").jBreadCrumb();
-			loadHelp("${xmet_root}","observation_curate");
-			$('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}",true));
+		 jQuery("#breadCrumb").jBreadCrumb();
+		 $('#download').html(getDownloadLinksObservation("${xmet_root}","${xmet_request}",true));
 	});   
 	
 	function getCompoundURI(selector) {
@@ -98,7 +102,7 @@ $(document).ready(function() {
 
     <div class="twelve columns add-bottom" >
     
-    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">New XMetDB observation</span></div>
+    <div class="row remove-bottom ui-widget-header ui-corner-top">&nbsp;<span id="xmet_id">XMetDB observation</span></div>
     <div class="half-bottom ui-widget-content ui-corner-bottom" >
     
 	<div class='row' style="margin:5px;padding:5px;"> 	

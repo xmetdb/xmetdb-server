@@ -354,6 +354,7 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
 	        	  $('#xmet_editor').attr("href","/xmetdb/editor/"+observation["identifier"]);
+	        	  $('#xmet_editorsom').attr("href","/xmetdb/protocol/"+observation["identifier"]+"/som");
 	        	  $('#xmet_curator').attr("href","/xmetdb/curator/"+observation["identifier"]);
 	        	  $('#xmet_export_json').attr("href",observation["uri"] + "?media=application%2Fjson");
 	        	  $('#xmet_curated').text(observation["curated"]?"Curated":"Not curated");
@@ -400,8 +401,15 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        	  
 	        	  observation = data.observations[0];
 	        	  $('#breadCrumb_xmet_id').html("<a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
-	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ root + "/curator/"+ observation["identifier"] + "' title='Click to curate the observation'>Curate</a>");
-	        	  $('#xmet_id').replaceWith("Curate the observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>");
+	        	  
+	        	  var puri = mode=="curate"?
+      			  		(root+"/curator/"+observation["identifier"]):
+      		  			(root+"/protocol/"+observation["identifier"]+"/som");
+      			  var puriTitle = mode=="curate"?"Curate":"Modify SOM";		
+      			  var puriHint = mode=="curate"?"Click to curate the observation":"Modify Sites of Metabolism";
+	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ puri + "' title='"+puriHint+"'>"+puriTitle+"</a>");
+	        	  
+	        	  $('#xmet_id').replaceWith(puriTitle + " [observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>]");
 
 	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
@@ -419,7 +427,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        	  $('#xmet_product_type').val('uri');
 	        	  $('#xmet_substrate_upload').val('');
 	        	  $('#xmet_product_upload').val('');
-	        	  var puri = root + (mode=="curate"?"/curator":"/som/");
+
 	        	  if ((observation.Substrate!=undefined) && (observation.Substrate!=null)  && (observation.Substrate.dataset.uri!=null)) {
 	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
@@ -427,7 +435,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri",null);
 	        			  
 	        				 $('#xmet_substrate_atoms').editable(
-	        				        	puri + observation["identifier"]+'?method=put',{
+	        				        	puri + '?method=put',{
 	        				        	type	: 'text',
 	        				        	cancel  : 'Cancel',
 	        				        	submit  : 'Update',
@@ -455,7 +463,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri",null);
 		        			 $('#xmet_product_atoms').editable(
-		        			        	puri + observation["identifier"]+'?method=put',{
+		        					 	puri +'?method=put',{
 		        			        	type	: 'text',
 		        			        	cancel  : 'Cancel',
 		        			        	submit  : 'Update',
@@ -522,25 +530,7 @@ function editObservation(root,observation_uri,query_service) {
 	        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 	        			  
 	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri","#xmet_substrate_mol");
-	        				 $('#xmet_substrate_atoms').editable(
-	        				        	root + '/curator/'+observation["identifier"]+'?method=put',{
-	        				        	type	: 'text',
-	        				        	cancel  : 'Cancel',
-	        				        	submit  : 'Update',
-	        				        	indicator : '<img src="'+root+'/images/progress.gif">',
-	        				        	tooltip  : 'Click to edit...',
-	        				        	submitdata :  function(value,settings) { 
-	        				        		var data = {};
-	        				        		data['compound_uri'] = $('#xmet_substrate_uri').val(); 
-	        				        		return data;
-	        				        	},
-	        				        	callback : function(value, settings) {
-	        				            },
-	        				            data: function(value, settings) {
-	        				                 //var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-	        				                 return value;
-	        				            } 	            
-	        				        });	        			  
+      			  
 	        		  }	  
 	        	  }
 	        	  if ((observation.Product!=undefined) && (observation.Product!=null) && (observation.Product.dataset.uri!=null)) {
@@ -548,21 +538,7 @@ function editObservation(root,observation_uri,query_service) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri","#xmet_product_mol");
-		      			 $('#xmet_product_atoms').editable(
-	        			        	root + '/curator/'+observation["identifier"]+'?method=put',{
-	        			        	type	: 'text',
-	        			        	cancel  : 'Cancel',
-	        			        	submit  : 'Update',
-	        			        	indicator : '<img src="'+root+'/images/progress.gif">',
-	        			        	tooltip  : 'Click to edit...',
-	        			        	submitdata : function(value,settings) { 
-	        			        		var data = {};
-	        			        		data['compound_uri'] = $('#xmet_product_uri').val(); 
-	        			        		return data;
-	        			        	},
-	        			        	callback : function(value, settings) {
-	        			            }
-	        			        });		
+
 		        	  }	  
 	        	  }
 

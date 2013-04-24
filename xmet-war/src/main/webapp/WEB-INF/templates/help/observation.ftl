@@ -13,6 +13,7 @@
     <li><a href="#allele">Allele</a></li>
     <li><a href="#reference">Reference</a></li>
     <li><a href="#modifyobs">Modify</a></li>
+    <li><a href="#modifysom">Modify SOM</a></li>
     <li><a href="#copyobs">Copy</a></li>
     <li><a href="#hcurator">XMETDB curation</a></li>
   </ul>
@@ -48,6 +49,9 @@
   <div id="modifyobs">
     <p>Launches the observation editor. Only allowed for observation owners and admins.</p>
   </div>  
+  <div id="modifysom">
+    <p>Allows to modify Sites of Metabolism (atom hilighting). Only allowed for observation owners and admins.</p>
+  </div>    
   <div id="copyobs">
     <p>Copies this observation into new one and launches the observation editor. 
     This is a convenient way to enter a new observation which only slightly differ from an existing one.</p>

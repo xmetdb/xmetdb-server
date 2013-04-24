@@ -11,6 +11,7 @@ import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
 import org.xmetdb.rest.protocol.resource.db.ProtocolVersionDBResource;
 import org.xmetdb.rest.structure.resource.DatasetResource;
 import org.xmetdb.rest.user.author.resource.ProtocolAuthorsResource;
+import org.xmetdb.rest.xmet.curator.UpdateObservationResource;
 import org.xmetdb.xmet.client.Resources;
 
 public class ProtocolRouter extends MyRouter {
@@ -31,5 +32,7 @@ public class ProtocolRouter extends MyRouter {
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.versions), ProtocolVersionDBResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.authors), ProtocolAuthorsResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.endpoint), EnzymesResource.class);
+		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.som), UpdateObservationResource.class);
+		
 	}
 }

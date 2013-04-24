@@ -86,6 +86,7 @@ public class ProtocolAuthorizer  extends RoleAuthorizer {
 		Template template2 = new Template(String.format("%s%s/{%s}%s",request.getRootRef(),Resources.protocol,FileResource.resourceKey,Resources.authors));
 		Template template3 = new Template(String.format("%s%s/{%s}%s",request.getRootRef(),Resources.protocol,FileResource.resourceKey,Resources.versions));
 		Template template4 = new Template(String.format("%s%s/{%s}%s",request.getRootRef(),Resources.protocol,FileResource.resourceKey,Resources.previous));
+		Template template5 = new Template(String.format("%s%s/{%s}%s",request.getRootRef(),Resources.protocol,FileResource.resourceKey,Resources.som));
 		Template template6 = new Template(String.format("%s%s/{%s}%s",request.getRootRef(),Resources.protocol,FileResource.resourceKey,Resources.attachment));
 		Map<String, Object> vars = new HashMap<String, Object>();
 		Reference ref = request.getResourceRef().clone();
@@ -94,6 +95,7 @@ public class ProtocolAuthorizer  extends RoleAuthorizer {
 		template2.parse(ref.toString(),vars);
 		template3.parse(ref.toString(),vars);
 		template4.parse(ref.toString(),vars);
+		template5.parse(ref.toString(),vars);
 		template6.parse(ref.toString(),vars);
 		return vars.get(FileResource.resourceKey);
 	}

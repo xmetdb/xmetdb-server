@@ -78,6 +78,8 @@
 			<span id='modifyURI'>
 			<a id="xmet_editor" href="${xmet_root}/editor/"  title='Modify the observation'>Modify this observation</a><a href='#' class='chelp modifyobs'></a>
 			|
+			<a id="xmet_editorsom" href="${xmet_root}/protocol/"  title='Modify sites of metabolism'>Modify SOM</a><a href='#' class='chelp modifysom'></a>			
+			|
 			</span>
 			<a title='Create new observation with the same content as this one.' href='#' onClick='document.forms["copyForm"].submit(); return false;'>Copy and create new observation</a><a href='#' class='chelp copyobs'></a>
 			<#if xmetdb_curator?? && xmetdb_curator>
