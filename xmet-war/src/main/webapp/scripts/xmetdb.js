@@ -411,7 +411,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        	  
 	        	  $('#xmet_id').replaceWith(puriTitle + " [observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>]");
 
-	        	  $('#xmet_atom_uncertainty').replaceWith(observation["atom_uncertainty"]);
+	        	  $('#xmet_atom_uncertainty').text(observation["atom_uncertainty"]);
 	        	  $('#xmet_product_amount').replaceWith(observation["product_amount"]);
 	        	  
 	        	  $('#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");

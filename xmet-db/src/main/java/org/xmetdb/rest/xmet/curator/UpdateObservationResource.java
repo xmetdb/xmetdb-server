@@ -35,6 +35,7 @@ import org.xmetdb.rest.protocol.ProtocolFactory;
 import org.xmetdb.rest.protocol.db.ReadProtocol;
 import org.xmetdb.rest.protocol.db.UpdateObservationEntry;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
+import org.xmetdb.xmet.client.AtomUncertainty;
 import org.xmetdb.xmet.client.Resources;
 
 public class UpdateObservationResource<Q extends IQueryRetrieval<DBProtocol>> extends ProtocolDBResource<Q> {
@@ -124,6 +125,12 @@ public class UpdateObservationResource<Q extends IQueryRetrieval<DBProtocol>> ex
 					ProtocolFactory.ObservationFields field = ProtocolFactory.ObservationFields.valueOf(id);
 					query.setObject(field);
 					switch (field) {
+					case xmet_atom_uncertainty:
+						try {
+						protocol.setAtomUncertainty(AtomUncertainty.valueOf(value));
+						} catch (Exception x) { throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);}
+						execUpdate(protocol, query);
+						return new StringRepresentation(value.toString(),MediaType.TEXT_PLAIN);
 					case xmet_reference:
 						protocol.setReference(value);
 						execUpdate(protocol, query);
@@ -162,6 +169,7 @@ public class UpdateObservationResource<Q extends IQueryRetrieval<DBProtocol>> ex
 					}
 
 
+				} catch (ResourceException x) { throw x;
 				} catch (Exception x) {throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);}
 			}
 		}

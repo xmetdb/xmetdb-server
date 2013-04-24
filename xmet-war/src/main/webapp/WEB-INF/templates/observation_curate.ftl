@@ -63,6 +63,17 @@ $(document).ready(function() {
         		}
             }
         });
+		$('#xmet_atom_uncertainty').editable(
+				 '${xmet_request}?method=put',{ 
+			     data   : " {'Certain':'Certain','Uncertain':'Uncertain'}",
+			     height  : '1em',
+			     type   : 'select',
+			     submit : 'Update',
+			     cancel  : 'Cancel',
+			     indicator : '<img src="${xmet_root}/images/progress.gif">',
+	        	 tooltip  : 'Click to edit...'        
+		});         
+        
 		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id"></li>');
         
          <#if xmet_updatemode?? && (xmet_updatemode=='curate')>
@@ -83,7 +94,6 @@ $(document).ready(function() {
 			 });
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
 			loadHelp("${xmet_root}","observation_curate");
-
 		<#else>
 	 		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Modify Sites of Metabolism">Modify SOM</a></li>');
 	 		loadHelp("${xmet_root}","observation_edit");
@@ -142,9 +152,8 @@ $(document).ready(function() {
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>
 	<div class='row' style="margin:5px;padding:5px;"> 	
  	   <div class='three columns alpha'><label>Atom uncertainty:<a href='#' class='chelp atomuncertainty'></a></label></div>
-	   <div class='six columns omega'>
-			<span id="xmet_atom_uncertainty">&nbsp;</span>
-		</div>
+	   <div class='three columns omega ui-state-default' id="xmet_atom_uncertainty" name="xmet_atom_uncertainty">&nbsp;</div>
+		<div class='three columns omega'>&nbsp;</div>
 		<div class='three columns alpha'><label>Product amount:<a href='#' class='chelp productamount'></a></label></div>
 		 <div class='three columns omega'>
 			<div id="xmet_product_amount">&nbsp;</div>
