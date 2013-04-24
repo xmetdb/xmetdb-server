@@ -1,7 +1,9 @@
 			<#assign freq_hint='Optional, if no alert frequency is selected, retrieve your saved search from the profile page.'>
 				<#assign alert_hint='Save your search and configure the frequency of e-mail update alerts.'>
 				
-				<a class='half-bottom' title='${username}, ${alert_hint}' href='#' onClick="$('#saveSearch').toggle(); return false;">Save this search</a>
+				<div class='w_header half-bottom'>
+				<a title='${username}, ${alert_hint}' href='#' onClick="$('#saveSearch').toggle(); return false;">Save this search</a>
+				</div>
 	
 				<div class="ui-widget-content ui-corner-all remove-bottom" style='display: none;' id='saveSearch'>
 				<div style="padding:5px;" class='help;'>

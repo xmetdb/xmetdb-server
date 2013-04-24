@@ -176,6 +176,17 @@ a.enter_qmrf {
 	font-size: 1.0em !important;
 }
 
+.w_header {
+	color: white;
+	background-color: silver;
+	padding: 0 5px;
+}
+
+.helptitle {
+	color: white;
+	background-color: silver;
+	padding: 0 5px;
+}
 
 table.w_table_stats {
 	width: 100%;
