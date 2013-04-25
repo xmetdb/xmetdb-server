@@ -4,11 +4,11 @@
   <parent>
     <artifactId>xmetdb</artifactId>
     <groupId>org.xmetdb</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
   <groupId>org.xmetdb</groupId>
   <artifactId>xmet-war</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>xmetdb REST web services</name>
   <dependencies>
