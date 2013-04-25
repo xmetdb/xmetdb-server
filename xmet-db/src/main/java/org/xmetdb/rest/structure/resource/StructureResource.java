@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.restnet.c.ChemicalMediaType;
@@ -34,9 +33,6 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.DBRoles;
-import org.xmetdb.rest.prediction.DBModel;
-import org.xmetdb.rest.prediction.ReadModel;
-import org.xmetdb.rest.prediction.ReadModelQuery;
 import org.xmetdb.rest.protocol.DBProtocol;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
@@ -133,9 +129,7 @@ public class StructureResource extends CatalogResource<Structure> {
 		try {
 			map.put("dataset",parameters.getDatasets());
 		} catch (Exception x) {}	
-		try {
-			map.put("model",parameters.getModels());
-		} catch (Exception x) {}			
+		
 		try {
 			map.put("pagesize",parameters.getPageSize());
 		} catch (Exception x) {}		
@@ -191,16 +185,11 @@ public class StructureResource extends CatalogResource<Structure> {
 			parameters.setDatasets(verifyDataset(datasets));
 		} catch (Exception x) { parameters.setDatasets(null); x.printStackTrace();}
 		
-		try {
-			String[] models = form.getValuesArray("model");
-			if ((models!=null) && (models.length>0))
-				parameters.setModels(verifyModels(models));
-		} catch (Exception x) { parameters.setModels(null); x.printStackTrace();}
 		
 		try {
 			String type = form.getFirstValue("type");
 			parameters.setMolFile(type==null?false:"b64mol".equals(type));
-		} catch (Exception x) { parameters.setModels(null); x.printStackTrace();}
+		} catch (Exception x) {  x.printStackTrace();}
 		
 		parameters.getFolder().clear();
 		try {
@@ -372,49 +361,6 @@ public class StructureResource extends CatalogResource<Structure> {
 	
 	public final static String algorithmURI = "/algorithm/fptanimoto";
 	
-	protected List<DBModel> verifyModels(String[] modelsKey) throws Exception {
-		if (modelsKey==null || modelsKey.length==0) return null;
-		List<DBModel> results = new ArrayList<DBModel>();
-		Connection conn = null;
-		QueryExecutor  exec = new QueryExecutor();
-		try {
-			IQueryRetrieval<DBModel>  query;
-			DBModel model = new DBModel();
-			
-			DBConnection dbc = new DBConnection(getApplication().getContext(),getConfigFile());
-			conn = dbc.getConnection();
-			exec.setConnection(conn);
-			for (String aKey : modelsKey) {
-				if (aKey==null) continue;
-				if (aKey.toString().startsWith("M")) {
-					query = new ReadModel();
-					model.setID(new Integer(Reference.decode(aKey.toString().substring(1))));
-					((ReadModel)query).setValue(model);
-					((ReadModel)query).setModelRoot(queryService+"/model");
-				} else  {
-					query = new ReadModelQuery();
-					((ReadModelQuery)query).setFieldname(new DBProtocol(aKey));
-					((ReadModelQuery)query).setValue(null);
-					((ReadModelQuery)query).setModelRoot(queryService+"/model");
-				}
-				ResultSet rs = exec.process(query);
-				while (rs.next()) {
-					DBModel a = query.getObject(rs);
-					results.add(a);
-				}
-				rs.close();
-
-			}
-			return results;
-		} catch (NumberFormatException x) {
-			return null;
-		} catch (Exception x) {
-			try { if (exec!=null) exec.close(); } catch (Exception xx) {}
-			try { if (conn!=null) conn.close(); } catch (Exception xx) {}
-			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
-		}
-		
-	}
 	
 }
 

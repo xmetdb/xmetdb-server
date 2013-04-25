@@ -14,7 +14,6 @@ import org.restlet.data.Form;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.prediction.DBModel;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 
 /**
@@ -66,12 +65,6 @@ public class MoleculeResource extends StructureResource {
 			for (DBAttachment attachment: datasets) 
 				query = String.format("%s?feature_uris[]=%s%s/%d%s",url,
 						queryService,OpenTox.URI.dataset.getURI(),attachment.getIdquerydatabase(),OpenTox.URI.feature.getURI());
-		}
-		List<DBModel> models = parameters.getModels();
-		if (models!=null)  {
-			for (DBModel model: models) 
-				query = String.format("%s?feature_uris[]=%s%s/%d%s",url,
-							queryService,OpenTox.URI.model.getURI(),model.getID(),"/predicted");
 		}
 		
 		List<Structure> records = new ArrayList<Structure>();

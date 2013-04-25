@@ -26,7 +26,6 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
-import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.XMETDBRoles;

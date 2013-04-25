@@ -31,6 +31,7 @@ import net.idea.restnet.user.db.ReadUser;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -384,9 +385,16 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 
 			String dir = dbc.getDir();
 			if ("".equals(dir)) dir = null;
-			return new CallableProtocolUpload(method,item,user,input,conn,r,xmetdbcookie,getRequest().getRootRef().toString(),
-						dir==null?null:new File(dir)
-			);
+			
+			String ambituser = ((TaskApplication)getApplication()).getProperty(Resources.AMBIT_LOCAL_USER);
+			String ambitpass = ((TaskApplication)getApplication()).getProperty(Resources.AMBIT_LOCAL_PWD);
+			UsernamePasswordCredentials creds = new UsernamePasswordCredentials(ambituser,ambitpass);
+			
+			return new CallableProtocolUpload(
+						method,item,user,input,conn,r,xmetdbcookie,getRequest().getRootRef().toString(),
+						dir==null?null:new File(dir),
+						getQueryService(),creds);		
+			
 		} catch (ResourceException x) {
 			throw x;
 		} catch (Exception x) {
@@ -394,6 +402,10 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
 		}
 
+	}
+	
+	protected String getQueryService() {
+		return ((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_ambit_service.name());
 	}
 	
 	@Override

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.restlet.data.Form;
 import org.restlet.data.Reference;
-import org.xmetdb.rest.prediction.DBModel;
 import org.xmetdb.rest.protocol.XmetdbHTMLBeauty;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.structure.resource.StructureResource.SearchMode;
@@ -21,7 +20,6 @@ public class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 		this.folder = folder;
 	}
 	protected String queryService;
-	protected List<DBModel> models;
 	protected boolean molFile = false;
 	public boolean isMolFile() {
 		return molFile;
@@ -31,13 +29,7 @@ public class StructureHTMLBeauty extends XmetdbHTMLBeauty {
 		this.molFile = molFile;
 	}
 
-	public List<DBModel> getModels() {
-		return models;
-	}
 
-	public void setModels(List<DBModel> models) {
-		this.models = models;
-	}
 	protected DBAttachment attachment = null;
 	
     public DBAttachment getAttachment() {

@@ -1,8 +1,12 @@
 package org.xmetdb.rest.protocol;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.idea.modbcum.i.query.IQueryUpdate;
@@ -10,6 +14,8 @@ import net.idea.modbcum.p.ProcessorException;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.modbcum.q.conditions.EQCondition;
+import net.idea.opentox.cli.task.FibonacciSequence;
+import net.idea.opentox.cli.task.RemoteTask;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.groups.DBOrganisation;
 import net.idea.restnet.groups.DBProject;
@@ -21,14 +27,35 @@ import net.toxbank.client.policy.AccessRights;
 import net.toxbank.client.resource.User;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.auth.params.AuthPNames;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.AuthPolicy;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HttpContext;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
+import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
+import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
 import org.xmetdb.rest.protocol.attachments.db.AddAttachment;
 import org.xmetdb.rest.protocol.db.CreateProtocol;
 import org.xmetdb.rest.protocol.db.CreateProtocolVersion;
@@ -80,6 +107,10 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 	protected Method method;
 	protected UpdateMode updateMode = UpdateMode.create;
 	
+	protected String queryService;
+	protected UsernamePasswordCredentials creds;
+	
+	
 	public UpdateMode getUpdateMode() {
 		return updateMode;
 	}
@@ -112,7 +143,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					ProtocolQueryURIReporter r,
 					String token,
 					String baseReference,
-					File dir) throws Exception {
+					File dir,String queryService, UsernamePasswordCredentials creds ) throws Exception {
 		super(token);
 		this.method = method;
 		this.protocol = protocol;
@@ -130,6 +161,8 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		} catch (Exception x) {
 			user = null;
 		}
+		this.queryService = queryService;
+		this.creds = creds; 
 	}
 	@Override
 	public TaskResult doCall() throws Exception {
@@ -157,9 +190,9 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				//DeleteProtocol k = new DeleteProtocol(protocol);
 				//exec.process(k);				
 			} else {
-				DeleteProtocol k = new DeleteProtocol(protocol);
-				exec.process(k);
-				connection.commit();
+			DeleteProtocol k = new DeleteProtocol(protocol);
+			exec.process(k);
+			connection.commit();
 				
 			}
 			return new TaskResult(String.format("%s%s", baseReference,Resources.protocol),false);
@@ -332,10 +365,13 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				//if commit succeeds, start import, but don't wait for it to complete
 				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
 					try {
+						RemoteImport rimport = new RemoteImport(queryService, creds);
 						for (DBAttachment attachment: protocol.getAttachments()) {
-							String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",
-									protocol.getID(),attachment.getID());
-							postImportJob(attachmentURL,getToken());
+							//String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",
+								//	protocol.getID(),attachment.getID());
+							//postImportJob(attachmentURL,getToken());
+							rimport.remoteImport(attachment);
+							
 						}
 					} finally {
 					}
@@ -583,3 +619,136 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 	}	
 }
 
+
+class RemoteImport {
+	protected String[] algorithms = new String[] {"/algorithm/fingerprints","/algorithm/struckeys","/algorithm/smartsprop","/algorithm/inchi"};
+	protected String queryService;
+	UsernamePasswordCredentials creds = null;
+	
+	public RemoteImport(String queryService,UsernamePasswordCredentials creds) {
+		super();
+		this.queryService = queryService;
+		this.creds = creds;
+	}
+	protected RemoteTask remoteImport(DBAttachment attachment) throws Exception {
+		Reference uri = new Reference(queryService);
+		
+		HttpClient client = createHTTPClient(uri.getHostDomain(),uri.getHostPort());
+		RemoteTask task = new RemoteTask(client, 
+					new URL(String.format("%s/dataset",queryService)), 
+					"text/uri-list", createPOSTEntity(attachment), HttpPost.METHOD_NAME);
+	
+		try {
+			task = wait(task, System.currentTimeMillis());
+			String dataset_uri = "dataset_uri";
+			URL dataset = task.getResult();
+			if (task.isCompletedOK()) {
+				if (!"text/uri-list".equals(attachment.getFormat())) { //was a file
+					//now post the dataset uri to get the /R datasets (query table)
+					attachment.setFormat("text/uri-list");
+					attachment.setDescription(dataset.toExternalForm());
+					task = new RemoteTask(client, 
+							new URL(String.format("%s/dataset",queryService)), 
+							"text/uri-list", createPOSTEntity(attachment), HttpPost.METHOD_NAME);
+					task = wait(task, System.currentTimeMillis());
+				}
+				
+				Form form = new Form();
+				form.add(dataset_uri, dataset.toURI().toString());
+				for (String algorithm: algorithms) { //just launch tasks and don't wait
+					List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+					formparams.add(new BasicNameValuePair(dataset_uri, dataset.toURI().toString()));
+					HttpEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+					HttpClient newclient = createHTTPClient(uri.getHostDomain(),uri.getHostPort());
+					try {
+						new RemoteTask(newclient, 
+									new URL(String.format("%s%s",queryService,algorithm)), 
+									"text/uri-list", entity, HttpPost.METHOD_NAME);
+
+					} catch (Exception x) { } finally { 
+						try {newclient.getConnectionManager().shutdown();} catch (Exception x) {}
+					}
+				}
+			}
+			
+		} catch (Exception x)  {
+			task.setError(new ResourceException(Status.SERVER_ERROR_BAD_GATEWAY,String.format("Error importing chemical structures dataset to %s",uri),x));
+		} finally {
+			try {client.getConnectionManager().shutdown();} catch (Exception x) {}
+		}
+		return task;
+	}
+	
+	protected HttpEntity createPOSTEntity(DBAttachment attachment) throws Exception {
+		Charset utf8 = Charset.forName("UTF-8");
+
+		if ("text/uri-list".equals(attachment.getFormat())) {
+			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+			formparams.add(new BasicNameValuePair("title", attachment.getTitle()));
+            formparams.add(new BasicNameValuePair("dataset_uri", attachment.getDescription()));
+            formparams.add(new BasicNameValuePair("folder", attachment_type.data_training.equals(attachment.getType())?"substrate":"product"));
+			return new UrlEncodedFormEntity(formparams, "UTF-8");
+		} else {
+			if (attachment.getResourceURL()==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Attachment resource URL is null! ");
+			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,null,utf8);
+			entity.addPart("title", new StringBody(attachment.getTitle(),utf8));
+			entity.addPart("seeAlso", new StringBody(attachment.getDescription(),utf8));
+			entity.addPart("license", new StringBody("XMETDB",utf8));
+			entity.addPart("file", new FileBody(new File(attachment.getResourceURL().toURI())));
+			return entity;
+		}
+//match, seeAlso, license
+	}
+	
+	protected HttpClient createHTTPClient(String hostName,int port) {
+		DefaultHttpClient  cli = new DefaultHttpClient();
+		List<String> authpref = new ArrayList<String>();
+		authpref.add(AuthPolicy.BASIC);
+		cli.getParams().setParameter(AuthPNames.PROXY_AUTH_PREF, authpref);
+		cli.getCredentialsProvider().setCredentials(
+		        new AuthScope(hostName,port), 
+		        creds);		
+		((DefaultHttpClient)cli).addRequestInterceptor(new HttpRequestInterceptor() {
+			@Override
+			public void process(HttpRequest request, HttpContext context)
+					throws HttpException, IOException {
+				//if (ssoToken != null)
+					//request.addHeader("subjectid",ssoToken.getToken());
+			}
+		});
+		return cli;
+	}
+	
+	protected long pollInterval = 1500;
+	protected long pollTimeout = 10000L*60L*5L; //50 min
+	
+	protected RemoteTask wait(RemoteTask task, long now) throws Exception {
+		if (task.getError()!=null) throw task.getError();
+		if (task.getResult()==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,String.format("%s returns empty contend instead of URI"));
+		String result = task.getResult().toString();
+		FibonacciSequence sequence = new FibonacciSequence();
+		while (!task.poll()) {
+			if (task.getError()!=null) throw task.getError();
+			Thread.sleep(sequence.sleepInterval(pollInterval,true,1000 * 60 * 5)); 				
+			Thread.yield();
+			if ((System.currentTimeMillis()-now) > pollTimeout) 
+				throw new ResourceException(Status.SERVER_ERROR_GATEWAY_TIMEOUT,
+						String.format("%s %s ms > %s ms",result==null?task.getUrl():result,System.currentTimeMillis()-now,pollTimeout));
+		}
+		
+		if (task.getError()!=null) 
+			if(task.getError() instanceof ResourceException)
+				throw new ResourceException(Status.SERVER_ERROR_BAD_GATEWAY,
+						String.format("%s %d %s",result==null?task.getUrl():result,
+						((ResourceException)task.getError()).getStatus().getCode(),
+						task.getError().getMessage()),
+						task.getError());
+			else
+				throw new ResourceException(Status.SERVER_ERROR_BAD_GATEWAY,
+						String.format("%s %s",result==null?task.getUrl():result,task.getError().getMessage()),
+						task.getError());
+		
+	
+		return task;
+	}	 	
+}
