@@ -174,7 +174,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 
 		setCookieUserRouter.attach(String.format("%s/{%s}",Resources.dataset,DatasetResource.datasetKey), DatasetResource.class);
 		setCookieUserRouter.attach(Resources.admin, createAdminRouter());
-		setCookieUserRouter.attach(Resources.editor, createEditorRouter());
+		setCookieUserRouter.attach(Resources.editor, createEditorRouter(testAuthZ));
 		setCookieUserRouter.attach(Resources.curator, createUnpublishedRouter());
 		setCookieUserRouter.attach(Resources.task, new XMETTaskRouter(
 				getContext()));
@@ -328,7 +328,8 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	 * 
 	 * @return
 	 */
-	protected Restlet createEditorRouter() {
+	protected Restlet createEditorRouter(Boolean skip) {
+		if (skip) return new XMETEditorRouter(getContext());
 		Authorizer authz = new SimpleRoleAndMethodAuthorizer(new DBRole(
 				XMETDBRoles.xmetdb_user.name(), XMETDBRoles.xmetdb_user.toString()));
 		authz.setNext(new XMETEditorRouter(getContext()));

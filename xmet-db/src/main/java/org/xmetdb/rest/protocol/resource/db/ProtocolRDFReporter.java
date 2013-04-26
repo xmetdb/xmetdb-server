@@ -120,11 +120,6 @@ public class ProtocolRDFReporter<Q extends IQueryRetrieval<DBProtocol>> extends 
 			//if (item.getDocument()!=null) item.getDocument().setResourceURL(new URL(String.format("%s%s",uri,Resources.document)));
 			//if (item.getDataTemplate()!=null) item.getDataTemplate().setResourceURL(new URL(String.format("%s%s",uri,Resources.datatemplate)));
 			
-			for (DBAttachment attachment : item.getAttachments()) {
-				//attachment.setResourceURL(new URL(String.format("%s%s",uri,Resources.attachment)));
-				System.out.println(attachment.getResourceURL());
-			}
-			
 			ioClass.objectToJena(
 				getJenaModel(), // create a new class
 				item

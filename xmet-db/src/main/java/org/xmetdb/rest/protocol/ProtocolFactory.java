@@ -431,8 +431,9 @@ public class ProtocolFactory {
 			throws Exception {
 		if (fi.getSize()==0) return null;
 		try {if ((dir != null) && !dir.exists())	dir.mkdir();} catch (Exception x) {	dir = null;	}
+		File rootDir = dir == null ? new File(System.getProperty("java.io.tmpdir")) : dir;
 		try {
-			dir = new File(dir == null ? new File(System.getProperty("java.io.tmpdir")) : dir,type.name());
+			dir = new File(rootDir,type.name());
 			if ((dir != null) && !dir.exists())	dir.mkdir();
 		} catch (Exception x) {	dir = null;	}
 		
@@ -463,7 +464,7 @@ public class ProtocolFactory {
 				}
 				//System.out.println(file.getAbsolutePath());
 				if (file.exists())
-						return DBAttachment.file2attachment(file, "Web form MOL file","form.mol", type);
+						return DBAttachment.file2attachment(rootDir.getAbsolutePath(),file, "Web form MOL file","form.mol", type);
 				else return null;
 			}
 		} else {
@@ -480,7 +481,7 @@ public class ProtocolFactory {
 				file = generateFileName(fi.getName(),dir,type,protocol);
 			}
 			fi.write(file);
-			return DBAttachment.file2attachment(file, description,originalName, type);
+			return  DBAttachment.file2attachment(rootDir.getAbsolutePath(),file, description,originalName, type);
 		}
 
 	}

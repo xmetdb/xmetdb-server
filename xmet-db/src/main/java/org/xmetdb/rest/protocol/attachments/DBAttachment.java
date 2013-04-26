@@ -1,11 +1,13 @@
 package org.xmetdb.rest.protocol.attachments;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.toxbank.client.resource.Document;
 
 import org.xmetdb.rest.protocol.DBProtocol;
+
 
 public class DBAttachment extends Document {
 
@@ -149,7 +151,12 @@ public class DBAttachment extends Document {
 		return String.format("%s %s",getType().getDescription(),getTitle()==null?"":getTitle());
 	}
 	
-	public static DBAttachment file2attachment(File file, String description, String originalFileName, attachment_type type) {
+	@Override
+	public void setResourceURL(URL resourceURL) {
+		// TODO Auto-generated method stub
+		super.setResourceURL(resourceURL);
+	}
+	public static DBAttachment file2attachment(String dir,File file, String description, String originalFileName, attachment_type type) {
 		DBAttachment attachment = new DBAttachment();
 		int extindex = file.getName().lastIndexOf(".");
 		if (extindex>0) {
@@ -163,8 +170,20 @@ public class DBAttachment extends Document {
 		attachment.setType(type);
 		attachment.setOriginalFileName(originalFileName);
 		attachment.setImported(false);
+		try {
+			attachment.setResourceURL(attachment.getPath(dir));
+		} catch (Exception x) { 
+			x.printStackTrace();
+		}
 		return attachment;
 	}
 
+	public static URL getPath(String dir,String name,String type,String format) throws MalformedURLException {
+		File file = new File(String.format("/%s/%s/%s.%s",dir,type,name.replace(" ","%20"),format));
+		return file.toURL();
+	}
+	public URL getPath(String dir) throws MalformedURLException {
+		return getPath(dir,getTitle(),getType().name(),getFormat());
+	}
 
 }

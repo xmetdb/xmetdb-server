@@ -2,6 +2,7 @@ package org.xmetdb.rest.protocol;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -47,12 +48,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.restlet.data.Form;
-import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Reference;
 import org.restlet.data.Status;
-import org.restlet.representation.Representation;
-import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.rest.protocol.attachments.DBAttachment.attachment_type;
@@ -367,9 +365,6 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					try {
 						RemoteImport rimport = new RemoteImport(queryService, creds);
 						for (DBAttachment attachment: protocol.getAttachments()) {
-							//String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",
-								//	protocol.getID(),attachment.getID());
-							//postImportJob(attachmentURL,getToken());
 							rimport.remoteImport(attachment);
 							
 						}
@@ -410,41 +405,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		} //switch
 
 	}
-	/*
-	protected String postImportJob(String url, String token)  {
-		ClientResource cr = null;
-		Representation repr = null;
-		try {
-			Form form = new Form();
-			form.add("import", "true");
-			
-			cr = new ClientResource(url);
-			Form headers = (Form) cr.getRequest().getAttributes().get("org.restlet.http.headers");
-			if (headers == null) {
-			    headers = new Form();
-			    cr.getRequest().getAttributes().put("org.restlet.http.headers", headers);
-			}
-			headers.add("Cookie", "xmetdb="+token);
-			repr = cr.post(form.getWebRepresentation(),MediaType.TEXT_URI_LIST);
-			return repr.getText();
-		} catch (ResourceException x) {
-			x.printStackTrace();
-			if (Status.CLIENT_ERROR_NOT_FOUND.equals(x.getStatus())) {
-
-				return x.getStatus().toString();
-			}
-			else throw x;
-		} catch (Exception x) {
-			x.printStackTrace();
-
-		} finally {
-			try { repr.release(); } catch (Exception x) {}
-			try {cr.release();} catch (Exception x) {}
-		}
-		return null;
-	}
-	*/
-
+	
 	public TaskResult update() throws ResourceException {
 		if ((protocol==null)||(!protocol.isValidIdentifier())||(protocol.getID()<=0)||(protocol.getVersion()<=0)) 
 					throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Can't update: Not an existing protocol!");
@@ -510,10 +471,8 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
 					try {
 						for (DBAttachment attachment: protocol.getAttachments()) {
-							//String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",protocol.getID(),attachment.getID());
 							RemoteImport rimport = new RemoteImport(queryService, creds);
 							if (!attachment.isImported())
-								//postImportJob(attachmentURL,getToken());
 								rimport.remoteImport(attachment);
 						}
 					} finally {
@@ -667,7 +626,9 @@ class RemoteImport {
 									new URL(String.format("%s%s",queryService,algorithm)), 
 									"text/uri-list", entity, HttpPost.METHOD_NAME);
 
-					} catch (Exception x) { } finally { 
+					} catch (Exception x) {
+						x.printStackTrace();
+					} finally { 
 						try {newclient.getConnectionManager().shutdown();} catch (Exception x) {}
 					}
 				}
@@ -696,7 +657,8 @@ class RemoteImport {
 			entity.addPart("title", new StringBody(attachment.getTitle(),utf8));
 			entity.addPart("seeAlso", new StringBody(attachment.getDescription(),utf8));
 			entity.addPart("license", new StringBody("XMETDB",utf8));
-			entity.addPart("file", new FileBody(new File(attachment.getResourceURL().toURI())));
+			URI uri = attachment.getResourceURL().toURI();
+			entity.addPart("file", new FileBody(new File(uri)));
 			return entity;
 		}
 //match, seeAlso, license

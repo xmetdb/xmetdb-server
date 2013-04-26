@@ -104,7 +104,7 @@ and idchemical=282
 	}
 
 	public DBAttachment getObject(ResultSet rs) throws AmbitException {
-		String url = "";
+		URL url = null;
 		try {
 				String format = rs.getString(_fields.format.name());
 				String name = rs.getString(_fields.name.name());
@@ -115,17 +115,14 @@ and idchemical=282
 					url = null; media = MediaType.TEXT_URI_LIST;
 					attachment = new DBAttachment();
 				} else {
-					url = String.format("file://%s/%s/%s.%s",dir,type,name.replace(" ","%20"),format);
-					attachment = new DBAttachment(new URL(url));
+					url = DBAttachment.getPath(dir,type,name,format);
+					attachment = new DBAttachment(url);
 					if ("pdf".equals(format)) media = MediaType.APPLICATION_PDF;
 					else if ("sdf".equals(format)) media = ChemicalMediaType.CHEMICAL_MDLSDF;
 					else if ("mol".equals(format)) media =  ChemicalMediaType.CHEMICAL_MDLMOL;
 					else if ("csv".equals(format)) media =  MediaType.TEXT_CSV;
 					else if ("txt".equals(format)) media =   MediaType.TEXT_PLAIN;
 					else if ("smi".equals(format)) media =  ChemicalMediaType.CHEMICAL_SMILES;
-					else if ("doc".equals(format)) media =  MediaType.APPLICATION_WORD;
-					else if ("rtf".equals(format)) media =  MediaType.APPLICATION_RTF;
-					else if ("docx".equals(format)) media =  MediaType.APPLICATION_MSOFFICE_DOCX;
 					else media =  MediaType.APPLICATION_ALL;
 				}
 				attachment.setFormat(format);

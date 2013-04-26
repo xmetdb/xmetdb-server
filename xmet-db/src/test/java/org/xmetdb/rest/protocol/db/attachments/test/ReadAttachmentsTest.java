@@ -38,7 +38,7 @@ public class ReadAttachmentsTest  extends QueryTest<ReadAttachment> {
 
 			Assert.assertNotNull(attachment.getResourceURL());
 			URL expected = 
-			new URL(String.format("file://%s",System.getProperty("java.io.tmpdir")).replace("\\","/"));
+			new URL(String.format("file:/%s",System.getProperty("java.io.tmpdir")).replace("\\","/"));
 			
 			//if (attachment_type.document.equals(attachment.getType())) Assert.assertFalse(attachment.isImported());
 			//else Assert.assertTrue(attachment.isImported());

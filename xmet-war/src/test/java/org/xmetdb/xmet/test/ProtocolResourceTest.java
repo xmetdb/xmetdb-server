@@ -11,6 +11,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 import net.idea.opentox.cli.task.RemoteTask;
+import net.idea.restnet.aa.cookie.CookieAuthenticator;
 import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.i.tools.DownloadTool;
 import net.toxbank.client.io.rdf.ProtocolIO;
@@ -249,6 +250,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 
 	@Test
 	public void testCreateEntryFromMultipartWeb() throws Exception {
+		
 		String url = createEntryFromMultipartWeb(new Reference(String.format(
 				"http://localhost:%d%s", port, Resources.protocol)));
 		System.out.println(url);
@@ -264,7 +266,7 @@ public class ProtocolResourceTest extends ProtectedResourceTest {
 		Assert.assertEquals(1, table.getRowCount());
 		//Assert.assertEquals(new BigInteger("1"), table.getValue(0, "version"));
 		//Assert.assertEquals(new BigInteger("3"), table.getValue(0, "iduser"));
-		Assert.assertEquals(new BigInteger("1"), table.getValue(0, "iduser"));
+		Assert.assertEquals(new BigInteger("2"), table.getValue(0, "iduser"));
 		Assert.assertEquals(STATUS.RESEARCH.toString(), table.getValue(0, "status"));
 		Assert.assertEquals("HEP",table.getValue(0, "title"));
 		Assert.assertEquals("XMET Comments",table.getValue(0, "keywords"));
