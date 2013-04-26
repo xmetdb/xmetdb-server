@@ -36,10 +36,19 @@ public class ReadAttachment extends AbstractQuery<DBProtocol, DBAttachment, EQCo
 		imported,
 		idquery
 	}
+	/*
 	protected static String sql = 
 		"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,idquery,published_status,title FROM protocol\n" +
 		"join attachments a using(idprotocol,version)\n" +
 		"left join `ambit2-xmetdb`.query a1 using(name) where %s ";
+	*/
+	protected static String sql = 
+	"SELECT idprotocol,version,qmrf_number,protocol.created,idattachment,type,a.name,`format`,description,a1.name is not null as imported,idquery,published_status,protocol.title FROM protocol\n"+
+	"join attachments a using(idprotocol,version)\n"+
+	"left join `ambit2-xmetdb`.query a1 on a1.name=protocol.qmrf_number\n"+ 
+	"join `ambit2-xmetdb`.sessions s using(idsessions)\n"+
+	"where s.title=a.`type` and %s\n";
+	
 	protected static String where_protocol = "protocol.qmrf_number=?";
 	protected static String where_attachment = "idattachment=?";
 	protected static String where_datasetname = "a.name=?";
