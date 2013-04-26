@@ -410,7 +410,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		} //switch
 
 	}
-	
+	/*
 	protected String postImportJob(String url, String token)  {
 		ClientResource cr = null;
 		Representation repr = null;
@@ -443,6 +443,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 		}
 		return null;
 	}
+	*/
 
 	public TaskResult update() throws ResourceException {
 		if ((protocol==null)||(!protocol.isValidIdentifier())||(protocol.getID()<=0)||(protocol.getVersion()<=0)) 
@@ -509,10 +510,11 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
 					try {
 						for (DBAttachment attachment: protocol.getAttachments()) {
-							String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",
-									protocol.getID(),attachment.getID());
+							//String attachmentURL = String.format("riap://component/protocol/XMETDB%d/attachment/A%d/dataset",protocol.getID(),attachment.getID());
+							RemoteImport rimport = new RemoteImport(queryService, creds);
 							if (!attachment.isImported())
-								postImportJob(attachmentURL,getToken());
+								//postImportJob(attachmentURL,getToken());
+								rimport.remoteImport(attachment);
 						}
 					} finally {
 					}
