@@ -8,5 +8,4 @@ ALTER TABLE `attachments` CHANGE COLUMN `newtype` `type` ENUM('substrate','produ
 ALTER TABLE `attachments` 
 ADD UNIQUE INDEX `protocoltype` (`idprotocol` ASC, `version` ASC, `type` ASC) 
 , ADD INDEX `type` (`type` ASC) ;
-
 insert into version (idmajor,idminor,comment) values (2,17,"Rename attachments type");

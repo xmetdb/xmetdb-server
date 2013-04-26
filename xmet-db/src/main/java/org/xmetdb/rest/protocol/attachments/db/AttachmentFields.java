@@ -49,12 +49,6 @@ public enum AttachmentFields {
 			return new QueryParam<String>(String.class, query.getObject().getDescription());
 		}			
 	},
-	type {
-		public QueryParam getParam(AbstractUpdate<DBProtocol,DBAttachment> query) {
-			return new QueryParam<String>(String.class, query.getObject().getType().name());
-		}		
-		
-	},
 	format {
 		public QueryParam getParam(AbstractUpdate<DBProtocol,DBAttachment> query) {
 			return new QueryParam<String>(String.class, query.getObject().getFormat());
@@ -69,7 +63,13 @@ public enum AttachmentFields {
 		public QueryParam getParam(AbstractUpdate<DBProtocol,DBAttachment> query) {
 			return new QueryParam<Boolean>(Boolean.class, query.getObject().isImported());
 		}	
-	};
+	},
+	type {
+		public QueryParam getParam(AbstractUpdate<DBProtocol,DBAttachment> query) {
+			return new QueryParam<String>(String.class, query.getObject().getType().name());
+		}		
+		
+	};	
 	public String getSQL() {
 		return String.format("%s=?", name());
 	}

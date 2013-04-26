@@ -28,7 +28,7 @@ public class DBAttachments_crud_test  extends CRUDTest<DBProtocol,DBAttachment> 
 			throws Exception {
 		DBProtocol protocol = new DBProtocol(idxmet1);
 		URL url = getClass().getClassLoader().getResource("org/xmetdb/xmet/test");
-		DBAttachment attachment = DBAttachment.file2attachment("/tmp",new File(url.getFile()), "Description", url.getFile(), attachment_type.document);
+		DBAttachment attachment = DBAttachment.file2attachment("/tmp",new File(url.getFile()), "Description", url.getFile(), attachment_type.substrate);
 		return new AddAttachment(protocol, attachment);
 	}
 	
@@ -37,11 +37,11 @@ public class DBAttachments_crud_test  extends CRUDTest<DBProtocol,DBAttachment> 
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version,name,description,type,format,original_name,imported FROM attachments where idprotocol=1 and version=1 order by idattachment");
-		Assert.assertEquals(3,table.getRowCount());
-		Assert.assertEquals("test",table.getValue(2,"name"));
-		Assert.assertEquals("Description",table.getValue(2,"description"));
-		Assert.assertEquals("",table.getValue(2,"format"));
-		Assert.assertEquals(attachment_type.document.name(),table.getValue(2,"type"));
+		Assert.assertEquals(2,table.getRowCount());
+		Assert.assertEquals("test",table.getValue(0,"name"));
+		Assert.assertEquals("Description",table.getValue(0,"description"));
+		Assert.assertEquals("",table.getValue(0,"format"));
+		Assert.assertEquals(attachment_type.substrate.name(),table.getValue(0,"type"));
 		c.close();
 		
 	}

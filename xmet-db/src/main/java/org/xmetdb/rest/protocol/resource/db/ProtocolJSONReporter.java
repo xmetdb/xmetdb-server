@@ -143,7 +143,6 @@ public class ProtocolJSONReporter extends QueryReporter<DBProtocol, IQueryRetrie
 					
 					));
 			for (attachment_type at : attachment_type.values()) {
-				if (attachment_type.document.equals(at)) continue;
 				int count = 0;
 				if ((item.getAttachments()!=null) && (item.getAttachments().size()>0))
 					for (DBAttachment attachment : item.getAttachments()) 

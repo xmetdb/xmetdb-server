@@ -45,17 +45,6 @@ public class DBAttachment extends Document {
 			public String getXmetName() {
 				return "product";
 			}
-		},
-		document {
-			@Override
-			public String toString() {
-				return "Document";
-			}
-			@Override
-			public String getDescription() {
-				return "PDF";
-			}	
-			public String acceptFormats() { return "pdf|doc|xls"; };
 		};
 		public String getDescription() { return toString();}
 		public int maxFiles() { return 3;}
