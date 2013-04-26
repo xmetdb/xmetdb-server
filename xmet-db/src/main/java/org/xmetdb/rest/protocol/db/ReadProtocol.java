@@ -58,8 +58,8 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 			fields.idproject,
 			fields.idorganisation,
 			fields.user_uri,
-			fields.data_training,
-			fields.data_validation,
+			fields.substrate,
+			fields.product,
 			fields.document //attachment of type document
 
 			//ReadProtocol.fields.accesslevel
@@ -482,7 +482,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 				return "Document";
 			}
 		},	
-		data_training {
+		substrate {
 			@Override
 			public QueryParam getParam(DBProtocol protocol) {
 				return null;
@@ -503,7 +503,7 @@ public class ReadProtocol  extends ReadProtocolAbstract<DBUser>  implements IQue
 				return "Attachment (document)";
 			}
 		},
-		data_validation {
+		product {
 			@Override
 			public QueryParam getParam(DBProtocol protocol) {
 				return null;

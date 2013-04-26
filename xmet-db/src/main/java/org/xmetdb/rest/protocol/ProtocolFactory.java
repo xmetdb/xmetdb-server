@@ -161,7 +161,7 @@ public class ProtocolFactory {
 				case xmet_substrate_uri : {
 					if ((s_upload==null) || StructureUploadType.uri.equals(s_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.uri,fi, protocol,
-								attachment_type.data_training, dir);
+								attachment_type.substrate, dir);
 						s_attachments[StructureUploadType.uri.ordinal()] = attachment;
 					}
 					break;					
@@ -169,7 +169,7 @@ public class ProtocolFactory {
 				case xmet_product_uri : {
 					if ((p_upload==null) || StructureUploadType.uri.equals(p_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.uri,fi, protocol,
-								attachment_type.data_validation, dir);
+								attachment_type.product, dir);
 						p_attachments[StructureUploadType.uri.ordinal()] = attachment;
 					}
 					break;					
@@ -177,7 +177,7 @@ public class ProtocolFactory {
 				case xmet_substrate_mol : {
 					if ((s_upload==null) || StructureUploadType.mol.equals(s_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.mol,fi, protocol,
-								attachment_type.data_training, dir);
+								attachment_type.substrate, dir);
 						s_attachments[StructureUploadType.mol.ordinal()] = attachment;
 					}
 					break;					
@@ -185,7 +185,7 @@ public class ProtocolFactory {
 				case xmet_product_mol : {
 					if ((p_upload==null) || StructureUploadType.mol.equals(p_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.mol,fi, protocol,
-								attachment_type.data_validation, dir);
+								attachment_type.product, dir);
 						p_attachments[StructureUploadType.mol.ordinal()] = attachment;
 					}
 					break;					
@@ -193,7 +193,7 @@ public class ProtocolFactory {
 				case xmet_substrate_upload: {
 					if ((s_upload==null) || StructureUploadType.file.equals(s_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.file,fi, protocol,
-								attachment_type.data_training, dir);
+								attachment_type.substrate, dir);
 						s_attachments[StructureUploadType.file.ordinal()] = attachment;
 					}
 					break;
@@ -201,7 +201,7 @@ public class ProtocolFactory {
 				case xmet_product_upload: {
 					if ((p_upload==null) || StructureUploadType.file.equals(p_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.file,fi, protocol,
-								attachment_type.data_validation, dir);
+								attachment_type.product, dir);
 						p_attachments[StructureUploadType.file.ordinal()] = attachment;
 					}
 					break;

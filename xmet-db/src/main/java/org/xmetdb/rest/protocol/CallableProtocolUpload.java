@@ -365,6 +365,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 					try {
 						RemoteImport rimport = new RemoteImport(queryService, creds);
 						for (DBAttachment attachment: protocol.getAttachments()) {
+							attachment.setProtocol(protocol);
 							rimport.remoteImport(attachment);
 							
 						}
@@ -471,6 +472,7 @@ public class CallableProtocolUpload extends CallableProtectedTask<String> {
 				if ((protocol.getAttachments()!=null) && protocol.getAttachments().size()>0)  {
 					try {
 						for (DBAttachment attachment: protocol.getAttachments()) {
+							attachment.setProtocol(protocol);
 							RemoteImport rimport = new RemoteImport(queryService, creds);
 							if (!attachment.isImported())
 								rimport.remoteImport(attachment);
@@ -647,9 +649,9 @@ class RemoteImport {
 
 		if ("text/uri-list".equals(attachment.getFormat())) {
 			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-			formparams.add(new BasicNameValuePair("title", attachment.getTitle()));
+			formparams.add(new BasicNameValuePair("title", attachment.getProtocol().getIdentifier()));
             formparams.add(new BasicNameValuePair("dataset_uri", attachment.getDescription()));
-            formparams.add(new BasicNameValuePair("folder", attachment_type.data_training.equals(attachment.getType())?"substrate":"product"));
+            formparams.add(new BasicNameValuePair("folder", attachment_type.substrate.equals(attachment.getType())?"substrate":"product"));
 			return new UrlEncodedFormEntity(formparams, "UTF-8");
 		} else {
 			if (attachment.getResourceURL()==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Attachment resource URL is null! ");

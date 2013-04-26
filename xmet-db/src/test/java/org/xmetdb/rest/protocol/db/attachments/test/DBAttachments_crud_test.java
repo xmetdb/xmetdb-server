@@ -52,7 +52,7 @@ public class DBAttachments_crud_test  extends CRUDTest<DBProtocol,DBAttachment> 
 			throws Exception {
 		DBProtocol protocol = new DBProtocol(idxmet1);
 		URL url = getClass().getClassLoader().getResource("org/xmetdb/xmet/Training.sdf");
-		DBAttachment attachment = DBAttachment.file2attachment("/tmp",new File(url.getFile()), "Description", url.getFile(), attachment_type.data_training);
+		DBAttachment attachment = DBAttachment.file2attachment("/tmp",new File(url.getFile()), "Description", url.getFile(), attachment_type.substrate);
 		return new AddAttachment(protocol, attachment);
 	}
 
@@ -61,12 +61,12 @@ public class DBAttachments_crud_test  extends CRUDTest<DBProtocol,DBAttachment> 
 			throws Exception {
         IDatabaseConnection c = getConnection();	
 		ITable table = 	c.createQueryTable("EXPECTED","SELECT idattachment,idprotocol,version,name,description,type,format,original_name,imported FROM attachments where idprotocol=1 and version=1 order by type" );
-		int ord = attachment_type.data_training.ordinal();
+		int ord = attachment_type.substrate.ordinal();
 		Assert.assertEquals(2,table.getRowCount());
 		Assert.assertEquals("Training",table.getValue(ord,"name"));
 		Assert.assertEquals("Description",table.getValue(ord,"description"));
 		Assert.assertEquals("sdf",table.getValue(ord,"format"));
-		Assert.assertEquals(attachment_type.data_training.name(),table.getValue(ord,"type"));
+		Assert.assertEquals(attachment_type.substrate.name(),table.getValue(ord,"type"));
 		c.close();
 	}
 

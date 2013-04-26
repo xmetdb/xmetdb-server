@@ -193,7 +193,7 @@ public class CallableAttachmentImporter extends  CallableDBUpdateTask<DBAttachme
 			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 			formparams.add(new BasicNameValuePair("title", attachment.getTitle()));
             formparams.add(new BasicNameValuePair("dataset_uri", attachment.getDescription()));
-            formparams.add(new BasicNameValuePair("folder", attachment_type.data_training.equals(attachment.getType())?"substrate":"product"));
+            formparams.add(new BasicNameValuePair("folder", attachment_type.substrate.equals(attachment.getType())?"substrate":"product"));
 			return new UrlEncodedFormEntity(formparams, "UTF-8");
 		} else {
 			if (attachment.getResourceURL()==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,"Attachment resource URL is null! ");

@@ -18,7 +18,7 @@ public class DBAttachment extends Document {
 	private static final long serialVersionUID = 1141527775736093041L;
 	
 	public enum attachment_type {
-		data_training {
+		substrate {
 			@Override
 			public String toString() {
 				return "Substrate";
@@ -32,7 +32,7 @@ public class DBAttachment extends Document {
 				return "substrate";
 			}
 		},
-		data_validation {
+		product {
 			@Override
 			public String toString() {
 				return "Product";
