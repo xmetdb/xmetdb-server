@@ -149,6 +149,7 @@ $(document).ready(function() {
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
 		</div>
 	</div>    	
+	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>
 	<div class='row' style="margin:5px;padding:5px;"> 	
  	   <div class='three columns alpha'><label>Atom uncertainty:<a href='#' class='chelp atomuncertainty'></a></label></div>
@@ -192,7 +193,7 @@ $(document).ready(function() {
 		</div>
 		<div name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="ten columns omega remove-bottom ui-state-default"> </div>
 	</div>			
-	<div class='row add-bottom' style="margin:5px;padding:5px;"> 	
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'>
 			<label>Status</label>
 		</div>
@@ -201,8 +202,22 @@ $(document).ready(function() {
 		<div class="one column omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
 		<div class="nine columns omega">&nbsp;</div>
 	</div>		
+	
+	<div class='row add-bottom' style="margin:5px;padding:5px;">
+	<#if username??>
+		<div class='three columns alpha'>Submitted by</div>
+		<div class='three columns omega'><a href='${xmet_root}/user' id='submittedby'></a></div>
+	<#else>
+		<div class='six columns alpha'>&nbsp;</div>
+	</#if>
+		<div class='ten columns omega'>
+			&nbsp;
+		</div>
+	</div>
+	
     </div>
 
+    
 	<!-- middle panel  twelve columns-->
 	</div>
 
