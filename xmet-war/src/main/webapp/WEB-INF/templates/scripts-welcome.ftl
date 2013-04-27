@@ -5,9 +5,13 @@
 
 		try {
 			$('span#valueStructures').load( '${queryService}/admin/stats/structures');
-		} catch (e) {
-		}
-
+		} catch (e) {}
+		try {
+			$('span#valueEnzymes').load( '${xmet_root}/stats?term=enzymes&media=text/plain');
+		} catch (e) {}
+		try {
+			$('span#valueObservations').load( '${xmet_root}/stats?term=observations&media=text/plain');
+		} catch (e) {}
 	});
 
 </script>

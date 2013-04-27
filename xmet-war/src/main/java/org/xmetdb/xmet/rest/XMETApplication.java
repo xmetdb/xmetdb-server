@@ -37,6 +37,7 @@ import org.xmetdb.rest.groups.ProjectRouter;
 import org.xmetdb.rest.help.HelpResource;
 import org.xmetdb.rest.protocol.ProtocolRouter;
 import org.xmetdb.rest.protocol.facet.ProtocolsByEndpointResource;
+import org.xmetdb.rest.protocol.facet.StatisticsResource;
 import org.xmetdb.rest.protocol.resource.db.MyObservationsResource;
 import org.xmetdb.rest.structure.resource.DatasetResource;
 import org.xmetdb.rest.structure.resource.StructureRouter;
@@ -157,6 +158,9 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		ProjectRouter projectRouter = new ProjectRouter(getContext());
 		Restlet protocolRouter;
 		
+		MyRouter statsRouter = new MyRouter(getContext());
+		statsRouter.attachDefault(StatisticsResource.class);
+		router.attach(StatisticsResource.resource,statsRouter);
 
 		
 		protocolRouter = protocols; // createProtectedResource(protocols,"protocol",new

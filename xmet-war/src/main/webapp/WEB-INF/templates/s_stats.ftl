@@ -11,5 +11,21 @@
                 	<span id='valueStructures'></span>
 				</td>
 			</tr>
+			<tr class='w_tr'>
+				<td class='w_td_param'>
+					Enzymes
+				</td>
+				<td class='w_td_value'>
+                	<span id='valueEnzymes'></span>
+				</td>
+			</tr>
+			<tr class='w_tr'>
+				<td class='w_td_param'>
+					Observations
+				</td>
+				<td class='w_td_value'>
+                	<span id='valueObservations'></span>
+				</td>
+			</tr>
 		</table>
 		</div>
