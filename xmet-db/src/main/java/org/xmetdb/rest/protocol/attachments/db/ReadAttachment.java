@@ -55,14 +55,6 @@ public class ReadAttachment extends AbstractQuery<DBProtocol, DBAttachment, EQCo
 	protected static String where_datasetid = "a1.idquery=?";
 	
 	/**
-	 * get datasets by structure
-SELECT * FROM attachments a, `ambit2-xmetdb`.query d
-join `ambit2-xmetdb`.query using(idquery)
-join `ambit2-xmmetdb`.structure using(idstructure)
-where a.name=d.name
-and idchemical=282
-	 */
-	/**
 	 * 
 	 * @param protocol
 	 */

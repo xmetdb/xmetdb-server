@@ -36,11 +36,15 @@ public class ReadProtocolByStructure extends ReadProtocolAbstract<Structure> {
 		"select protocol.idprotocol,protocol.version,protocol.title,protocol.qmrf_number,abstract as anabstract,iduser,\n"+
 		"curated,idproject,idorganisation,reference,protocol.updated,status,\n"+
 		"protocol.`created`,published_status,atom_uncertainty,product_amount\n"+
-		"from protocol,attachments a, `ambit2-xmetdb`.query q\n"+
+		"from protocol, `ambit2-xmetdb`.query q\n"+
 		"join `ambit2-xmetdb`.query_results using(idquery)\n"+
 		"where idchemical=?\n"+
-		"and published_status='published' and a.name=q.name and a.idprotocol=protocol.idprotocol and a.version=protocol.version\n";
+		"and published_status='published' and q.name=protocol.qmrf_number\n";
 
+	/*
+	 * (non-Javadoc)
+	 * @see net.idea.modbcum.i.IQueryObject#getParameters()
+	 */
 	public List<QueryParam> getParameters() throws AmbitException {
 		List<QueryParam> params =  new ArrayList<QueryParam>();
 		if ((getFieldname()!=null) && (getFieldname().getIdchemical()>0)) 
