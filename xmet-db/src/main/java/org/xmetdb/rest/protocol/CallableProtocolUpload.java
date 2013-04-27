@@ -614,25 +614,25 @@ class RemoteImport {
 							new URL(String.format("%s/dataset",queryService)), 
 							"text/uri-list", createPOSTEntity(attachment), HttpPost.METHOD_NAME);
 					task = wait(task, System.currentTimeMillis());
-				}
-				
-				Form form = new Form();
-				form.add(dataset_uri, dataset.toURI().toString());
-				for (String algorithm: algorithms) { //just launch tasks and don't wait
-					List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-					formparams.add(new BasicNameValuePair(dataset_uri, dataset.toURI().toString()));
-					HttpEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
-					HttpClient newclient = createHTTPClient(uri.getHostDomain(),uri.getHostPort());
-					try {
-						new RemoteTask(newclient, 
-									new URL(String.format("%s%s",queryService,algorithm)), 
-									"text/uri-list", entity, HttpPost.METHOD_NAME);
+					//indexing 
+					Form form = new Form();
+					form.add(dataset_uri, dataset.toURI().toString());
+					for (String algorithm: algorithms) { //just launch tasks and don't wait
+						List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+						formparams.add(new BasicNameValuePair(dataset_uri, dataset.toURI().toString()));
+						HttpEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+						HttpClient newclient = createHTTPClient(uri.getHostDomain(),uri.getHostPort());
+						try {
+					 		new RemoteTask(newclient, 
+										new URL(String.format("%s%s",queryService,algorithm)), 
+										"text/uri-list", entity, HttpPost.METHOD_NAME);
 
-					} catch (Exception x) {
-						x.printStackTrace();
-					} finally { 
-						try {newclient.getConnectionManager().shutdown();} catch (Exception x) {}
-					}
+						} catch (Exception x) {
+							x.printStackTrace();
+						} finally { 
+							try {newclient.getConnectionManager().shutdown();} catch (Exception x) {}
+						}
+					}					
 				}
 			}
 			
