@@ -105,7 +105,9 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				MediaType.APPLICATION_RDF_TURTLE,
 				MediaType.TEXT_RDF_N3,
 				ChemicalMediaType.CHEMICAL_MDLSDF,
-				MediaType.APPLICATION_JAVA_OBJECT
+				MediaType.APPLICATION_JAVA_OBJECT,
+				MediaType.APPLICATION_XML,
+				GPML_WIKIPATHWAYS
 		});		
 	}
 
@@ -128,6 +130,13 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 									.getProperty(Resources.Config.xmet_ambit_service.name());
 			ProtocolCSVReporter r = new ProtocolCSVReporter(getRequest(),variant.getMediaType(),queryService);
 			return new OutputWriterConvertor(r,MediaType.TEXT_CSV,filenamePrefix);
+			
+		} else if (variant.getMediaType().equals(MediaType.APPLICATION_XML)||variant.getMediaType().equals(GPML_WIKIPATHWAYS)) {
+			String queryService = ((TaskApplication) getApplication())
+									.getProperty(Resources.Config.xmet_ambit_service.name());
+			ProtocolGPMLReporter r = new ProtocolGPMLReporter(getRequest(),variant.getMediaType(),queryService);
+			return new OutputWriterConvertor(r,MediaType.APPLICATION_XML,filenamePrefix);
+			
 		} else if (variant.getMediaType().equals(ChemicalMediaType.CHEMICAL_MDLSDF)) {
 			String queryService = ((TaskApplication) getApplication())
 									.getProperty(Resources.Config.xmet_ambit_service.name());

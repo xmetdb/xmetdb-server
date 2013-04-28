@@ -31,7 +31,9 @@ import org.xmetdb.xmet.client.Resources;
 import org.xmetdb.xmet.client.XMETDBRoles;
 
 public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends Serializable> extends QueryResource<Q,T>{
-
+	
+	public static final MediaType GPML_WIKIPATHWAYS = new MediaType("application/wikipath+xml");
+	
 	protected boolean headless = false;
 	protected XmetdbHTMLBeauty htmlBeauty;
 	
