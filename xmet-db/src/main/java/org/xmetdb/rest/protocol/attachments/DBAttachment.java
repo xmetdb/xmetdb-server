@@ -8,6 +8,8 @@ import net.toxbank.client.resource.Document;
 
 import org.xmetdb.rest.protocol.DBProtocol;
 
+import ambit2.base.interfaces.IStructureRecord;
+
 
 public class DBAttachment extends Document {
 
@@ -16,7 +18,13 @@ public class DBAttachment extends Document {
 	 * 
 	 */
 	private static final long serialVersionUID = 1141527775736093041L;
-	
+	protected IStructureRecord structure;
+	public IStructureRecord getStructure() {
+		return structure;
+	}
+	public void setStructure(IStructureRecord structure) {
+		this.structure = structure;
+	}
 	public enum attachment_type {
 		substrate {
 			@Override

@@ -23,9 +23,10 @@ import org.restlet.data.MediaType;
 import org.xmetdb.rest.endpoints.Enzyme;
 import org.xmetdb.rest.endpoints.db.ReadEnzymeByObservation;
 import org.xmetdb.rest.protocol.DBProtocol;
-import org.xmetdb.rest.protocol.attachments.AttachmentURIReporter;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
-import org.xmetdb.rest.protocol.attachments.db.ReadAttachment;
+import org.xmetdb.rest.protocol.attachments.db.ReadAttachmentStructures;
+
+import ambit2.base.interfaces.IStructureRecord;
 
 public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetrieval<DBProtocol>,Writer>  {
 
@@ -36,25 +37,18 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 	protected MediaType mediaType;
 	protected String queryService;
 	protected QueryURIReporter uriReporter;
-	protected AttachmentURIReporter<IQueryRetrieval<DBAttachment>> attachmentReporter;
 	protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy");
 	
 	public QueryURIReporter getUriReporter() {
 		return uriReporter;
 	}
 
-	protected GroupQueryURIReporter<IQueryRetrieval<IDBGroup>> groupReporter;
-	protected UserURIReporter<IQueryRetrieval<DBUser>> userReporter;
-	
 	
 	public ProtocolCSVReporter(Request request,MediaType mediaType,String queryService) {
 		super();
 		this.mediaType = mediaType;
 		this.queryService = queryService;
 		uriReporter = new ProtocolQueryURIReporter<IQueryRetrieval<DBProtocol>>(request);
-		groupReporter = new GroupQueryURIReporter<IQueryRetrieval<IDBGroup>>(request);
-		userReporter = new UserURIReporter<IQueryRetrieval<DBUser>>(request);
-		attachmentReporter = new AttachmentURIReporter<IQueryRetrieval<DBAttachment>>(request);
 		getProcessors().clear();
 		IQueryRetrieval<Enzyme> queryE = new ReadEnzymeByObservation(null); 
 		MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition> enzymeReader = new MasterDetailsProcessor<DBProtocol,Enzyme,IQueryCondition>(queryE) {
@@ -66,13 +60,11 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 			}
 		};
 		getProcessors().add(enzymeReader);
-		IQueryRetrieval<DBAttachment> queryP = new ReadAttachment(null,null); 
+		IQueryRetrieval<DBAttachment> queryP = new ReadAttachmentStructures(null); 
 		MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition> attachmentReader = new MasterDetailsProcessor<DBProtocol,DBAttachment,IQueryCondition>(queryP) {
 			@Override
 			protected DBProtocol processDetail(DBProtocol target, DBAttachment detail)
 					throws Exception {
-				
-				detail.setResourceURL(new URL(attachmentReporter.getURI(detail)));
 				target.getAttachments().add(detail);
 				return target;
 			}
@@ -101,25 +93,35 @@ public class ProtocolCSVReporter extends QueryReporter<DBProtocol, IQueryRetriev
 		} catch (Exception x) {}
 		
 	}
-	private static String header = "URI,Identifier,\"Product amount\",\"Experiment type\",Enzyme code,Enzyme name,UniProt,Reference,Comment\r\n";
-	private static String format = "\"%s\",\"%s\",\"%s\",\"%s\",%s,\"%s\",\"%s\"\r\n";
+	private static String header = "URI,Identifier,Substrate SMILES,Substrate InChI,Product SMILES,Product InChI,\"Product amount\",\"Experiment type\",Enzyme code,Enzyme name,UniProt,Reference,Comment\r\n";
+	private static String format = "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",%s,\"%s\",\"%s\"\r\n";
 		
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
 		try {
 			String uri = uriReporter.getURI(item);
 		
-			if ((item.getProject()!=null) && (item.getProject().getResourceURL()==null))
-				item.getProject().setResourceURL(new URL(groupReporter.getURI((DBProject)item.getProject())));
-			if ((item.getOrganisation()!=null) && (item.getOrganisation().getResourceURL()==null))
-				item.getOrganisation().setResourceURL(new URL(groupReporter.getURI((DBOrganisation)item.getOrganisation())));
-			if ((item.getOwner()!=null) && (item.getOwner().getResourceURL()==null))
-				item.getOwner().setResourceURL(new URL(userReporter.getURI((DBUser)item.getOwner())));
-			
-
+			IStructureRecord substrate = null;
+			IStructureRecord product = null;
+			for (DBAttachment attachment: item.getAttachments()) {
+				switch (attachment.getType()) {
+				case substrate: {
+					substrate = attachment.getStructure();
+					break;				
+				}
+				case product: {
+					product = attachment.getStructure();
+					break;
+				}
+				}
+			}
 			getOutput().write(String.format(format,
 					uri,
 					item.getVisibleIdentifier(),
+					substrate==null?"":substrate.getSmiles(),
+					substrate==null?"":substrate.getInchi(),
+					product==null?"":product.getSmiles(),
+					product==null?"":product.getInchi(),
 					item.getProductAmount(),
 					item.getAbstract(),
 					item.getEndpoint()==null?"":item.getEndpoint().toCSV(),
