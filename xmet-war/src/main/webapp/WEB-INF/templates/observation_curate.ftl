@@ -193,7 +193,7 @@ $(document).ready(function() {
 		</div>
 		<div name="xmet_comments" id="xmet_comments" title="Note" value="" row="1" class="ten columns omega remove-bottom ui-state-default"> </div>
 	</div>			
-	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+	<div class='row half-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'>
 			<label>Status</label>
 		</div>
@@ -203,18 +203,24 @@ $(document).ready(function() {
 		<div class="nine columns omega">&nbsp;</div>
 	</div>		
 	
-	<div class='row add-bottom' style="margin:5px;padding:5px;">
+	<div class='row half-bottom' style="margin:5px;padding:5px;">
 	<#if username??>
 		<div class='three columns alpha'>Submitted by</div>
 		<div class='three columns omega'><a href='${xmet_root}/user' id='submittedby'></a></div>
 	<#else>
 		<div class='six columns alpha'>&nbsp;</div>
 	</#if>
-		<div class='ten columns omega'>
-			&nbsp;
-		</div>
+		<div class='ten columns omega'>&nbsp;</div>
 	</div>
 	
+	<#if xmet_updatemode?? && (xmet_updatemode!='curate')>
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>	
+	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
+		<div class='eleven columns alpha'>&nbsp;</div>
+		<input type="submit" class="submit four columns omega" value="Submit">
+		<div class='one column omega'>&nbsp;</div>
+	</div>
+	</#if>
     </div>
 
     

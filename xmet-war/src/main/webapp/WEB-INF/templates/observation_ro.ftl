@@ -66,7 +66,8 @@
 		<div class="two columns omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
 		<div class='six columns omega'>&nbsp;</div>
 	</div>	
-	<hr class='row half-bottom'/>		
+	<div class='row half-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>		
+
 	<div class='row remove-bottom' >
 		<#if username??>
 			<div class='three columns alpha'>Submitted by</div>
