@@ -11,11 +11,19 @@ function defineStructuresTable(url, query_service, similarity) {
 					"sClass" : "center",
 					"bSortable" : false,
 					"bSearchable" : false,
-					"mDataProp" : "compound.URI",
+					"mDataProp" : "facets",
 					"bUseRendered" : false,
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
-						 return  "<span class='ui-icon ui-icon-folder-collapsed zoomstruc' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span>";			
+						var sOut = "";
+						 $.each(val,function(index) {
+							 $.each(val[index],function(i) {
+								 sOut += "<span title='" + i + "'>(" + val[index][i] + ")</span>";
+							 });
+
+						 });
+						 sOut += "<span class='ui-icon ui-icon-folder-collapsed zoomstruc' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span> ";
+						 return sOut;
 					}
 				},			
 				{ "mDataProp": "compound.URI" , "asSorting": [ "asc", "desc" ],
