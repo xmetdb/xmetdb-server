@@ -10,6 +10,7 @@ import net.idea.modbcum.i.IQueryObject;
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.q.conditions.StringCondition;
+import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.c.PageParams;
 import net.idea.restnet.c.RepresentationConvertor;
 import net.idea.restnet.c.StringConvertor;
@@ -103,10 +104,7 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				MediaType.APPLICATION_RDF_XML,
 				MediaType.APPLICATION_RDF_TURTLE,
 				MediaType.TEXT_RDF_N3,
-				MediaType.APPLICATION_PDF,
-				MediaType.APPLICATION_EXCEL,
-				MediaType.APPLICATION_WORD,
-				MediaType.APPLICATION_RTF,
+				ChemicalMediaType.CHEMICAL_MDLSDF,
 				MediaType.APPLICATION_JAVA_OBJECT
 		});		
 	}
@@ -124,13 +122,17 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 			String queryService = ((TaskApplication) getApplication())
 									.getProperty(Resources.Config.xmet_ambit_service.name());
 			ProtocolJSONReporter r = new ProtocolJSONReporter(getRequest(),queryService);
-			return new StringConvertor(	r,MediaType.APPLICATION_JSON,filenamePrefix);
+			return new OutputWriterConvertor(r,MediaType.APPLICATION_JSON,filenamePrefix);
 		} else if (variant.getMediaType().equals(MediaType.TEXT_CSV)) {
 			String queryService = ((TaskApplication) getApplication())
 									.getProperty(Resources.Config.xmet_ambit_service.name());
 			ProtocolCSVReporter r = new ProtocolCSVReporter(getRequest(),variant.getMediaType(),queryService);
-			return new StringConvertor(	r,MediaType.TEXT_CSV,filenamePrefix);
-							
+			return new OutputWriterConvertor(r,MediaType.TEXT_CSV,filenamePrefix);
+		} else if (variant.getMediaType().equals(ChemicalMediaType.CHEMICAL_MDLSDF)) {
+			String queryService = ((TaskApplication) getApplication())
+									.getProperty(Resources.Config.xmet_ambit_service.name());
+			ProtocolSDFReporter r = new ProtocolSDFReporter(getRequest(),variant.getMediaType(),queryService);
+			return new OutputWriterConvertor(r,ChemicalMediaType.CHEMICAL_MDLSDF,filenamePrefix);					
 		} else if (variant.getMediaType().equals(MediaType.APPLICATION_RDF_XML) ||
 					variant.getMediaType().equals(MediaType.APPLICATION_RDF_TURTLE) ||
 					variant.getMediaType().equals(MediaType.TEXT_RDF_N3) ||
@@ -148,7 +150,12 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 				};
 		} else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
 			return new OutputWriterConvertor(createHTMLReporter(headless),MediaType.TEXT_HTML);
-		} else return new OutputWriterConvertor(createHTMLReporter(headless),MediaType.TEXT_HTML);		
+		} else {
+				String queryService = ((TaskApplication) getApplication())
+				.getProperty(Resources.Config.xmet_ambit_service.name());
+				ProtocolJSONReporter r = new ProtocolJSONReporter(getRequest(),queryService);
+				return new OutputWriterConvertor(r,MediaType.APPLICATION_JSON,filenamePrefix);
+		}
 	}
 	
 	@Override
@@ -359,11 +366,15 @@ public class ProtocolDBResource<Q extends IQueryRetrieval<DBProtocol>> extends X
 		
 		if ((getRequest().getClientInfo().getUser()==null) || (getRequest().getClientInfo().getUser().getIdentifier()==null)) {
 			user = null;
+			
 			//POST is protected by a filter, should not come here
 			throw new ResourceException(Status.CLIENT_ERROR_UNAUTHORIZED.getCode(),
 						"Upload not allowed",
 						"Only logged in users may upload new observations",
 						Status.CLIENT_ERROR_UNAUTHORIZED.getUri());
+						
+			//user = new DBUser();
+			//user.setUserName("guest");
 		} else {
 			user = new DBUser();
 			user.setUserName(getRequest().getClientInfo().getUser().getIdentifier());

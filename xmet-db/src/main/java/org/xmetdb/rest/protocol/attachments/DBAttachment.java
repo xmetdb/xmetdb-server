@@ -18,6 +18,7 @@ public class DBAttachment extends Document {
 	 * 
 	 */
 	private static final long serialVersionUID = 1141527775736093041L;
+	protected String som;
 	protected IStructureRecord structure;
 	public IStructureRecord getStructure() {
 		return structure;
@@ -25,6 +26,13 @@ public class DBAttachment extends Document {
 	public void setStructure(IStructureRecord structure) {
 		this.structure = structure;
 	}
+	
+	public String getSom() {
+		return som;
+	}
+	public void setSom(String som) {
+		this.som = som;
+	}	
 	public enum attachment_type {
 		substrate {
 			@Override
