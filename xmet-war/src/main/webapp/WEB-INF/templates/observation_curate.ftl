@@ -21,6 +21,8 @@ function atomNumber(num, atoms_id) {
     if (index>=0) _xmet.atoms[atoms_id].splice(index,1);
     else _xmet.atoms[atoms_id].push(num);
     $(atoms_id).text(_xmet.atoms[atoms_id]);
+    $(atoms_id+"_modified").val("YES");
+    $("#som_submit").show();
 }	    
 $(document).ready(function() {
 		$( ".useSelected" ).button();
@@ -216,8 +218,16 @@ $(document).ready(function() {
 	<#if xmet_updatemode?? && (xmet_updatemode!='curate')>
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
-		<div class='eleven columns alpha'>&nbsp;</div>
-		<input type="submit" class="submit four columns omega" value="Submit">
+		<div class='three columns alpha'>&nbsp;</div>
+		<div class='eight columns omega' id='som_status'>Click on the structure diagram to change selection</div>
+		<form id="som_form" method='POST'><label for="xmet_substrate_atoms_modified"><em></em></label>
+		<input type="hidden" name="id" id="som_id" value="">
+		<input type="hidden" name="value" id="som_value" value="">
+		<input type="hidden" name="compound_uri" id="som_compound_uri" value="">
+		<input type="hidden" name="xmet_substrate_atoms_modified" id="xmet_substrate_atoms_modified" value="">
+		<input type="hidden" name="xmet_product_atoms_modified" id="xmet_product_atoms_modified" value="">
+		<input type="submit" id="som_submit" class="submit four columns omega" style="display:none;" value="Confirm SOM update">
+		</form>
 		<div class='one column omega'>&nbsp;</div>
 	</div>
 	</#if>

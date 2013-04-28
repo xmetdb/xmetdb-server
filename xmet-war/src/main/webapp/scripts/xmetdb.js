@@ -390,6 +390,23 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	       });
 }
 
+
+function updateSOM(url,form,selector) {
+	    $.ajax({
+	        type     : "POST",
+	        cache    : false,
+	        url      : url,
+	        data     : form.serialize(),
+	        error: function( jqXHR ,  textStatus,  errorThrown ) {
+	        	$("#som_status").text(textStatus + " " + errorThrown);
+	        },
+	        success  : function(data,textStatus, jqXHR ) {
+	        	$(selector).val("");
+	        	$("#som_status").text("SOM updated. Click on the structure diagram to change atom selection.");
+	        }
+	    });
+}
+
 function updateObservation(root,observation_uri,query_service,mode) {
 	var observation;
     $.ajax({
@@ -405,6 +422,30 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        	  var puri = mode=="curate"?
       			  		(root+"/curator/"+observation["identifier"]):
       		  			(root+"/protocol/"+observation["identifier"]+"/som");
+      			  
+      			  $('#som_form').attr("action",puri + "?method=put");
+	      		  $('#som_form').on('submit',function(e){
+	      			    e.preventDefault();
+	      			    var hide = false;
+	      				if ($('#xmet_substrate_atoms_modified').val()=="YES") {
+	      					$('#som_compound_uri').val($('#xmet_substrate_uri').val());
+      						$('#som_id').val("xmet_substrate_atoms");
+      						$('#som_value').val($('#xmet_substrate_atoms').text());
+      						updateSOM(puri + "?method=put",$(this),"#xmet_substrate_atoms_modified");
+      						hide = true;
+  						}
+  						if ($('#xmet_product_atoms_modified').val()=="YES") {
+	      					$('#som_compound_uri').val($('#xmet_product_uri').val());
+      						$('#som_id').val("xmet_product_atoms");
+      						$('#som_value').val($('#xmet_product_atoms').text());
+  							updateSOM(puri + "?method=put",$(this),"#xmet_product_atoms_modified");
+  							hide = true;
+  						}
+  						if (hide) {
+  							$('#som_submit').hide();
+  						}
+	      		  });
+      			  	
       			  var puriTitle = mode=="curate"?"Curate":"Modify SOM";		
       			  var puriHint = mode=="curate"?"Click to curate the observation":"Modify Sites of Metabolism";
 	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ puri + "' title='"+puriHint+"'>"+puriTitle+"</a>");
