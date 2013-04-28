@@ -146,7 +146,6 @@ public class UpdateObservationResource<Q extends IQueryRetrieval<DBProtocol>> ex
 							String compoundURI = form.getFirstValue("compound_uri");
 							if (compoundURI==null) throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST,id);
 							String url = updateSOM(compoundURI, key.toString(), value, queryService);
-							System.out.println(url);
 							return new StringRepresentation(value,MediaType.TEXT_PLAIN);
 						} catch (ResourceException x) {
 							throw x;
