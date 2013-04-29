@@ -87,7 +87,9 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	public void header(Writer output, IQueryRetrieval<DBProtocol> query) {
 		try {
 			output.write(header);
-			output.write("<Pathway>");
+			String entryTitle = "GPMLExport"; // not sure how to get 'XMetDB1'
+			output.write("<Pathway xmlns=\"http://pathvisio.org/GPML/2013a\" Name=\"" + entryTitle + "\">");
+			output.write("<Graphics BoardWidth=\"516.0\" BoardHeight=\"264.1\" />");
 			
 		} catch (Exception x) {}
 		
@@ -115,9 +117,13 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 				}
 				}
 			}
-			getOutput().write(String.format(structureNode,substrate.getIdchemical(),substrate.getIdchemical(),substrate.getInchi()));
-			getOutput().write(String.format(enzymeNode,item.getEndpoint().getCode(),item.getEndpoint().getCode(),item.getEndpoint().getUniprot_id()));
-			getOutput().write(String.format(structureNode,product.getIdchemical(),product.getIdchemical(),product.getInchi()));
+			getOutput().write(
+				String.format(structureNode, substrate.getIdchemical(), "d2e23", "125.0", "115.0", substrate.getInchi())
+			);
+			getOutput().write(String.format(enzymeNode,item.getEndpoint().getCode(),"af48a",item.getEndpoint().getUniprot_id()));
+			getOutput().write(
+				String.format(structureNode, product.getIdchemical(), "e427a", "285.0", "115.0", product.getInchi())
+			);
 			
 		
 		} catch (Exception x) {
@@ -128,20 +134,37 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	
 	private static String structureNode =
 		"<DataNode TextLabel=\"%d\" GraphId=\"%d\" Type=\"Metabolite\">\n"+
-	    "<Graphics CenterX=\"289.19315954771645\" CenterY=\"224.11050289701976\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32768\" FontSize=\"10\" Valign=\"Middle\" Color=\"0000ff\"/>\n"+
+	    "<Graphics CenterX=\"%s\" CenterY=\"%s\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32768\" FontSize=\"10\" Valign=\"Middle\" Color=\"0000ff\"/>\n"+
 	    //"<Xref Database=\"PubChem-compound\" ID=\"3033\"/>\n"+
 	    "<Xref Database=\"InChI\" ID=\"%s\"/>\n"+ 
 	    "</DataNode>";
 	
 	private static String enzymeNode = 
 		"<DataNode TextLabel=\"%s\" GraphId=\"%s\" Type=\"Protein\">\n"+
-    	"<Graphics CenterX=\"378.781450992011\" CenterY=\"85.36340595214881\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32771\" FontSize=\"10\" Valign=\"Middle\"/>\n"+
+    	"<Graphics CenterX=\"205.0\" CenterY=\"65.0\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32771\" FontSize=\"10\" Valign=\"Middle\"/>\n"+
     	"<Xref Database=\"Uniprot/TrEMBL\" ID=\"%s\"/>\n"+
     	"</DataNode>";
 	
 	@Override
 	public void footer(Writer output, IQueryRetrieval<DBProtocol> query) {
 		try {
+			output.write("  <Interaction>" +
+				"    <Graphics ZOrder=\"12288\" LineThickness=\"1.0\">" +
+				"      <Point X=\"165.0\" Y=\"115.0\" GraphRef=\"d2e23\" RelX=\"1.0\" RelY=\"0.0\" />" +
+				"      <Point X=\"245.0\" Y=\"115.0\" GraphRef=\"e427a\" RelX=\"-1.0\" RelY=\"0.0\" ArrowHead=\"Arrow\" />" +
+				"      <Anchor Position=\"0.5\" Shape=\"None\" GraphId=\"baca7\" />" +
+				"    </Graphics>" +
+				"    <Xref Database=\"\" ID=\"\" />" +
+				"  </Interaction>" +
+				"  <Interaction>" +
+				"    <Graphics ZOrder=\"12288\" LineThickness=\"1.0\">" +
+				"      <Point X=\"205.0\" Y=\"75.0\" GraphRef=\"af48a\" RelX=\"0.0\" RelY=\"1.0\" />" +
+				"      <Point X=\"205.0\" Y=\"115.0\" GraphRef=\"baca7\" RelX=\"0.0\" RelY=\"0.0\" ArrowHead=\"mim-catalysis\" />" +
+				"    </Graphics>" +
+				"    <Xref Database=\"\" ID=\"\" />" +
+				"  </Interaction>"
+			);
+			output.write("<InfoBox CenterX=\"0.0\" CenterY=\"0.0\" />");
 			output.write("</Pathway>");
 			
 		} catch (Exception x) {}
