@@ -133,7 +133,7 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	}
 	
 	private static String structureNode =
-		"<DataNode TextLabel=\"%d\" GraphId=\"%d\" Type=\"Metabolite\">\n"+
+		"<DataNode TextLabel=\"%d\" GraphId=\"%s\" Type=\"Metabolite\">\n"+
 	    "<Graphics CenterX=\"%s\" CenterY=\"%s\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32768\" FontSize=\"10\" Valign=\"Middle\" Color=\"0000ff\"/>\n"+
 	    //"<Xref Database=\"PubChem-compound\" ID=\"3033\"/>\n"+
 	    "<Xref Database=\"InChI\" ID=\"%s\"/>\n"+ 
