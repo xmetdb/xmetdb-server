@@ -50,13 +50,16 @@ public class ReadAttachmentStructures extends AbstractQuery<DBProtocol, DBAttach
 	*/
 	
 	protected static String sql_structure = 
-		"SELECT query.name as identifier,title as atype,idchemical,idstructure,format,type_structure,uncompress(structure) struc,value\n"+ 
+		"SELECT query.name as identifier,title as atype,idchemical,idstructure,format,type_structure,uncompress(structure) struc,value\n"+
 		"from `ambit2-xmetdb`.sessions join `ambit2-xmetdb`.query using(idsessions) join `ambit2-xmetdb`.query_results using(idquery)\n"+
 		"join `ambit2-xmetdb`.structure using(idchemical,idstructure) \n"+
-		"left join `ambit2-xmetdb`.property_values using(idchemical,idstructure)\n"+
-		"left join `ambit2-xmetdb`.properties using(idproperty)\n"+
-		"left join `ambit2-xmetdb`.property_string using(idvalue_string)\n"+
-		"where query.name=? and properties.name=? and title in ('substrate','product')";	
+		"left join \n"+
+		"(select idchemical,idstructure,value from `ambit2-xmetdb`.property_values\n"+
+		"join `ambit2-xmetdb`.properties using(idproperty)\n"+
+		"join `ambit2-xmetdb`.property_string using(idvalue_string)\n"+
+		"where `ambit2-xmetdb`.properties.name=?\n"+
+		") vals  using(idchemical,idstructure)\n"+
+		"where query.name=? and title in ('substrate','product')";	
 	/**
 	 * 
 	 * @param protocol
