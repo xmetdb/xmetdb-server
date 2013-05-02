@@ -219,7 +219,9 @@ $(document).ready(function() {
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>	
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"> 	
 		<div class='three columns alpha'>&nbsp;</div>
-		<div class='eight columns omega' id='som_status'>Click on the structure diagram to change selection</div>
+		<div class='eight columns omega' id='som_status'>Click on the structure diagram to change selection
+		<br/>If the atoms are not selectable, please reload this page.
+		</div>
 		<form id="som_form" method='POST'><label for="xmet_substrate_atoms_modified"><em></em></label>
 		<input type="hidden" name="id" id="som_id" value="">
 		<input type="hidden" name="value" id="som_value" value="">
