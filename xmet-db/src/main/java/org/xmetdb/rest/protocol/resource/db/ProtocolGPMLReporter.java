@@ -89,8 +89,8 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 			output.write(header);
 			String entryTitle = "GPMLExport"; // not sure how to get 'XMetDB1'
 			output.write("<Pathway xmlns=\"http://pathvisio.org/GPML/2013a\" Name=\"" + entryTitle + "\">");
+			output.write("<BiopaxRef>ae3</BiopaxRef>");
 			output.write("<Graphics BoardWidth=\"516.0\" BoardHeight=\"264.1\" />");
-			
 		} catch (Exception x) {}
 		
 	}
@@ -165,6 +165,33 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 				"  </Interaction>"
 			);
 			output.write("<InfoBox CenterX=\"0.0\" CenterY=\"0.0\" />");
+
+			/** Nina, below is the template, but if you have either a DOI or free text, it will probably not work well...
+                            With a DOI you can actually get the fields, but that is too much to ask for now :)
+                            See http://crosstech.crossref.org/2011/04/content_negotiation_for_crossr.html
+
+			output.write("  <Biopax>");
+			output.write("    <bp:PublicationXref xmlns:bp=\"http://www.biopax.org/release/biopax-level3.owl#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" rdf:id=\"ae3\">");
+			output.write("      <bp:ID rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">17464936</bp:ID>");
+			output.write("      <bp:DB rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">PubMed</bp:DB>");
+			output.write("      <bp:TITLE rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">The emerging role of ACE2 in physiology and disease.</bp:TITLE>");
+			output.write("      <bp:SOURCE rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">J Pathol</bp:SOURCE>");
+			output.write("      <bp:YEAR rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">2007</bp:YEAR>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Hamming I</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Cooper ME</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Haagmans BL</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Hooper NM</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Korstanje R</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Osterhaus AD</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Timens W</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Turner AJ</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">Navis G</bp:AUTHORS>");
+			output.write("      <bp:AUTHORS rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">van Goor H</bp:AUTHORS>");
+			output.write("    </bp:PublicationXref>");
+			output.write("  </Biopax>");
+
+			*/
+
 			output.write("</Pathway>");
 			
 		} catch (Exception x) {}
