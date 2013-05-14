@@ -1070,7 +1070,7 @@ function getDownloadLinksTask(root,uri) {
 function getDownloadLinksStructure(root,uri) {
 	var val = uri;
 	var sOut = "<a href='"+getMediaLink(val,"text/csv")+"' id='csv'><img src='"+root+"/images/excel.png' alt='CSV' title='Download as CSV (Comma delimited file) with SMILES'></a> ";
-	sOut += "<a href='"+getMediaLink(val,"chemical/x-mdl-sdfile")+"' id='sdf'><img src='"+root+"/images/sdf.jpg' alt='SDF' title='Download as SDF'></a> ";
+	sOut += "<a href='"+getMediaLink(val,"chemical/x-mdl-sdfile")+"' id='sdf'><img src='"+root+"/images/sdf.png' alt='SDF' title='Download as SDF'></a> ";
 	sOut += "<a href='"+getMediaLink(val,"chemical/x-cml")+"' id='cml'><img src='"+root+"/images/cml.jpg' alt='CML' title='Download as Chemical Markup Language (CML)'></a> ";
 	sOut += "<a href='"+getMediaLink(val,"chemical/x-inchi")+"' id='inchi'><img src='"+root+"/images/inchi.png' alt='InChI' title='Download as InChI'></a> ";
 	sOut += "<br/><a href='"+getMediaLink(val,"application/rdf+xml")+"' id='rdfxml'><img src='"+root+"/images/rdf.gif' alt='RDF/XML' title='Download as RDF/XML (Resource Description Framework XML format)'></a> ";
@@ -1081,16 +1081,16 @@ function getDownloadLinksStructure(root,uri) {
 function getDownloadLinksObservation(root,uri,molecules) {
 	   var val = uri;
 	   var sOut = "<a href='"+getMediaLink(val,"text/csv")+"' id='csv'><img src='"+root+"/images/excel.png' alt='CSV' title='Download as CSV (Comma delimited file)'></a> ";
-	   sOut += "<a href='"+getMediaLink(val,"chemical/x-mdl-sdfile")+"' id='sdf'><img src='"+root+"/images/sdf.jpg' alt='SDF' title='Download as SDF'></a> ";
+	   sOut += "<a href='"+getMediaLink(val,"chemical/x-mdl-sdfile")+"' id='sdf'><img src='"+root+"/images/sdf.png' alt='SDF' title='Download as SDF'></a> ";
 
 	 //  sOut += "<a href='"+getMediaLink(val,"application/rdf+xml")+"' id='rdfxml'><img src='"+root+"/images/rdf.gif' alt='RDF/XML' title='Download as RDF/XML (Resource Description Framework XML format)'></a> ";
 	 //  sOut += "<a href='"+getMediaLink(val,"text/n3")+"' id='rdfn3'><img src='"+root+"/images/rdf.gif' alt='RDF/N3' title='Download as RDF N3 (Resource Description Framework N3 format)'></a> ";
 	   sOut += "<a href='"+getMediaLink(val,"application/json")+"' id='json' target=_blank><img src='"+root+"/images/json.png' alt='json' title='Download as JSON'></a>";
-	   sOut += "<a href='"+getMediaLink(val,"application/xml")+"' id='xml' target=_blank><img src='"+root+"/images/gpml.png' width='16' height='16'  alt='json' title='Download as GPML'></a>";
+	   sOut += "<a href='"+getMediaLink(val,"application/xml")+"' id='xml' target=_blank><img src='"+root+"/images/gpml.png' alt='json' title='Download as GPML'></a>";
 	 
 	   if (molecules) {
-		sOut += '<br/>Export substrate  <a id="xmet_export_substrate" href="#" title="Export substrate structure as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
-		sOut += '<br/>Export product(s) <a id="xmet_export_product"   href="#" title="Export product structure(s) as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
+		sOut += '<br/>Export substrate  <a id="xmet_export_substrate" href="#" title="Export substrate structure as SDF"><img src="'+root+'/images/sdf.png"></a>';
+		sOut += '<br/>Export product(s) <a id="xmet_export_product"   href="#" title="Export product structure(s) as SDF"><img src="'+root+'/images/sdf.png"></a>';
 	   }
 	   return sOut;
 }
