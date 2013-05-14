@@ -1086,7 +1086,7 @@ function getDownloadLinksObservation(root,uri,molecules) {
 	 //  sOut += "<a href='"+getMediaLink(val,"application/rdf+xml")+"' id='rdfxml'><img src='"+root+"/images/rdf.gif' alt='RDF/XML' title='Download as RDF/XML (Resource Description Framework XML format)'></a> ";
 	 //  sOut += "<a href='"+getMediaLink(val,"text/n3")+"' id='rdfn3'><img src='"+root+"/images/rdf.gif' alt='RDF/N3' title='Download as RDF N3 (Resource Description Framework N3 format)'></a> ";
 	   sOut += "<a href='"+getMediaLink(val,"application/json")+"' id='json' target=_blank><img src='"+root+"/images/json.png' alt='json' title='Download as JSON'></a>";
-	   sOut += "<a href='"+getMediaLink(val,"application/xml")+"' id='xml' target=_blank><img src='"+root+"/images/xml.png' alt='json' title='Download as GPML'></a>";
+	   sOut += "<a href='"+getMediaLink(val,"application/xml")+"' id='xml' target=_blank><img src='"+root+"/images/gpml.png' width='16' height='16'  alt='json' title='Download as GPML'></a>";
 	 
 	   if (molecules) {
 		sOut += '<br/>Export substrate  <a id="xmet_export_substrate" href="#" title="Export substrate structure as SDF"><img src="'+root+'/images/sdf.jpg"></a>';
