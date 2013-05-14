@@ -32,6 +32,7 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 3537339785122677311L;
 	protected MediaType mediaType;
 	protected QueryURIReporter uriReporter;
@@ -87,17 +88,23 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	public void header(Writer output, IQueryRetrieval<DBProtocol> query) {
 		try {
 			output.write(header);
-			String entryTitle = "GPMLExport"; // not sure how to get 'XMetDB1'
-			output.write("<Pathway xmlns=\"http://pathvisio.org/GPML/2013a\" Name=\"" + entryTitle + "\">");
-			output.write("<BiopaxRef>ae3</BiopaxRef>");
-			output.write("<Graphics BoardWidth=\"516.0\" BoardHeight=\"264.1\" />");
+			String entryTitle = "GPMLExport"; // not sure how to get 'XMetDB1' 
+			//This is a method to write a header.
+			//to write an observation content , place the code in the processItem() method. Use getIdentifier() to retrieve XMETDB* id
+			//There could be multiple observations serialized , and the header is common to all of them.
+			//Not sure how this translates to GPML, so keeping it here for now
+			output.write(String.format(gpml_pathway_start, entryTitle));
+			output.write(gpml_biopax);
+			output.write(gpml_graphics);
 		} catch (Exception x) {}
 		
 	}
 	
 	
 	private static String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		
+	private static String gpml_pathway_start = "<Pathway xmlns=\"http://pathvisio.org/GPML/2013a\" Name=\"%s\">";
+	private static String gpml_biopax = "<BiopaxRef>ae3</BiopaxRef>";
+	private static String gpml_graphics = "<Graphics BoardWidth=\"516.0\" BoardHeight=\"264.1\" />";
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
 		try {
@@ -125,48 +132,12 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 				String.format(structureNode, product.getIdchemical(), "e427a", "285.0", "115.0", product.getInchi())
 			);
 			
-		
-		} catch (Exception x) {
-			x.printStackTrace();
-		}
-		return item;
-	}
-	
-	private static String structureNode =
-		"<DataNode TextLabel=\"%d\" GraphId=\"%s\" Type=\"Metabolite\">\n"+
-	    "<Graphics CenterX=\"%s\" CenterY=\"%s\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32768\" FontSize=\"10\" Valign=\"Middle\" Color=\"0000ff\"/>\n"+
-	    //"<Xref Database=\"PubChem-compound\" ID=\"3033\"/>\n"+
-	    "<Xref Database=\"InChI\" ID=\"%s\"/>\n"+ 
-	    "</DataNode>";
-	
-	private static String enzymeNode = 
-		"<DataNode TextLabel=\"%s\" GraphId=\"%s\" Type=\"Protein\">\n"+
-    	"<Graphics CenterX=\"205.0\" CenterY=\"65.0\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32771\" FontSize=\"10\" Valign=\"Middle\"/>\n"+
-    	"<Xref Database=\"Uniprot/TrEMBL\" ID=\"%s\"/>\n"+
-    	"</DataNode>";
-	
-	@Override
-	public void footer(Writer output, IQueryRetrieval<DBProtocol> query) {
-		try {
-			output.write("  <Interaction>" +
-				"    <Graphics ZOrder=\"12288\" LineThickness=\"1.0\">" +
-				"      <Point X=\"165.0\" Y=\"115.0\" GraphRef=\"d2e23\" RelX=\"1.0\" RelY=\"0.0\" />" +
-				"      <Point X=\"245.0\" Y=\"115.0\" GraphRef=\"e427a\" RelX=\"-1.0\" RelY=\"0.0\" ArrowHead=\"Arrow\" />" +
-				"      <Anchor Position=\"0.5\" Shape=\"None\" GraphId=\"baca7\" />" +
-				"    </Graphics>" +
-				"    <Xref Database=\"\" ID=\"\" />" +
-				"  </Interaction>" +
-				"  <Interaction>" +
-				"    <Graphics ZOrder=\"12288\" LineThickness=\"1.0\">" +
-				"      <Point X=\"205.0\" Y=\"75.0\" GraphRef=\"af48a\" RelX=\"0.0\" RelY=\"1.0\" />" +
-				"      <Point X=\"205.0\" Y=\"115.0\" GraphRef=\"baca7\" RelX=\"0.0\" RelY=\"0.0\" ArrowHead=\"mim-catalysis\" />" +
-				"    </Graphics>" +
-				"    <Xref Database=\"\" ID=\"\" />" +
-				"  </Interaction>"
-			);
-			output.write("<InfoBox CenterX=\"0.0\" CenterY=\"0.0\" />");
+			//infobox moved from the footer to the observation serialization
+			output.write(gpml_interaction);
+			output.write(gpml_infobox_start);
 
-			/** Nina, below is the template, but if you have either a DOI or free text, it will probably not work well...
+			/** TODO 
+			 * below is the template, but if you have either a DOI or free text, it will probably not work well...
                             With a DOI you can actually get the fields, but that is too much to ask for now :)
                             See http://crosstech.crossref.org/2011/04/content_negotiation_for_crossr.html
 
@@ -191,10 +162,54 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 			output.write("  </Biopax>");
 
 			*/
-
-			output.write("</Pathway>");
 			
-		} catch (Exception x) {}
+
+		} catch (Exception x) {
+			logger.error(x);
+		}
+		return item;
+	}
+	
+	private static String structureNode =
+		"<DataNode TextLabel=\"%d\" GraphId=\"%s\" Type=\"Metabolite\">\n"+
+	    "<Graphics CenterX=\"%s\" CenterY=\"%s\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32768\" FontSize=\"10\" Valign=\"Middle\" Color=\"0000ff\"/>\n"+
+	    //"<Xref Database=\"PubChem-compound\" ID=\"3033\"/>\n"+
+	    "<Xref Database=\"InChI\" ID=\"%s\"/>\n"+ 
+	    "</DataNode>";
+	
+	private static String enzymeNode = 
+		"<DataNode TextLabel=\"%s\" GraphId=\"%s\" Type=\"Protein\">\n"+
+    	"<Graphics CenterX=\"205.0\" CenterY=\"65.0\" Width=\"80.0\" Height=\"20.0\" ZOrder=\"32771\" FontSize=\"10\" Valign=\"Middle\"/>\n"+
+    	"<Xref Database=\"Uniprot/TrEMBL\" ID=\"%s\"/>\n"+
+    	"</DataNode>";
+
+	private static String gpml_interaction = 
+	"  <Interaction>" +
+	"    <Graphics ZOrder=\"12288\" LineThickness=\"1.0\">" +
+	"      <Point X=\"165.0\" Y=\"115.0\" GraphRef=\"d2e23\" RelX=\"1.0\" RelY=\"0.0\" />" +
+	"      <Point X=\"245.0\" Y=\"115.0\" GraphRef=\"e427a\" RelX=\"-1.0\" RelY=\"0.0\" ArrowHead=\"Arrow\" />" +
+	"      <Anchor Position=\"0.5\" Shape=\"None\" GraphId=\"baca7\" />" +
+	"    </Graphics>" +
+	"    <Xref Database=\"\" ID=\"\" />" +
+	"  </Interaction>" +
+	"  <Interaction>" +
+	"    <Graphics ZOrder=\"12288\" LineThickness=\"1.0\">" +
+	"      <Point X=\"205.0\" Y=\"75.0\" GraphRef=\"af48a\" RelX=\"0.0\" RelY=\"1.0\" />" +
+	"      <Point X=\"205.0\" Y=\"115.0\" GraphRef=\"baca7\" RelX=\"0.0\" RelY=\"0.0\" ArrowHead=\"mim-catalysis\" />" +
+	"    </Graphics>" +
+	"    <Xref Database=\"\" ID=\"\" />" +
+	"  </Interaction>";
+
+	private static String gpml_infobox_start = "<InfoBox CenterX=\"0.0\" CenterY=\"0.0\" />";
+	@Override
+	public void footer(Writer output, IQueryRetrieval<DBProtocol> query) {
+		try {
+			output.write("</Pathway>");
+		} catch (Exception x) {
+			logger.debug(x);
+		} finally {
+		}
+		
 	
 	}
 	
