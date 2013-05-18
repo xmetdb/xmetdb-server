@@ -94,8 +94,6 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 			//There could be multiple observations serialized , and the header is common to all of them.
 			//Not sure how this translates to GPML, so keeping it here for now
 			output.write(String.format(gpml_pathway_start, entryTitle));
-			output.write(gpml_biopax);
-			output.write(gpml_graphics);
 		} catch (Exception x) {}
 		
 	}
@@ -103,13 +101,15 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	
 	private static String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	private static String gpml_pathway_start = "<Pathway xmlns=\"http://pathvisio.org/GPML/2013a\" Name=\"%s\">";
-	private static String gpml_biopax = "<BiopaxRef>ae3</BiopaxRef>";
+	private static String gpml_comments = "<Comment Source=\"%s\">%s</Comment>";
 	private static String gpml_graphics = "<Graphics BoardWidth=\"516.0\" BoardHeight=\"264.1\" />";
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
 		try {
+			output.write(String.format(gpml_comments,"XMetDB",item.getReference()));
+			output.write(gpml_graphics);
+			
 			String uri = uriReporter.getURI(item);
-		
 			IStructureRecord substrate = null;
 			IStructureRecord product = null;
 			for (DBAttachment attachment: item.getAttachments()) {
