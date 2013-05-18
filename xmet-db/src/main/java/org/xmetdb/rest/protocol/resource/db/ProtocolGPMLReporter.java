@@ -1,6 +1,7 @@
 package org.xmetdb.rest.protocol.resource.db;
 
 import java.io.Writer;
+import java.util.List;
 
 import net.idea.modbcum.i.IQueryCondition;
 import net.idea.modbcum.i.IQueryRetrieval;
@@ -106,10 +107,17 @@ public class ProtocolGPMLReporter  extends QueryReporter<DBProtocol, IQueryRetri
 	@Override
 	public Object processItem(DBProtocol item) throws Exception {
 		try {
-			output.write(String.format(gpml_comments,"XMetDB",item.getReference()));
+			List<String> comments = item.getKeywords();
+			String uri = uriReporter.getURI(item);
+			output.write(String.format(gpml_comments,"XMetDB Observation ID",item.getIdentifier()));
+			output.write(String.format(gpml_comments,"XMetDB Observation URI",uri));
+			output.write(String.format(gpml_comments,"XMetDB Reference",item.getReference()));
+			output.write(String.format(gpml_comments,"XMetDB Experiment",String.format("%s (%s)",item.getAbstract(),item.getTitle())));
+			output.write(String.format(gpml_comments,"XMetDB Product Ammount",item.getProductAmount()));
+			output.write(String.format(gpml_comments,"XMetDB Comments",comments==null?"":comments.size()==0?"":comments.get(0)));
+			output.write(String.format(gpml_comments,"XMetDB Status",item.isSearchable()?"Curated":"Not curated"));
 			output.write(gpml_graphics);
 			
-			String uri = uriReporter.getURI(item);
 			IStructureRecord substrate = null;
 			IStructureRecord product = null;
 			for (DBAttachment attachment: item.getAttachments()) {
