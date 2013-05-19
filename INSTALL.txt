@@ -1,0 +1,216 @@
+###############################################################################
+				 INTRODUCTION
+###############################################################################
+
+This is a list of the actions for setting up or upgrading to the latest version
+of the Xenobiotics Metabolism Database (XMetDB).
+
+###############################################################################
+				    STEP 1
+###############################################################################
+
+Create the new 'xmetdb' database, set up the corresponding grants, and create
+the tables that are required. You will need the 'xmetdb.sql' script, which is
+provided in this archive.
+
+Run the following commands in the MySQL console (please refer to the previous
+step for information on how to start the console).
+
+	IMPORTANT: Before starting the console, make sure that the script
+	'xmetdbf.sql' is located in the current folder.
+
+---8<--------------------------------------------------------------------------
+CREATE DATABASE xmetdb CHARACTER SET utf8;
+GRANT ALL ON xmetdb.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
+GRANT ALL ON xmetdb.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
+GRANT ALL ON xmetdb.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
+USE xmetdb;
+source xmetdb.sql
+GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'localhost';
+GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'127.0.0.1';
+GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'::1';
+GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'localhost';
+GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'127.0.0.1';
+GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'::1';
+---8<--------------------------------------------------------------------------
+
+###############################################################################
+				    STEP 2
+###############################################################################
+
+	IMPORTANT: If you already have a database named 'xmet_users', please
+	skip this step.
+
+If the database 'xmett_users' does not exist, run the following commands in
+the MySQL console. You will need the 'xmet_users.sql' script, which is
+provided in this archive.
+
+	IMPORTANT: Before starting the console, make sure that the script
+	'xmet_users.sql' is located in the current folder.
+
+---8<--------------------------------------------------------------------------
+CREATE DATABASE xmet_users;
+GRANT ALL ON xmet_users.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
+GRANT ALL ON xmet_users.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
+GRANT ALL ON xmet_users.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
+USE xmet_users;
+source xmet_users.sql
+---8<--------------------------------------------------------------------------
+
+###############################################################################
+				    STEP 3
+###############################################################################
+
+Create the chemical structures database, populate it with data, and set up the
+associated grants. You will need the 'ambit2-xmetdb.sql' script, which is
+provided in this archive.
+
+Run the following commands in the MySQL console.
+
+	IMPORTANT: Before starting the console, make sure that the script
+	'ambit2-xmetdb.sql' is located in the current folder.
+
+---8<--------------------------------------------------------------------------
+source ambit2-xmetdb.sql
+GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
+GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
+GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
+GRANT TRIGGER ON `ambit2-xmetdb`.* TO 'guest'@'localhost';
+GRANT TRIGGER ON `ambit2-xmetdb`.* TO 'guest'@'127.0.0.1';
+GRANT TRIGGER ON `ambit2-xmetdb`.* TO 'guest'@'::1';
+GRANT EXECUTE ON PROCEDURE `ambit2-xmetdb`.findByProperty TO 'guest'@'localhost';
+GRANT EXECUTE ON PROCEDURE `ambit2-xmetdb`.findByProperty TO 'guest'@'127.0.0.1';
+GRANT EXECUTE ON PROCEDURE `ambit2-xmetdb`.findByProperty TO 'guest'@'::1';
+---8<--------------------------------------------------------------------------
+
+###############################################################################
+				    STEP 4
+###############################################################################
+
+Deploy the 'xmetdata.war' in your Tomcat instance. The 'xmetdata.war' is
+provided in the WebApplications folder of this archive.
+
+	IMPORTANT: If you are running Tomcat without root privileges, please
+	ensure that the following requirements are met:
+
+		1) Tomcat must have read access to 'xmetdb.war';
+
+		2) Tomcat must have both read and write access to the
+		   'webapps' folder where web applications are being deployed
+		   (e.g. '/usr/share/tomcat6/webapps');
+
+		3) Tomcat must have both read and write access to the home
+		   directory of the user who is running the service
+		   (e.g. '/usr/share/tomcat6' for user 'tomcat').
+
+Open the following URI in your browser, replacing YOURHOST and YOURPORT with
+the relevant values from your configuration.
+
+http://YOURHOST:YOURPORT/xmetdb/dataset
+
+The browser should then display the default XMetDB datasets.
+
+###############################################################################
+				    STEP 5
+###############################################################################
+
+Deploy the 'xmetdb.war' in your Tomcat instance. 
+The new 'xmetdb.war' is included in this archive.
+
+	IMPORTANT: If you are running Tomcat without root privileges, please
+	ensure that the following requirements are met:
+
+		1) Tomcat must have read access to 'xmetdb.war';
+
+		2) Tomcat must have both read and write access to the
+		   'webapps' folder where web applications are being deployed
+		   (e.g. '/usr/share/tomcat6/webapps');
+
+Open the following URI in your browser, replacing YOURHOST and YOURPORT with
+the relevant values from your configuration.
+
+http://YOURHOST:YOURPORT/xmetdb
+
+The browser should then display the "Search" page of the XMetDB.
+
+Click "Obsrevations" on the left hand side menu. 
+The browser should now display the XMetDB obsrevations.
+
+###############################################################################
+				    STEP 6
+###############################################################################
+
+Customize the configuration settings for the XMetDB web application.
+
+	IMPORTANT: As a minimum, check and adjust if necessary the following
+	settings: 'xmet_attachments_dir', 'xmet_ambit_service', 'mail.host',
+	'mail.user', 'mail.password' and 'notification.admin.email'.
+
+Open and edit the following file, replacing the {tomcat-dir} with the relevant
+value from your configuration.
+
+{tomcat-dir}/webapps/xmetdb/WEB-INF/classes/config/xmetdb.properties
+
+The following option sets the folder where uploaded files are stored. 
+
+	IMPORTANT: Tomcat must have both read and write access to this folder.
+
+---8<--------------------------------------------------------------------------
+# File path to store uploaded files. If null, will use the temp folder.
+xmet_attachments_dir=/srv/xmetdb-docs
+---8<--------------------------------------------------------------------------
+
+	IMPORTANT: If you're performing an upgrade, please ensure that all
+	existing attachments are placed in the 'xmetdb_attachments_dir' that
+	you've just configured.
+
+Set the following option to 'http://YOURHOST:YOURPORT/xmetdata' (don't include
+the quotes), where YOURHOST is the fully qualified domain name of the host
+running the Tomcat instance in which the xmetdata web application has been
+deployed, and YOURPORT is the TCP port Tomcat is listening on.
+
+---8<--------------------------------------------------------------------------
+# If not defined correctly, the query by structure will not be available.
+xmet_ambit_service=http://localhost:8080/xmetdata
+---8<--------------------------------------------------------------------------
+
+The following options control the e-mail notifications from the services.
+
+---8<--------------------------------------------------------------------------
+# To enable the XMetDB application to send e-mail notifications on registration 
+# and alert updates, configure the following SMTP server settings appropriately.
+#
+# Set to 'true' if SMTP connections should use TLS
+mail.smtp.starttls.enable=true
+#
+# Set to 'true' if the SMTP server requires authentication
+mail.smtp.auth=true
+#
+# This must be set to 'smtp'
+mail.transport.protocol=smtp
+#
+# The TCP port on which the SMTP server listens
+mail.smtp.port=587
+#
+# Fallback from TLS; this must be set to 'false'
+mail.smtp.socketFactory.fallback=false
+#
+# The fully qualified domain name of the SMTP server
+mail.host=your.mail.server.org
+#
+# If the SMTP server requires authentication, use this user name
+mail.user=your-email
+#
+# Password for the SMTP user
+mail.password=EMAIL-PASS
+#
+# The email address, which should appear in the FROM: field of the sent emails
+notification.admin.email=your-email@your.mail.server.org
+---8<--------------------------------------------------------------------------
+
+	IMPORTANT: You must restart Tomcat to make sure that the configuration
+	changes you've made become effective.
+
+###############################################################################
+				  END OF FILE
+###############################################################################
