@@ -209,10 +209,7 @@ function defineStructuresTable(url, query_service, similarity) {
 	return oTable;
 }
 
-
-function getID() {
-	   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-}			
+		
 
 	/* QMRF list per structure */
 function fnStructureXMETObservationsList(oTable, nTr, id) {
@@ -267,20 +264,4 @@ function fnStructureXMETObservationsList(oTable, nTr, id) {
 	return sOut;
 }
 
-
-function formatValues(dataEntry,tag) {
-	var sOut = "";
-	$.each(dataEntry.lookup[tag], function(index, value) { 
-	  if (dataEntry.values[value] != undefined) {
-		  $.each(dataEntry.values[value].split("|"), function (index, v) {
-			  if (v.indexOf(".mol")==-1) {
-				sOut += v;
-			  	sOut += "<br>";
-		  	  }
-		  });
-		  //sOut += dataEntry.values[value];
-	  }
-	});
-	return sOut;
-}
 

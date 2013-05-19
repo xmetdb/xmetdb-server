@@ -1,7 +1,7 @@
 <#include "/s_html.ftl" >
 <head>
 <#include "/s_head.ftl" >
-
+<script type='text/javascript' src='${xmet_root}/scripts/jcompound.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.MultiFile.pack.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.base64.min.js'></script>
@@ -9,12 +9,7 @@
 <script  type="text/javascript" src="${xmet_root}/jquery/jquery.imagemapster.min.js"></script>
 <script  type="text/javascript" src="${xmet_root}/scripts/jopentox-ui-atoms.js"></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.jeditable.js'></script>
-<style>
-    .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
-    .structresults .ui-selected { background: #F39814; border-color: #F39814; }
-    .structresults { list-style-type: none; margin: 0; padding: 0; width: 930px; }
-    .structresults li { margin: 3px; padding: 1px; float: left; width: 155px; height: 155px; font-size: 4em; text-align: center; }
-</style>
+
 
 <script type="text/javascript">
 

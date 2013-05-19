@@ -220,7 +220,7 @@ function runSearchURI(sSource,results,callback, errorcallback) {
 /**
  * Load structures from remote Ambit dataset uri via JSONP
  */
-function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISelector, molSelector,selectable) {
+function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISelector, molSelector,selectable,query_service) {
 	if ((datasetURI===undefined) || (datasetURI==null)) {
 		  $(results).empty();
 	} else {
@@ -235,7 +235,10 @@ function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISele
 	        	  for (i = 0; i < dataSize; i++) {
 	        		  $(cmpURISelector).attr('value',data.dataEntry[i].compound.URI);
 	        		  try {$(molSelector).attr('value',data.dataEntry[i].compound["mol"]);} catch (err) {$(molSelector).attr('value','');}
-	        		  $(results).append('<li class="ui-state-default" >'+cmpatoms2image(data.dataEntry[i].compound.URI,null)+'</li>');
+	        		  var nameid = getID();
+	        		  $(results).append('<li class="ui-widget-content">'+cmpatoms2image(data.dataEntry[i].compound.URI,null)+
+	        				  		'<div style="margin-top:5px;" id="'+nameid+'"></div></li>');
+	        		  loadStructureIds(query_service,data.dataEntry[i].compound.URI,renderStructureIds,'#'+nameid);
 	        		  var id= data.dataEntry[i].compound.URI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
 	        		  var som = null;
 	        		  $.each(data.dataEntry[i].values,function(index) {
@@ -251,6 +254,56 @@ function loadStructures(datasetURI, results, atomsid, similarityLink, cmpURISele
 	       });
 	}
 }
+
+
+
+function loadStructureIds(query_service,compoundURI,callback,nameSelector) {
+	id_uri = query_service + "/query/compound/url/all?search=" + encodeURIComponent(compoundURI) + "?max=1&media=application%2Fx-javascript";
+	$.ajax({
+	         dataType: "jsonp",
+	         "crossDomain": true, 
+	         url: id_uri,
+	         success: function(data, status, xhr) {
+	        	identifiers(data);
+	        	$.each(data.dataEntry,function(index, entry) {
+	        		callback(nameSelector,
+	        				formatValues(entry,"names"),
+	        				formatValues(entry,"cas"),
+	        				formatValues(entry,"smiles"),
+	        				formatValues(entry,"inchi"),
+	        				formatValues(entry,"inchikey"));
+	        	});
+	         },
+	         error: function(xhr, status, err) { },
+	         complete: function(xhr, status) { }
+	});	
+}
+function renderStructureIds(nameSelector,names,cas,smiles,inchi,inchikey) {
+	$(nameSelector).html(names);
+	/*
+	console.log(names);
+	console.log(cas);
+	console.log(smiles);
+	console.log(inchi);
+	*/
+}
+
+function formatValues(dataEntry,tag) {
+	var sOut = "";
+	$.each(dataEntry.lookup[tag], function(index, value) { 
+	  if (dataEntry.values[value] != undefined) {
+		  $.each(dataEntry.values[value].split("|"), function (index, v) {
+			  if (v.indexOf(".mol")==-1) {
+				sOut += v;
+			  	sOut += "<br>";
+		  	  }
+		  });
+		  //sOut += dataEntry.values[value];
+	  }
+	});
+	return sOut;
+}
+
 
 function toggleDrawUI(prefix, idButton, msg) {
 	var drawUI = $( '#drawUI');
@@ -365,7 +418,7 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        	  	  $('#xmet_export_substrate').show();
         			  var uri = query_service + "/feature?search="+observation["identifier"];
         			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;  
-	        	  	  loadStructures(uri,"#xmet_substrate","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri",null,false);
+	        	  	  loadStructures(uri,"#xmet_substrate","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri",null,false,query_service);
 	        	  } else {
 	        		  $('#xmet_export_substrate').hide();
 	        	  }
@@ -374,7 +427,7 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        		  $('#xmet_export_product').show();
 	        		  var uri = query_service + "/feature?search="+observation["identifier"];
         			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;  
-	        		  loadStructures(uri,"#xmet_product","#xmet_product_atoms","#sim_product","#xmet_product_uri",null,false);
+	        		  loadStructures(uri,"#xmet_product","#xmet_product_atoms","#sim_product","#xmet_product_uri",null,false,query_service);
 	          	  } else {
 	          		 $('#xmet_export_product').hide();
 	          	  }
@@ -476,7 +529,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        		  if ( (observation.Substrate.dataset.structure === undefined) || (observation.Substrate.dataset.structure==null)) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
-	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri",null,true);
+	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri",null,true,query_service);
 	        			  
 	        				 $('#xmet_substrate_atoms').editable(
 	        				        	puri + '?method=put',{
@@ -507,7 +560,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
-		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri",null,true);
+		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri",null,true,query_service);
 		        			 $('#xmet_product_atoms').editable(
 		        					 	puri +'?method=put',{
 		        			        	type	: 'text',
@@ -577,7 +630,7 @@ function editObservation(root,observation_uri,query_service) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Substrate.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
 	        			  
-	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri","#xmet_substrate_mol",false);
+	        			  loadStructures(uri,"#xmet_substrate_img","#xmet_substrate_atoms","#sim_substrate","#xmet_substrate_uri","#xmet_substrate_mol",false,query_service);
       			  
 	        		  }	  
 	        	  }
@@ -585,7 +638,7 @@ function editObservation(root,observation_uri,query_service) {
 		        	  if ((observation.Product.dataset.structure === undefined) || (observation.Product.dataset.structure==null)) {
 	        			  var uri = query_service + "/feature?search="+observation["identifier"];
 	        			  uri = observation.Product.dataset.uri + "?feature_uris[]=" + encodeURIComponent(uri) ;
-		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri","#xmet_product_mol",false);
+		        		  loadStructures(uri,"#xmet_product_img","#xmet_product_atoms","#sim_product","#xmet_product_uri","#xmet_product_mol",false,query_service);
 
 		        	  }	  
 	        	  }
@@ -1114,3 +1167,8 @@ function loadDBInfo(root) {
 	          }
 	       });
 }
+
+
+function getID() {
+	   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+}	

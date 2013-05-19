@@ -2,18 +2,13 @@
 <head>
 <#include "/s_head.ftl" >
 
-
+<script type='text/javascript' src='${xmet_root}/scripts/jcompound.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.validate.min.js'></script>
 <script type='text/javascript' charset='utf8' src='${xmet_root}/jquery/jquery.base64.min.js'></script>
 <script  type="text/javascript" src="${xmet_root}/jquery/jquery.imagemapster.min.js"></script>
 <script  type="text/javascript" src="${xmet_root}/scripts/jopentox-ui-atoms.js"></script>
 <script type='text/javascript' src='${xmet_root}/jquery/jquery.jeditable.js'></script>
-<style>
-    .structresults .ui-selecting { background: #FECA40; border-color: #FECA40; }
-    .structresults .ui-selected { background: #F39814; border-color: #F39814; }
-    .structresults { list-style-type: none; margin: 0; padding: 0; width: 930px; }
-    .structresults li { margin: 3px; padding: 1px; float: left; width: 155px; height: 155px; font-size: 4em; text-align: center; }
-</style>
+
 
 <script type="text/javascript">
 function atomNumber(num, atoms_id) {
@@ -131,9 +126,7 @@ $(document).ready(function() {
 	 	<div id="sim_substrate"></div>
 	 	</div>
 	    <div class='five columns omega'>
-		    <ul class='structresults' id="xmet_substrate_img" style='height:150px;'></ul>
-		    <br/>
-		    <div id="xmet_substrate_atoms" class='ui-state-default'></div>
+		    <ul class='structresults' id="xmet_substrate_img" ></ul>
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
@@ -143,15 +136,22 @@ $(document).ready(function() {
 		<div id="sim_product"></div>
 		</div>
 	    <div class='five columns omega'>
-			<ul class='structresults' id="xmet_product_img" style='height:150px;'></ul>
-			<br/>
-			<div id="xmet_product_atoms" class='ui-state-default'></div>
+			<ul class='structresults' id="xmet_product_img"></ul>
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
 		</div>
 	</div>    	
-	
+	<div class='row' style="margin:5px;padding:5px;"> 
+		<div class='three columns alpha'>&nbsp;</div>
+		 <div class='five columns omega'>
+		 	<div id="xmet_substrate_atoms" class='ui-state-default'></div>
+		 </div>
+		 <div class='three columns omega'>&nbsp;</div>
+		 <div class='five columns omega'>
+		 	<div id="xmet_product_atoms" class='ui-state-default'></div>
+		 </div>
+	</div>
 	<div class='row remove-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>
 	<div class='row' style="margin:5px;padding:5px;"> 	
  	   <div class='three columns alpha'><label>Atom uncertainty:<a href='#' class='chelp atomuncertainty'></a></label></div>
