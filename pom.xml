@@ -443,6 +443,7 @@
         <!-- attachment uploads related. More in WEB-INF/config/xmet.properties -->
         <aa.local.admin.name>admin</aa.local.admin.name>
         <aa.local.admin.pass>changeit</aa.local.admin.pass>
+        <xmet.secret>qJ9tcJiBCezVSKWF</xmet.secret>
         <!-- mail notification & registration Please change according to your server setup! -->
         <notification.mail.smtp.starttls.enable>true</notification.mail.smtp.starttls.enable>
         <notification.mail.smtp.port>587</notification.mail.smtp.port>
