@@ -106,7 +106,7 @@ provided in the WebApplications folder of this archive.
 Open the following URI in your browser, replacing YOURHOST and YOURPORT with
 the relevant values from your configuration.
 
-http://YOURHOST:YOURPORT/xmetdb/dataset
+http://YOURHOST:YOURPORT/xmetdata/dataset
 
 The browser should then display the default XMetDB datasets.
 
