@@ -216,7 +216,7 @@ $(document).ready(function() {
 	<div id="drawUI" class="remove-bottom" style='display:none;'>
 		<div class='row ui-widget-header ui-corner-top remove-bottom'>Draw the structure or search by structure<span style='float:right;' class='ui-icon ui-icon-closethick' title='Click to close this window' onClick='$("#drawUI").hide();'></span></div>
 		<div class='ui-widget-content ui-corner-bottom half-bottom'>
-			<div class='row'  style="margin:5px;padding:5px;"> 	
+			<div class='row remove-bottom'  style="margin:5px;padding:5px;"> 	
 				<form method='GET' action='#' name='substrateSearchForm'>
 				<iframe class="ten columns alpha remove-bottom" style='height:420px;width:500px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html" onLoad="iframeOnLoad()"></iframe>
 				<div class='six columns omega remove-bottom'>
@@ -243,7 +243,13 @@ $(document).ready(function() {
 				</div>
 				</form>
 			</div>
-
+			<div class='row'  style="margin:5px;padding:5px;">
+				<div class="ten columns alpha remove-bottom">
+					<label>Chemical name</label>
+					<input type="text" name="xmet_name" id="xmet_name" value="">
+				</div>
+				<div class='six columns omega remove-bottom'>&nbsp;</div>
+			</div>
 			<div id='divresults' class='remove-bottom' style="display:none;margin:5px;padding:5px;" >
 				<div class='row remove-bottom'>
 					<div class='ten columns alpha' style='width:500px;'><label>Search results</label><span class='details'>Click on the structure diagram to select the structure.<br>Ctrl + click to select multiple structures.</span></div>

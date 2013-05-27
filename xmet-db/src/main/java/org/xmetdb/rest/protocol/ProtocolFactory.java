@@ -189,7 +189,7 @@ public class ProtocolFactory {
 						p_attachments[StructureUploadType.mol.ordinal()] = attachment;
 					}
 					break;					
-				}				
+				}		
 				case xmet_substrate_upload: {
 					if ((s_upload==null) || StructureUploadType.file.equals(s_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.file,fi, protocol,
@@ -454,7 +454,7 @@ public class ProtocolFactory {
 				return attachment;
 			} else {
 				String content = fi.getString(utf8);
-				File file = generateFileName("wwwformsubmitted.mol", dir, type, protocol);
+				File file = generateFileName("wwwformsubmitted.sdf", dir, type, protocol);
 				FileWriter writer=null;
 				try {
 					writer = new FileWriter(file);
