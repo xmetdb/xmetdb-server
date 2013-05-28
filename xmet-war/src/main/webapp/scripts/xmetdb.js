@@ -92,20 +92,25 @@ function loadEnzymesList(root,selectTag,allelesTag) {
  * @param prefix
  */
 function useSelected(prefix) {
-	$( '#structureSearchResults li.ui-selected img').each(function (index,entry) {
+	$( '#structureSearchResults li.ui-selected').each(function (index,item) {
+		var entry = $(item).find('img');
+		var names = $(item).find('div');
+		var img_alt = entry.attr('alt');
+		var img_src = entry.attr('src');
+		
 		var results = '#xmet_'+prefix+'_img';
 		$('input[name=xmet_'+prefix+'_uppload]').val();
 		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
-		if (entry.alt.indexOf('http')==0) {
-			$(results_uri).val(entry.alt);
+		if (img_alt.indexOf('http')==0) {
+			$(results_uri).val(img_alt);
 			$(results).empty();
-			$(results).append('<li class="ui-state-default" >'+cmp2image(entry.alt)+'</li>');
+			$(results).append('<li class="ui-state-default" >'+cmp2image(img_alt)+'<div>'+names.html()+'</div></li>');
 			$(results_mol).val('');
 		} else {
-			$(results_uri).val(entry.alt);
+			$(results_uri).val(img_alt);
 			$(results).empty();
-			$(results).append('<li class="ui-state-default" ><img border="0" src="'+entry.src+'"></li>');
+			$(results).append('<li class="ui-state-default" ><img border="0" src="'+img_src+'"></li>');
 			$(results_mol).val('');
 		}
 		$("#xmet_"+prefix+"_type").val("uri");
