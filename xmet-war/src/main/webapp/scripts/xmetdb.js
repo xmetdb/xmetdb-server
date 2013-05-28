@@ -134,12 +134,16 @@ function useDrawn(queryService,prefix) {
 		$('input[name=xmet_'+prefix+'_uppload]').val();
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		var results_name = $('input[name=xmet_name]').val();
+		var results_name_div = "";
 		try { results_name = results_name.toLowerCase(); } catch (err) {}
 		var b64search = encodeURIComponent($.base64.encode(molFile));
 		if (!results_name || 0 === results_name.length) { //empty name
 			molFile = molFile + "\n$$$$\n";
+			$('input[name="xmet_'+prefix+'_name"]').val("");
 		} else {
-			molFile = molFile + "\n> <Name>\n" + results_name + "\n\n$$$$\n";		
+			molFile = molFile + "\n> <Name>\n" + results_name + "\n\n$$$$\n";
+			results_name_div = '<div style="margin-top:5px;">'+results_name+'</div>';
+			$('input[name="xmet_'+prefix+'_name"]').val(results_name);
 		}
 		$(results_mol).val(molFile);
 		$("#xmet_"+prefix+"_type").val("mol");
@@ -154,9 +158,10 @@ function useDrawn(queryService,prefix) {
 					$(results).empty();
 					json.dataEntry.forEach(function img(element, index, array) {
        					$(results_uri).val(element.compound.URI);
-       					$(results).append('<li class="ui-state-default" style="background-color:#ffffff;" >'+cmp2image(element.compound.URI)+
-       									  '<div style="margin-top:5px;" id="'+nameid+'"></div></li>');
        					var nameid = getID();
+       					$(results).append('<li class="ui-state-default" style="background-color:#ffffff;" >'+cmp2image(element.compound.URI)+
+       									  results_name_div +
+       									  '<div style="margin-top:5px;" id="'+nameid+'"></div></li>');
        					loadStructureIds(prefix,queryService,element.compound.URI,renderStructureIds,'#'+nameid);
        					found++;
        				});

@@ -15,6 +15,9 @@ import net.idea.modbcum.p.ProcessorException;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.modbcum.q.conditions.EQCondition;
+import net.idea.opentox.cli.OTClient;
+import net.idea.opentox.cli.structure.Substance;
+import net.idea.opentox.cli.structure.SubstanceClient;
 import net.idea.opentox.cli.task.FibonacciSequence;
 import net.idea.opentox.cli.task.RemoteTask;
 import net.idea.restnet.c.task.CallableProtectedTask;
@@ -64,6 +67,8 @@ import org.xmetdb.rest.protocol.db.ReadProtocolByID;
 import org.xmetdb.rest.protocol.db.UpdateProtocol;
 import org.xmetdb.rest.protocol.resource.db.ProtocolQueryURIReporter;
 import org.xmetdb.xmet.client.Resources;
+
+import ambit2.base.data.Property;
 
 
 public class CallableProtocolUpload extends CallableProtectedTask<String> {
@@ -633,6 +638,12 @@ class RemoteImport {
 							try {newclient.getConnectionManager().shutdown();} catch (Exception x) {}
 						}
 					}					
+				} else {
+					if (attachment.getStructure()!=null && attachment.getStructure().getProperty(Property.getNameInstance())!=null) try {
+						updateName(attachment.getDescription(),attachment.getStructure().getProperty(Property.getNameInstance()));
+					} catch (Exception x) {
+						x.printStackTrace();
+					}
 				}
 			}
 			
@@ -643,7 +654,48 @@ class RemoteImport {
 		}
 		return task;
 	}
-	
+	/**
+	 * /compound/{id} PUT
+	 * @param compoundURI
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	protected String updateName(String compoundURI, Object name)throws Exception {
+		if ((name==null) || "".equals(name.toString().trim())) return null;
+		final Reference uri = new Reference(queryService);
+		OTClient cli=null;
+		//PUT
+		try {
+			cli = new OTClient() {
+				protected HttpClient createHTTPClient() {
+					DefaultHttpClient  cli = new DefaultHttpClient();
+					List<String> authpref = new ArrayList<String>();
+					authpref.add(AuthPolicy.BASIC);
+					cli.getParams().setParameter(AuthPNames.PROXY_AUTH_PREF, authpref);
+					cli.getCredentialsProvider().setCredentials(
+					        new AuthScope(uri.getHostDomain(),uri.getHostPort()), 
+					        creds);		
+					return cli;
+				};
+			};
+			SubstanceClient scli = cli.getSubstanceClient();
+			Substance substance = new Substance();
+			substance.setResourceIdentifier(new URL(compoundURI));
+			substance.setName(name.toString().toLowerCase());
+			RemoteTask task = scli.setSubstancePropertyAsync(new URL(compoundURI), substance,null,null);
+			task.waitUntilCompleted(500);
+			if (task.getError()!=null) throw task.getError();
+			return task.getResult().toExternalForm();
+		} catch (Exception x) {
+			//do smth
+			throw x;
+		} finally {
+			try {cli.close();} catch (Exception x) {}
+		}
+		
+	}
+
 	protected HttpEntity createPOSTEntity(DBAttachment attachment) throws Exception {
 		Charset utf8 = Charset.forName("UTF-8");
 

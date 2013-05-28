@@ -105,6 +105,7 @@ $(document).ready(function() {
 			<input type="hidden" id="xmet_substrate_uri" name="xmet_substrate_uri" value="">
 			<input type="hidden" id="xmet_substrate_mol" name="xmet_substrate_mol" value="">
 			<input type="hidden" id="xmet_substrate_type" name="xmet_substrate_type" value="uri">
+			<input type="hidden" id="xmet_substrate_name" name="xmet_substrate_name" value="">
 	    </div>
 		<div class='three columns omega'><label for='xmet_product_uri'>Product<em></em><a href='#' class='chelp product'></a></label>
 		<br/>
@@ -116,6 +117,7 @@ $(document).ready(function() {
 			<input type="hidden" id="xmet_product_uri" name="xmet_product_uri" value="">
 			<input type="hidden" id="xmet_product_mol" name="xmet_product_mol" value="">
 			<input type="hidden" id="xmet_product_type" name="xmet_product_type" value="uri">
+			<input type="hidden" id="xmet_product_name" name="xmet_product_name" value="">
 		</div>
 	</div>    	
 	<div class='row  remove-bottom' style="margin:5px;padding:5px;"> 	

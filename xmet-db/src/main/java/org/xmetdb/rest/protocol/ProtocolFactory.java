@@ -27,6 +27,10 @@ import org.xmetdb.xmet.client.AtomUncertainty;
 import org.xmetdb.xmet.client.ProductAmount;
 import org.xmetdb.xmet.client.PublishedStatus;
 
+import ambit2.base.data.Property;
+import ambit2.base.data.StructureRecord;
+import ambit2.base.interfaces.IStructureRecord;
+
 public class ProtocolFactory {
 	protected static final String utf8 = "UTF-8";
 	public enum StructureUploadType {uri,mol,file};
@@ -35,6 +39,7 @@ public class ProtocolFactory {
 		xmet_substrate_type,xmet_product_type,
 		xmet_substrate_upload, xmet_product_upload, 
 		xmet_substrate_uri, xmet_product_uri,
+		xmet_substrate_name, xmet_product_name,
 		xmet_substrate_atoms, xmet_product_atoms,
 		xmet_substrate_mol, xmet_product_mol,
 		xmet_allele, xmet_reference, xmet_comments,
@@ -83,7 +88,8 @@ public class ProtocolFactory {
 		
 		String[] substrate_atoms = null;
 		String[] product_atoms = null;
-		
+		IStructureRecord[] structure = new IStructureRecord[attachment_type.values().length];
+
 		for (final Iterator<FileItem> it = items.iterator(); it.hasNext();) {
 			FileItem fi = it.next();
 
@@ -174,6 +180,16 @@ public class ProtocolFactory {
 					}
 					break;					
 				}
+				case xmet_substrate_name : {
+					structure[attachment_type.substrate.ordinal()] = new StructureRecord();
+					structure[attachment_type.substrate.ordinal()].setProperty(Property.getNameInstance(), fi.getString(utf8));
+					break;
+				}
+				case xmet_product_name : {
+					structure[attachment_type.product.ordinal()] = new StructureRecord();
+					structure[attachment_type.product.ordinal()].setProperty(Property.getNameInstance(), fi.getString(utf8));
+					break;
+				}				
 				case xmet_substrate_mol : {
 					if ((s_upload==null) || StructureUploadType.mol.equals(s_upload)) {
 						DBAttachment attachment = createAttachment(StructureUploadType.mol,fi, protocol,
@@ -423,6 +439,11 @@ public class ProtocolFactory {
 			p_attachments[p_upload.ordinal()].setAtomNumbers(product_atoms);
 			protocol.getAttachments().add(p_attachments[p_upload.ordinal()]);
 		}
+		for (DBAttachment attachment : protocol.getAttachments()) 
+			if (structure[attachment.getType().ordinal()]!=null)
+				attachment.setStructure(structure[attachment.getType().ordinal()]);
+		
+
 		return protocol;
 	}
 
@@ -464,7 +485,7 @@ public class ProtocolFactory {
 				}
 				//System.out.println(file.getAbsolutePath());
 				if (file.exists())
-						return DBAttachment.file2attachment(rootDir.getAbsolutePath(),file, "Web form MOL file","form.mol", type);
+						return DBAttachment.file2attachment(rootDir.getAbsolutePath(),file, "Web form MOL file","form.sdf", type);
 				else return null;
 			}
 		} else {
