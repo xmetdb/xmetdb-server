@@ -218,14 +218,11 @@ $(document).ready(function() {
 		<div class='ui-widget-content ui-corner-bottom half-bottom'>
 			<div class='row remove-bottom'  style="margin:5px;padding:5px;"> 	
 				<form method='GET' action='#' name='substrateSearchForm'>
-				<iframe class="ten columns alpha remove-bottom" style='height:420px;width:500px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html" onLoad="iframeOnLoad()"></iframe>
-				<div class='six columns omega remove-bottom'>
-					<label>Use the drawn structure</label>
+				<iframe class="twelve columns alpha remove-bottom" style='height:420px;width:500px;' id="iframeSketcher" src="${xmet_root}/scripts/sketcher_2D.html" onLoad="iframeOnLoad()"></iframe>
+				<div class='four columns omega remove-bottom'>
+					<br/>
 	   				<input type='hidden' name='type' value='smiles'>
 	   				<input type='hidden' name='b64search' value=''>
-					<a href='#' class='button remove-bottom' onClick='useDrawn("${queryService}","substrate");return false;'>as a substrate</a>
-					&nbsp;
-					<a href='#' class='button ' onClick='useDrawn("${queryService}","product");return false;'>as a product</a>&nbsp;
 					<label>Search options</label>
 					<br/>
 					<input type='radio' id='auto' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
@@ -244,13 +241,20 @@ $(document).ready(function() {
 				</form>
 			</div>
 			<div class='row'  style="margin:5px;padding:5px;">
-				<div class="ten columns alpha remove-bottom">
-					<label>Chemical name</label>
+				<div class="five columns alpha remove-bottom">
+					<label>Enter chemical name of the drawn structure</label>
 					<input type="text" name="xmet_name" id="xmet_name" value="">
 				</div>
+				<div class="five columns omega remove-bottom">
+					<label>Use the drawn structure</label>
+					<a href='#' class='button remove-bottom' onClick='useDrawn("${queryService}","substrate");return false;'>as a substrate</a>
+					&nbsp;
+					<a href='#' class='button ' onClick='useDrawn("${queryService}","product");return false;'>as a product</a>&nbsp;
+				</div>				
 				<div class='six columns omega remove-bottom'>&nbsp;</div>
 			</div>
 			<div id='divresults' class='remove-bottom' style="display:none;margin:5px;padding:5px;" >
+				<hr class='row remove-bottom'/>
 				<div class='row remove-bottom'>
 					<div class='ten columns alpha' style='width:500px;'><label>Search results</label><span class='details'>Click on the structure diagram to select the structure.<br>Ctrl + click to select multiple structures.</span></div>
 					<div class='six columns omega'>
