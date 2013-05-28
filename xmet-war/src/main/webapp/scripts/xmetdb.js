@@ -21,7 +21,7 @@ function cmp2image(val) {
 		//}
 		//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
 		var id= cmpURI.replace(/:/g,"").replace(/\//g,"").replace(/\./g,"");
-		return '<img border="0" alt="'+val+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
+		return '<img border="0" style="background-color:#ffffff" alt="'+val+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
 function cmpatoms2image(uri, model_uri) {
@@ -35,7 +35,7 @@ function cmpatoms2image(uri, model_uri) {
 	}
 	//return '<a href="'+val+'" title="'+cmpURI+'"><img border="0" src="'+cmpURI+'&w=150&h=150"></a>';
 	var id= uri.replace(/:/g,"").replace(/\//g,"").replace(/\./g,""); 
-	return '<img border="0" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
+	return '<img border="0" style="background-color:#ffffff" alt="'+uri+'" src="'+cmpURI+'&w=150&h=150" usemap="#m'+id+'" id="i'+id+'">\n<map id="m'+id+'" name="m'+id+'"></map>';
 }
 
 function renderEnzyme(root,enzyme) {
@@ -129,6 +129,7 @@ function useDrawn(queryService,prefix) {
 		$('input[name=xmet_'+prefix+'_uppload]').val();
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		var results_name = $('input[name=xmet_name]').val();
+		var b64search = encodeURIComponent($.base64.encode(molFile));
 		if (!results_name || 0 === results_name.length) { //empty name
 			molFile = molFile + "\n$$$$\n";
 		} else {
@@ -139,8 +140,7 @@ function useDrawn(queryService,prefix) {
 		var results_uri = 'input[name=xmet_'+prefix+'_uri]';
 		$(results_uri).val();
 		$(results).empty();
-		runSearchURI(queryService + '/query/compound/search/all?media=application/x-javascript&type=mol&max=1&b64search=' 
-								  + encodeURIComponent($.base64.encode(molFile)),
+		runSearchURI(queryService + '/query/compound/search/all?media=application/x-javascript&type=mol&max=1&b64search=' + b64search,
 				results,
 				function(json) {
 					var found = 0;
@@ -148,13 +148,17 @@ function useDrawn(queryService,prefix) {
 					$(results).empty();
 					json.dataEntry.forEach(function img(element, index, array) {
        					$(results_uri).val(element.compound.URI);
-       					$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
+       					$(results).append('<li class="ui-state-default" style="background-color:#ffffff;" >'+cmp2image(element.compound.URI)+
+       									  '<div style="margin-top:5px;" id="'+nameid+'"></div></li>');
+       					var nameid = getID();
+       					loadStructureIds(prefix,queryService,element.compound.URI,renderStructureIds,'#'+nameid);
        					found++;
        				});
        				if (found==0) {
-       					$(results).append('<li class="ui-state-default" ><img border="1" src="'+
+       					var nameid = getID();
+       					$(results).append('<li class="ui-state-default" style="background-color:#ffffff;" ><img border="1" style="background-color:#ffffff" src="'+
        			    			queryService + '/depict/cdk/kekule?type=mol&b64search=' + encodeURIComponent($.base64.encode(molFile)) +
-       			    			'&w=150&h=150" alt="'+ molFile +'"></li>');
+       			    			'&w=150&h=150" alt="'+ molFile +'"><div style="margin-top:5px;" id="'+nameid+'">'+results_name+'</div></li>');
        				} else {
        					$("#xmet_"+prefix+"_type").val("uri");
        				}
@@ -185,12 +189,15 @@ function getQueryURL(queryService,option) {
 	
 }
 
-function runSearch(queryService,form,results) {
-	runSearchURI(queryService + '?media=application/x-javascript&'+ form.serialize(),
+function runSearch(queryService,query,form,results) {
+	runSearchURI(queryService + query + '?media=application/x-javascript&'+ form.serialize(),
 				results,
 				function(json) {
 					json.dataEntry.forEach(function img(element, index, array) {
-       				$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+'</li>');
+						var nameid = getID();
+						$(results).append('<li class="ui-state-default" >'+cmp2image(element.compound.URI)+
+										  '<div style="margin-top:5px;" id="'+nameid+'"></div></li>');
+						loadStructureIds("",queryService,element.compound.URI,renderStructureIds,'#'+nameid);
        				});
 	});	 
 }
@@ -265,13 +272,14 @@ function loadStructures(prefix,datasetURI, results, atomsid, similarityLink, cmp
 
 function loadStructureIds(prefix,query_service,compoundURI,callback,nameSelector) {
 
-	var id_uri = query_service + "/query/compound/url/all?search=" + encodeURIComponent(compoundURI) + "?max=1&media=application%2Fx-javascript";
+	var id_uri = query_service + "/query/compound/url/all?search=" + encodeURIComponent(compoundURI) + "&max=1&media=application%2Fx-javascript";
 	$.ajax({
 	         dataType: "jsonp",
 	         "crossDomain": true, 
 	         url: id_uri,
 	         success: function(data, status, xhr) {
 	        	identifiers(data);
+	        	$(nameSelector).html("&nbsp;");
 	        	$.each(data.dataEntry,function(index, entry) {
 	        		callback(nameSelector,
 	        				formatValues(entry,"names"),
@@ -281,33 +289,53 @@ function loadStructureIds(prefix,query_service,compoundURI,callback,nameSelector
 	        				formatValues(entry,"inchikey"));
 	        	});
 	         },
-	         error: function(xhr, status, err) { },
+	         error: function(xhr, status, err) {
+	        	 $(nameSelector).html("&nbsp;");
+	         },
 	         complete: function(xhr, status) { }
 	});	
 }
 function renderStructureIds(nameSelector,names,cas,smiles,inchi,inchikey) {
 	$(nameSelector).html(names);
-	/*
-	console.log(names);
-	console.log(cas);
-	console.log(smiles);
-	console.log(inchi);
-	*/
 }
 
 function formatValues(dataEntry,tag) {
 	var sOut = "";
+	var line = 0;
+	var id = "n" + getID();
+	
 	$.each(dataEntry.lookup[tag], function(index, value) { 
 	  if (dataEntry.values[value] != undefined) {
 		  $.each(dataEntry.values[value].split("|"), function (index, v) {
 			  if (v.indexOf(".mol")==-1) {
-				sOut += v;
-			  	sOut += "<br>";
+				switch(line) {
+				case 0:
+					sOut += "<span class='long' title='"+v+"'>"+v+"</span>";
+				    break;
+				case 1:
+					sOut += "<span style='display:none;' id='"+id+"'>";
+					sOut += v;
+				    break;
+				default:
+				  	sOut += "<br/>";
+					sOut += v;
+				}
+			  	line++;
 		  	  }
 		  });
-		  //sOut += dataEntry.values[value];
 	  }
 	});
+	
+	switch(line) {
+	case 0: 
+		sOut += "&nbsp;";
+		break;
+	case 1: 
+		break;
+	default:  
+	   sOut += "</span>";
+	   sOut += " <a href='#' onClick='$(\"#"+id+"\").toggle();' title='Click here for more synonyms'>&raquo;</a> ";
+	}
 	return sOut;
 }
 

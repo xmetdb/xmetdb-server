@@ -34,11 +34,11 @@ $(document).ready(function() {
 				this.type.value = "smiles"; 
 				this.b64search.value = "";
 			}
-			var queryService = '${queryService}';
-			if (this.similarity["checked"]) queryService += "/query/similarity";
-			else if (this.smarts["checked"]) queryService += "/query/smarts";
-			else queryService += "/query/compound/search/all";
-        	runSearch(queryService,$(this),'#structureSearchResults');
+			var query = '';
+			if (this.similarity["checked"]) query += "/query/similarity";
+			else if (this.smarts["checked"]) query += "/query/smarts";
+			else query += "/query/compound/search/all";
+        	runSearch('${queryService}',query,$(this),'#structureSearchResults');
             event.preventDefault();
             return false;
         });

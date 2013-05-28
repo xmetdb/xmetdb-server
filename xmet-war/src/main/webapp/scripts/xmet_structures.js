@@ -46,7 +46,7 @@ function defineStructuresTable(url, query_service, similarity) {
 								/*
 "<a href=\"%s%s/%d?headless=true&details=false&media=text/html\" title=\"Molecule\">Molecule</a>", 
 								 */
-						return '<img class="ui-widget-content" title="'+val+'" border="0" src="'+cmpURI+'&w=150&h=150">';
+						return '<img class="ui-widget-content" style="background-color:#ffffff" title="'+val+'" border="0" src="'+cmpURI+'&w=150&h=150">';
 				  }
 				},
 				{ "mDataProp": "compound.name" , "asSorting": [ "asc", "desc" ],
