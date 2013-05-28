@@ -134,6 +134,7 @@ function useDrawn(queryService,prefix) {
 		$('input[name=xmet_'+prefix+'_uppload]').val();
 		var results_mol = 'input[name=xmet_'+prefix+'_mol]';
 		var results_name = $('input[name=xmet_name]').val();
+		try { results_name = results_name.toLowerCase(); } catch (err) {}
 		var b64search = encodeURIComponent($.base64.encode(molFile));
 		if (!results_name || 0 === results_name.length) { //empty name
 			molFile = molFile + "\n$$$$\n";
@@ -301,7 +302,11 @@ function loadStructureIds(prefix,query_service,compoundURI,callback,nameSelector
 	});	
 }
 function renderStructureIds(nameSelector,names,cas,smiles,inchi,inchikey) {
-	$(nameSelector).html(names);
+	try {
+		$(nameSelector).html(names.toLowerCase());
+	} catch (err) {
+		$(nameSelector).html(names);
+	}
 }
 
 function formatValues(dataEntry,tag) {
