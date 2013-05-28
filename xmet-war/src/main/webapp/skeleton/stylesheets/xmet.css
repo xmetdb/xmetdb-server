@@ -319,3 +319,12 @@ A:hover {
 .help  a {
 	color: #516373;
 }
+
+.long {
+   border: solid 0px #F2F0E6 ;
+    text-overflow: ellipsis;
+    width: 155px;
+    display: block;
+    overflow: hidden;
+    padding: 0px;
+}  
