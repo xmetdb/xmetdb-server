@@ -1,14 +1,9 @@
 package  org.xmetdb.rest.endpoints;
 
-import java.sql.Connection;
-
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.processors.IProcessor;
-import net.idea.modbcum.i.query.IQueryUpdate;
-import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.restnet.c.StringConvertor;
 import net.idea.restnet.c.html.HTMLBeauty;
-import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.db.QueryURIReporter;
 import net.idea.restnet.db.convertors.OutputWriterConvertor;
 
