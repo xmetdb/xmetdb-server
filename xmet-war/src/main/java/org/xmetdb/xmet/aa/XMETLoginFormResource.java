@@ -6,6 +6,7 @@ import java.util.Map;
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.restnet.aa.local.UserLoginFormResource;
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 
 import org.restlet.data.MediaType;
@@ -57,6 +58,8 @@ public class XMETLoginFormResource extends UserLoginFormResource<User> {
 		        Map<String, Object> map = new HashMap<String, Object>();
 		        if (getClientInfo().getUser()!=null) 
 		        	map.put("username", getClientInfo().getUser().getIdentifier());
+		        map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+			    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
 		        map.put("creator","IdeaConsult Ltd.");
 		        map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
 		        map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));

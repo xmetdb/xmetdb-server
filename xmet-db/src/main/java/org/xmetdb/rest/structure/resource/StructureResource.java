@@ -16,6 +16,7 @@ import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.modbcum.p.QueryExecutor;
 import net.idea.restnet.c.ChemicalMediaType;
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.resource.CatalogResource;
 import net.idea.restnet.db.DBConnection;
@@ -69,6 +70,8 @@ public class StructureResource extends CatalogResource<Structure> {
 	
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
 		StructureHTMLBeauty parameters = ((StructureHTMLBeauty)getHTMLBeauty());
 
 		Reference query = getSearchReference(getContext(),getRequest(),getResponse(),parameters);

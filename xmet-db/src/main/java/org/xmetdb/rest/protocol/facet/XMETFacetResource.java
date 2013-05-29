@@ -5,6 +5,7 @@ import java.util.Map;
 import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.facet.IFacet;
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.db.facet.FacetResource;
 
@@ -54,6 +55,8 @@ public abstract class XMETFacetResource extends FacetResource<IQueryRetrieval<IF
 	public void configureTemplateMap(Map<String, Object> map) {
         if (getClientInfo().getUser()!=null) 
         	map.put("username", getClientInfo().getUser().getIdentifier());
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
         map.put("creator","IdeaConsult Ltd.");
         map.put(Resources.Config.xmet_email.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_email.name()));
         map.put(Resources.Config.xmet_about.name(),((TaskApplication)getApplication()).getProperty(Resources.Config.xmet_about.name()));

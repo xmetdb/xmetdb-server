@@ -1,6 +1,9 @@
 package org.xmetdb.xmet.aa;
 
+import java.util.Map;
+
 import net.idea.restnet.aa.local.UserLogoutPOSTResource;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 
 import org.restlet.representation.Representation;
@@ -23,5 +26,12 @@ public class XMETLogoutPOSTResource<U extends User> extends UserLogoutPOSTResour
 			
 	     this.getResponse().redirectSeeOther(String.format("%s/",getRequest().getRootRef()));
 	     return null;
+	}
+	
+	@Override
+	public void configureTemplateMap(Map<String, Object> map) {
+		super.configureTemplateMap(map);
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
 	}
 }

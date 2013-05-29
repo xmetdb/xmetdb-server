@@ -1,7 +1,9 @@
 package org.xmetdb.rest.user.resource;
 
 import java.sql.Connection;
+import java.util.Map;
 
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.i.task.ICallableTask;
 import net.idea.restnet.user.DBUser;
@@ -35,5 +37,12 @@ public class PwdForgottenResource extends RegistrationResource {
 			try { conn.close(); } catch (Exception xx) {}
 			throw new ResourceException(Status.SERVER_ERROR_INTERNAL,x);
 		}
+	}
+	
+	@Override
+	public void configureTemplateMap(Map<String, Object> map) {
+		super.configureTemplateMap(map);
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
 	}
 }

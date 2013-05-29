@@ -3,6 +3,7 @@ package org.xmetdb.rest.user.resource;
 import java.util.Map;
 
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.user.resource.RegistrationNotifyResource;
 
@@ -26,6 +27,8 @@ public class XMETRegistrationNotifyResource  extends RegistrationNotifyResource 
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
 		map.put("searchURI",Resources.register);
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
 		map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
 		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
 		if (getClientInfo()!=null) {

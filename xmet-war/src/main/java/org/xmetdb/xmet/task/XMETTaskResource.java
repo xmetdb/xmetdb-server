@@ -9,6 +9,7 @@ import net.idea.modbcum.i.exceptions.AmbitException;
 import net.idea.modbcum.i.reporter.Reporter;
 import net.idea.restnet.c.ResourceDoc;
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.resource.TaskResource;
 import net.idea.restnet.c.task.FactoryTaskConvertor;
@@ -43,6 +44,8 @@ public class XMETTaskResource extends TaskResource<String> {
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
         
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
         map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
 		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
 		if (getClientInfo()!=null) {
