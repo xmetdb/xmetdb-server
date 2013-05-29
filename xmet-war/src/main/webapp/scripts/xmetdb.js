@@ -318,24 +318,30 @@ function formatValues(dataEntry,tag) {
 	var sOut = "";
 	var line = 0;
 	var id = "n" + getID();
-	
+	var cache = {};
 	$.each(dataEntry.lookup[tag], function(index, value) { 
 	  if (dataEntry.values[value] != undefined) {
 		  $.each(dataEntry.values[value].split("|"), function (index, v) {
 			  if (v.indexOf(".mol")==-1) {
-				switch(line) {
-				case 0:
-					sOut += "<span class='long' title='"+v+"'>"+v+"</span>";
-				    break;
-				case 1:
-					sOut += "<span style='display:none;' id='"+id+"'>";
-					sOut += v;
-				    break;
-				default:
-				  	sOut += "<br/>";
-					sOut += v;
+				if ("" != v) {  
+					var lv = v.toLowerCase();
+					if (cache[lv]==null) {
+						switch(line) {
+						case 0:
+							sOut += "<span class='long' title='"+v+"'>"+v+"</span>";
+						    break;
+						case 1:
+							sOut += "<span style='display:none;' id='"+id+"'>";
+							sOut += v;
+						    break;
+						default:
+						  	sOut += "<br/>";
+							sOut += v;
+						}
+					  	line++;
+					  	cache[lv] = true;
+					}
 				}
-			  	line++;
 		  	  }
 		  });
 	  }
