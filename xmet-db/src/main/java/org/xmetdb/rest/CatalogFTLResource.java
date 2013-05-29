@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.resource.CatalogResource;
 
 import org.restlet.data.MediaType;
@@ -24,6 +25,9 @@ public abstract class CatalogFTLResource<T> extends CatalogResource<T> {
 	@Override
 	public void configureTemplateMap(Map<String, Object> map) {
 		super.configureTemplateMap(map);
+		   
+	    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+	    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
         map.put("creator","IdeaConsult Ltd.");
         map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
 		map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);

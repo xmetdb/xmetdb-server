@@ -1,5 +1,9 @@
 package org.xmetdb.xmet.rest;
 
+import java.io.InputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Properties;
 import java.util.UUID;
 
 import net.idea.modbcum.i.config.Preferences;
@@ -72,8 +76,12 @@ import org.xmetdb.xmet.task.XMETTaskRouter;
  */
 public class XMETApplication extends FreeMarkerApplicaton<String> {
 	/** The Freemarker's configuration. */
- 
-
+	static final String xmetProperties = "config/xmetdb.properties";
+	static final String version = "xmet.version";
+	static final String version_build = "xmet.build";
+	static final String version_timestamp = "xmet.build.timestamp";
+	protected Hashtable<String,Properties> properties = new Hashtable<String, Properties>();
+	   
 	public XMETApplication() {
 		super();
 
@@ -81,7 +89,10 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		setDescription("Xenobiotics metabolism database");
 		setOwner("xmetdb.org");
 		setAuthor("Developed by Ideaconsult Ltd. (2012) on behalf of xmetdb.org");
-		setConfigFile("config/xmetdb.properties");
+		setConfigFile(xmetProperties);
+		
+		versionShort = readVersionShort();
+		versionLong = readVersionLong();
 
 		setStatusService(new XMETStatusService(this));
 		setTunnelService(new TunnelService(true, true) {
@@ -111,6 +122,38 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		if (isInsecure())
 			insecureConfig();
 
+	}
+	
+	public synchronized String readVersionShort()  {
+		try {
+			return getProperty(version,xmetProperties);
+		} catch (Exception x) {return "Unknown"; }
+	}
+
+	public synchronized String readVersionLong()  {
+		try {
+			String v1 = getProperty(version,xmetProperties);
+			String v2 = getProperty(version_build,xmetProperties);
+			String v3 = getProperty(version_timestamp,xmetProperties);
+			return String.format("%s r%s built %s",v1,v2,new Date(Long.parseLong(v3)));
+		} catch (Exception x) {return "Unknown"; }
+	}
+	
+	protected synchronized String getProperty(String name,String config)  {
+		try {
+			Properties p = properties.get(config);
+			if (p==null) {
+				p = new Properties();
+				InputStream in = this.getClass().getClassLoader().getResourceAsStream(config);
+				p.load(in);
+				in.close();
+				properties.put(config,p);
+			}
+			return p.getProperty(name);
+
+		} catch (Exception x) {
+			return null;
+		}
 	}
 
 	@Override

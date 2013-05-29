@@ -33,7 +33,11 @@
 			<a href='http://xmetdb.org/'>
 				<img class='scale-with-grid' border='0' src='${xmet_root}/images/logo.png' alt='XMETDB logo'>
 			</a>
-			<h5 class='help'>Version 1.0</h5>
+			<#if xmet_version_short??>
+				<div class='h5' title='${xmet_version_long}'>Version ${xmet_version_short}</div>
+			<#else>
+				<div class='h5'>Version 1.0</div>	
+			</#if>
 		</div>
 		<div class="thirteen columns">
 			<h1 class="remove-bottom">

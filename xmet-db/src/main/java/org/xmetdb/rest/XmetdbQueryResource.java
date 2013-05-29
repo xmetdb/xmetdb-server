@@ -9,6 +9,7 @@ import net.idea.modbcum.i.IQueryRetrieval;
 import net.idea.modbcum.i.query.IQueryUpdate;
 import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.restnet.c.TaskApplication;
+import net.idea.restnet.c.freemarker.FreeMarkerApplicaton;
 import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.FactoryTaskConvertor;
 import net.idea.restnet.db.DBConnection;
@@ -115,6 +116,9 @@ public abstract class XmetdbQueryResource<Q extends IQueryRetrieval<T>,T extends
 	protected Map<String, Object> getMap(Variant variant) throws ResourceException {
 		   Map<String, Object> map = new HashMap<String, Object>();
 
+		   
+		    map.put("xmet_version_short",((FreeMarkerApplicaton)getApplication()).getVersionShort());
+		    map.put("xmet_version_long",((FreeMarkerApplicaton)getApplication()).getVersionLong());
 			map.put(XMETDBRoles.xmetdb_admin.name(), Boolean.FALSE);
 			map.put(XMETDBRoles.xmetdb_curator.name(), Boolean.FALSE);
 			if (getClientInfo()!=null) {
