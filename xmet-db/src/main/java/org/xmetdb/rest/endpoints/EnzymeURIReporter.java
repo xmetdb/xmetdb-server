@@ -34,10 +34,10 @@ public class EnzymeURIReporter<D extends Enzyme> extends QueryURIReporter<D, IQu
 		
 		if (record==null) return null;
 		
-		return String.format("%s%s/%s",
+		return String.format("%s%s/%d",
 			ref,
 			Resources.enzyme,
-			Reference.encode(record.getCode()),
+			record.getID(),
 			getDelimiter()
 		);
 		
