@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.xmetdb</groupId>
   <artifactId>xmetdb</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.2</version>
   <packaging>pom</packaging>
   <name>xmetdb</name>
   <description>xmetdb</description>
@@ -17,9 +17,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.8.1</junit.version>
     <restlet.version>2.0-M6</restlet.version>
-    <restnet.version>1.0.0-SNAPSHOT</restnet.version>
+    <restnet.version>1.0.0</restnet.version>
     <opentoxcli.version>1.0.2-SNAPSHOT</opentoxcli.version>
-    <ambit.version>2.4.11-SNAPSHOT</ambit.version>
+    <ambit.version>2.4.11</ambit.version>
   </properties>
   <issueManagement>
     <system></system>
