@@ -59,12 +59,12 @@ insert into version (idmajor,idminor,comment) values (2,0,"XMETDB users");
 -- Default user
 -- -----------------------------------------------------
 insert into users values("admin",MD5("admin"));
-insert into roles values("xmetdb_editor");
-insert into roles values("xmetdb_manager");
+insert into roles values("xmetdb_curator");
+insert into roles values("xmetdb_admin");
 insert into roles values ("xmetdb_user");
 
-insert into user_roles values("admin","xmetdb_editor");
-insert into user_roles values("admin","xmetdb_manager");
+insert into user_roles values("admin","xmetdb_curator");
+insert into user_roles values("admin","xmetdb_admin");
 insert into user_roles values("admin","xmetdb_user");
 insert ignore into user_registration
 SELECT user_name,now(),now(),concat("SYSTEM_",user_name),'confirmed' FROM users;
