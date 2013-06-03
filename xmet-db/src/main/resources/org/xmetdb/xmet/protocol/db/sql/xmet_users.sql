@@ -29,9 +29,9 @@ CREATE TABLE  `user_roles` (
   PRIMARY KEY (`user_name`,`role_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-------------------------------------------
+-- ----------------------------------------
 -- Registration status and confirmation codes
-------------------------------------------
+-- ----------------------------------------
 DROP TABLE IF EXISTS `user_registration`;
 CREATE TABLE  `user_registration` (
   `user_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
@@ -43,9 +43,9 @@ CREATE TABLE  `user_registration` (
   UNIQUE KEY `Index_2` (`code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-------------------------------------------
+-- ----------------------------------------
 -- Version
-------------------------------------------
+-- ----------------------------------------
 CREATE TABLE  `version` (
   `idmajor` int(5) unsigned NOT NULL,
   `idminor` int(5) unsigned NOT NULL,
