@@ -11,7 +11,7 @@ of the Xenobiotics Metabolism Database (XMetDB).
 
 Create the new 'xmetdb' database, set up the corresponding grants, and create
 the tables that are required. You will need the 'xmetdb.sql' script, which is
-provided in this archive or at 
+provided in the SQL folder in this archive or at 
 https://github.com/xmetdb/xmetdb-server/blob/master/xmet-db/src/main/resources/org/xmetdb/xmet/protocol/db/sql/xmetdb.sql
 
 Run the following commands in the MySQL console (please refer to the previous
@@ -23,8 +23,8 @@ step for information on how to start the console).
 ---8<--------------------------------------------------------------------------
 CREATE DATABASE xmetdb CHARACTER SET utf8;
 GRANT ALL ON xmetdb.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
-GRANT ALL ON xmetdb.* TO 'guest'@'127.0.0.1' ;
-GRANT ALL ON xmetdb.* TO 'guest'@'::1';
+GRANT ALL ON xmetdb.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
+GRANT ALL ON xmetdb.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
 USE xmetdb;
 source xmetdb.sql
 GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'localhost';
@@ -39,12 +39,9 @@ GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'::1';
 				    STEP 2
 ###############################################################################
 
-	IMPORTANT: If you already have a database named 'xmet_users', please
-	skip this step.
-
-If the database 'xmett_users' does not exist, run the following commands in
+If the database 'xmet_users' does not exist, run the following commands in
 the MySQL console. You will need the 'xmet_users.sql' script, which is
-provided in this archive or at
+provided in the SQL folder of this archive or at
 https://github.com/xmetdb/xmetdb-server/blob/master/xmet-db/src/main/resources/org/xmetdb/xmet/protocol/db/sql/xmet_users.sql
 
 	IMPORTANT: Before starting the console, make sure that the script
@@ -52,8 +49,8 @@ https://github.com/xmetdb/xmetdb-server/blob/master/xmet-db/src/main/resources/o
 
 ---8<--------------------------------------------------------------------------
 CREATE DATABASE xmet_users;
-GRANT ALL ON xmet_users.* TO 'guest'@'localhost';
-GRANT ALL ON xmet_users.* TO 'guest'@'127.0.0.1';
+GRANT ALL ON xmet_users.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
+GRANT ALL ON xmet_users.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
 GRANT ALL ON xmet_users.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
 USE xmet_users;
 source xmet_users.sql
@@ -65,7 +62,7 @@ source xmet_users.sql
 
 Create the chemical structures database, populate it with data, and set up the
 associated grants. You will need the 'ambit2-xmetdb.sql' script, which is
-provided in this archive.
+provided in the SQL folder in this archive.
 
 Run the following commands in the MySQL console.
 
@@ -73,10 +70,12 @@ Run the following commands in the MySQL console.
 	'ambit2-xmetdb.sql' is located in the current folder.
 
 ---8<--------------------------------------------------------------------------
-source ambit2-xmetdb.sql
-GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
-GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
-GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
+CREATE DATABASE `ambit2-xmetdb` DEFAULT CHARACTER SET utf8;
+use `ambit2-xmetdb`;
+source ambit2-xmetdb.sql;
+GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'localhost';
+GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'127.0.0.1';
+GRANT ALL ON `ambit2-xmetdb`.* TO 'guest'@'::1';
 GRANT TRIGGER ON `ambit2-xmetdb`.* TO 'guest'@'localhost';
 GRANT TRIGGER ON `ambit2-xmetdb`.* TO 'guest'@'127.0.0.1';
 GRANT TRIGGER ON `ambit2-xmetdb`.* TO 'guest'@'::1';
@@ -95,7 +94,7 @@ provided in the WebApplications folder of this archive.
 	IMPORTANT: If you are running Tomcat without root privileges, please
 	ensure that the following requirements are met:
 
-		1) Tomcat must have read access to 'xmetdb.war';
+		1) Tomcat must have read access to 'xmetdata.war';
 
 		2) Tomcat must have both read and write access to the
 		   'webapps' folder where web applications are being deployed
