@@ -11,7 +11,8 @@ of the Xenobiotics Metabolism Database (XMetDB).
 
 Create the new 'xmetdb' database, set up the corresponding grants, and create
 the tables that are required. You will need the 'xmetdb.sql' script, which is
-provided in this archive.
+provided in this archive or at 
+https://github.com/xmetdb/xmetdb-server/blob/master/xmet-db/src/main/resources/org/xmetdb/xmet/protocol/db/sql/xmetdb.sql
 
 Run the following commands in the MySQL console (please refer to the previous
 step for information on how to start the console).
@@ -22,8 +23,8 @@ step for information on how to start the console).
 ---8<--------------------------------------------------------------------------
 CREATE DATABASE xmetdb CHARACTER SET utf8;
 GRANT ALL ON xmetdb.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
-GRANT ALL ON xmetdb.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
-GRANT ALL ON xmetdb.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
+GRANT ALL ON xmetdb.* TO 'guest'@'127.0.0.1' ;
+GRANT ALL ON xmetdb.* TO 'guest'@'::1';
 USE xmetdb;
 source xmetdb.sql
 GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'localhost';
@@ -43,15 +44,16 @@ GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'::1';
 
 If the database 'xmett_users' does not exist, run the following commands in
 the MySQL console. You will need the 'xmet_users.sql' script, which is
-provided in this archive.
+provided in this archive or at
+https://github.com/xmetdb/xmetdb-server/blob/master/xmet-db/src/main/resources/org/xmetdb/xmet/protocol/db/sql/xmet_users.sql
 
 	IMPORTANT: Before starting the console, make sure that the script
 	'xmet_users.sql' is located in the current folder.
 
 ---8<--------------------------------------------------------------------------
 CREATE DATABASE xmet_users;
-GRANT ALL ON xmet_users.* TO 'guest'@'localhost' IDENTIFIED BY 'guest';
-GRANT ALL ON xmet_users.* TO 'guest'@'127.0.0.1' IDENTIFIED BY 'guest';
+GRANT ALL ON xmet_users.* TO 'guest'@'localhost';
+GRANT ALL ON xmet_users.* TO 'guest'@'127.0.0.1';
 GRANT ALL ON xmet_users.* TO 'guest'@'::1' IDENTIFIED BY 'guest';
 USE xmet_users;
 source xmet_users.sql
@@ -159,10 +161,6 @@ The following option sets the folder where uploaded files are stored.
 # File path to store uploaded files. If null, will use the temp folder.
 xmet_attachments_dir=/srv/xmetdb-docs
 ---8<--------------------------------------------------------------------------
-
-	IMPORTANT: If you're performing an upgrade, please ensure that all
-	existing attachments are placed in the 'xmetdb_attachments_dir' that
-	you've just configured.
 
 Set the following option to 'http://YOURHOST:YOURPORT/xmetdata' (don't include
 the quotes), where YOURHOST is the fully qualified domain name of the host
