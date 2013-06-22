@@ -30,6 +30,9 @@ source xmetdb.sql
 GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'localhost';
 GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'127.0.0.1';
 GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolVersion TO 'guest'@'::1';
+GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolCopy TO 'guest'@'localhost';
+GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolCopy TO 'guest'@'127.0.0.1';
+GRANT EXECUTE ON PROCEDURE xmetdb.createProtocolCopy TO 'guest'@'::1';
 GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'localhost';
 GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'127.0.0.1';
 GRANT EXECUTE ON PROCEDURE xmetdb.deleteProtocol TO 'guest'@'::1';
@@ -126,6 +129,12 @@ The new 'xmetdb.war' is included in this archive.
 		2) Tomcat must have both read and write access to the
 		   'webapps' folder where web applications are being deployed
 		   (e.g. '/usr/share/tomcat6/webapps');
+
+	    3) The JNI-InChI library needs write access in the home directory of the 
+	    user who runs the tomcat service ({home}/.jnati folder).  Please check
+	    the UID of the user who runs the tomcat service and ensure that his home
+	    directory exists and is writeable for that user.  
+
 
 Open the following URI in your browser, replacing YOURHOST and YOURPORT with
 the relevant values from your configuration.
