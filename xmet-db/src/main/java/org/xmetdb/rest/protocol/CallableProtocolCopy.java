@@ -3,6 +3,7 @@ package org.xmetdb.rest.protocol;
 import java.sql.Connection;
 
 import net.idea.modbcum.i.query.IQueryUpdate;
+import net.idea.modbcum.p.UpdateExecutor;
 import net.idea.restnet.db.update.CallableDBUpdateTask;
 import net.idea.restnet.user.DBUser;
 
@@ -11,6 +12,7 @@ import org.restlet.data.Method;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.db.CreateProtocolCopy;
+import org.xmetdb.rest.protocol.db.CreateStructuresCopy;
 import org.xmetdb.xmet.client.Resources;
 
 public class CallableProtocolCopy extends CallableDBUpdateTask<DBProtocol,Form,String> {
@@ -38,6 +40,17 @@ public class CallableProtocolCopy extends CallableDBUpdateTask<DBProtocol,Form,S
 	protected IQueryUpdate<? extends Object, DBProtocol> createUpdate(DBProtocol target) throws Exception {
 		CreateProtocolCopy q = new CreateProtocolCopy(owner,target);
 		return q;
+	}
+	
+	@Override
+	protected Object executeQuery(IQueryUpdate<? extends Object, DBProtocol> q)
+			throws Exception {
+		String oldID = q.getObject().getIdentifier();
+		Object result = super.executeQuery(q);
+		//now copy the structures as well
+		CreateStructuresCopy strucs = new CreateStructuresCopy(oldID, q.getObject());
+		exec.process(strucs);
+		return result;
 	}
 
 	@Override
