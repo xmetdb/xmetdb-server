@@ -231,7 +231,7 @@ CREATE TABLE  `version` (
   `comment` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idmajor`,`idminor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-insert into version (idmajor,idminor,comment) values (2,17,"XMETDB schema");
+insert into version (idmajor,idminor,comment) values (2,18,"XMETDB schema");
 
 -- -----------------------------------------------------
 -- Create new protocol version
@@ -265,8 +265,8 @@ begin
     -- update published status of the old version to archived
 
   	-- create new version
-    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
-    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount,reference)
+    select idprotocol,version_new,ifnull(title_new,title),concat("XMETDB",idprotocol,"v",version_new),ifnull(abstract_new,abstract),iduser,curated,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount,reference 
     from protocol where qmrf_number=protocol_qmrf_number;
       	
    	-- copy authors
@@ -305,8 +305,8 @@ begin
 	DECLARE new_id INT;
 	
   	-- create new version
-    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount)
-    select null,1,protocol.title,concat("XMETDB",idprotocol,"v",now()),abstract,user.iduser,0,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount 
+    insert into protocol (idprotocol,version,title,qmrf_number,abstract,iduser,curated,idproject,idorganisation,filename,status,created,published_status,atom_uncertainty,product_amount,reference)
+    select null,1,protocol.title,concat("XMETDB",idprotocol,"v",now()),abstract,user.iduser,0,idproject,idorganisation,filename,status,now(),'draft',atom_uncertainty,product_amount,reference 
     from protocol join user where qmrf_number=protocol_qmrf_number and username=user_name;
     
     SELECT LAST_INSERT_ID() INTO new_id;
