@@ -461,6 +461,8 @@
         <xmet.db.user.test>guest</xmet.db.user.test>
         <!-- DB password for tests -->
         <xmet.db.user.password.test>guest</xmet.db.user.password.test>
+        <xmet_guide>https://github.com/xmetdb</xmet_guide>
+		<xmet_about>http://xmetdb.org/</xmet_about>
         <!-- attachment uploads related. More in WEB-INF/config/xmet.properties -->
         <aa.local.admin.name>admin</aa.local.admin.name>
         <aa.local.admin.pass>changeit</aa.local.admin.pass>
