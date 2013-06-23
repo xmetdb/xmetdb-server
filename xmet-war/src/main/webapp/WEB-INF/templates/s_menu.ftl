@@ -16,7 +16,7 @@
 			<li><a class='ui-widget-header selectable ${s["/myaccount"]!""}' href='${xmet_root}/myaccount/protocol' title="${username}'s observations.">My observations</a></li>
 	</#if>
 	<li><a class='selectable ui-widget-header' title='About XMetDB' href='${xmet_about}'>About</a></li>	
-	<li><a class='selectable ui-widget-header' title='Click here to read the XMEXMetDBTDB guide' href='${xmet_guide}'>Guide</a></li>
+	<li><a class='selectable ui-widget-header' title='Click here to read the XmetDB guide' href='${xmet_guide}'>Guide</a></li>
 </ul>
 	<#if s["/protocol"]??>
 		<#include "/s_stats.ftl">
