@@ -1,10 +1,10 @@
 <div class='helptitle' style='font-weight:bold;'>XMetDB observation</div>
 <div class='helpcontent'>
-<a href='${xmet_root}/stats?term=enzymes'>Number of enzymes</a>|
-<a href='${xmet_root}/stats?term=observations'>Number of observations</a>|
-<a href='${xmet_root}/stats?term=observationsbystatus'>Number of all observations by status</a>|
-<a href='${xmet_root}/stats?term=structuresbygroup'>Number of chemical structures associated with observations</a>|
-<a href='${xmet_root}/stats?term=structures'>Number of all chemical structures</a>|
+<a href='${xmet_root}/stats?term=enzymes'>Number of enzymes</a><br>
+<a href='${xmet_root}/stats?term=observations'>Number of observations</a><br>
+<a href='${xmet_root}/stats?term=observationsbystatus'>Number of all observations by status</a><br>
+<a href='${xmet_root}/stats?term=structuresbygroup'>Number of chemical structures associated with observations</a><br>
+<a href='${xmet_root}/stats?term=structures'>Number of all chemical structures</a><br>
 </div>
 
 <div id="keys" style="display:none;">
