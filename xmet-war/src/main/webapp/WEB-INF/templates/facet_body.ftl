@@ -11,9 +11,9 @@ $(document).ready(function() {
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="XMetDB enzymes">Enzymes</a></li>');
-	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/catalog" title="Only enzymes with observations available">Only enzymes with observations available</a></li>');
+	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/stats" title="XMetDB stats">Statistics</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
+    loadHelp("${xmet_root}","stats");
 })
 </script>
 </head>
@@ -30,8 +30,8 @@ jQuery(document).ready(function()
 		<table id='facet' cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>	
 		<tr>
-		<th width='75%'>Enzyme</th>
-		<th width='25%'>Observations</th>
+		<th width='75%'>Name</th>
+		<th width='25%'>Count</th>
 		</tr>
 		</thead>
 		<tbody></tbody>

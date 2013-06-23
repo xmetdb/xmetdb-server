@@ -38,7 +38,8 @@ public class HelpResource extends CatalogFTLResource<String>  {
 		task,
 		users,
 		pwd_forgotten,
-		organisation
+		organisation,
+		stats
 	}
 	public HelpResource() {
 		super();

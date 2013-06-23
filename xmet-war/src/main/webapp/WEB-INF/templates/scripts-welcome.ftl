@@ -4,7 +4,7 @@
 		$('a.selectable').mouseout(function  () { $(this).removeClass('ui-state-active'); } );
 
 		try {
-			$('span#valueStructures').load( '${queryService}/admin/stats/structures');
+			$('span#valueStructures').load( '${xmet_root}/stats?term=substratesandproducts&media=text/plain');
 		} catch (e) {}
 		try {
 			$('span#valueEnzymes').load( '${xmet_root}/stats?term=enzymes&media=text/plain');

@@ -19,12 +19,43 @@ public class TableCountFacetQuery extends AbstractFacetQuery<RESOURCES,String,St
 				return "select 'Enzymes' as name,count(idtemplate) c from template";
 			}
 		},
+
 		observations {
 			@Override
 			public String getSQL() {
 				return "select 'Observations' as name,count(idprotocol) c from protocol where published_status='published'";
 			}
-		};
+		},
+		observationsbystatus {
+			@Override
+			public String getSQL() {
+				return 
+				"SELECT concat(ifnull(published_status, 'ALL'),' ',if(curated is null,' [All]',if(curated=1,'[Curated]','[Not curated]'))), count(idprotocol) from protocol\n"+
+				"group by published_status,curated with rollup";
+			}
+		},			
+		structuresbygroup {
+			@Override
+			public String getSQL() {
+				return 
+				"SELECT concat(title,'s'),count(distinct(idchemical)) FROM `ambit2-xmetdb`.sessions join `ambit2-xmetdb`.query using(idsessions) join `ambit2-xmetdb`.query_results using(idquery)\n"+ 
+				"where title='substrate' or title='product'	group by idsessions";
+			}			
+		},
+		substratesandproducts {
+			@Override
+			public String getSQL() {
+				return 
+				"SELECT 'Chemical structures',count(distinct(idchemical)) FROM `ambit2-xmetdb`.sessions join `ambit2-xmetdb`.query using(idsessions) join `ambit2-xmetdb`.query_results using(idquery) where title=\"substrate\" or title=\"product\"";
+			}			
+		},
+		structures {
+			@Override
+			public String getSQL() {
+				return 
+				"SELECT 'Chemical structures',count(idchemical) FROM `ambit2-xmetdb`.chemicals";
+			}			
+		};		
 		public abstract String getSQL();
 	}
 	/**
@@ -32,7 +63,6 @@ public class TableCountFacetQuery extends AbstractFacetQuery<RESOURCES,String,St
 	 */
 	private static final long serialVersionUID = -8340773122431657623L;
 	protected StatisticsFacet record;
-	protected static String sql_template = "select 'Enzymes' as name,count(idtemplate) c from template";
 	
 	/**
 	 * 

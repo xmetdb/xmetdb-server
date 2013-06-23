@@ -16,6 +16,11 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.xmetdb.rest.protocol.facet.TableCountFacetQuery.RESOURCES;
 
+/**
+ * http://localhost:8081/xmetdb/stats?term=observations&media=text/plain
+ * @author nina
+ *
+ */
 public class StatisticsResource extends XMETFacetResource {
 	
 	public StatisticsResource() {
@@ -29,6 +34,7 @@ public class StatisticsResource extends XMETFacetResource {
 	@Override
 	protected IQueryRetrieval<IFacet<String>> createQuery(Context context,
 			Request request, Response response) throws ResourceException {
+		//getRequest().getAttributes().get(key)
 		Form form = getRequest().getResourceRef().getQueryAsForm();
 		RESOURCES term = RESOURCES.enzymes;
 		if (form.getFirstValue("term")!=null)
