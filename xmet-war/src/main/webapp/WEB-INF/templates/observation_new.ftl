@@ -19,7 +19,6 @@ function atomNumber(num, atoms_id) {
 $(document).ready(function() {
 		$( ".useSelected" ).button();
 		$( "#structureSearchResults" ).selectable();
-		loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele");
 		$( "#buttonSubstrateDraw" ).click(function() {  toggleDrawUI('substrate','#buttonSubstrateDraw','structure diagram editor and search');  return false; });
 		$( "#buttonProductDraw" ).click(function() {  toggleDrawUI('product','#buttonProductDraw','structure diagram editor and search');  return false; });		
 		$('form[name="substrateSearchForm"]').removeAttr('onsubmit')
@@ -51,6 +50,7 @@ $(document).ready(function() {
     <#switch xmet_mode>
     <#case "newdocument">
     	$(document).ready(function() {    
+    		loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele","","");
     		jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/editor" title="Create new observation">New observation</a></li>');
     		jQuery("#breadCrumb").jBreadCrumb();
     		loadHelp("${xmet_root}","observation_new");

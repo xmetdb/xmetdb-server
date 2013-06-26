@@ -48,7 +48,7 @@ function renderEnzyme(root,enzyme) {
 	} catch (err) { return enzyme["code"]}
 }
 
-function loadEnzymesList(root,selectTag,allelesTag) {
+function loadEnzymesList(root,selectTag,allelesTag,enzymeSelected,alleleSelected) {
 	  //clear the list	
 	$(selectTag).html("");
 	  //get all enzymes
@@ -66,21 +66,24 @@ function loadEnzymesList(root,selectTag,allelesTag) {
           
           var alleles = {};
           data.forEach(function enz(element, index, array) {
-      		  $("<option value='" + element.code + "'>" + element.code + "&nbsp;" +element.name + "</option>").appendTo(selectTag);
+        	  var selected = (enzymeSelected==element.code)?'selected':'';
+      		  $("<option value='" + element.code + "'" + selected + ">" + element.code + "&nbsp;" +element.name + "</option>").appendTo(selectTag);
       		  alleles[element.code] = element.alleles;
       	  });
       	  $(selectTag).change(function() {
         		var x = $(this).val();
+        		try { if ($.isArray(x)) x = x[0];} catch (err) {};
                 $(allelesTag).html("");
-                $("<option value='' selected></option>").appendTo(allelesTag);
+                $("<option value=''></option>").appendTo(allelesTag);
                 if (alleles[x]!=undefined)
                 	alleles[x].forEach(function enz(element, index, array) {
-	              		  $("<option value='" + element + "'>" + element + "</option>").appendTo(allelesTag);
+                		  var selected = '';//(alleleSelected==element)?'selected':'';
+	              		  $("<option value='" + element + "'" + selected + " >" + element + "</option>").appendTo(allelesTag);
 	              	});
       	  });
         },
         error: function(xhr, status, err) { 
-        	//console.log(err);
+
         },
         complete: function(xhr, status) { }
      });
@@ -668,11 +671,12 @@ function editObservation(root,observation_uri,query_service) {
 	        	  $('#xmet_atom_uncertainty option[value='+observation["atom_uncertainty"]+']').attr('selected', 'selected');
 	        	  $('#xmet_product_amount option[value='+observation["product_amount"]+']').attr('selected', 'selected');
 	        	  $('#xmet_experiment option[value='+observation["title"]+']').attr('selected', 'selected');
+	        	  
+	        	  
 	        	  loadEnzyme(observation,function(obs) {
 	        		  var allele = obs.enzyme.allele==null?"":obs.enzyme.allele.length>0?obs.enzyme.allele[0]:"";
-	        		  $('#xmet_enzyme option[value='+obs.enzyme.code+']').attr('selected', 'selected');
-	        		  //$('#xmet_enzyme option[value='+obs.enzyme.code+']').change();
-	        		  $('#xmet_allele option[value='+allele+']').attr('selected', 'selected');
+	        		  //load enzymes and set selected; otherwise the list may not be yet loaded!
+	        		  loadEnzymesList(root,"#xmet_enzyme","#xmet_allele",obs.enzyme.code,allele);
 	        	  });
 	        	  $('#xmet_reference').attr("value",observation["reference"]);
 	        	  $('#xmet_curated').text(observation["curated"]?"Curated":"Not curated");
@@ -1119,21 +1123,24 @@ function escape (key, val) {
 function loadHelp(root,topic) {
 	var helpURI =  root + "/help/" + (topic===undefined?"":topic) + "?media=text/html";
 	$.get(helpURI,function(data) {
-		$('#pagehelp').append(data);	
-		
-		$('#keys ul li').map(function(el, value) {
-			var key = $(value.innerHTML).attr('href');
-		    var content = $(key).html();
-		    var title = $(value).text();
-		    key = key.replace('#','');
-		    $('a.chelp.'+key)
-			 .attr('title','Help: '+key)
-			 .html('<span id="info-link" class="ui-icon ui-icon-help" style="display: inline-block;"></span>')
-			 .click(function() {
-				 $('#keytitle').text(title);
-				 $('#keycontent').html(content);
-		     });		    
-		});
+		try {
+			$('#pagehelp').append(data);	
+			$('#keys ul li').map(function(el, value) {
+				var key = $(value.innerHTML).attr('href');
+			    var content = $(key).html();
+			    var title = $(value).text();
+			    key = key.replace('#','');
+			    $('a.chelp.'+key)
+				 .attr('title','Help: '+key)
+				 .html('<span id="info-link" class="ui-icon ui-icon-help" style="display: inline-block;"></span>')
+				 .click(function() {
+					 $('#keytitle').text(title);
+					 $('#keycontent').html(content);
+			     });		    
+			});
+		} catch (err) {
+			
+		}
 	});
 }
 function loadHelpJSON(root,topic) {

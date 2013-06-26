@@ -6,7 +6,7 @@
 
 
 $(document).ready(function() {
-	loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele");
+	loadEnzymesList("${xmet_root}","#xmet_enzyme","#xmet_allele","","");
 	searchFormValidation("#search_form");
 });
 
