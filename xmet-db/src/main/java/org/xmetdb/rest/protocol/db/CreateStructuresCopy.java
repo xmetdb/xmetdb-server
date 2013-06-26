@@ -15,7 +15,14 @@ import org.xmetdb.rest.protocol.DBProtocol;
  *
  */
 public class CreateStructuresCopy  extends AbstractUpdate<String,DBProtocol> {
+	protected int newpropertyid = -1;
+	public int getNewpropertyid() {
+		return newpropertyid;
+	}
 
+	public void setNewpropertyid(int newpropertyid) {
+		this.newpropertyid = newpropertyid;
+	}
 	protected String[] create_sql = {
 			"insert into `ambit2-xmetdb`.query SELECT null,idsessions,?,content,idtemplate,now() FROM `ambit2-xmetdb`.query where name = ?",
 			"insert into `ambit2-xmetdb`.query_results SELECT qnew.idquery,r.idchemical,r.idstructure,r.selected,r.metric,r.text\n"+ 
@@ -24,8 +31,7 @@ public class CreateStructuresCopy  extends AbstractUpdate<String,DBProtocol> {
 			//and SOMs via properties
 			"insert ignore into `ambit2-xmetdb`.properties\n"+
 			"select null,idreference,?,units,?,islocal,ptype from `ambit2-xmetdb`.properties where name=?"
-			//new,new,old
-			
+
 	};
 
 	public CreateStructuresCopy(String oldID,DBProtocol ref) {
@@ -63,11 +69,11 @@ public class CreateStructuresCopy  extends AbstractUpdate<String,DBProtocol> {
 		return create_sql;
 	}
 	public void setID(int index, int id) {
-		
+		if (index==2) newpropertyid = id;
 	}
 	@Override
 	public boolean returnKeys(int index) {
-		return false;
+		return index==2;
 	}
 
 }
