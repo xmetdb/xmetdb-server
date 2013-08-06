@@ -815,7 +815,7 @@ function defineObservationsTable(tableSelector,observations_uri,root,curatorLink
 	        		}
 				}				
 			],
-		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',	
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"iplf>',	
 		"bJQueryUI" : true,
 		"bPaginate" : true,
 		"sPaginationType": "full_numbers",
