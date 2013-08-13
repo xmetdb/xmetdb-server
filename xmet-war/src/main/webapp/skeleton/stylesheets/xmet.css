@@ -258,6 +258,12 @@ a.admin {
 	padding: 0 0 0 20px;
 }
 
+a.ccby {
+	font-weight: normal;
+	text-decoration: none;
+	background: url("/xmetdb/images/ccby.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 0 40px;
+}
 
 A:link {
 	COLOR: #516373;
