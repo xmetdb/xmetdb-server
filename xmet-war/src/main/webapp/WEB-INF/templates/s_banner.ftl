@@ -2,7 +2,7 @@
 					
 	<ul class='topLinks'>
 	<li class='topLinks'>
-		<a class='topLinks ccby' href='http://creativecommons.org/licenses/by/3.0/' target='license' title='CC-BY'>License</a>
+		<a class='topLinks ccby' href='http://creativecommons.org/licenses/by/2.0/' target='license' title='CC-BY'>License</a>
 	</li>
 	<li class='topLinks'>|</li>
 	<#if username??>
