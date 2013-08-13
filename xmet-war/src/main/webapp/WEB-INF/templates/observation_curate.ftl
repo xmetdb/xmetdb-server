@@ -92,7 +92,7 @@ $(document).ready(function() {
 			jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Curate an existing observation">Curate</a></li>');
 			loadHelp("${xmet_root}","observation_curate");
 		<#else>
-	 		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Modify Sites of Metabolism">Modify SOM</a></li>');
+	 		jQuery("#breadCrumb ul").append('<li id="breadCrumb_xmet_id_modify"><a href="${xmet_request}" title="Modify Sites of Metabolism">Modify Sites of Metabolism</a></li>');
 	 		loadHelp("${xmet_root}","observation_edit");
 		 </#if>
 		 updateObservation("${xmet_root}","${xmet_request_json}","${queryService}","${xmet_updatemode}");

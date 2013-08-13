@@ -13,7 +13,7 @@
     <li><a href="#allele">Allele</a></li>
     <li><a href="#reference">Reference</a></li>
     <li><a href="#modifyobs">Modify</a></li>
-    <li><a href="#modifysom">Modify SOM</a></li>
+    <li><a href="#modifysom">Modify Sites of Metabolism</a></li>
     <li><a href="#copyobs">Copy</a></li>
     <li><a href="#hcurator">XMETDB curation</a></li>
   </ul>

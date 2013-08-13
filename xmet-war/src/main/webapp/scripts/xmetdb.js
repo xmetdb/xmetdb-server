@@ -560,7 +560,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
   						}
 	      		  });
       			  	
-      			  var puriTitle = mode=="curate"?"Curate":"Modify SOM";		
+      			  var puriTitle = mode=="curate"?"Curate":"Modify Sites of Metabolism";		
       			  var puriHint = mode=="curate"?"Click to curate the observation":"Modify Sites of Metabolism";
 	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ puri + "' title='"+puriHint+"'>"+puriTitle+"</a>");
 	        	  
