@@ -225,7 +225,9 @@ function runSearchURI(sSource,results,callback, errorcallback) {
 	        "crossDomain": true,  //bloody IE
 	        "contentType" : "application/x-javascript",
 	        "success": function(json) {
-	        	callback(json);
+	        	  callback(json);
+                  var p = $(results).offset();
+                  $(window).scrollTop(p.top-100);
 	        },
 	        "cache": false,
 	        "statusCode" : {
@@ -383,6 +385,8 @@ function toggleDrawUI(prefix, idButton, msg) {
 	        "contentType" : "application/x-javascript",
 	        "url": $(uriTag).val() + "?mol=true&media=" + encodeURIComponent("application/x-javascript"),
 	        "success": function(mol) {
+	        	var p = drawUI.offset();
+                $(window).scrollTop(p.top);
 	        	$(molTag).val(mol);
 	        	try {iframeOnLoad();} catch (err) { }
 	        },
@@ -400,7 +404,11 @@ function toggleDrawUI(prefix, idButton, msg) {
 	        }
 	      } );				
 	} else
-		try {iframeOnLoad();} catch (err) { }
+		try {
+			iframeOnLoad();
+			var p = drawUI.offset();
+            $(window).scrollTop(p.top);
+		} catch (err) { }
 }      
 
 
