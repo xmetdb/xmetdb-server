@@ -1,9 +1,9 @@
-xmetdb-server
+<img src="http://www.xmetdb.org/xmetdb/images/logo.png"> [Xenobiotics Metabolism Database](http://www.xmetdb.org/xmetdb)
 =============
 
-The xmetdb web service/application. Go to [XMetDB database](http://www.xmetdb.org/xmetdb) in order to use the database!
+User guide and API documentation at [XMetDB wiki](http://www.xmetdb.org/wiki/Main_Page)
 
-This is an ongoing implementation of XMETDB.  Almost fully functional, with some [issues](https://github.com/xmetdb/xmetdb-server/issues) still to be resolved!
+This is an ongoing implementation of XMetDB.  Almost fully functional, with some [issues](https://github.com/xmetdb/xmetdb-server/issues) still to be resolved!
 
 --------
 Build: 
