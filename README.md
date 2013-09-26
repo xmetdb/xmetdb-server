@@ -1,7 +1,7 @@
 xmetdb-server
 =============
 
-The xmetdb web service/application
+The xmetdb web service/application. Go to [XMetDB database](http://www.xmetdb.org/xmetdb) in order to use the database!
 
 This is an ongoing implementation of XMETDB.  Almost fully functional, with some [issues](https://github.com/xmetdb/xmetdb-server/issues) still to be resolved!
 
