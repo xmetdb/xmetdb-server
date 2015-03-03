@@ -5,9 +5,7 @@
     <artifactId>xmetdb</artifactId>
     <version>0.0.5-SNAPSHOT</version>
   </parent>
-  <groupId>org.xmetdb</groupId>
   <artifactId>xmet-beans</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
   <name>xmetdb beans</name>
   <dependencies>
   	<dependency>

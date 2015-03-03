@@ -5,9 +5,7 @@
     <groupId>org.xmetdb</groupId>
     <version>0.0.5-SNAPSHOT</version>
   </parent>
-    <groupId>org.xmetdb</groupId>
   <artifactId>xmet-db</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
   <name>XMET database</name>
     <repositories>
   	<repository>
