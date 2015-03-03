@@ -5,6 +5,7 @@ import net.idea.restnet.c.routers.MyRouter;
 import org.restlet.Context;
 import org.xmetdb.rest.FileResource;
 import org.xmetdb.rest.endpoints.EnzymesResource;
+import org.xmetdb.rest.links.db.LinksResource;
 import org.xmetdb.rest.protocol.resource.db.ProtocolDBResource;
 import org.xmetdb.rest.protocol.resource.db.ProtocolVersionDBResource;
 import org.xmetdb.rest.user.author.resource.ProtocolAuthorsResource;
@@ -20,6 +21,7 @@ public class ProtocolRouter extends MyRouter {
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.authors), ProtocolAuthorsResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.endpoint), EnzymesResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.som), UpdateObservationResource.class);
+		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.link), LinksResource.class);
 		
 	}
 }

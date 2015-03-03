@@ -10,6 +10,7 @@ import net.toxbank.client.resource.Protocol;
 import net.toxbank.client.resource.Template;
 
 import org.xmetdb.rest.endpoints.Enzyme;
+import org.xmetdb.rest.links.ExternalIdentifier;
 import org.xmetdb.rest.protocol.attachments.DBAttachment;
 import org.xmetdb.xmet.client.AtomUncertainty;
 import org.xmetdb.xmet.client.ProductAmount;
@@ -27,6 +28,15 @@ public class DBProtocol extends Protocol {
 	protected Enzyme endpoint;
 	protected PublishedStatus publishedStatus = PublishedStatus.draft;
 	protected AtomUncertainty atomUncertainty = AtomUncertainty.Uncertain;
+	protected List<ExternalIdentifier> externalids;
+	
+	public List<ExternalIdentifier> getExternalids() {
+		return externalids;
+	}
+	public void setExternalids(List<ExternalIdentifier> externalids) {
+		this.externalids = externalids;
+	}
+	
 	public AtomUncertainty getAtomUncertainty() {
 		return atomUncertainty;
 	}
@@ -160,4 +170,5 @@ public class DBProtocol extends Protocol {
 		if (getDataTemplate()==null) return null;
 		else return getDataTemplate().getTitle();
 	}
+	
 }

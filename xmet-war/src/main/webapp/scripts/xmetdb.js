@@ -1250,3 +1250,108 @@ function loadDBInfo(root) {
 function getID() {
 	   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 }	
+
+function defineLinksTable(url,root) {
+
+	var eTable = $('#extids').dataTable( {
+		"bProcessing": true,
+		"bServerSide": false,
+		"bStateSave": false,
+		"sAjaxDataProp" : "externalIdentifiers",
+		"aoColumnDefs": [
+				{ //0
+					"aTargets": [ 0 ],	
+					"sClass" : "center",
+					"bSortable" : false,
+					"bSearchable" : false,
+					"bUseRendered" : false,
+					"mDataProp" : "type",
+					"fnRender" : function(o,val) {
+						 return val;
+					}
+				},			
+				
+				{ "mDataProp": "id" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [1 ],
+				  "bSearchable" : true,
+				  "bSortable" : true,
+				  "bUseRendered" : false,
+				  "fnRender" : function(o,val) {
+					  return val;
+				  }
+				}		
+			],
+		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
+		"sSearch": "Filter:",
+		"bJQueryUI" : true,
+		"bPaginate" : true,
+		"sPaginationType": "full_numbers",
+		"sPaginate" : ".dataTables_paginate _paging",
+		"bDeferRender": true,
+		"bSearchable": true,
+		"sAjaxSource": url,
+
+		"oLanguage": {
+	            "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
+	            "sLoadingRecords": "No  links found.",
+	            "sLengthMenu": 'Display <select>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="50">50</option>' +
+                '<option value="100">100</option>' +
+                '<option value="-1">all</option>' +
+                '</select> links.'	            
+	    }
+    
+	} )
+	.makeEditable({
+		"aoColumns": [
+                null,
+                {
+                    type:'text'	,
+                    loadtext: 'loading...',
+                    indicator: 'Saving enzyme code ...',
+                    tooltip: 'Click to edit enzyme code',
+                    loadtext: 'loading...',
+                    onblur: 'cancel',
+                    submit: 'Save changes',
+                    fnOnCellUpdated: function(sStatus, sValue, settings){
+
+					}
+                },
+                {
+                    type:'text'	,
+                    loadtext: 'loading...',
+                    indicator: 'Saving enzyme name ...',
+                    tooltip: 'Click to edit enzyme name',
+                    loadtext: 'loading...',
+                    onblur: 'cancel',
+                    data: function (a,b) {
+                    	return $(a).text();
+                    },
+                    submit: 'Save changes'                  	  
+                }
+        ],		
+        fnOnDeleting: function(tr, id)  {       
+                this["sDeleteURL"] = root + "/link"+id +"?method=DELETE";
+                return true;
+        },
+        fnOnDeleted: function(status) {       
+        		eTable.fnDraw(true);
+        },        
+        sAddURL: root+"/catalog",
+        sUpdateURL: root+"/catalog?method=PUT",
+        sAddNewRowFormId: "formAddNewLink",
+        sAddNewRowButtonId: "btnAddNewLink",
+        sDeleteURL: root + "/catalog?method=DELETE",
+        oDeleteRowButtonOptions: {
+            label: "Remove",
+            icons: { primary: 'ui-icon-trash' }
+        },
+		oAddNewRowButtonOptions: {	label: "Add...",
+			icons: {primary:'ui-icon-plus'} 
+		},
+		sAddDeleteToolbarSelector: ".dataTables_length"		
+	});
+	return eTable;
+}

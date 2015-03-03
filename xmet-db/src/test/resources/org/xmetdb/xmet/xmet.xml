@@ -46,4 +46,7 @@
   <alert idquery="2" name="toxicity" query="toxicity" qformat="FREETEXT" rfrequency="weekly" rinterval="1" iduser="2" sent="2012-01-16 09:30:51.000000000"/>
    <protocol_authors idprotocol="1" version="1" iduser="2"/>
    <protocol_endpoints idprotocol="2" version="1" idtemplate="4" allele="1A"/>
+   <protocol_links idprotocol="2" version="1" type="type1" id="12345"/>
+   <protocol_links idprotocol="2" version="1" type="type2" id="abcdef"/>
+   
 </dataset>

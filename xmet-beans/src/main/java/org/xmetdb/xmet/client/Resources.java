@@ -13,6 +13,7 @@ public class Resources {
 	public static final String structure = "/structure";
 	public static final String dataset = "/dataset";
 	public static final String endpoint = "/endpoint";
+	public static final String link = "/link";
 	public static final String som = "/som";
 	public static final String project = "/project";
 	public static final String organisation = "/organisation";
