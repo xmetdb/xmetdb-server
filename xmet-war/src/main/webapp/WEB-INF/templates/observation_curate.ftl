@@ -185,7 +185,7 @@ $(document).ready(function() {
 			<label>Reference:<a href='#' class='chelp reference'></a></label>
 			<input type="hidden" name="published_status"  value="on">
 		</div>
-		<div class="ten columns omega remove-bottom ui-state-default" id="xmet_reference" title="Enter reference DOI or free text"> </div>
+		<div class="ten columns omega remove-bottom ui-state-default" id="xmet_reference" title="Enter reference DOI (doi:XYZ) or PubMed ID (pmid:123) or free text"> </div>
 		<div class="three columns omega">&nbsp;</div>
 
 	</div>

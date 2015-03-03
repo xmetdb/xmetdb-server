@@ -29,5 +29,5 @@
 	</p>
 	<!-- References -->
 	<p><label for="xmet_reference">Reference:<em>*</em></label>
-		<input type="text" name="xmet_reference" size='60' title="DOI or free text?" value="">
+		<input type="text" name="xmet_reference" size='60' title="Reference DOI (doi:XYZ) or PubMed ID (pmid:123) or free text" value="">
 	</p>

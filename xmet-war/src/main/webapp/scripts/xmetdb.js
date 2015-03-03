@@ -459,7 +459,7 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        	  } catch (err) {
 	        		  $("#sim_reference").hide();
 	        	  }
-	        	  //DOI link (if available)
+	        	  //DOI or PubMed link (if available)
 	        	  try {
 	        		  $('#xmet_doi').hide();
 	        		  var doi = observation["reference"].toLowerCase();
@@ -468,7 +468,12 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        			  $('#xmet_doi').attr("href",doi);
 	        			  $('#xmet_doi').attr("title",doi);
 	        			  $('#xmet_doi').show();
-	        		  }	  
+	        		  }	else if (doi.indexOf("pmid:")==0)  {
+	        			  doi = "http://www.ncbi.nlm.nih.gov/pubmed/" + doi.replace("pmid:","");
+	        			  $('#xmet_doi').attr("href",doi);
+	        			  $('#xmet_doi').attr("title",doi);
+	        			  $('#xmet_doi').show();
+	        		  }  
 	        	  } catch (err) {}
 	        	  
 	        	  $('#xmet_comments').text(observation["comments"]===undefined?"":observation["comments"]);
