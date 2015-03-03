@@ -40,7 +40,37 @@
   </dependencies>
   <build>
     <plugins>
-
+    <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <url></url>
+          <port>8081</port>
+          <server>www.xmetdb.org</server>
+          <path>/xmetdb</path>
+          <systemProperties>
+            <JAVA_OPTS>XX:-UseSplitVerifier
+							-Djava.util.Arrays.useLegacyMergeSort=true 
+							-Djsse.enableSNIExtension=false</JAVA_OPTS>
+          </systemProperties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+        <configuration>
+          <webXml>${web_xml}</webXml>
+          <!-- <manifest> <addDefaultImplementationEntries>true</addDefaultImplementationEntries> 
+						</manifest> -->
+          <archive>
+            <manifestEntries>
+              <Implementation-Build>${build.version}</Implementation-Build>
+            </manifestEntries>
+          </archive>
+          <packagingExcludes>${exclude.jni}</packagingExcludes>
+        </configuration>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
