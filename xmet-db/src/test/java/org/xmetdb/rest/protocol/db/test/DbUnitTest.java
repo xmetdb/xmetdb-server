@@ -67,12 +67,12 @@ public abstract class DbUnitTest {
 		loadProperties();
 		String p = properties.getProperty("Host");
 		return p==null?"localhost":
-			("${qmrf.db.host}".equals(p))?"localhost":p;
+			("${xmet.db.host}".equals(p))?"localhost":p;
 	}
 	protected String getDatabase() {
 		loadProperties();
 		String p = properties.getProperty("database.test");
-		return (p==null)||("${qmrf.db}".equals(p))?"qmrf-test":p;
+		return (p==null)||("${xmet.db}".equals(p))?"xmetdb-test":p;
 	}
 	protected String getPort() {
 		loadProperties();
@@ -82,12 +82,12 @@ public abstract class DbUnitTest {
 	protected String getUser() {
 		loadProperties();
 		String p = properties.getProperty("database.user.test");
-		return (p==null) || ("${qmrf.db.user.test}".equals(p))?"guest":p;			
+		return (p==null) || ("${xmet.db.user.test}".equals(p))?"guest":p;			
 	}
 	protected String getPWD() {
 		loadProperties();
 		String p = properties.getProperty("database.user.test.password");
-		return (p==null) || ("${qmrf.db.user.test.password}".equals(p))?"guest":p;	
+		return (p==null) || ("${xmet.db.user.test.password}".equals(p))?"guest":p;	
 	}
 	
 	@Before
