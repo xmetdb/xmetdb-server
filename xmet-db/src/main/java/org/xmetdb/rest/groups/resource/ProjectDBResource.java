@@ -2,7 +2,6 @@ package org.xmetdb.rest.groups.resource;
 
 import java.sql.Connection;
 
-import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.groups.CallableGroupCreator;
@@ -39,12 +38,6 @@ public class ProjectDBResource extends GroupDBResource<DBProject> {
 	@Override
 	public String getGroupTitle() {
 		return GroupType.PROJECT.toString();
-	}
-
-	@Override
-	protected HTMLBeauty getHTMLBeauty() {
-		if (htmlBeauty==null) htmlBeauty =  new GroupHTMLBeauty(Resources.project);
-		return htmlBeauty;
 	}
 
 	@Override

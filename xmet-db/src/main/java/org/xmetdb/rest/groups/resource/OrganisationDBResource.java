@@ -2,7 +2,6 @@ package org.xmetdb.rest.groups.resource;
 
 import java.sql.Connection;
 
-import net.idea.restnet.c.html.HTMLBeauty;
 import net.idea.restnet.c.task.CallableProtectedTask;
 import net.idea.restnet.db.DBConnection;
 import net.idea.restnet.groups.CallableGroupCreator;
@@ -41,12 +40,6 @@ public class OrganisationDBResource extends GroupDBResource<DBOrganisation> {
 		return GroupType.ORGANISATION.toString();
 	}
 	
-	@Override
-	protected HTMLBeauty getHTMLBeauty() {
-		if (htmlBeauty==null) htmlBeauty =  new GroupHTMLBeauty(Resources.organisation);
-		return htmlBeauty;
-	}
-
 	@Override
 	protected CallableProtectedTask<String> createCallable(Method method,
 			Form form, DBOrganisation item) throws ResourceException {
