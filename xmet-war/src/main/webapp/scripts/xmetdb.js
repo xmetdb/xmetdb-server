@@ -748,8 +748,8 @@ function loadEnzyme(observation, renderEnzyme) {
 }
 
 function displayEnzyme(observation) {
-	  $('#xmet_enzyme').replaceWith(observation.enzyme.code + "&nbsp;" +  observation.enzyme.name );
-	  $('#xmet_allele').replaceWith(observation.enzyme['allele']);
+	  $('#xmet_enzyme').replaceWith((observation.enzyme.code==null?"":observation.enzyme.code) + "&nbsp;" +  (observation.enzyme.name==null?"":observation.enzyme.name) );
+	  $('#xmet_allele').replaceWith(observation.enzyme['allele']==null?"":observation.enzyme['allele']);
 }
 
 /**
