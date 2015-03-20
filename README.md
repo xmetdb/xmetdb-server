@@ -1,7 +1,13 @@
-<img src="http://www.xmetdb.org/xmetdb/images/logo.png"> [Xenobiotics Metabolism Database](http://www.xmetdb.org/xmetdb)
-=============
+Xenobiotics Metabolism Database (XMetDB)
+===========
 
-User guide and API documentation at [XMetDB wiki](http://www.xmetdb.org/wiki/Main_Page)
+<img src="http://www.xmetdb.org/xmetdb/images/logo.png">
+
+- <a href="http://www.xmetdb.org/">Database</a>
+- User guide and API documentation at [XMetDB wiki](http://www.xmetdb.org/wiki/Main_Page)
+- Interactive <a href="http://xmetdb.github.io/xmetdb-docs/">XMetDB API-DOCS</a> Swagger-UI based 
+
+=============
 
 This is an ongoing implementation of XMetDB.  Almost fully functional, with some [issues](https://github.com/xmetdb/xmetdb-server/issues) still to be resolved!
 
