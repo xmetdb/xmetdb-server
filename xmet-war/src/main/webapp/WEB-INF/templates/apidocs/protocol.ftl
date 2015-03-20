@@ -7,17 +7,49 @@
         "application/xml",
         "text/html"
     ],		    
-    "resourcePath": "/chemical",
+    "resourcePath": "/protocol",
 	"apis": [
+		{
+            "path": "/protocol/{xmetdbid}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Retrieve single observation",
+                    "notes": "Returns single observation by xmetdbid",
+                    "type": "Observation",
+                    "nickname": "getObservation",
+                     <#include "/apidocs/authz.ftl" >
+                    "parameters": [
+			            {
+			              "name": "xmetdbid",
+			              "description": "XMETDB obsrevation by identifier ",
+			              "required": true,
+			              "type": "string",
+			              "paramType": "path",
+			              "defaultValue" : "XMETDB2",
+			              "allowMultiple"  : false
+			            }			            			            
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Observation not found"
+                        },
+						<#include "/apidocs/error_aa.ftl" >,
+						<#include "/apidocs/error_500.ftl" >                            
+                    ]
+                }
+            ]
+     	} ,
      	{
-            "path": "/chemical",
+            "path": "/protocol",
             "operations": [
                 {
                     "method": "GET",
                     "summary": "Observation search",
                     "notes": "Returns list of observations",
-                    "type": "Search observations",
-                    "nickname": "searchObservation",
+                    "type": "Observation",
+                    "nickname": "searchObservations",
                      <#include "/apidocs/authz.ftl" >
                     "parameters": [
 			            {

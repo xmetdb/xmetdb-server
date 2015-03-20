@@ -4,7 +4,7 @@
         "application/json",
         "text/html"
     ],		
-    "resourcePath": "/catalog",
+    "resourcePath": "/enzyme",
 	"apis": [
      	{
             "path": "/catalog",
@@ -17,14 +17,6 @@
                     "nickname": "searchEnzyme",
                      <#include "/apidocs/authz.ftl" >
                     "parameters": [
-			            {
-			              "name": "search",
-			              "description": "SMILES, InChI, IUPAC name, base64 endcoded MOL",
-			              "required": true,
-			              "type": "string",
-			              "paramType": "query",
-			              "allowMultiple"  : false
-			            },
 						<#include "/apidocs/parameters_page.ftl" >				            			            
                     ],
                     "responseMessages": [
@@ -54,7 +46,8 @@
 			              "description": "Enzyme by identifier ",
 			              "required": true,
 			              "type": "string",
-			              "paramType": "query",
+			              "paramType": "path",
+			              "defaultValue" : "2",
 			              "allowMultiple"  : false
 			            },
 						<#include "/apidocs/parameters_page.ftl" >				            			            
