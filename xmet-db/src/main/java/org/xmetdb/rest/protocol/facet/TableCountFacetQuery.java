@@ -18,12 +18,19 @@ public class TableCountFacetQuery extends AbstractFacetQuery<RESOURCES,String,St
 			public String getSQL() {
 				return "select 'Enzymes' as name,count(idtemplate) c from template";
 			}
+			@Override
+			public String getURI() {
+				return "catalog?";
+			}
 		},
 
 		observations {
 			@Override
 			public String getSQL() {
 				return "select 'Observations' as name,count(idprotocol) c from protocol where published_status='published'";
+			}
+			public String getURI() {
+				return "protocol?status=published";
 			}
 		},
 		observationsbystatus {
@@ -55,8 +62,22 @@ public class TableCountFacetQuery extends AbstractFacetQuery<RESOURCES,String,St
 				return 
 				"SELECT 'Chemical structures',count(idchemical) FROM `ambit2-xmetdb`.chemicals";
 			}			
-		};		
+		},
+		references {
+			@Override
+			public String getSQL() {
+				return "select reference,count(*) from protocol group by reference";
+			}
+			@Override
+			public String getURI() {
+				return "protocol?xmet_reference=";
+			}
+		};	
+		
 		public abstract String getSQL();
+		public String getURI() {
+			return null;
+		}
 	}
 	/**
 	 * 
@@ -73,7 +94,7 @@ public class TableCountFacetQuery extends AbstractFacetQuery<RESOURCES,String,St
 	public TableCountFacetQuery(String url,RESOURCES resources) {
 		super(url);
 		setFieldname(resources);
-		record = new StatisticsFacet();
+		record = new StatisticsFacet(resources.getURI());
 	}
 
 	@Override
@@ -98,7 +119,7 @@ public class TableCountFacetQuery extends AbstractFacetQuery<RESOURCES,String,St
 
 	@Override
 	public StatisticsFacet getObject(ResultSet rs) throws AmbitException {
-		if (record == null) record = new StatisticsFacet();
+		if (record == null) record = new StatisticsFacet(getFieldname().getURI());
 		try {
 			record.setValue(rs.getString(1));
 			record.setCount(rs.getInt(2));

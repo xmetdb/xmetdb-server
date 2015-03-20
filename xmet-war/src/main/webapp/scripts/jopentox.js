@@ -227,7 +227,7 @@ function defineFacetsTable(root,url) {
 				  "bUseRendered" : false,
 				  "bSortable" : true,
 				  "fnRender" : function(o,val) {
-					  return "<a href='"+o.aData["uri"]+"' title='"+o.aData["uri"]+"'>"+val+"</a>";
+					  return "<a href='" + root + "/" + o.aData["subcategory"] + encodeURIComponent(val) + "' title='"+o.aData["subcategory"]+"'>"+val+"</a>";
 				  }
 				},
 				{ "mDataProp": "count" , "asSorting": [ "asc", "desc" ],
