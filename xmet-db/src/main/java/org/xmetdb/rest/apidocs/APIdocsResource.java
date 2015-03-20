@@ -21,6 +21,7 @@ public class APIdocsResource extends CatalogFTLResource {
 		catalog,
 		myaccount,  //myaccount/protocol
 		editor,
+		stats,
 		chemical //chemical?option=similarity&threshold=0.5&
 	}
 	public APIdocsResource() {
