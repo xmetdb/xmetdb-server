@@ -464,7 +464,8 @@
         <notification.mail.user>admin</notification.mail.user>
         <notification.mail.debug>root@localhost</notification.mail.debug>
         <notification.admin.email>root@localhost</notification.admin.email>
-        
+        <!-- CORS support -->
+		<xmet.allowed.origins>*</xmet.allowed.origins>        
       </properties>
     </profile>
   </profiles>

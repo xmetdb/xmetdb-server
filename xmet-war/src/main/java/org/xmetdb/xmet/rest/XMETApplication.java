@@ -81,8 +81,10 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	static final String version = "xmet.version";
 	static final String version_build = "xmet.build";
 	static final String version_timestamp = "xmet.build.timestamp";
-	protected Hashtable<String,Properties> properties = new Hashtable<String, Properties>();
-	   
+	public static final String ALLOWED_ORIGINS = "xmet.allowed.origins";
+	
+	protected Hashtable<String, Properties> properties = new Hashtable<String, Properties>();
+
 	public XMETApplication() {
 		super();
 
@@ -91,7 +93,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		setOwner("xmetdb.org");
 		setAuthor("Developed by Ideaconsult Ltd. (2012) on behalf of xmetdb.org");
 		setConfigFile(xmetProperties);
-		
+
 		versionShort = readVersionShort();
 		versionLong = readVersionLong();
 
@@ -124,31 +126,37 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 			insecureConfig();
 
 	}
-	
-	public synchronized String readVersionShort()  {
+
+	public synchronized String readVersionShort() {
 		try {
-			return getProperty(version,xmetProperties);
-		} catch (Exception x) {return "Unknown"; }
+			return getProperty(version, xmetProperties);
+		} catch (Exception x) {
+			return "Unknown";
+		}
 	}
 
-	public synchronized String readVersionLong()  {
+	public synchronized String readVersionLong() {
 		try {
-			String v1 = getProperty(version,xmetProperties);
-			String v2 = getProperty(version_build,xmetProperties);
-			String v3 = getProperty(version_timestamp,xmetProperties);
-			return String.format("%s r%s built %s",v1,v2,new Date(Long.parseLong(v3)));
-		} catch (Exception x) {return "Unknown"; }
+			String v1 = getProperty(version, xmetProperties);
+			String v2 = getProperty(version_build, xmetProperties);
+			String v3 = getProperty(version_timestamp, xmetProperties);
+			return String.format("%s r%s built %s", v1, v2,
+					new Date(Long.parseLong(v3)));
+		} catch (Exception x) {
+			return "Unknown";
+		}
 	}
-	
-	protected synchronized String getProperty(String name,String config)  {
+
+	protected synchronized String getProperty(String name, String config) {
 		try {
 			Properties p = properties.get(config);
-			if (p==null) {
+			if (p == null) {
 				p = new Properties();
-				InputStream in = this.getClass().getClassLoader().getResourceAsStream(config);
+				InputStream in = this.getClass().getClassLoader()
+						.getResourceAsStream(config);
 				p.load(in);
 				in.close();
-				properties.put(config,p);
+				properties.put(config, p);
 			}
 			return p.getProperty(name);
 
@@ -162,89 +170,97 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 
 		Router router = new MyRouter(this.getContext()) {
 			public void handle(Request request, Response response) {
-				//to use within riap calls
-				String rootUrl = getContext().getParameters().getFirstValue(Resources.BASE_URL); 
-				if ((rootUrl == null) && request.getRootRef().toString().startsWith("http")) { 
-                    rootUrl = request.getRootRef().toString(); 
-                    getContext().getParameters().set(Resources.BASE_URL,rootUrl,true);
+				// to use within riap calls
+				String rootUrl = getContext().getParameters().getFirstValue(
+						Resources.BASE_URL);
+				if ((rootUrl == null)
+						&& request.getRootRef().toString().startsWith("http")) {
+					rootUrl = request.getRootRef().toString();
+					getContext().getParameters().set(Resources.BASE_URL,
+							rootUrl, true);
 				}
 				super.handle(request, response);
 			};
 		};
 		// here we check if the cookie contains auth token, if not just consider
 		// the user notlogged in
-		boolean testAuthZ = "true".equalsIgnoreCase(getContext().getParameters().getFirstValue("TESTAUTHZ"));
-		
+		boolean testAuthZ = "true".equalsIgnoreCase(getContext()
+				.getParameters().getFirstValue("TESTAUTHZ"));
+
 		Filter auth = createCookieAuthenticator(true);
-		//owners & admin are allowed to modify everything
-		Filter authz = new ProtocolAuthorizer(testAuthZ,DBRoles.adminRole); 
+		// owners & admin are allowed to modify everything
+		Filter authz = new ProtocolAuthorizer(testAuthZ, DBRoles.adminRole);
 		Router setCookieUserRouter = new MyRouter(getContext());
 		auth.setNext(authz);
 		authz.setNext(setCookieUserRouter);
 		setCookieUserRouter
 				.attach(Resources.login, XMETLoginFormResource.class);
-		
+
 		AlertRouter alertRouter = new AlertRouter(getContext());
-		
+
 		MyRouter myAccountRouter = new MyRouter(getContext());
 		myAccountRouter.attachDefault(MyAccountResource.class);
-		myAccountRouter.attach(Resources.alert,alertRouter);
-		myAccountRouter.attach(Resources.reset,PwdResetResource.class);
-		myAccountRouter.attach(Resources.protocol,MyObservationsResource.class);
-		
-		
+		myAccountRouter.attach(Resources.alert, alertRouter);
+		myAccountRouter.attach(Resources.reset, PwdResetResource.class);
+		myAccountRouter
+				.attach(Resources.protocol, MyObservationsResource.class);
+
 		setCookieUserRouter.attach(Resources.myaccount, myAccountRouter);
-		
 
 		/** XMETDB observations & SOMs **/
 		ProtocolRouter protocols = new ProtocolRouter(getContext());
 		OrganisationRouter org_router = new OrganisationRouter(getContext());
 		ProjectRouter projectRouter = new ProjectRouter(getContext());
 		Restlet protocolRouter;
-		
+
 		MyRouter statsRouter = new MyRouter(getContext());
 		statsRouter.attachDefault(StatisticsResource.class);
-		router.attach(StatisticsResource.resource,statsRouter);
+		router.attach(StatisticsResource.resource, statsRouter);
 
-		
 		protocolRouter = protocols; // createProtectedResource(protocols,"protocol",new
 									// ProtocolAuthorizer());
 		setCookieUserRouter.attach(Resources.protocol, protocolRouter);
 		setCookieUserRouter.attach(Resources.project, projectRouter);
 		setCookieUserRouter.attach(Resources.organisation, org_router);
-		setCookieUserRouter.attach(Resources.user, createUserRouter(new UserRouter(getContext(),
-				protocols, org_router, projectRouter, alertRouter)));
-	
+		setCookieUserRouter.attach(Resources.user,
+				createUserRouter(new UserRouter(getContext(), protocols,
+						org_router, projectRouter, alertRouter)));
 
-		setCookieUserRouter.attach(Resources.endpoint,ProtocolsByEndpointResource.class);
-		
-		setCookieUserRouter.attach(Resources.chemical, new StructureRouter(getContext()));
+		setCookieUserRouter.attach(Resources.endpoint,
+				ProtocolsByEndpointResource.class);
 
-		setCookieUserRouter.attach(String.format("%s/{%s}",Resources.dataset,DatasetResource.datasetKey), DatasetResource.class);
+		setCookieUserRouter.attach(Resources.chemical, new StructureRouter(
+				getContext()));
+
+		setCookieUserRouter.attach(String.format("%s/{%s}", Resources.dataset,
+				DatasetResource.datasetKey), DatasetResource.class);
 		setCookieUserRouter.attach(Resources.admin, createAdminRouter());
-		setCookieUserRouter.attach(Resources.editor, createEditorRouter(testAuthZ));
-		setCookieUserRouter.attach(Resources.curator, createUnpublishedRouter());
+		setCookieUserRouter.attach(Resources.editor,
+				createEditorRouter(testAuthZ));
+		setCookieUserRouter
+				.attach(Resources.curator, createUnpublishedRouter());
 		setCookieUserRouter.attach(Resources.task, new XMETTaskRouter(
 				getContext()));
 
 		setCookieUserRouter.attach("", XMETWelcomeResource.class);
 		setCookieUserRouter.attach("/", XMETWelcomeResource.class);
-		
-		
+
 		Router endpointsRouter = new MyRouter(getContext());
 		endpointsRouter.attachDefault(EnzymesResource.class);
-		endpointsRouter.attach(EnzymesResource.resourceID,EnzymesResource.class);
+		endpointsRouter.attach(EnzymesResource.resourceID,
+				EnzymesResource.class);
 		setCookieUserRouter.attach(Resources.enzyme, endpointsRouter);
-		
+
 		router.attach(auth);
 		/**
 		 * Images, styles, favicons, applets
 		 */
 		attachStaticResources(router);
 		router.attach(Resources.help, HelpResource.class);
-		router.attach(String.format("%s/{key}", Resources.help), HelpResource.class);
+		router.attach(String.format("%s/{key}", Resources.help),
+				HelpResource.class);
 		router.attach("/api-docs", new APIDocsRouter(getContext()));
-		
+
 		Router protectedRouter = new MyRouter(getContext());
 		protectedRouter.attach("/roles", XMETLoginFormResource.class);
 		protectedRouter.attach(
@@ -259,14 +275,24 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		router.attach("/protected", auth);
 
 		router.attach(Resources.register, RegistrationResource.class);
-		router.attach(String.format("%s%s", Resources.register, Resources.confirm), RegistrationConfirmResource.class);
-		router.attach(String.format("%s%s", Resources.register, Resources.notify), XMETRegistrationNotifyResource.class);
+		router.attach(
+				String.format("%s%s", Resources.register, Resources.confirm),
+				RegistrationConfirmResource.class);
+		router.attach(
+				String.format("%s%s", Resources.register, Resources.notify),
+				XMETRegistrationNotifyResource.class);
 
 		router.attach(Resources.forgotten, PwdForgottenResource.class);
-		router.attach(String.format("%s%s", Resources.forgotten, Resources.confirm), PwdForgottenConfirmResource.class);
-		router.attach(String.format("%s%s", Resources.forgotten, Resources.notify), PwdForgottenNotifyResource.class);
-		router.attach(String.format("%s%s", Resources.forgotten, Resources.failed), PwdForgottenFailedResource.class);
-		
+		router.attach(
+				String.format("%s%s", Resources.forgotten, Resources.confirm),
+				PwdForgottenConfirmResource.class);
+		router.attach(
+				String.format("%s%s", Resources.forgotten, Resources.notify),
+				PwdForgottenNotifyResource.class);
+		router.attach(
+				String.format("%s%s", Resources.forgotten, Resources.failed),
+				PwdForgottenFailedResource.class);
+
 		router.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
 		router.setRoutingMode(Router.MODE_BEST_MATCH);
 		/*
@@ -274,33 +300,62 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		 * XMETApplication.printRoutes(router, ">", w);
 		 * System.out.println(w.toString());
 		 */
-		
-        initFreeMarkerConfiguration();
-		
-        //"clap://class/templates"));
-        
-		return router;
+
+		initFreeMarkerConfiguration();
+
+		// "clap://class/templates"));
+
+		return addOriginFilter(router);
 	}
 
-
-	/*
-	 * protected Restlet createLocalAAVerifiedResource(Class clazz) {
+	/**
+	 * CORS support
 	 * 
-	 * Filter userAuthn = new
-	 * ChallengeAuthenticatorDBLocal(getContext(),true,"conf/xmetdb.pref"
-	 * ,"xmet_users"); userAuthn.setNext(clazz); return userAuthn; }
+	 * @param router
+	 * @return
+	 */
+	protected Restlet addOriginFilter(Restlet router) {
+		String allowedOrigins = getAllowedOrigins();
+		getLogger().info("CORS: Origin filter attached:\t" + allowedOrigins);
+		OriginFilter originFilter = new OriginFilter(getContext(),
+				allowedOrigins);
+		originFilter.setNext(router);
+		return originFilter;
+	}
+
+	protected synchronized String getAllowedOrigins() {
+		try {
+			return getProperty(ALLOWED_ORIGINS, xmetProperties);
+		} catch (Exception x) {
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param optional
+	 * @return
 	 */
 	protected Filter createCookieAuthenticator(boolean optional) {
 		String secret = getProperty(Resources.Config.secret.name());
-		String usersdbname = getContext().getParameters().getFirstValue(Config.users_dbname.name());
-		if (usersdbname==null) usersdbname = "xmet_users";
-		
+		String usersdbname = getContext().getParameters().getFirstValue(
+				Config.users_dbname.name());
+		if (usersdbname == null)
+			usersdbname = "xmet_users";
+
 		CookieAuthenticator cookieAuth = new CookieAuthenticator(getContext(),
-				usersdbname, (secret==null?UUID.randomUUID().toString():secret).getBytes());
+				usersdbname, (secret == null ? UUID.randomUUID().toString()
+						: secret).getBytes());
 		cookieAuth.setCookieName("xmetdb");
-		long sessionLength = 1000*60*45L; //45 min in milliseconds
-		try { sessionLength = Long.parseLong(getProperty(Resources.Config.sessiontimeout.name())); } catch (Exception x) {}
-		if (sessionLength<600000) sessionLength =  600000; //10 min in case the config is broken
+		long sessionLength = 1000 * 60 * 45L; // 45 min in milliseconds
+		try {
+			sessionLength = Long
+					.parseLong(getProperty(Resources.Config.sessiontimeout
+							.name()));
+		} catch (Exception x) {
+		}
+		if (sessionLength < 600000)
+			sessionLength = 600000; // 10 min in case the config is broken
 		cookieAuth.setSessionLength(sessionLength);
 		String config = "conf/xmetdb.pref";
 		if (!optional) {
@@ -308,7 +363,6 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 			cookieAuth.setLoginFormPath("/login");
 			cookieAuth.setLoginPath("/signin");
 			cookieAuth.setLogoutPath("/signout");
-
 
 			cookieAuth.setVerifier(new DBVerifier(getContext(), config,
 					"xmet_users"));
@@ -345,8 +399,6 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		return cookieAuth;
 	}
 
-
-
 	/**
 	 * Resource /bookmark
 	 * 
@@ -378,37 +430,50 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 	 * @return
 	 */
 	protected Restlet createEditorRouter(Boolean skip) {
-		if (skip) return new XMETEditorRouter(getContext());
+		if (skip)
+			return new XMETEditorRouter(getContext());
 		Authorizer authz = new SimpleRoleAndMethodAuthorizer(new DBRole(
-				XMETDBRoles.xmetdb_user.name(), XMETDBRoles.xmetdb_user.toString()));
+				XMETDBRoles.xmetdb_user.name(),
+				XMETDBRoles.xmetdb_user.toString()));
 		authz.setNext(new XMETEditorRouter(getContext()));
-		
+
 		return authz;
 	}
+
 	protected Restlet createUnpublishedRouter() {
-		Authorizer authz = new SimpleRoleAndMethodAuthorizer(DBRoles.adminRole,DBRoles.curatorRole);
+		Authorizer authz = new SimpleRoleAndMethodAuthorizer(DBRoles.adminRole,
+				DBRoles.curatorRole);
 		authz.setNext(new XMETCuratorRouter(getContext()));
 		return authz;
 	}
+
 	/**
-	 * Use {@link UserAuthorizer} unless explicitly xmet_protected is explicitly set to false.
+	 * Use {@link UserAuthorizer} unless explicitly xmet_protected is explicitly
+	 * set to false.
+	 * 
 	 * @param userRouter
 	 * @return
 	 */
 	protected Restlet createUserRouter(UserRouter userRouter) {
 		String aa = getProperty(Resources.Config.xmet_protected.name());
-		if (aa==null) aa = getContext().getParameters().getFirstValue(Resources.Config.xmet_protected.name());
+		if (aa == null)
+			aa = getContext().getParameters().getFirstValue(
+					Resources.Config.xmet_protected.name());
 		boolean aaenabled = true;
 		try {
-			if (aa!=null)
+			if (aa != null)
 				aaenabled = Boolean.parseBoolean(aa);
-		} catch (Exception x) {aaenabled = true;}
+		} catch (Exception x) {
+			aaenabled = true;
+		}
 		if (aaenabled) {
 			Authorizer authz = new UserAuthorizer();
 			authz.setNext(userRouter);
 			return authz;
-		} else return userRouter;
-	}	
+		} else
+			return userRouter;
+	}
+
 	/**
 	 * Images, styles, icons Works if packaged as war only!
 	 * 
@@ -440,8 +505,6 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 
 	}
 
-
-	
 	/**
 	 * Standalone, for testing mainly
 	 * 
@@ -490,44 +553,34 @@ class SimpleRoleAndMethodAuthorizer extends RoleAuthorizer {
 	}
 
 }
+
 /*
-
-class ProtocolAuthorizer extends RoleAuthorizer {
-	protected boolean skip = true;
-	public ProtocolAuthorizer(boolean skip, DBRole... roles) {
-		super();
-		this.skip = skip;
-		for (DBRole role : roles)
-			getAuthorizedRoles().add(role);
-	}
-
-	@Override
-	public boolean authorize(Request request, Response response) {
-		
-		if (Method.GET.equals(request.getMethod()))
-			return true;
-		if (skip) return true;
-		if (Protocol.RIAP.equals(request.getProtocol())) return true;
-		
-		if ((request.getClientInfo() == null)
-				|| (request.getClientInfo().getUser() == null)
-				|| (request.getClientInfo().getUser().getIdentifier() == null))
-			return false;
-		return super.authorize(request, response);
-	}
-
-}
-*/
+ * 
+ * class ProtocolAuthorizer extends RoleAuthorizer { protected boolean skip =
+ * true; public ProtocolAuthorizer(boolean skip, DBRole... roles) { super();
+ * this.skip = skip; for (DBRole role : roles) getAuthorizedRoles().add(role); }
+ * 
+ * @Override public boolean authorize(Request request, Response response) {
+ * 
+ * if (Method.GET.equals(request.getMethod())) return true; if (skip) return
+ * true; if (Protocol.RIAP.equals(request.getProtocol())) return true;
+ * 
+ * if ((request.getClientInfo() == null) || (request.getClientInfo().getUser()
+ * == null) || (request.getClientInfo().getUser().getIdentifier() == null))
+ * return false; return super.authorize(request, response); }
+ * 
+ * }
+ */
 class APIDocsRouter extends MyRouter {
 
-    public APIDocsRouter(Context context) {
-	super(context);
-	init();
-    }
+	public APIDocsRouter(Context context) {
+		super(context);
+		init();
+	}
 
-    protected void init() {
-	attachDefault(APIdocsResource.class);
-	attach("/{key1}", APIdocsResource.class);
-	attach("/{key1}/{key2}", APIdocsResource.class);
-    }
+	protected void init() {
+		attachDefault(APIdocsResource.class);
+		attach("/{key1}", APIdocsResource.class);
+		attach("/{key1}/{key2}", APIdocsResource.class);
+	}
 }
