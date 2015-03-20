@@ -142,7 +142,7 @@
      	}
     ],
     "models" : {
-        "Task" : <#include "/apidocs/json_schema_task.ftl" >,
+        "Task" : <#include "/apidocs/json_schema_task.ftl" >
       },    
 	<#include "/apidocs/info.ftl" >  
 }
