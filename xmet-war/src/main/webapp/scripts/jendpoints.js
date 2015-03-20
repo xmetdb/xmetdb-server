@@ -1,6 +1,17 @@
 function defineEndpointsTable(url,root) {
 
 	var facet = getEndpointsFacet(); 
+	jQuery.fn.dataTableExt.oSort['facet-asc']  = function(a,b) {
+		var x = facet[a];
+		var y = facet[b];
+		return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['facet-desc'] = function(a,b) {
+		var x = facet[a];
+		var y = facet[b];
+		return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+	};	
 	var eTable = $('#endpoints').dataTable( {
 		"bProcessing": true,
 		"bServerSide": false,
@@ -9,14 +20,16 @@ function defineEndpointsTable(url,root) {
 				{ //0
 					"aTargets": [ 0 ],	
 					"sClass" : "center",
-					"bSortable" : false,
-					"bSearchable" : false,
+					"bSortable" : true,
+					"bSearchable" : true,
 					"bUseRendered" : false,
-					"mDataProp" : "id",
+					"asSorting": [ "desc","asc" ],
+					"mDataProp" : "name",
+					"sType": "facet" ,
 					"sClass": "readonly",
 					sWidth : "32px",
 					"fnRender" : function(o,val) {
-						 var count = facet[o.aData["name"]];	
+						 var count = facet[val];	
 						 if (count == null) return "";
 						 else {
 							 return  "<span class='ui-icon ui-icon-folder-collapsed zoomxmet' style='float: left; margin: .1em;' title='Click to show XMetDB observations'></span>"+
@@ -71,6 +84,7 @@ function defineEndpointsTable(url,root) {
 					  }
 				}				
 			],
+	    "order": [[0, "desc" ]],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"sSearch": "Filter:",
 		"bJQueryUI" : true,
