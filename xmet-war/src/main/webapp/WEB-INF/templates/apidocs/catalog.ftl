@@ -4,7 +4,7 @@
         "application/json",
         "text/html"
     ],		
-    "resourcePath": "/enzyme",
+    "resourcePath": "/catalog",
 	"apis": [
      	{
             "path": "/catalog",

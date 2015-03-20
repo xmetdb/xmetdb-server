@@ -19,7 +19,7 @@
                     "parameters": [
 			            {
 			              "name": "search",
-			              "description": "SMILES, InChI, IUPAC name, base64 endcoded MOL",
+			              "description": "Chemical identifier or SMILES or InChI or Base64 encoded MOL file, if (type=b64mol)",
 			              "required": true,
 			              "type": "string",
 			              "paramType": "query",
@@ -30,14 +30,14 @@
 			              "description": "Defines the expected content of the search parameter",
 			              "required": false,
 			              "type": "string",
-			              "enum" : ["smiles","mol", "url","b64mol"],
-			              "defaultValue" : "smiles",
+			              "enum" : ["","b64mol"],
+			              "defaultValue" : "",
 			              "paramType": "query",
 			              "allowMultiple"  : false
 			            },				       
 	            		{                  
 			              "name": "search_substrates",
-			              "description": "Search structures found as substrates",
+			              "description": "Search within Substrates only, if =on",
 			              "required": false,
 			              "type": "string",
 			              "paramType": "query",
@@ -46,7 +46,7 @@
 			            },			
        					{                  
 			              "name": "search_products",
-			              "description": "Search structures found as products",
+			              "description": "Search within Products only, if =on",
 			              "required": false,
 			              "type": "string",
 			              "paramType": "query",
@@ -64,10 +64,11 @@
 			            },	
 			            {
 			              "name": "threshold",
-			              "description": "Similarity threshold",
+			              "description": "Tanimoto similarity threshold",
 			              "required": false,
 			              "type": "double",
 			              "paramType": "query",
+			              "defaultvalue" : 0.5,
 			              "allowMultiple"  : false
 			            },		
 				            

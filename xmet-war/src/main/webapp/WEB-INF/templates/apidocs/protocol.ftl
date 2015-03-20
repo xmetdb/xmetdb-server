@@ -141,5 +141,8 @@
             ]
      	}
     ],
+    "models" : {
+        "Task" : <#include "/apidocs/json_schema_task.ftl" >,
+      },    
 	<#include "/apidocs/info.ftl" >  
 }
