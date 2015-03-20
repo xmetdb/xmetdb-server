@@ -50,7 +50,7 @@ public class HelpResource extends CatalogFTLResource<String>  {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		if (isHtmlbyTemplate()) {
-			CookieSetting cS = new CookieSetting(0, "subjectid", getToken());
+			CookieSetting cS = new CookieSetting(0, "xmetdb", getToken());
 			cS.setPath("/");
 	        this.getResponse().getCookieSettings().add(cS);
 	        return getHTMLByTemplate(variant);

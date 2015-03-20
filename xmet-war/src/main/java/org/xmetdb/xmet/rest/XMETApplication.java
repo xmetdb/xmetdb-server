@@ -35,6 +35,7 @@ import org.restlet.security.User;
 import org.restlet.service.TunnelService;
 import org.xmetdb.rest.DBRoles;
 import org.xmetdb.rest.aa.ProtocolAuthorizer;
+import org.xmetdb.rest.apidocs.APIdocsResource;
 import org.xmetdb.rest.endpoints.EnzymesResource;
 import org.xmetdb.rest.groups.OrganisationRouter;
 import org.xmetdb.rest.groups.ProjectRouter;
@@ -242,6 +243,7 @@ public class XMETApplication extends FreeMarkerApplicaton<String> {
 		attachStaticResources(router);
 		router.attach(Resources.help, HelpResource.class);
 		router.attach(String.format("%s/{key}", Resources.help), HelpResource.class);
+		router.attach("/api-docs", new APIDocsRouter(getContext()));
 		
 		Router protectedRouter = new MyRouter(getContext());
 		protectedRouter.attach("/roles", XMETLoginFormResource.class);
@@ -516,3 +518,16 @@ class ProtocolAuthorizer extends RoleAuthorizer {
 
 }
 */
+class APIDocsRouter extends MyRouter {
+
+    public APIDocsRouter(Context context) {
+	super(context);
+	init();
+    }
+
+    protected void init() {
+	attachDefault(APIdocsResource.class);
+	attach("/{key1}", APIdocsResource.class);
+	attach("/{key1}/{key2}", APIdocsResource.class);
+    }
+}
