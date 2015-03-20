@@ -4,7 +4,7 @@
     "apis": [
         {
             "path": "/protocol",
-            "description": "XMetDB observations. An <a href='http://www.xmetdb.org/wiki/Observation'>Observation</a> is a record of an experiment, transforming a Substrate to a Product. "
+            "description": "Observations. A XMetDB Observation is a record of an experiment, transforming a Substrate to a Product."
         },
         {
             "path": "/chemical",
@@ -12,11 +12,11 @@
         },
         {
             "path": "/catalog",
-            "description": "XMetDB is populated with a list of the <a href='http://www.xmetdb.org/wiki/API#Enzymes'>common enzymes>/a>. "
+            "description": "Enzymes. XMetDB is populated with a list of the common enzymes."
         },
         {
             "path": "/stats",
-            "description": "Statistics"
+            "description": "XMetDB Statistics"
         }                                             
     ],
 	<#include "/apidocs/authz.ftl" >
