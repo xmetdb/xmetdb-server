@@ -3,7 +3,7 @@
   <parent>
     <artifactId>xmetdb</artifactId>
     <groupId>org.xmetdb</groupId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>xmet-db</artifactId>
   <name>XMET database</name>
