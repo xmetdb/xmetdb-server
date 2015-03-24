@@ -1290,7 +1290,10 @@ function defineLinksTable(url,root,xmetid) {
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
-					  return val;
+					  try {
+					  if (val.match("^http")) return "<a href='"+val+"'  class='qxternal' target='qxternal'>"+val+"</a>"; 
+					  else return val;
+					  } catch (err) { return val; } 
 				  }
 				},		
 				{ "mDataProp": "value" , "asSorting": [ "asc", "desc" ],

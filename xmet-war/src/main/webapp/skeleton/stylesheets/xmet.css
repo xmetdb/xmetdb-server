@@ -334,3 +334,8 @@ A:hover {
     overflow: hidden;
     padding: 0px;
 }  
+a.qxternal {
+	background: url("../../skeleton/images/external.jpg") no-repeat scroll 0 0 transparent;
+	background-position:right;
+	padding: 0 20px 0 0;
+}
