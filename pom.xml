@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.xmetdb</groupId>
   <artifactId>xmetdb</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>xmetdb</name>
   <description>xmetdb</description>
@@ -25,7 +25,7 @@
     <system></system>
     <url>https://github.com/xmetdb/xmetdb-server/issues</url>
   </issueManagement>
-   <repositories>
+  <repositories>
     <repository>
       <id>ambit-plovdiv</id>
       <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/thirdparty</url>
@@ -71,7 +71,7 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-    </repository>    
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -119,7 +119,6 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-  
   <build>
     <resources>
       <resource>
@@ -209,23 +208,23 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
           <version>1.2</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-           <shortRevisionLength>8</shortRevisionLength>
-          <revisionOnScmFailure>-SNAPSHOT</revisionOnScmFailure>
-          <doCheck>false</doCheck>
-          <doUpdate>false</doUpdate>
-          <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
-          <locale>US</locale>
-        </configuration>
-      </plugin>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>create</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <shortRevisionLength>8</shortRevisionLength>
+            <revisionOnScmFailure>-SNAPSHOT</revisionOnScmFailure>
+            <doCheck>false</doCheck>
+            <doUpdate>false</doUpdate>
+            <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+            <locale>US</locale>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -447,7 +446,7 @@
         <!-- DB password for tests -->
         <xmet.db.user.password.test>guest</xmet.db.user.password.test>
         <xmet_guide>https://github.com/xmetdb</xmet_guide>
-		<xmet_about>http://xmetdb.org/</xmet_about>
+        <xmet_about>http://xmetdb.org/</xmet_about>
         <!-- attachment uploads related. More in WEB-INF/config/xmet.properties -->
         <aa.local.admin.name>admin</aa.local.admin.name>
         <aa.local.admin.pass>changeit</aa.local.admin.pass>
@@ -465,7 +464,7 @@
         <notification.mail.debug>root@localhost</notification.mail.debug>
         <notification.admin.email>root@localhost</notification.admin.email>
         <!-- CORS support -->
-		<xmet.allowed.origins>*</xmet.allowed.origins>        
+        <xmet.allowed.origins>*</xmet.allowed.origins>
       </properties>
     </profile>
   </profiles>
