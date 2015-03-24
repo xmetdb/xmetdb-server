@@ -10,6 +10,10 @@ jQuery(document).ready(function()
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}" title="XMetDB search">Search</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
     loadHelp("${xmet_root}","search");
+    
+    $( "#search_value" ).keypress(function() {
+    	$( "#search_type" ).val(""); 
+    });
 })
 </script>
 </head>
@@ -45,9 +49,9 @@ jQuery(document).ready(function()
 				<label>Search options</label>
 				<a href='#' class='chelp options'></a>
 				<br/>
-				<input type='radio' id='auto' value='auto' name='option'  title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
+				<input type='radio' id='auto' value='auto' name='option' checked title='Exact structure or search by identifier' size='20' tabindex='2'/>Auto
 				</br>
-      		    <input type='radio' name='option' id='similarity' value='similarity' checked title='Enter SMILES or draw structure' tabindex='3'/>Similarity
+      		    <input type='radio' name='option' id='similarity' value='similarity'  title='Enter SMILES or draw structure' tabindex='3'/>Similarity
       		    </br>
       		    <input type='radio' name='option' id="smarts" value='smarts' title='Enter or draw a SMARTS query' tabindex='5' size='40'/>Substructure
 				<br/>
@@ -55,8 +59,8 @@ jQuery(document).ready(function()
     		 	<label>Chemical identifier</label>
     		 	<a href='#' class='chelp identifier'></a>
     		 	<br/>
-    		 	<input type='text' name='search' size='60' value='' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
-   				<input type='hidden' name='type' value='smiles'>
+    		 	<input type='text' name='search' id='search_value' size='60' value='' tabindex='1' title='Enter any chemical compound identifier (CAS, Name, EINECS, SMILES or InChI). The the input type is guessed automatically.'>
+   				<input type='hidden' name='type' id='search_type' value=''>
    				
     		 	<input type="submit" class="search" value="Structure search" tabindex='13'>
 			</div>
