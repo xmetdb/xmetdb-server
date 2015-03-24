@@ -25,8 +25,8 @@ public class ReadObservationIdentifiers
 	 * 
 	 */
 	private static final long serialVersionUID = -2268008311829764871L;
-	private static String readSQL = "select idprotocol,version,type,id from protocol_links where idprotocol=? and version=?";
-	private static String readSQL_byidentifier = "select idprotocol,version,type,id from protocol join protocol_links using(idprotocol,version) where qmrf_number=?";
+	private static String readSQL = "select idprotocol,version,type,id,qmrf_number from from protocol join protocol_links using(idprotocol,version) where idprotocol=? and version=?";
+	private static String readSQL_byidentifier = "select idprotocol,version,type,id,qmrf_number from protocol join protocol_links using(idprotocol,version) where qmrf_number=?";
 
 	@Override
 	public String getSQL() throws AmbitException {
@@ -67,7 +67,8 @@ public class ReadObservationIdentifiers
 	@Override
 	public ExternalIdentifier getObject(ResultSet rs) throws AmbitException {
 		try {
-			return new ExternalIdentifier(rs.getString("type"),
+			return new ExternalIdentifier(rs.getString("qmrf_number"),
+					rs.getString("type"),
 					rs.getString("id"));
 		} catch (Exception x) {
 			throw new AmbitException(x);

@@ -15,6 +15,11 @@ public class LinksJSONReporter extends QueryReporter<ExternalIdentifier, IQueryR
 	 */
 	private static final long serialVersionUID = -6247243997729783899L;
 	protected String comma = "";
+	protected String root = null;
+	public LinksJSONReporter(String root) {
+		super(); 
+		this.root = root;
+	}
 	@Override
 	public void footer(Writer arg0, IQueryRetrieval<ExternalIdentifier> arg1) {
 		try {

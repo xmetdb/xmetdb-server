@@ -64,7 +64,8 @@
 		</div>
 		<div class='two columns omega' id="xmet_curated"></div>
 		<div class="two columns omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
-		<div class='six columns omega'>&nbsp;</div>
+		<div class='four columns omega' ></div>
+		<div class='two columns omega'><a href='#' title='Links' id='xmet_links'></a></div>
 	</div>	
 	<div class='row half-bottom' style="margin:5px;padding:5px;"><hr class='remove-bottom'/></div>		
 

@@ -22,6 +22,8 @@ public class ProtocolRouter extends MyRouter {
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.endpoint), EnzymesResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.som), UpdateObservationResource.class);
 		attach(String.format("/{%s}%s",FileResource.resourceKey,Resources.link), LinksResource.class);
+		attach(String.format("/{%s}%s/{%s}",FileResource.resourceKey,Resources.link,LinksResource.typeKey), LinksResource.class);
+		attach(String.format("/{%s}%s/{%s}/{%s}",FileResource.resourceKey,Resources.link,LinksResource.typeKey,LinksResource.valueKey), LinksResource.class);
 		
 	}
 }

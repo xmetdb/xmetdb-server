@@ -8,7 +8,8 @@
   <script type='text/javascript'>
 $(document).ready(function() {
 	$.ajaxSetup({cache:false});//while dev
-  	var oTable = defineLinksTable("${xmet_request_json}","${xmet_root}");
+	
+  	var oTable = defineLinksTable("${xmet_request_json}","${xmet_root}","${xmetid}");
 
 } );
 </script>
@@ -17,7 +18,8 @@ $(document).ready(function() {
 jQuery(document).ready(function()
 {
 	jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol" title="XMetDB observations">Observations</a></li>');
-    jQuery("#breadCrumb ul").append('<li><a href="${xmet_request}" title="This observation"><span id="xmet_id"></span></a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol/${xmetid}" title="This observation">${xmetid}</a></li>');
+    jQuery("#breadCrumb ul").append('<li><a href="${xmet_root}/protocol/${xmetid}/link" title="This observation links">Related links</a></li>');
     jQuery("#breadCrumb").jBreadCrumb();
     loadHelp("${xmet_root}","observation_list");
 })
@@ -37,8 +39,10 @@ jQuery(document).ready(function()
 		<table id='extids' class='row' cellpadding='0' border='0' width='100%' cellspacing='0' style="margin:0;padding:0;" >
 		<thead>
 		<tr>
+		<th>Observation</th>
 		<th>Type</th>
 		<th>URI</th>
+		<th>Edit</th>
 		</tr>
 		</thead>
 		<tbody></tbody>
@@ -52,9 +56,11 @@ jQuery(document).ready(function()
 		<#include "/s_footer.ftl">
 		
 	<form id="formAddNewLink" action="#" title="Add new link">
-		<input type="hidden" name="id" value="" rel="0">
+		<input type="hidden" name="xmetid" rel="0">
+		
 	    <label for="type">Link type</label><input type="text" name="type" size="64" id="type" class="required" rel="1" />
-	    <label for="id">Link URI</label><input type="text" size="64" name="id" id="id" class="required" rel="2" />
+	    <label for="value">Link URI</label><input type="text" size="128" name="value" id="value" class="required" rel="2" />
+	    <input type="hidden" name="id" value="DATAROWID" rel="3">
 	</form>				
 </div><!-- container -->
 

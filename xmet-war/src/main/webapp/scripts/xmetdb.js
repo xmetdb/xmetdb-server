@@ -447,6 +447,8 @@ function loadObservation(root,observation_uri,query_service,username,isAdmin) {
 	        	  $('#submittedby').text(observation.owner.username);
 	        	  
 	        	  $('#xmet_id').replaceWith("<a href='"+ observation["uri"] + "'>" + observation["identifier"] + "</a>");
+	        	  $('#xmet_links').replaceWith("<a href='"+ root  + "/protocol/" + observation["identifier"]  + "/link'>Related links</a>");
+
 	        	  $('#xmet_experiment').replaceWith(observation["description"] + " (" + observation["title"] + ")");
 	        	  //$('span#xmet_substrate').replaceWith(observation.Substrate.dataset.uri);
 	        	  //$('span#xmet_product').replaceWith(observation.Product.dataset.uri);
@@ -578,7 +580,7 @@ function updateObservation(root,observation_uri,query_service,mode) {
 	        	  $('#breadCrumb_xmet_id_modify').html("<a href='"+ puri + "' title='"+puriHint+"'>"+puriTitle+"</a>");
 	        	  
 	        	  $('#xmet_id').replaceWith(puriTitle + " [observation ID: <a href='"+ observation["uri"] + "' title='Click to view the observation'>" + observation["identifier"] + "</a>]");
-
+	        	  $('#xmet_links').replaceWith("<a href='"+ root  + "/protocol/" + observation["identifier"]  + "/link'>Related links</a>");
 	        	  $('#submittedby').attr('href',observation.owner.uri);
 	        	  $('#submittedby').text(observation.owner.username);
 	        	  
@@ -1251,7 +1253,7 @@ function getID() {
 	   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 }	
 
-function defineLinksTable(url,root) {
+function defineLinksTable(url,root,xmetid) {
 
 	var eTable = $('#extids').dataTable( {
 		"bProcessing": true,
@@ -1259,11 +1261,22 @@ function defineLinksTable(url,root) {
 		"bStateSave": false,
 		"sAjaxDataProp" : "externalIdentifiers",
 		"aoColumnDefs": [
+		 	{ //0
+				"aTargets": [ 0 ],	
+				"bSortable" : true,
+				"bSearchable" : false,
+				"bUseRendered" : false,
+				"sWidth" : "10%",
+				"mDataProp" : "xmetid",
+				"fnRender" : function(o,val) {
+						 return "<a href='"+root+"/protocol/"+xmetid+"'>"+ xmetid +"</a>";
+				}
+			},			                 
 				{ //0
-					"aTargets": [ 0 ],	
+					"aTargets": [ 1 ],	
 					"sClass" : "center",
-					"bSortable" : false,
-					"bSearchable" : false,
+					"bSortable" : true,
+					"bSearchable" : true,
 					"bUseRendered" : false,
 					"mDataProp" : "type",
 					"fnRender" : function(o,val) {
@@ -1271,15 +1284,28 @@ function defineLinksTable(url,root) {
 					}
 				},			
 				
-				{ "mDataProp": "id" , "asSorting": [ "asc", "desc" ],
-				  "aTargets": [1 ],
+				{ "mDataProp": "value" , "asSorting": [ "asc", "desc" ],
+				  "aTargets": [2 ],
 				  "bSearchable" : true,
 				  "bSortable" : true,
 				  "bUseRendered" : false,
 				  "fnRender" : function(o,val) {
 					  return val;
 				  }
-				}		
+				},		
+				{ "mDataProp": "value" , "asSorting": [ "asc", "desc" ],
+					  "aTargets": [3 ],
+					  "bSearchable" : true,
+					  "bSortable" : true,
+					  "bUseRendered" : false,
+					  "mDataProp" : "id",
+					  "sWidth" : "16px",
+					  "fnRender" : function(o,val) {
+						  return "<a class='table-action-deletelink' href='"+root+"/protocol"+val+"?method=DELETE' title='Delete'><span class='ui-icon ui-icon-trash'></span></a>";
+					  }
+					}		
+									
+				
 			],
 		"sDom" : '<"help remove-bottom"i><"help"p>Trt<"help"lf>',
 		"sSearch": "Filter:",
@@ -1290,7 +1316,33 @@ function defineLinksTable(url,root) {
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
-
+		"fnServerData" : function(sSource, aoData, fnCallback,oSettings) {
+			oSettings.jqXHR = $.ajax({
+				"type" : "GET",
+				"url" : sSource,
+				"data" : aoData,
+				"dataType" : "json",
+				"contentType" : "application/json",
+				"cache" : true,
+				"success": function(result){fnCallback(result);},
+				"error" : function(xhr, textStatus, error) {
+					switch (xhr.status) {
+					case 403: {
+			        	alert("Restricted access. You are not authorized to access this page.");
+						break;
+					}
+					case 404: {
+						//not found
+						break;
+					}
+					default: {
+			        	alert("Error loading links " + xhr.status + " " + error);
+					}
+					}
+					oSettings.oApi._fnProcessingDisplay(oSettings, false);
+				}
+			});
+		},	    
 		"oLanguage": {
 	            "sProcessing": "<img src='/xmetdb/images/progress.gif' border='0'>",
 	            "sLoadingRecords": "No  links found.",
@@ -1307,43 +1359,19 @@ function defineLinksTable(url,root) {
 	.makeEditable({
 		"aoColumns": [
                 null,
-                {
-                    type:'text'	,
-                    loadtext: 'loading...',
-                    indicator: 'Saving enzyme code ...',
-                    tooltip: 'Click to edit enzyme code',
-                    loadtext: 'loading...',
-                    onblur: 'cancel',
-                    submit: 'Save changes',
-                    fnOnCellUpdated: function(sStatus, sValue, settings){
-
-					}
-                },
-                {
-                    type:'text'	,
-                    loadtext: 'loading...',
-                    indicator: 'Saving enzyme name ...',
-                    tooltip: 'Click to edit enzyme name',
-                    loadtext: 'loading...',
-                    onblur: 'cancel',
-                    data: function (a,b) {
-                    	return $(a).text();
-                    },
-                    submit: 'Save changes'                  	  
-                }
+                null,null
         ],		
         fnOnDeleting: function(tr, id)  {       
-                this["sDeleteURL"] = root + "/link"+id +"?method=DELETE";
-                return true;
+            this["sDeleteURL"] = root+"/protocol/" + xmetid + "/link?method=DELETE";
+            return true;
         },
         fnOnDeleted: function(status) {       
         		eTable.fnDraw(true);
         },        
-        sAddURL: root+"/catalog",
-        sUpdateURL: root+"/catalog?method=PUT",
+        sAddURL: root+"/protocol/" + xmetid + "/link" ,
+        sUpdateURL: root + "/protocol/" + xmetid + "/link?method=PUT",
         sAddNewRowFormId: "formAddNewLink",
         sAddNewRowButtonId: "btnAddNewLink",
-        sDeleteURL: root + "/catalog?method=DELETE",
         oDeleteRowButtonOptions: {
             label: "Remove",
             icons: { primary: 'ui-icon-trash' }
@@ -1355,3 +1383,4 @@ function defineLinksTable(url,root) {
 	});
 	return eTable;
 }
+

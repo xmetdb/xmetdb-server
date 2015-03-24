@@ -202,7 +202,8 @@ $(document).ready(function() {
 		<div name="curated" id="curated" title="Curation status" row="1" class="three columns omega remove-bottom ui-state-default">
 		</div>
 		<div class="one column omega"><img id='imgcurated' style='display:none;' src='${xmet_root}/images/star.png'></div>
-		<div class="nine columns omega">&nbsp;</div>
+		<div class="two columns omega">&nbsp;</div>
+		<div class='five columns omega'><a href='#' title='Links' id='xmet_links'></a></div>
 	</div>		
 	
 	<div class='row half-bottom' style="margin:5px;padding:5px;">
